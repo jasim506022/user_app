@@ -1,0 +1,193 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:user_app/service/provider/cartprovider.dart';
+import 'package:user_app/const/const.dart';
+import 'package:user_app/page/cart/cartpage.dart';
+import 'package:user_app/service/database/firebasedatabase.dart';
+
+class CartMethods {
+  static void addItemToCartWithSeller(
+      {required String productId,
+      required int productCounter,
+      required String seller,
+      required BuildContext context}) {
+    List<String> tempList = sharedPreference!.getStringList("cartlist")!;
+
+    tempList.add("$productId:$seller:$productCounter");
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+        .update({"cartlist": tempList}).then((value) {
+      globalMethod.flutterToast(msg: "Item Add Successfully");
+
+      sharedPreference!.setStringList("cartlist", tempList);
+
+      Provider.of<CartProductCounter>(context, listen: false).addCartItem();
+      separeteProductIdUserCartList();
+      separteProductQuantityUserCartList();
+    });
+  }
+
+  static void addItemToCart(
+      {required String productId,
+      required int productCounter,
+      required BuildContext context}) {
+    List<String> tempList = sharedPreference!.getStringList("cartlist")!;
+
+    tempList.add("$productId:$productCounter");
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+        .update({"cartlist": tempList}).then((value) {
+      globalMethod.flutterToast(msg: "Item Add Successfully");
+
+      sharedPreference!.setStringList("cartlist", tempList);
+
+      Provider.of<CartProductCounter>(context, listen: false).addCartItem();
+      separeteProductIdUserCartList();
+      separteProductQuantityUserCartList();
+    });
+  }
+
+//Remove Product from Cart
+  static void removeProdctFromCart(
+      {required int index, required BuildContext context}) async {
+    List<String> cartList = sharedPreference!.getStringList("cartlist")!;
+
+    cartList.removeAt(index);
+    await FirebaseDatabase.currentUserSnaphots()
+        .update({"cartlist": cartList}).then((value) {
+      globalMethod.flutterToast(msg: "Item remove Successfully");
+
+      sharedPreference!.setStringList("cartlist", cartList);
+      CartMethods.separeteProductIdUserCartList();
+      CartMethods.separteProductQuantityUserCartList();
+
+      Provider.of<CartProductCounter>(context, listen: false).removeCartItem();
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CartPage(),
+          ));
+    });
+  }
+
+// Clear All Cart
+  static void clearCart() {
+    sharedPreference!.setStringList("cartlist", ["initial"]);
+    List<String> emptyCart = sharedPreference!.getStringList("cartlist")!;
+
+    /*
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+*/
+    FirebaseDatabase.currentUserSnaphots()
+        .update({"cartlist": emptyCart}).then((value) {
+      globalMethod.flutterToast(msg: "Remove All Cart Successfully");
+    });
+  }
+
+// Separet Product Id From CartList
+  static separeteProductIdUserCartList() {
+    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    List<String> productIdList = [];
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      int indexChatePositionProductColon = item.indexOf(":");
+      String productId = item.substring(0, indexChatePositionProductColon);
+      productIdList.add(productId);
+    }
+    return productIdList;
+  }
+
+// Separet Product Quantity List From CartList
+  static separteProductQuantityUserCartList() {
+    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    List<int> productQuanityList = [];
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      List<String> splitCartList = item.split(":").toList();
+      int quatityProduct = int.parse(splitCartList[2].toString());
+      productQuanityList.add(quatityProduct);
+    }
+    return productQuanityList;
+  }
+
+// Separete Seller List From CartList
+  static separteSellerListUserList() {
+    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    List<String> sellerList = [];
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      int lastChaterPositionOfItembeforeColon = item.lastIndexOf(":");
+      String productandSeller =
+          item.substring(0, lastChaterPositionOfItembeforeColon);
+      List<String> splistProductAndSelelr =
+          productandSeller.split(":").toList();
+      String sellerId = splistProductAndSelelr[1].toString();
+      sellerList.add(sellerId);
+    }
+    if (kDebugMode) {
+      print(sellerList);
+    }
+    return sellerList;
+  }
+
+  static separateOrderSellerCartList(productIds) {
+    List<String> userCartList = List<String>.from(productIds);
+    List<String> itemSellerDetails = [];
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      var lastChaterPositionOfItembeforeColon = item.lastIndexOf(":");
+      String getItemId = item.substring(0, lastChaterPositionOfItembeforeColon);
+      var colonAndAfterCharaList = getItemId.split(":").toList();
+      String sellerItemId = colonAndAfterCharaList[1].toString();
+      // var getStringSeller = getItemId.lastIndexOf(":");
+      // String sellerItemId = item.substring(0, getStringSeller);
+      itemSellerDetails.add(sellerItemId);
+    }
+    if (kDebugMode) {
+      print(itemSellerDetails);
+    }
+    return itemSellerDetails;
+  }
+
+  static separteOrderProductIdList(productIds) {
+    List<dynamic> userCartList = List<dynamic>.from(productIds);
+
+    List<String> itemIDDetails = [];
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+
+      var lastChaterPositionOfItembeforeColon = item.indexOf(":");
+      String getItemId = item.substring(0, lastChaterPositionOfItembeforeColon);
+
+      itemIDDetails.add(getItemId);
+    }
+
+    return itemIDDetails;
+  }
+
+  static separateOrderItemQuantities(productIds) {
+    List<String> userCartList = List<String>.from(productIds);
+    List<int> itemQuantity = [];
+
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      var colonAndafterCharaListh = item.split(":").toList();
+
+      int qunatityNumber = int.parse(colonAndafterCharaListh[2].toString());
+      itemQuantity.add(qunatityNumber);
+    }
+    if (kDebugMode) {
+      print("Item Qunaity List");
+    }
+
+    return itemQuantity;
+  }
+}
