@@ -93,16 +93,20 @@ class CartMethods {
   }
 
 // Separet Product Id From CartList
-  static separeteProductIdUserCartList() {
-    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
-    List<String> productIdList = [];
-    for (int i = 1; i < userCartList.length; i++) {
-      String item = userCartList[i].toString();
-      int indexChatePositionProductColon = item.indexOf(":");
-      String productId = item.substring(0, indexChatePositionProductColon);
-      productIdList.add(productId);
-    }
-    return productIdList;
+  static List<String> separeteProductIdUserCartList() {
+    // List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    return [
+      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+        item.toString().split(":")[0]
+    ];
+    // List<String> productIdList = [];
+    // for (int i = 1; i < userCartList.length; i++) {
+    //   String item = userCartList[i].toString();
+    //   int indexChatePositionProductColon = item.indexOf(":");
+    //   String productId = item.substring(0, indexChatePositionProductColon);
+    //   productIdList.add(productId);
+    // }
+    // return productIdList;
   }
 
 // Separet Product Quantity List From CartList

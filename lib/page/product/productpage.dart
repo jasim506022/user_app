@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/service/database/firebasedatabase.dart';
 import '../../const/const.dart';
 import '../../model/productsmodel.dart';
+import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';
 import '../../widget/empty_widget.dart';
 import '../../widget/loading_product_widget.dart';
 import 'product_widget.dart';
 
-// ignore: must_be_immutable
 class ProductPage extends StatefulWidget {
-  ProductPage({super.key, this.isPopular = false});
+  const ProductPage({super.key, this.isPopular = false});
 
-  bool? isPopular;
+  final bool? isPopular;
 
   @override
   State<ProductPage> createState() => _ProductPageState();

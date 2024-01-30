@@ -7,4 +7,6 @@ class AppRouters {
   static const String forgetPassword = '/forgetPassword';
   static const String completeOrderPage = '/completeOrderPage';
   static const String orderPage = '/orderPage';
+  static const String cartPage = '/cartPage';
+  static const String searchPage = '/searchPage';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/const/approutes.dart';
 import 'package:user_app/const/gobalcolor.dart';
 
 class CartBadge extends StatelessWidget {
@@ -21,7 +22,9 @@ class CartBadge extends StatelessWidget {
               icon,
               color: color,
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pushNamed(context, AppRouters.cartPage);
+            }),
         if (itemCount > 0)
           Positioned(
             right: 5,
@@ -32,6 +35,7 @@ class CartBadge extends StatelessWidget {
                 color: red,
                 borderRadius: BorderRadius.circular(15),
               ),
+              // What is different Between BoxConstraints and contains
               constraints: const BoxConstraints(
                 minWidth: 12,
                 minHeight: 12,

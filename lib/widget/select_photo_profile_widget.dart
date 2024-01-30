@@ -12,7 +12,7 @@ class SelectPhotoProfile extends StatelessWidget {
   final ImagePicker imagePicker;
   @override
   Widget build(BuildContext context) {
-    textstyle = Textstyle(context);
+    Textstyle textstyle = Textstyle(context);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(

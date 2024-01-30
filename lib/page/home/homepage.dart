@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/const/approutes.dart';
 import '../../service/provider/cartprovider.dart';
 import '../../const/const.dart';
 import '../../const/gobalcolor.dart';
@@ -16,10 +18,8 @@ import '../../widget/empty_widget.dart';
 import '../../widget/single_empty_widget.dart';
 import '../../widget/loading_product_widget.dart';
 import '../../widget/single_loading_product_widget.dart';
-import '../cart/cartpage.dart';
 import '../product/product_widget.dart';
 import '../product/productpage.dart';
-import '../search/searchpage.dart';
 import 'carousel_silder_widget.dart';
 import 'category_widget.dart';
 import 'row_widget.dart';
@@ -45,31 +45,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
         statusBarColor: Theme.of(context).scaffoldBackgroundColor,
         statusBarIconBrightness: Brightness.dark));
-    textstyle = Textstyle(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Textstyle textstyle = Textstyle(context);
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+          padding: EdgeInsets.symmetric(
+              horizontal: mq.width * .03, vertical: mq.height * .034),
           child: Column(
             children: [
               Column(
                 children: [
                   // user Profile
-                  _buildUserProfile(),
+                  _buildUserProfile(textstyle),
                   SizedBox(height: mq.height * .015),
                   // Search
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SearchPage(),
-                          ));
+                      Navigator.pushNamed(context, AppRouters.searchPage);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const SearchPage(),
+                      //     ));
                     },
                     child: _buildSearchBar(),
                   ),
@@ -87,15 +94,11 @@ class _HomePageState extends State<HomePage> {
                             width: mq.width,
                             child: const CarouselSilderWidget(),
                           ),
-
                           SizedBox(height: mq.height * .013),
-
                           // Select Category
                           const CategoryWidget(),
+                          SizedBox(height: mq.height * .02),
 
-                          SizedBox(height: mq.height * .013),
-
-                          // Product List Cateogry
                           RowWidget(
                             text: "Popular Product",
                             function: () {
@@ -103,122 +106,29 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ProductPage(isPopular: true),
+                                        const ProductPage(isPopular: true),
                                   ));
                             },
                           ),
-
+                          SizedBox(height: mq.height * .01),
                           // Popular Product List
+                          _buildPopularProductList(categoryProvider),
                           SizedBox(
-                            height: mq.height * .19,
-                            width: double.infinity,
-                            child: StreamBuilder(
-                              stream: FirebaseDatabase.popularProductSnapshot(
-                                  category: categoryProvider.getCategory),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: 5,
-                                    itemBuilder: (context, index) {
-                                      return const LoadingSingleProductWidget();
-                                    },
-                                  );
-                                } else if (!snapshot.hasData ||
-                                    snapshot.data!.docs.isEmpty) {
-                                  return const SingleEmptyWidget(
-                                    image: 'asset/payment/emptytow.png',
-                                    title: 'No Data Available',
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return SingleEmptyWidget(
-                                    image: 'asset/payment/emptytow.png',
-                                    title: 'Error Occure: ${snapshot.error}',
-                                  );
-                                } else if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: snapshot.data!.docs.length,
-                                    itemBuilder: (context, index) {
-                                      ProductModel productModel =
-                                          ProductModel.fromMap(snapshot
-                                              .data!.docs[index]
-                                              .data());
-                                      return ChangeNotifierProvider.value(
-                                        value: productModel,
-                                        child: const SingleProductWidget(),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return const SingleEmptyWidget(
-                                    image: 'asset/payment/emptytow.png',
-                                    title: 'No Data Available',
-                                  );
-                                }
-                              },
-                            ),
+                            height: mq.height * .012,
                           ),
 
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          // Product List
                           RowWidget(
                             text: "Product",
                             function: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ProductPage(),
+                                    builder: (context) => const ProductPage(),
                                   ));
                             },
                           ),
                           // Product List
-                          StreamBuilder(
-                            stream: FirebaseDatabase.productSnapshots(
-                                category: categoryProvider.getCategory),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const LoadingProductWidget();
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.docs.isEmpty) {
-                                return const EmptyWidget(
-                                  image: 'asset/payment/empty.png',
-                                  title: 'No Data Available',
-                                );
-                              } else if (snapshot.hasError) {
-                                return EmptyWidget(
-                                  image: 'asset/payment/empty.png',
-                                  title: 'Error Occure: ${snapshot.error}',
-                                );
-                              } else if (snapshot.hasData) {
-                                return GridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data!.docs.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: .78,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 20),
-                                  itemBuilder: (context, index) {
-                                    ProductModel productModel =
-                                        ProductModel.fromMap(
-                                            snapshot.data!.docs[index].data());
-                                    return ChangeNotifierProvider.value(
-                                      value: productModel,
-                                      child: const ProductWidget(),
-                                    );
-                                  },
-                                );
-                              }
-                              return const LoadingProductWidget();
-                            },
-                          )
+                          _buildProductList(categoryProvider)
                         ],
                       ),
                     );
@@ -230,8 +140,106 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+//Product List
+  StreamBuilder<QuerySnapshot<Map<String, dynamic>>> _buildProductList(
+      CategoryProvider categoryProvider) {
+    return StreamBuilder(
+      stream: FirebaseDatabase.productSnapshots(
+          category: categoryProvider.getCategory),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const LoadingProductWidget();
+        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return const EmptyWidget(
+            image: 'asset/payment/empty.png',
+            title: 'No Data Available',
+          );
+        } else if (snapshot.hasError) {
+          return EmptyWidget(
+            image: 'asset/payment/empty.png',
+            title: 'Error Occure: ${snapshot.error}',
+          );
+        } else if (snapshot.hasData) {
+          return GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount:
+                snapshot.data!.docs.length > 8 ? 8 : snapshot.data!.docs.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: .78,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 20),
+            itemBuilder: (context, index) {
+              ProductModel productModel =
+                  ProductModel.fromMap(snapshot.data!.docs[index].data());
+              return ChangeNotifierProvider.value(
+                value: productModel,
+                child: const ProductWidget(),
+              );
+            },
+          );
+        }
+        return const LoadingProductWidget();
+      },
+    );
+  }
+
+// Popular Porduct List
+  SizedBox _buildPopularProductList(CategoryProvider categoryProvider) {
+    return SizedBox(
+      height: mq.height * .19,
+      width: double.infinity,
+      child: StreamBuilder(
+        stream: FirebaseDatabase.popularProductSnapshot(
+            category: categoryProvider.getCategory),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return const LoadingSingleProductWidget();
+              },
+            );
+          } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const SingleEmptyWidget(
+              image: 'asset/payment/emptytow.png',
+              title: 'No Data Available',
+            );
+          } else if (snapshot.hasError) {
+            return SingleEmptyWidget(
+              image: 'asset/payment/emptytow.png',
+              title: 'Error Occure: ${snapshot.error}',
+            );
+          } else if (snapshot.hasData) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data!.docs.length > 5
+                  ? 5
+                  : snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                ProductModel productModel =
+                    ProductModel.fromMap(snapshot.data!.docs[index].data());
+                return ChangeNotifierProvider.value(
+                  value: productModel,
+                  child: const SingleProductWidget(),
+                );
+              },
+            );
+          } else {
+            return const SingleEmptyWidget(
+              image: 'asset/payment/emptytow.png',
+              title: 'No Data Available',
+            );
+          }
+        },
+      ),
+    );
+  }
+
   //Profile
-  SizedBox _buildUserProfile() {
+  SizedBox _buildUserProfile(Textstyle textstyle) {
     return SizedBox(
       height: mq.height * .08,
       width: mq.width,
@@ -276,11 +284,12 @@ class _HomePageState extends State<HomePage> {
             builder: (context, value, child) {
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CartPage(),
-                      ));
+                  Navigator.pushNamed(context, AppRouters.cartPage);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const CartPage(),
+                  //     ));
                 },
                 child: CartBadge(
                     color: greenColor,
@@ -301,13 +310,13 @@ class _HomePageState extends State<HomePage> {
   Container _buildSearchBar() {
     return Container(
       height: mq.height * .065,
-      margin: const EdgeInsets.symmetric(vertical: 15),
+      margin: EdgeInsets.symmetric(vertical: mq.height * .02),
       width: mq.width,
       decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: const EdgeInsets.only(left: 30),
+        padding: EdgeInsets.only(left: mq.width * .07),
         child: Row(
           children: [
             Text(
@@ -322,8 +331,8 @@ class _HomePageState extends State<HomePage> {
               IconlyLight.search,
               color: Theme.of(context).primaryColor,
             ),
-            const SizedBox(
-              width: 10,
+            SizedBox(
+              width: mq.width * 0.022,
             ),
           ],
         ),

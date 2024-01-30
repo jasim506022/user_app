@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/const/approutes.dart';
+import 'package:user_app/const/const.dart';
 
 import '../../const/gobalcolor.dart';
 import '../../service/provider/cartprovider.dart';
@@ -20,9 +21,7 @@ class PlaceOrderScreen extends StatefulWidget {
 class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
   @override
   void initState() {
-    Future.delayed(Duration.zero, () {
-      Provider.of<CartProductCounter>(context, listen: false).setValue();
-    });
+    globalMethod.getUserInformation();
     super.initState();
   }
 

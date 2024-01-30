@@ -24,12 +24,20 @@ class RowWidget extends StatelessWidget {
           style: textstyle.largestText,
         ),
         const Spacer(),
-        IconButton(
-            onPressed: function,
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              color: greenColor,
-            )),
+        InkWell(
+          onTap: function,
+          child: Icon(
+            Icons.arrow_forward_ios,
+            color: greenColor,
+          ),
+        )
+        // IconButton(
+        //     onPressed: function,
+        //     icon: Icon(
+        //       Icons.arrow_forward_ios,
+        //       color: greenColor,
+        //     )
+        //     ),
       ],
     );
   }

@@ -47,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    textstyle = Textstyle(context);
+    Textstyle txtStyle = Textstyle(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -61,7 +61,7 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _signinPageIntro(),
+                _signinPageIntro(txtStyle),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -349,7 +349,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Column _signinPageIntro() {
+  Column _signinPageIntro(Textstyle txtStyle) {
     return Column(
       children: [
         SizedBox(
@@ -364,7 +364,7 @@ class _SignInPageState extends State<SignInPage> {
           height: mq.height * .012,
         ),
         Text("Welcome Back!",
-            style: textstyle.largestText.copyWith(fontSize: 24, color: black)),
+            style: txtStyle.largestText.copyWith(fontSize: 24, color: black)),
         SizedBox(
           height: mq.height * .012,
         ),

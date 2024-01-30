@@ -20,16 +20,6 @@ const List<String> allCategoryList = <String>[
   "Candy & Chocolate"
 ];
 
-// List<String> category = <String>[
-//   'Fruits',
-//   'Vegetables',
-//   'Dairy & Egg',
-//   'Dry & Canned',
-//   "Drinks",
-//   "Meat & Fish",
-//   "Candy & Chocolate",
-// ];
-
 const List<String> unitList = <String>[
   'Per Kg',
   'Per Dozen',
@@ -51,7 +41,6 @@ Size mqs(BuildContext context) {
 }
 
 late Size mq;
-late Textstyle textstyle;
 
 int? isviewed;
 

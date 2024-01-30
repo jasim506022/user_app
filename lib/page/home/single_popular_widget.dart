@@ -19,6 +19,7 @@ class SingleProductWidget extends StatelessWidget {
     final productModel = Provider.of<ProductModel>(context);
     Textstyle textstyle = Textstyle(context);
     bool isCart = false;
+
     List<String> productIdListFromCartLish =
         CartMethods.separeteProductIdUserCartList();
     if (productIdListFromCartLish.contains(productModel.productId)) {
@@ -37,8 +38,8 @@ class SingleProductWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Container(
-          height: mqs(context).height * .17,
-          width: MediaQuery.of(context).size.width * .8,
+          height: mq.height * .17,
+          width: mq.width * .8,
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -54,8 +55,8 @@ class SingleProductWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: mqs(context).height * .145,
-                    width: mqs(context).height * .145,
+                    height: mq.height * .145,
+                    width: mq.height * .145,
                     alignment: Alignment.center,
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(20),
@@ -131,8 +132,8 @@ class SingleProductWidget extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        height: mqs(context).height * .045,
-                        width: MediaQuery.of(context).size.width,
+                        height: mq.height * .045,
+                        width: mq.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: isCart ? red : greenColor,

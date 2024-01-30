@@ -31,7 +31,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
-    textstyle = Textstyle(context);
+    Textstyle textstyle = Textstyle(context);
     return Scaffold(
         backgroundColor: white,
         appBar: AppBar(

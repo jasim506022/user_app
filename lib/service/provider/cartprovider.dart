@@ -5,10 +5,13 @@ class CartProductCounter extends ChangeNotifier {
   int cartListItemCounter =
       (sharedPreference!.getStringList("cartlist")!.length) - 1;
 
-  setValue() {
-    cartListItemCounter = 0;
-    notifyListeners();
-  }
+  // setValue() {
+
+  //   // Why we don
+  //   cartListItemCounter =
+  //       (sharedPreference!.getStringList("cartlist")!.length) - 1;
+  //   notifyListeners();
+  // }
 
   int get getCount => cartListItemCounter;
 

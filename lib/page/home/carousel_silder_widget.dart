@@ -21,24 +21,30 @@ class CarouselSilderWidget extends StatelessWidget {
           viewportFraction: 0.9,
           autoPlay: true,
           autoPlayAnimationDuration: const Duration(seconds: 3)),
-      items: caroselList.map((i) {
+      // What is call is Map Name
+      // Understand This code
+      items: caroselList.map((carosle) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
                 width: mq.width,
-                padding: const EdgeInsets.only(left: 25, bottom: 15, top: 15),
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: EdgeInsets.only(
+                    left: mq.width * .055,
+                    bottom: mq.height * .02,
+                    top: mq.height * .02),
+                margin: EdgeInsets.symmetric(horizontal: mq.width * .022),
                 decoration: BoxDecoration(
-                    color: i.color, borderRadius: BorderRadius.circular(15)),
+                    color: carosle.color,
+                    borderRadius: BorderRadius.circular(15)),
                 child: Stack(
                   children: [
                     Positioned(
                       bottom: 0,
                       right: 0,
                       child: Image.asset(
-                        i.image,
-                        height: mqs(context).height * .19,
-                        width: mqs(context).height * .19,
+                        carosle.image,
+                        height: mq.height * .19,
+                        width: mq.height * .19,
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -57,7 +63,7 @@ class CarouselSilderWidget extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                  text: " ${i.category}",
+                                  text: " ${carosle.category}",
                                   style: textstyle.mediumTextbold.copyWith(
                                     letterSpacing: .9,
                                     color: greenColor,
@@ -66,7 +72,7 @@ class CarouselSilderWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          i.title,
+                          carosle.title,
                           style: textstyle.largestText
                               .copyWith(fontSize: 24, color: black),
                         ),
@@ -84,7 +90,7 @@ class CarouselSilderWidget extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              i.number.toUpperCase(),
+                              carosle.number.toUpperCase(),
                               style: textstyle.largeBoldText.copyWith(
                                 letterSpacing: 1,
                                 color: greenColor,

@@ -42,7 +42,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    textstyle = Textstyle(context);
+    Textstyle textstyle = Textstyle(context);
     return Material(
       child: Container(
         height: mq.height,

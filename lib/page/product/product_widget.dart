@@ -16,7 +16,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
-    textstyle = Textstyle(context);
+    Textstyle textstyle = Textstyle(context);
     bool isCart = false;
     List<String> productIdListFromCartLish =
         CartMethods.separeteProductIdUserCartList();

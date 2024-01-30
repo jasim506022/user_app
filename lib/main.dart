@@ -6,6 +6,8 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_app/auth/forgetpasswordpage.dart';
+import 'package:user_app/page/cart/cartpage.dart';
+import 'package:user_app/page/search/searchpage.dart';
 
 import 'auth/signinpage.dart';
 import 'auth/signuppage.dart';
@@ -56,6 +58,8 @@ class MyApp extends StatelessWidget {
               AppRouters.onBaordingPage: (context) => const OnboardingPage(),
               AppRouters.forgetPassword: (context) =>
                   const ForgetPasswordPage(),
+              AppRouters.cartPage: (context) => const CartPage(),
+              AppRouters.searchPage: (context) => const SearchPage(),
             },
           );
         },
