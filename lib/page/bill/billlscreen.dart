@@ -349,6 +349,8 @@ class _BillPageState extends State<BillPage> {
       "productIds": sharedPreference!.getStringList("cartlist"),
       "paymentDetails": payment,
       "orderId": orderId,
+      "seller": CartMethods.seperateSEllerSet(),
+      // seperateSEllerSet
       "orderTime": orderId,
       "isSuccess": true,
       "status": "normal",
@@ -366,6 +368,7 @@ class _BillPageState extends State<BillPage> {
         "orderId": orderId,
         "orderTime": orderId,
         "isSuccess": true,
+        "seller": CartMethods.seperateSEllerSet(),
         "status": "normal",
         "deliverydate": estimateDeliveryDate,
         "deliverypartner": "BD-DEX",

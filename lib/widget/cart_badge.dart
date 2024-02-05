@@ -35,7 +35,6 @@ class CartBadge extends StatelessWidget {
                 color: red,
                 borderRadius: BorderRadius.circular(15),
               ),
-              // What is different Between BoxConstraints and contains
               constraints: const BoxConstraints(
                 minWidth: 12,
                 minHeight: 12,

@@ -23,6 +23,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   List<int>? productQuantityListFromCartList;
+  double totalAmountPerSeller = 0;
 
   double totalAmount = 0.0;
   double deliveryAmount = 50;
@@ -78,6 +79,7 @@ class _CartPageState extends State<CartPage> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             var sellerId = snapshot.data!.docs[index]["name"];
+
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +102,9 @@ class _CartPageState extends State<CartPage> {
                                 Flexible(
                                   child: StreamBuilder(
                                     stream:
-                                        FirebaseDatabase.cartProductSnapshot(),
+                                        FirebaseDatabase.cartProductSnapshot(
+                                            sellerId: snapshot.data!.docs[index]
+                                                ['uid']),
                                     builder: (context, productSnashot) {
                                       if (snapshot.connectionState ==
                                           ConnectionState.waiting) {
@@ -118,27 +122,35 @@ class _CartPageState extends State<CartPage> {
                                                     productSnashot
                                                         .data!.docs[itemIndex]
                                                         .data());
+                                            totalAmountPerSeller += globalMethod
+                                                    .productPrice(
+                                                  productModel.productprice!,
+                                                  productModel.discount!
+                                                      .toDouble(),
+                                                ) *
+                                                productQuantityListFromCartList![
+                                                    itemIndex];
 
-                                            if (itemIndex == 0) {
-                                              totalAmount = 0;
-                                              totalAmount = totalAmount +
-                                                  (globalMethod.productPrice(
-                                                          productModel
-                                                              .productprice!,
-                                                          productModel.discount!
-                                                              .toDouble()) *
-                                                      productQuantityListFromCartList![
-                                                          itemIndex]);
-                                            } else {
-                                              totalAmount = totalAmount +
-                                                  (globalMethod.productPrice(
-                                                          productModel
-                                                              .productprice!,
-                                                          productModel.discount!
-                                                              .toDouble()) *
-                                                      productQuantityListFromCartList![
-                                                          itemIndex]);
-                                            }
+                                            // if (itemIndex == 0) {
+                                            //   totalAmount = 0;
+                                            //   totalAmount = totalAmount +
+                                            //       (globalMethod.productPrice(
+                                            //               productModel
+                                            //                   .productprice!,
+                                            //               productModel.discount!
+                                            //                   .toDouble()) *
+                                            //           productQuantityListFromCartList![
+                                            //               itemIndex]);
+                                            // } else {
+                                            //   totalAmount = totalAmount +
+                                            //       (globalMethod.productPrice(
+                                            //               productModel
+                                            //                   .productprice!,
+                                            //               productModel.discount!
+                                            //                   .toDouble()) *
+                                            //           productQuantityListFromCartList![
+                                            //               itemIndex]);
+                                            // }
 
                                             if (snapshot.data!.docs.length -
                                                     1 ==
@@ -149,9 +161,23 @@ class _CartPageState extends State<CartPage> {
                                                 Provider.of<TotalAmountProvider>(
                                                         context,
                                                         listen: false)
-                                                    .setAmount(totalAmount);
+                                                    .setAmount(
+                                                        totalAmountPerSeller);
                                               });
                                             }
+
+                                            // if (snapshot.data!.docs.length -
+                                            //         1 ==
+                                            //     itemIndex) {
+                                            //   WidgetsBinding.instance
+                                            //       .addPostFrameCallback(
+                                            //           (timeStamp) {
+                                            //     Provider.of<TotalAmountProvider>(
+                                            //             context,
+                                            //             listen: false)
+                                            //         .setAmount(totalAmount);
+                                            //   });
+                                            // }
                                             return CardWidget(
                                               productModel: productModel,
                                               itemQunter:

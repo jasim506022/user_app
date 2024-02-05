@@ -21,8 +21,6 @@ class CarouselSilderWidget extends StatelessWidget {
           viewportFraction: 0.9,
           autoPlay: true,
           autoPlayAnimationDuration: const Duration(seconds: 3)),
-      // What is call is Map Name
-      // Understand This code
       items: caroselList.map((carosle) {
         return Builder(
           builder: (BuildContext context) {

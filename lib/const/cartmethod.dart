@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/service/provider/cartprovider.dart';
+import 'package:user_app/service/provider/cart_product_counter_provider.dart';
 import 'package:user_app/const/const.dart';
 import 'package:user_app/page/cart/cartpage.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 class CartMethods {
+  // Add Item to CartWithSeller
   static void addItemToCartWithSeller(
       {required String productId,
       required int productCounter,
       required String seller,
       required BuildContext context}) {
     List<String> tempList = sharedPreference!.getStringList("cartlist")!;
-
     tempList.add("$productId:$seller:$productCounter");
 
     FirebaseFirestore.instance
@@ -22,10 +22,9 @@ class CartMethods {
         .doc(sharedPreference!.getString("uid")!)
         .update({"cartlist": tempList}).then((value) {
       globalMethod.flutterToast(msg: "Item Add Successfully");
-
       sharedPreference!.setStringList("cartlist", tempList);
-
-      Provider.of<CartProductCounter>(context, listen: false).addCartItem();
+      Provider.of<CartProductCountProvider>(context, listen: false)
+          .addCartItem();
       separeteProductIdUserCartList();
       separteProductQuantityUserCartList();
     });
@@ -47,7 +46,8 @@ class CartMethods {
 
       sharedPreference!.setStringList("cartlist", tempList);
 
-      Provider.of<CartProductCounter>(context, listen: false).addCartItem();
+      Provider.of<CartProductCountProvider>(context, listen: false)
+          .addCartItem();
       separeteProductIdUserCartList();
       separteProductQuantityUserCartList();
     });
@@ -67,7 +67,8 @@ class CartMethods {
       CartMethods.separeteProductIdUserCartList();
       CartMethods.separteProductQuantityUserCartList();
 
-      Provider.of<CartProductCounter>(context, listen: false).removeCartItem();
+      Provider.of<CartProductCountProvider>(context, listen: false)
+          .removeCartItem();
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -110,20 +111,24 @@ class CartMethods {
   }
 
 // Separet Product Quantity List From CartList
-  static separteProductQuantityUserCartList() {
-    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
-    List<int> productQuanityList = [];
-    for (int i = 1; i < userCartList.length; i++) {
-      String item = userCartList[i].toString();
-      List<String> splitCartList = item.split(":").toList();
-      int quatityProduct = int.parse(splitCartList[2].toString());
-      productQuanityList.add(quatityProduct);
-    }
-    return productQuanityList;
+  static List<int> separteProductQuantityUserCartList() {
+    // List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    return [
+      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+        int.parse(item.toString().split(":")[2])
+    ];
+    // List<int> productQuanityList = [];
+    // for (int i = 1; i < userCartList.length; i++) {
+    //   String item = userCartList[i].toString();
+    //   List<String> splitCartList = item.split(":").toList();
+    //   int quatityProduct = int.parse(splitCartList[2].toString());
+    //   productQuanityList.add(quatityProduct);
+    // }
+    // return productQuanityList;
   }
 
 // Separete Seller List From CartList
-  static separteSellerListUserList() {
+  static List<String> separteSellerListUserList() {
     List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
     List<String> sellerList = [];
     for (int i = 1; i < userCartList.length; i++) {
@@ -135,6 +140,26 @@ class CartMethods {
           productandSeller.split(":").toList();
       String sellerId = splistProductAndSelelr[1].toString();
       sellerList.add(sellerId);
+    }
+    if (kDebugMode) {
+      print(sellerList);
+    }
+    return sellerList;
+  }
+
+  // Separete Seller List From CartList
+  static Set<String> seperateSEllerSet() {
+    List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+    Set<String> sellerList = {};
+    for (int i = 1; i < userCartList.length; i++) {
+      String item = userCartList[i].toString();
+      int lastChaterPositionOfItembeforeColon = item.lastIndexOf(":");
+      String productandSeller =
+          item.substring(0, lastChaterPositionOfItembeforeColon);
+      List<String> splistProductAndSelelr =
+          productandSeller.split(":").toList();
+      String sellerId = splistProductAndSelelr[1].toString();
+      sellerList.add("$sellerId:false");
     }
     if (kDebugMode) {
       print(sellerList);

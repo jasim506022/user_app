@@ -208,6 +208,7 @@ class GlobalMethod {
     imageUploadProvider.setImage(imageXFiles!);
   }
 
+//Product Price
   double productPrice(double productprice, double discount) {
     return productprice - (productprice * discount / 100);
   }

@@ -195,9 +195,11 @@ class FirebaseDatabase {
   }
 
 // Cart Product
-  static Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot() {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
+      {required String sellerId}) {
     return FirebaseFirestore.instance
         .collection("products")
+        .where("sellerId", isEqualTo: sellerId)
         .where("productId",
             whereIn: CartMethods.separeteProductIdUserCartList())
         .orderBy("publishDate", descending: true)

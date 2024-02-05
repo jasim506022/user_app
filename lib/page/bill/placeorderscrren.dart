@@ -5,7 +5,7 @@ import 'package:user_app/const/approutes.dart';
 import 'package:user_app/const/const.dart';
 
 import '../../const/gobalcolor.dart';
-import '../../service/provider/cartprovider.dart';
+import '../../service/provider/cart_product_counter_provider.dart';
 import '../../const/textstyle.dart';
 import '../main/mainpage.dart';
 

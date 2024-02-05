@@ -7,7 +7,7 @@ import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';
 import '../../widget/empty_widget.dart';
 import '../../widget/loading_product_widget.dart';
-import 'product_widget.dart';
+import '../../widget/product_widget.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, this.isPopular = false});
@@ -48,37 +48,7 @@ class _ProductPageState extends State<ProductPage> {
           children: [
             Consumer<CategoryProvider>(
               builder: (context, dropvaluesall, child) {
-                return DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    fillColor: Theme.of(context).cardColor,
-                    filled: true,
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(15)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(15)),
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 15),
-                  ),
-                  value: dropvaluesall.getCategory,
-                  isExpanded: true,
-                  style: GoogleFonts.poppins(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700),
-                  focusColor: Theme.of(context).primaryColor,
-                  elevation: 16,
-                  items: allCategoryList
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                        value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (value) {
-                    Provider.of<CategoryProvider>(context, listen: false)
-                        .setCategory(category: value!);
-                  },
-                );
+                return _buildDropDownButton(dropvaluesall);
               },
             ),
             const SizedBox(
@@ -96,10 +66,16 @@ class _ProductPageState extends State<ProductPage> {
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const LoadingProductWidget();
-                      } else if (!snapshot.hasData) {
+                      } else if (!snapshot.hasData ||
+                          snapshot.data!.docs.isEmpty) {
                         return const EmptyWidget(
                           image: 'asset/payment/empty.png',
-                          title: 'Data No Avabaile',
+                          title: 'No Data Available',
+                        );
+                      } else if (snapshot.hasError) {
+                        return EmptyWidget(
+                          image: 'asset/payment/empty.png',
+                          title: 'Error Occure: ${snapshot.error}',
                         );
                       } else if (snapshot.hasData) {
                         return GridView.builder(
@@ -129,6 +105,43 @@ class _ProductPageState extends State<ProductPage> {
           ],
         ),
       ),
+    );
+  }
+
+// Understand this code
+  DropdownButtonFormField<String> _buildDropDownButton(
+      CategoryProvider dropvaluesall) {
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        fillColor: Theme.of(context).cardColor,
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 1),
+            borderRadius: BorderRadius.circular(15)),
+        focusedBorder: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Theme.of(context).primaryColor, width: 1),
+            borderRadius: BorderRadius.circular(15)),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+      ),
+      value: dropvaluesall.getCategory,
+      isExpanded: true,
+      style: GoogleFonts.poppins(
+          color: Theme.of(context).primaryColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w700),
+      focusColor: Theme.of(context).primaryColor,
+      elevation: 16,
+      // Understand this code on dart
+      items: allCategoryList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(value: value, child: Text(value));
+      }).toList(),
+      onChanged: (value) {
+        Provider.of<CategoryProvider>(context, listen: false)
+            .setCategory(category: value!);
+      },
     );
   }
 }

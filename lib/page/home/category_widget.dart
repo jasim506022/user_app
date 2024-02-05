@@ -25,7 +25,7 @@ class CategoryWidget extends StatelessWidget {
           return Consumer<CategoryProvider>(
             builder: (context, categoryProvider, child) {
               return Padding(
-                padding: const EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: mq.width * .022),
                 child: InkWell(
                   onTap: () {
                     Provider.of<CategoryProvider>(context, listen: false)
@@ -34,8 +34,9 @@ class CategoryWidget extends StatelessWidget {
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: mq.width * .044,
+                        vertical: mq.height * .015),
                     decoration: BoxDecoration(
                         color: categoryProvider.index == index
                             ? utils.categorySelectBackground

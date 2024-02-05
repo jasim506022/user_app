@@ -1,12 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../const/cartmethod.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
-import '../../model/productsmodel.dart';
-import 'detailsproductpage.dart';
+import '../const/cartmethod.dart';
+import '../const/const.dart';
+import '../const/gobalcolor.dart';
+import '../const/textstyle.dart';
+import '../model/productsmodel.dart';
+import '../page/product/detailsproductpage.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -95,7 +95,7 @@ class ProductWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "৳. ${(productModel.productprice!) - (productModel.productprice! * productModel.discount! / 100)}",
+                            "৳. ${globalMethod.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
                             style: textstyle.largeText.copyWith(color: red),
                           ),
                           const SizedBox(

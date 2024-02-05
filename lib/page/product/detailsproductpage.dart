@@ -8,13 +8,12 @@ import '../../const/gobalcolor.dart';
 import '../../const/textstyle.dart';
 import '../../const/utils.dart';
 import '../../service/database/firebasedatabase.dart';
-import '../../service/provider/cartprovider.dart';
+import '../../service/provider/cart_product_counter_provider.dart';
 import '../../const/const.dart';
 import '../../model/productsmodel.dart';
 import '../../widget/cart_badge.dart';
 import '../../widget/single_empty_widget.dart';
 import '../cart/cartpage.dart';
-import '../main/mainpage.dart';
 import 'details_card_swiper.dart';
 import 'loading_similar_widet.dart';
 import 'similar_product_widget.dart';
@@ -33,6 +32,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   List<String> productIdListFromCartLish =
       CartMethods.separeteProductIdUserCartList();
+
   @override
   void initState() {
     if (productIdListFromCartLish.contains(widget.productModel.productId)) {
@@ -42,18 +42,24 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    Textstyle textstyle = Textstyle(context);
+  void didChangeDependencies() {
     Utils utils = Utils(context);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: utils.green300,
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Theme.of(context).brightness));
+    super.didChangeDependencies();
+  }
 
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushNamedAndRemoveUntil(
-            context, AppRouters.mainPage, (route) => false,
+  @override
+  Widget build(BuildContext context) {
+    Textstyle textstyle = Textstyle(context);
+    Utils utils = Utils(context);
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) async {
+        // Understand All  Push and Pop
+        Navigator.pushReplacementNamed(context, AppRouters.mainPage,
             arguments: 0);
         // Navigator.pushReplacement(
         //     context,
@@ -61,36 +67,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         //       builder: (context) => MainPage(index: 0),
         //     ));
 
-        return false;
+        // return false;
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: isCart ? red : greenColor,
-          onPressed: () {
-            List<String> cartItemIdList =
-                CartMethods.separeteProductIdUserCartList();
-            if (cartItemIdList.contains(widget.productModel.productId)) {
-              globalMethod.flutterToast(msg: "Item is already  in cart");
-            } else {
-              CartMethods.addItemToCartWithSeller(
-                  productId: widget.productModel.productId!,
-                  productCounter: countNumber,
-                  seller: widget.productModel.sellerId!,
-                  context: context);
-              isCart = true;
-              setState(() {});
-            }
-          },
-          icon: Icon(
-            Icons.shopping_cart,
-            color: white,
-          ),
-          label: Text(
-            isCart ? "Item Already in Cart" : "Add To Cart",
-            style: textstyle.smallText.copyWith(color: white),
-          ),
-        ),
+        floatingActionButton: _buildAddCartItemFlotatActionButton(textstyle),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -99,9 +80,47 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
               SizedBox(
                 height: 418,
-                width: MediaQuery.of(context).size.width,
+                width: mq.width,
                 child: Stack(
                   children: [
+                    //understand this code carefully
+                    for (Map<String, dynamic> circleConfig in [
+                      {
+                        'left': -200.00,
+                        'right': -200.00,
+                        'top': -400.00,
+                        'size': 800.00,
+                        'color': utils.green100
+                      },
+                      {
+                        'left': -80.00,
+                        'right': -80.00,
+                        'top': -300.00,
+                        'size': 600.00,
+                        'color': utils.green200
+                      },
+                      {
+                        'left': 0.00,
+                        'right': 0.00,
+                        'top': -mq.width * 0.425,
+                        'size': mq.width * 0.85,
+                        'color': utils.green300
+                      },
+                    ])
+                      Positioned(
+                        left: circleConfig['left'],
+                        right: circleConfig['right'],
+                        top: circleConfig['top'],
+                        child: Container(
+                          height: circleConfig['size'],
+                          width: circleConfig['size'],
+                          decoration: BoxDecoration(
+                            color: circleConfig['color'],
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    /*
                     Positioned(
                       left: -200,
                       right: -200,
@@ -110,8 +129,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         height: 800,
                         width: 800,
                         decoration: BoxDecoration(
-                            color: utils.green100, //100
-                            shape: BoxShape.circle),
+                            color: utils.green100, shape: BoxShape.circle),
                       ),
                     ),
                     Positioned(
@@ -122,22 +140,21 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         height: 600,
                         width: 600,
                         decoration: BoxDecoration(
-                            color: utils.green200, //200
-                            shape: BoxShape.circle),
+                            color: utils.green200, shape: BoxShape.circle),
                       ),
                     ),
                     Positioned(
                       left: 0,
                       right: 0,
-                      top: -MediaQuery.of(context).size.width * .425,
+                      top: -mq.width * .425,
                       child: Container(
-                        height: MediaQuery.of(context).size.width * .85,
-                        width: MediaQuery.of(context).size.width * .85,
+                        height: mq.width * .85,
+                        width: mq.width * .85,
                         decoration: BoxDecoration(
-                            color: utils.green300, //300
-                            shape: BoxShape.circle),
+                            color: utils.green300, shape: BoxShape.circle),
                       ),
                     ),
+                   */
                     Positioned(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -156,12 +173,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     Navigator.pushNamed(
                                         context, AppRouters.mainPage,
                                         arguments: 0);
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           MainPage(index: 0),
-                                    //     ));
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -178,12 +189,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CartPage(),
-                                        ));
+                                    Navigator.pushNamed(
+                                        context, AppRouters.cartPage);
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           const CartPage(),
+                                    //     ));
                                   },
                                   child: Container(
                                     height: 50,
@@ -191,7 +204,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     decoration: BoxDecoration(
                                         color: greenColor,
                                         shape: BoxShape.circle),
-                                    child: Consumer<CartProductCounter>(
+                                    child: Consumer<CartProductCountProvider>(
                                       builder: (context, value, child) {
                                         return CartBadge(
                                           color: white,
@@ -307,30 +320,25 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         ),
                         Row(
                           children: [
-                            InkWell(
-                              onTap: () {
+                            //Increament Button
+                            _buildIncreandDecrementButton(
+                              () {
                                 countNumber++;
                                 setState(() {});
                               },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: greenColor,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Icon(
-                                  Icons.add,
-                                  color: white,
-                                ),
-                              ),
+                              Icons.add,
                             ),
+
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Text(countNumber.toString(),
                                   style: textstyle.largestText),
                             ),
-                            InkWell(
-                              onTap: () {
+
+                            //Increament Button
+                            _buildIncreandDecrementButton(
+                              () {
                                 if (countNumber == 1) {
                                   globalMethod.flutterToast(
                                       msg:
@@ -340,20 +348,34 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   setState(() {});
                                 }
                               },
-                              child: Container(
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                    color: greenColor,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Icon(
-                                  Icons.remove,
-                                  color: white,
-                                ),
-                              ),
+                              Icons.remove,
                             ),
+                            // InkWell(
+                            //   onTap: () {
+                            //     if (countNumber == 1) {
+                            //       globalMethod.flutterToast(
+                            //           msg:
+                            //               "The Quantity cannot be less then 1");
+                            //     } else {
+                            //       countNumber--;
+                            //       setState(() {});
+                            //     }
+                            //   },
+                            //   child: Container(
+                            //     padding: const EdgeInsets.all(5),
+                            //     decoration: BoxDecoration(
+                            //         color: greenColor,
+                            //         borderRadius: BorderRadius.circular(10)),
+                            //     child: Icon(
+                            //       Icons.remove,
+                            //       color: white,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         const Spacer(),
+                        // Rattting Product
                         Row(
                           children: [
                             Icon(Icons.star, color: yellow),
@@ -398,55 +420,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      height: 150,
-                      width: MediaQuery.of(context).size.width,
-                      child: StreamBuilder(
-                        stream: FirebaseDatabase.similarProductSnapshot(
-                            productModel: widget.productModel),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const LoadingSimilierWidget();
-                          } else if (!snapshot.hasData ||
-                              snapshot.data!.docs.isEmpty) {
-                            return const SingleEmptyWidget(
-                              image: 'asset/payment/emptytow.png',
-                              title: 'No Data Available',
-                            );
-                          } else if (snapshot.hasError) {
-                            return SingleEmptyWidget(
-                              image: 'asset/payment/emptytow.png',
-                              title: 'Error Occure: ${snapshot.error}',
-                            );
-                          }
-
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snapshot.data!.docs.length,
-                                itemBuilder: (context, index) {
-                                  ProductModel models = ProductModel.fromMap(
-                                      snapshot.data!.docs[index].data());
-                                  return InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductDetailsPage(
-                                              productModel: models,
-                                            ),
-                                          ));
-                                    },
-                                    child: SimilarProductWidget(models: models),
-                                  );
-                                });
-                          }
-                          return const LoadingSimilierWidget();
-                        },
-                      ),
-                    ),
+                    _buildSimilarProjectList(),
                     const SizedBox(
                       height: 20,
                     ),
@@ -456,6 +430,106 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+// Similar Project List
+  SizedBox _buildSimilarProjectList() {
+    return SizedBox(
+      height: 150,
+      width: mq.width,
+      child: StreamBuilder(
+        stream: FirebaseDatabase.similarProductSnapshot(
+            productModel: widget.productModel),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingSimilierWidget();
+          } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const SingleEmptyWidget(
+              image: 'asset/payment/emptytow.png',
+              title: 'No Data Available',
+            );
+          } else if (snapshot.hasError) {
+            return SingleEmptyWidget(
+              image: 'asset/payment/emptytow.png',
+              title: 'Error Occure: ${snapshot.error}',
+            );
+          }
+          if (snapshot.hasData) {
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.docs.length > 5
+                    ? 5
+                    : snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  ProductModel models =
+                      ProductModel.fromMap(snapshot.data!.docs[index].data());
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsPage(
+                              productModel: models,
+                            ),
+                          ));
+                    },
+                    child: SimilarProductWidget(models: models),
+                  );
+                });
+          }
+          return const LoadingSimilierWidget();
+        },
+      ),
+    );
+  }
+
+// Increment and Decrement Buttton
+  InkWell _buildIncreandDecrementButton(VoidCallback function, IconData icon) {
+    return InkWell(
+      onTap: function,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            color: greenColor, borderRadius: BorderRadius.circular(10)),
+        child: Icon(
+          icon,
+          color: white,
+        ),
+      ),
+    );
+  }
+
+  // Add item on cart function
+  FloatingActionButton _buildAddCartItemFlotatActionButton(
+      Textstyle textstyle) {
+    //extended us for icon and text
+    return FloatingActionButton.extended(
+      backgroundColor: isCart ? red : greenColor,
+      onPressed: () {
+        List<String> cartItemIdList =
+            CartMethods.separeteProductIdUserCartList();
+
+        if (cartItemIdList.contains(widget.productModel.productId)) {
+          globalMethod.flutterToast(msg: "Item is already  in cart");
+        } else {
+          CartMethods.addItemToCartWithSeller(
+              productId: widget.productModel.productId!,
+              productCounter: countNumber,
+              seller: widget.productModel.sellerId!,
+              context: context);
+          isCart = true;
+          setState(() {});
+        }
+      },
+      icon: Icon(
+        Icons.shopping_cart,
+        color: white,
+      ),
+      label: Text(
+        isCart ? "Item Already in Cart" : "Add To Cart",
+        style: textstyle.smallText.copyWith(color: white),
       ),
     );
   }

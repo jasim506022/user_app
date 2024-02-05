@@ -9,7 +9,7 @@ import '../../const/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';
-import '../product/product_widget.dart';
+import '../../widget/product_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

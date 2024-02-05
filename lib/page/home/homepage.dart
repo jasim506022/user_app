@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/const/approutes.dart';
-import '../../service/provider/cartprovider.dart';
+
+import '../../const/approutes.dart';
+import '../../service/provider/cart_product_counter_provider.dart';
 import '../../const/const.dart';
 import '../../const/gobalcolor.dart';
 import '../../const/textstyle.dart';
@@ -18,7 +19,8 @@ import '../../widget/empty_widget.dart';
 import '../../widget/single_empty_widget.dart';
 import '../../widget/loading_product_widget.dart';
 import '../../widget/single_loading_product_widget.dart';
-import '../product/product_widget.dart';
+import '../../widget/product_widget.dart';
+
 import '../product/productpage.dart';
 import 'carousel_silder_widget.dart';
 import 'category_widget.dart';
@@ -72,11 +74,6 @@ class _HomePageState extends State<HomePage> {
                   InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, AppRouters.searchPage);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => const SearchPage(),
-                      //     ));
                     },
                     child: _buildSearchBar(),
                   ),
@@ -144,22 +141,22 @@ class _HomePageState extends State<HomePage> {
   StreamBuilder<QuerySnapshot<Map<String, dynamic>>> _buildProductList(
       CategoryProvider categoryProvider) {
     return StreamBuilder(
-      stream: FirebaseDatabase.productSnapshots(
-          category: categoryProvider.getCategory),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LoadingProductWidget();
-        } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return const EmptyWidget(
-            image: 'asset/payment/empty.png',
-            title: 'No Data Available',
-          );
-        } else if (snapshot.hasError) {
-          return EmptyWidget(
-            image: 'asset/payment/empty.png',
-            title: 'Error Occure: ${snapshot.error}',
-          );
-        } else if (snapshot.hasData) {
+        stream: FirebaseDatabase.productSnapshots(
+            category: categoryProvider.getCategory),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingProductWidget();
+          }
+          if (!snapshot.hasData ||
+              snapshot.data!.docs.isEmpty ||
+              snapshot.hasError) {
+            return EmptyWidget(
+              image: 'asset/payment/empty.png',
+              title: snapshot.hasError
+                  ? 'Error Occure: ${snapshot.error}'
+                  : 'No Data Available',
+            );
+          }
           return GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -179,10 +176,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
           );
-        }
-        return const LoadingProductWidget();
-      },
-    );
+        });
   }
 
 // Popular Porduct List
@@ -191,28 +185,28 @@ class _HomePageState extends State<HomePage> {
       height: mq.height * .19,
       width: double.infinity,
       child: StreamBuilder(
-        stream: FirebaseDatabase.popularProductSnapshot(
-            category: categoryProvider.getCategory),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return const LoadingSingleProductWidget();
-              },
-            );
-          } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const SingleEmptyWidget(
-              image: 'asset/payment/emptytow.png',
-              title: 'No Data Available',
-            );
-          } else if (snapshot.hasError) {
-            return SingleEmptyWidget(
-              image: 'asset/payment/emptytow.png',
-              title: 'Error Occure: ${snapshot.error}',
-            );
-          } else if (snapshot.hasData) {
+          stream: FirebaseDatabase.popularProductSnapshot(
+              category: categoryProvider.getCategory),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return const LoadingSingleProductWidget();
+                },
+              );
+            }
+            if (!snapshot.hasData ||
+                snapshot.data!.docs.isEmpty ||
+                snapshot.hasError) {
+              return SingleEmptyWidget(
+                image: 'asset/payment/emptytow.png',
+                title: snapshot.hasError
+                    ? 'Error Occure: ${snapshot.error}'
+                    : 'No Data Available',
+              );
+            }
             return ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data!.docs.length > 5
@@ -227,19 +221,15 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             );
-          } else {
-            return const SingleEmptyWidget(
-              image: 'asset/payment/emptytow.png',
-              title: 'No Data Available',
-            );
-          }
-        },
-      ),
+          }),
     );
   }
 
-  //Profile
+  //Profile User
   SizedBox _buildUserProfile(Textstyle textstyle) {
+    String imageUrl =
+        sharedPreference?.getString("imageurl") ?? blankProfileImage;
+    final name = sharedPreference?.getString("name") ?? "Jasim Uddin";
     return SizedBox(
       height: mq.height * .08,
       width: mq.width,
@@ -251,15 +241,14 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: red, width: 3)),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(mq.height * 0.04),
+            child: ClipOval(
+              // borderRadius: BorderRadius.circular(mq.height * 0.04),
               child: CachedNetworkImage(
                 placeholder: (context, url) => CircularProgressIndicator(
                   backgroundColor: white,
                 ),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
-                imageUrl: sharedPreference!.getString("imageurl") ??
-                    "asset/empty/blank.png",
+                imageUrl: imageUrl,
                 fit: BoxFit.fill,
               ),
             ),
@@ -274,22 +263,17 @@ class _HomePageState extends State<HomePage> {
               Text("Hi!",
                   style: textstyle.largestText.copyWith(color: greenColor)),
               Text(
-                sharedPreference!.getString("name") ?? "Jasim Uddin",
+                name,
                 style: textstyle.largeText,
               )
             ],
           ),
           const Spacer(),
-          Consumer<CartProductCounter>(
+          Consumer<CartProductCountProvider>(
             builder: (context, value, child) {
               return InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, AppRouters.cartPage);
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => const CartPage(),
-                  //     ));
                 },
                 child: CartBadge(
                     color: greenColor,

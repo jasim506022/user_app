@@ -15,7 +15,7 @@ import 'const/approutes.dart';
 import 'const/gobalcolor.dart';
 import 'page/splash/onboardingpage.dart';
 import 'page/splash/splashpage.dart';
-import 'service/provider/cartprovider.dart';
+import 'service/provider/cart_product_counter_provider.dart';
 import 'const/const.dart';
 import 'page/main/mainpage.dart';
 import 'service/provider/category_provider.dart';
@@ -123,7 +123,7 @@ class MyApp extends StatelessWidget {
       ),
       ChangeNotifierProvider(
         create: (context) {
-          return CartProductCounter();
+          return CartProductCountProvider();
         },
       ),
       ChangeNotifierProvider(

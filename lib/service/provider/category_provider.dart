@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../const/const.dart';
 
 class CategoryProvider with ChangeNotifier {
+  // Curent Category
   String _category = allCategoryList.first;
 
   String get getCategory => _category;
@@ -12,6 +13,7 @@ class CategoryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+// Current Index
   int _index = 0;
 
   int get index => _index;
