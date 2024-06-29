@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../const/const.dart';
+import '../../res/constants.dart';
 
 class CategoryProvider with ChangeNotifier {
   // Curent Category

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/textstyle.dart';
 
 import 'package:user_app/page/bill/billlscreen.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/addressmodel.dart';
 import '../../widget/textfieldformwidget.dart';
 

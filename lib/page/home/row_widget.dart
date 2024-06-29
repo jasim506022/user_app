@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
 
 class RowWidget extends StatelessWidget {
   const RowWidget({

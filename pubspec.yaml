@@ -65,6 +65,7 @@ dependencies:
   http: ^1.1.0
   nested: ^1.0.0
   google_sign_in: ^6.2.1
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:user_app/const/gobalcolor.dart';
+import 'package:user_app/res/gobalcolor.dart';
 
-import '../../const/utils.dart';
+import '../../res/utils.dart';
 
 class LoadingCardWidget extends StatelessWidget {
   const LoadingCardWidget({

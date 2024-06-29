@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../const/const.dart';
+import '../../res/constants.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';

@@ -1,4 +1,4 @@
-import 'package:user_app/const/const.dart';
+import 'package:user_app/res/constants.dart';
 
 class ThemePreFerence {
   static const themeStatue = "THEME_STATUS";

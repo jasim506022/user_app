@@ -1,36 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../const/approutes.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
-import '../../model/onboardmodel.dart';
+import '../../controller/onboarding_controller.dart';
 
-class OnboardingPage extends StatefulWidget {
+import '../../model/onboard_data.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
+
+class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
 
   @override
-  State<OnboardingPage> createState() => _OnboardingPageState();
-}
-
-class _OnboardingPageState extends State<OnboardingPage> {
-  final PageController pageController = PageController(initialPage: 0);
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
-
-  int currentIndex = 0;
-  Future<void> onBoardingInfo() async {
-    int isViewed = 0;
-    await sharedPreference!.setInt("onBoarding", isViewed);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final OnboardingController controller = Get.put(OnboardingController(
+      onBoardingRepository: Get.find(),
+    ));
+
+    final PageController pageController = PageController(initialPage: 0);
+
     Textstyle textstyle = Textstyle(context);
     return Scaffold(
         backgroundColor: white,
@@ -40,8 +29,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           actions: [
             TextButton(
                 onPressed: () {
-                  onBoardingInfo();
-                  Navigator.pushReplacementNamed(context, AppRouters.signPage);
+                  controller.completeOnboarding();
                 },
                 child: Text(
                   "Skip",
@@ -52,17 +40,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: mq.height * .044),
           child: PageView.builder(
-            itemCount: onboardModeList.length,
+            controller: pageController,
+            itemCount: OnBoardData.onboarddataList().length,
             onPageChanged: (value) {
-              currentIndex = value;
-              setState(() {});
+              controller.updateIndex(value);
             },
             itemBuilder: (context, index) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset(
-                    onboardModeList[index].img,
+                    OnBoardData.onboarddataList()[index].img,
                     height: mq.height * .411,
                     fit: BoxFit.fill,
                   ),
@@ -76,28 +64,34 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              height: mq.height * .01,
-                              width: mq.height * .01,
-                              margin: const EdgeInsets.symmetric(horizontal: 3),
-                              decoration: BoxDecoration(
-                                  color: currentIndex == index ? red : black,
-                                  shape: BoxShape.circle),
-                            ),
+                            Obx(
+                              () => Container(
+                                height: mq.height * .01,
+                                width: mq.height * .01,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 3),
+                                decoration: BoxDecoration(
+                                    color:
+                                        controller.currentIndex.value == index
+                                            ? red
+                                            : black,
+                                    shape: BoxShape.circle),
+                              ),
+                            )
                           ],
                         );
                       },
                     ),
                   ),
                   Text(
-                    onboardModeList[index].text,
+                    OnBoardData.onboarddataList()[index].text,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: black),
                   ),
-                  Text(onboardModeList[index].desc,
+                  Text(OnBoardData.onboarddataList()[index].desc,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                           fontSize: 16,
@@ -105,16 +99,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           color: black)),
                   InkWell(
                     onTap: () async {
-                      if (index == onboardModeList.length - 1) {
-                        await onBoardingInfo();
-                        if (mounted) {
-                          Navigator.pushReplacementNamed(
-                              context, AppRouters.signPage);
-                        }
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 250),
-                            curve: Curves.bounceIn);
-                      }
+                      if (index == OnBoardData.onboarddataList().length - 1) {}
+                      pageController.nextPage(
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.bounceIn);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(

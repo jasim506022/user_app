@@ -1,4 +1,4 @@
-class AppRouters {
+class RoutesName {
   static const String initailRoutes = '/';
   static const String mainPage = '/mainpage';
   static const String signPage = '/signpage';

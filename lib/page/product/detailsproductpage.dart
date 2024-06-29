@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../const/approutes.dart';
-import '../../const/cartmethod.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
-import '../../const/utils.dart';
+import '../../res/routes/routesname.dart';
+import '../../res/cartmethod.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
+import '../../res/utils.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/cart_product_counter_provider.dart';
-import '../../const/const.dart';
+import '../../res/constants.dart';
 import '../../model/productsmodel.dart';
 import '../../widget/cart_badge.dart';
 import '../../widget/single_empty_widget.dart';
@@ -59,7 +59,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       canPop: false,
       onPopInvoked: (bool didPop) async {
         // Understand All  Push and Pop
-        Navigator.pushReplacementNamed(context, AppRouters.mainPage,
+        Navigator.pushReplacementNamed(context, RoutesName.mainPage,
             arguments: 0);
         // Navigator.pushReplacement(
         //     context,
@@ -171,7 +171,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(
-                                        context, AppRouters.mainPage,
+                                        context, RoutesName.mainPage,
                                         arguments: 0);
                                   },
                                   child: Container(
@@ -190,7 +190,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(
-                                        context, AppRouters.cartPage);
+                                        context, RoutesName.cartPage);
                                     // Navigator.push(
                                     //     context,
                                     //     MaterialPageRoute(

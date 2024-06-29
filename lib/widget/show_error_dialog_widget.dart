@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../const/const.dart';
-import '../const/gobalcolor.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
 
 class ShowErrorDialogWidget extends StatelessWidget {
   const ShowErrorDialogWidget({

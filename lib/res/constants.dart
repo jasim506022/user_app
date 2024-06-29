@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:user_app/const/paymentmodel.dart';
-
 import 'method.dart';
-import 'textstyle.dart';
+import 'paymentmodel.dart';
 
 SharedPreferences? sharedPreference;
+int? isviewed;
 
 GlobalMethod globalMethod = GlobalMethod();
+
+String onBoardingSharedPre = "onBoarding";
 
 const List<String> allCategoryList = <String>[
   "All",
@@ -45,8 +46,6 @@ Size mqs(BuildContext context) {
 }
 
 late Size mq;
-
-int? isviewed;
 
 double countStarRatting = 0.0;
 String titleRating = "";

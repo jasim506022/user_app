@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:user_app/const/const.dart';
+import 'package:user_app/res/constants.dart';
 
 class CartProductCountProvider extends ChangeNotifier {
   int cartListItemCounter =

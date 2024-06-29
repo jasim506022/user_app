@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/utils.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/utils.dart';
 import '../../service/provider/category_provider.dart';
 
 class CategoryWidget extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../const/utils.dart';
-import '../const/gobalcolor.dart';
+import '../res/utils.dart';
+import '../res/gobalcolor.dart';
 
 class LoadingProductWidget extends StatelessWidget {
   const LoadingProductWidget({

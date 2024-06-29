@@ -8,9 +8,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
 
-import '../../const/approutes.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../res/routes/routesname.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
 import '../../service/database/firebasedatabase.dart';
 
 import '../../widget/show_error_dialog_widget.dart';
@@ -122,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (mounted) {
                     globalMethod.flutterToast(msg: "Successfully Register");
                     Navigator.pushReplacementNamed(
-                        context, AppRouters.signPage);
+                        context, RoutesName.signPage);
                   }
                 } else {
                   globalMethod.flutterToast(msg: "No Internet Connection");
@@ -361,7 +361,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         colorText: "Sign In",
                         function: () {
                           Navigator.pushReplacementNamed(
-                              context, AppRouters.signPage);
+                              context, RoutesName.signPage);
                         }),
                     SizedBox(
                       height: mq.height * .12,

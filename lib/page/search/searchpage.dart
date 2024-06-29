@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/widget/empty_widget.dart';
 
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';

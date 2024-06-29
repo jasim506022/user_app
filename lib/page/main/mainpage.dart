@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
 import '../home/homepage.dart';
 import '../order/orderpage.dart';
 import '../profile/profilescreen.dart';

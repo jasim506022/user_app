@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:user_app/const/utils.dart';
+import 'package:user_app/res/utils.dart';
 
 class LoadingAddressWidget extends StatelessWidget {
   const LoadingAddressWidget({

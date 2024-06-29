@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const/textstyle.dart';
+import '../res/textstyle.dart';
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({

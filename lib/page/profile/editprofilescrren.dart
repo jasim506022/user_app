@@ -7,11 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 // ignore: unused_import
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:user_app/const/utils.dart';
+import 'package:user_app/res/utils.dart';
 
-import '../../const/const.dart';
+import '../../res/constants.dart';
 
-import '../../const/gobalcolor.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/profilemodel.dart';
 import '../../widget/textfieldformwidget.dart';
 import '../main/mainpage.dart';

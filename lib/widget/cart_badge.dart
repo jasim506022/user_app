@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/const/approutes.dart';
-import 'package:user_app/const/gobalcolor.dart';
+import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/gobalcolor.dart';
 
 class CartBadge extends StatelessWidget {
   final int itemCount;
@@ -23,7 +23,7 @@ class CartBadge extends StatelessWidget {
               color: color,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, AppRouters.cartPage);
+              Navigator.pushNamed(context, RoutesName.cartPage);
             }),
         if (itemCount > 0)
           Positioned(

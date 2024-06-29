@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
-import '../../const/utils.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
+import '../../res/utils.dart';
 import '../../model/addressmodel.dart';
 import 'addresscreen.dart';
 

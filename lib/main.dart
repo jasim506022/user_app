@@ -1,23 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:user_app/auth/forgetpasswordpage.dart';
-import 'package:user_app/page/cart/cartpage.dart';
-import 'package:user_app/page/search/searchpage.dart';
-
-import 'auth/signinpage.dart';
-import 'auth/signuppage.dart';
-import 'const/approutes.dart';
-import 'const/gobalcolor.dart';
-import 'page/splash/onboardingpage.dart';
-import 'page/splash/splashpage.dart';
+import 'package:user_app/res/routes/approutes.dart';
+import 'bindings/initial_binding.dart';
+import 'res/routes/routesname.dart';
+import 'res/gobalcolor.dart';
 import 'service/provider/cart_product_counter_provider.dart';
-import 'const/const.dart';
-import 'page/main/mainpage.dart';
+import 'res/constants.dart';
 import 'service/provider/category_provider.dart';
 import 'service/provider/image_upload_provider.dart';
 import 'service/provider/imageaddremoveprovider.dart';
@@ -30,39 +24,33 @@ void main() async {
   Stripe.publishableKey = publishKey;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   sharedPreference = await SharedPreferences.getInstance();
-  isviewed = sharedPreference!.getInt('onBoarding');
+  isviewed = sharedPreference!.getInt(onBoardingSharedPre);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+// OnboardingRepository
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
 
-    return MultiProvider(
-      providers: providerAllList,
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvder, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: themeData(themeProvder),
-            initialRoute: AppRouters.initailRoutes,
-            routes: {
-              AppRouters.initailRoutes: (context) => const SplashPage(),
-              AppRouters.signPage: (context) => const SignInPage(),
-              AppRouters.signupPage: (context) => const SignUpPage(),
-              AppRouters.mainPage: (context) => const MainPage(),
-              AppRouters.onBaordingPage: (context) => const OnboardingPage(),
-              AppRouters.forgetPassword: (context) =>
-                  const ForgetPasswordPage(),
-              AppRouters.cartPage: (context) => const CartPage(),
-              AppRouters.searchPage: (context) => const SearchPage(),
-            },
-          );
-        },
+    return Material(
+      child: MultiProvider(
+        providers: providerAllList,
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvder, child) {
+            return GetMaterialApp(
+              initialBinding: InitialBinding(),
+              debugShowCheckedModeBanner: false,
+              theme: themeData(themeProvder),
+              initialRoute: RoutesName.initailRoutes,
+              getPages: AppRoutes.appRoutes(),
+            );
+          },
+        ),
       ),
     );
   }

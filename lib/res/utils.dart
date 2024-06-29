@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/const/gobalcolor.dart';
+import 'package:user_app/res/gobalcolor.dart';
 
 import '../service/provider/theme_provider.dart';
 

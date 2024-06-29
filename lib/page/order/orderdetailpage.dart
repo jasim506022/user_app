@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/const/const.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/constants.dart';
+import 'package:user_app/res/textstyle.dart';
 import 'package:user_app/page/main/mainpage.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
-import '../../const/approutes.dart';
-import '../../const/cartmethod.dart';
-import '../../const/gobalcolor.dart';
+import '../../res/routes/routesname.dart';
+import '../../res/cartmethod.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 import '../../model/profilemodel.dart';
 import 'delivery_cart_widget.dart';
@@ -205,7 +205,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                   vertical: 15, horizontal: 30)),
                           onPressed: () {
                             Navigator.pushNamedAndRemoveUntil(
-                                context, AppRouters.mainPage, (route) => false,
+                                context, RoutesName.mainPage, (route) => false,
                                 arguments: 0);
                             // Navigator.pushAndRemoveUntil(
                             //     context,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app/const/cartmethod.dart';
+import 'package:user_app/res/cartmethod.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 import '../../widget/empty_widget.dart';

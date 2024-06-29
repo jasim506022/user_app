@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-import '../../const/gobalcolor.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 
 class DetailsSwiperWidget extends StatelessWidget {

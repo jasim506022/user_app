@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/const/const.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/constants.dart';
+import 'package:user_app/res/textstyle.dart';
 import 'package:user_app/page/order/orderdetailpage.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
-import '../../const/gobalcolor.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 import '../../model/profilemodel.dart';
 import '../cart/loadingcardwidget.dart';

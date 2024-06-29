@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/const/approutes.dart';
-import 'package:user_app/const/const.dart';
+import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/constants.dart';
 
-import '../../const/gobalcolor.dart';
+import '../../res/gobalcolor.dart';
 import '../../service/provider/cart_product_counter_provider.dart';
-import '../../const/textstyle.dart';
+import '../../res/textstyle.dart';
 import '../main/mainpage.dart';
 
 class PlaceOrderScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30)),
               onPressed: () {
                 Navigator.pushNamedAndRemoveUntil(
-                    context, AppRouters.mainPage, (route) => false,
+                    context, RoutesName.mainPage, (route) => false,
                     arguments: 0);
                 // Navigator.pushAndRemoveUntil(
                 //     context,

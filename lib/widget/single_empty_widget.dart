@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/textstyle.dart';
 
 class SingleEmptyWidget extends StatelessWidget {
   const SingleEmptyWidget({

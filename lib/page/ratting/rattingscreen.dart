@@ -5,9 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rating_bar_updated/rating_bar_updated.dart';
 import 'package:smooth_rating_bar/smooth_rating_bar.dart';
 import 'package:user_app/page/main/mainpage.dart';
+import 'package:user_app/res/constants.dart';
+import 'package:user_app/res/routes/routesname.dart';
 
-import '../../const/approutes.dart';
-import '../../const/const.dart';
+
 
 class RattingScreen extends StatefulWidget {
   const RattingScreen({super.key, required this.sellerId});
@@ -192,7 +193,7 @@ class _RattingScreenState extends State<RattingScreen> {
                         countStarRatting = 0.0;
                         titleRating = "";
                       });
-                      Navigator.pushNamed(context, AppRouters.mainPage,
+                      Navigator.pushNamed(context, RoutesName.mainPage,
                           arguments: 0);
                       // Navigator.push(
                       //     context,

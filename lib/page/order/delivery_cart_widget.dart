@@ -1,10 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/textstyle.dart';
 
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
 import '../../model/productsmodel.dart';
 import '../cart/dotlineprinter.dart';
 import '../product/detailsproductpage.dart';

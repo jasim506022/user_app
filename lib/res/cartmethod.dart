@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/service/provider/cart_product_counter_provider.dart';
-import 'package:user_app/const/const.dart';
+import 'package:user_app/res/constants.dart';
 import 'package:user_app/page/cart/cartpage.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 

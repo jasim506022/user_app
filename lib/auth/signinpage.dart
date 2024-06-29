@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../const/approutes.dart';
-import '../const/const.dart';
-import '../const/gobalcolor.dart';
-import '../const/textstyle.dart';
+import '../res/routes/routesname.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
+import '../res/textstyle.dart';
 import '../service/database/firebasedatabase.dart';
 import '../service/provider/loading_provider.dart';
 import '../widget/loading_widget.dart';
@@ -103,7 +103,7 @@ class _SignInPageState extends State<SignInPage> {
                     alignment: Alignment.topRight,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, AppRouters.forgetPassword);
+                        Navigator.pushNamed(context, RoutesName.forgetPassword);
                       },
                       child: Text(
                         "Forget Password",
@@ -156,7 +156,7 @@ class _SignInPageState extends State<SignInPage> {
                                 if (await FirebaseDatabase.userExists()) {
                                   if (mounted) {
                                     Navigator.pushReplacementNamed(
-                                        context, AppRouters.mainPage);
+                                        context, RoutesName.mainPage);
                                   }
                                 } else {
                                   await FirebaseDatabase.createUserGmail()
@@ -164,7 +164,7 @@ class _SignInPageState extends State<SignInPage> {
                                     globalMethod.flutterToast(
                                         msg: "Successfully Loging");
                                     Navigator.pushReplacementNamed(
-                                        context, AppRouters.mainPage);
+                                        context, RoutesName.mainPage);
                                   });
                                 }
                               }
@@ -183,7 +183,7 @@ class _SignInPageState extends State<SignInPage> {
                   colorText: "Create Account",
                   context: context,
                   function: () {
-                    Navigator.pushNamed(context, AppRouters.signupPage);
+                    Navigator.pushNamed(context, RoutesName.signupPage);
                   },
                   simpleText: "Don't Have An Account? ",
                 ),
@@ -294,7 +294,7 @@ class _SignInPageState extends State<SignInPage> {
 
               if (mounted) {
                 globalMethod.flutterToast(msg: "Sign in Successfully");
-                Navigator.pushReplacementNamed(context, AppRouters.mainPage);
+                Navigator.pushReplacementNamed(context, RoutesName.mainPage);
               }
             } else {
               globalMethod.flutterToast(msg: "No Internet Connection");

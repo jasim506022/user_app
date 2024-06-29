@@ -1,10 +1,10 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../const/cartmethod.dart';
-import '../const/const.dart';
-import '../const/gobalcolor.dart';
-import '../const/textstyle.dart';
+import '../res/cartmethod.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
+import '../res/textstyle.dart';
 import '../model/productsmodel.dart';
 import '../page/product/detailsproductpage.dart';
 

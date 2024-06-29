@@ -6,11 +6,11 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../const/approutes.dart';
+import '../../res/routes/routesname.dart';
 import '../../service/provider/cart_product_counter_provider.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/category_provider.dart';
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                   // Search
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, AppRouters.searchPage);
+                      Navigator.pushNamed(context, RoutesName.searchPage);
                     },
                     child: _buildSearchBar(),
                   ),
@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, value, child) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, AppRouters.cartPage);
+                  Navigator.pushNamed(context, RoutesName.cartPage);
                 },
                 child: CartBadge(
                     color: greenColor,

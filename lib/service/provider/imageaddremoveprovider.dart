@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:user_app/const/const.dart';
+import 'package:user_app/res/constants.dart';
 
 class ImageAddRemoveProvider with ChangeNotifier {
   // Cateogry

@@ -1,57 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:user_app/controller/splash_controller.dart';
+import 'package:user_app/res/appasset/icon_asset.dart';
+import 'package:user_app/res/appasset/image_asset.dart';
 
-import '../../const/approutes.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    Future.delayed(
-      const Duration(seconds: 3),
-      () {
-        FirebaseAuth.instance.currentUser != null
-            ? Navigator.pushReplacementNamed(context, AppRouters.mainPage)
-            : Navigator.pushReplacementNamed(
-                context,
-                isviewed != 0
-                    ? AppRouters.onBaordingPage
-                    : AppRouters.signPage);
-      },
-    );
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Get.put(SplashController(
+      repository: Get.find(),
+    ));
+
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     Textstyle textstyle = Textstyle(context);
     return Material(
       child: Container(
         height: mq.height,
         width: mq.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-              "asset/image/splash.png",
-            ),
+            image: AssetImage(ImageAsset.splashImage),
           ),
         ),
         child: Center(
@@ -59,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "asset/image/icon.png",
+                IconAsset.appIcon,
                 height: mq.height * .176,
                 width: mq.height * .176,
               ),

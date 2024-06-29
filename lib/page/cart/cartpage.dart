@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/const/utils.dart';
-import '../../const/cartmethod.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
+import 'package:user_app/res/utils.dart';
+import '../../res/cartmethod.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/totalamountrpovider.dart';

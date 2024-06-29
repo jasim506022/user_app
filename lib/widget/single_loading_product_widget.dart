@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:user_app/const/utils.dart';
-import 'package:user_app/const/gobalcolor.dart';
+import 'package:user_app/res/utils.dart';
+import 'package:user_app/res/gobalcolor.dart';
 
 class LoadingSingleProductWidget extends StatelessWidget {
   const LoadingSingleProductWidget({

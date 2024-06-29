@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../const/utils.dart';
+import '../../res/utils.dart';
 
 class LoadingSimilierWidget extends StatelessWidget {
   const LoadingSimilierWidget({

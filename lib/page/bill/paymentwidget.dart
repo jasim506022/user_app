@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/const/gobalcolor.dart';
-import 'package:user_app/const/textstyle.dart';
+import 'package:user_app/res/gobalcolor.dart';
+import 'package:user_app/res/textstyle.dart';
 
-import '../../const/const.dart';
-import '../../const/utils.dart';
+import '../../res/constants.dart';
+import '../../res/utils.dart';
 
 class PaymentWidgetMethod extends StatelessWidget {
   const PaymentWidgetMethod({

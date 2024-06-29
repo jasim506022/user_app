@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../const/gobalcolor.dart';
+import '../res/gobalcolor.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({super.key, required this.message});

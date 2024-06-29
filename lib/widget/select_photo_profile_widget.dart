@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../const/const.dart';
-import '../const/gobalcolor.dart';
-import '../const/textstyle.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
+import '../res/textstyle.dart';
 import '../service/provider/imageaddremoveprovider.dart';
 
 class SelectPhotoProfile extends StatelessWidget {

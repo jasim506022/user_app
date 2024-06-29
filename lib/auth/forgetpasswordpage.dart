@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../const/approutes.dart';
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
+import '../res/routes/routesname.dart';
+import '../res/constants.dart';
+import '../res/gobalcolor.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../widget/show_error_dialog_widget.dart';
 import '../../widget/textfieldformwidget.dart';
@@ -39,7 +39,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       email: _emailET.text)
                   .then((value) {
                 globalMethod.flutterToast(msg: "Please Check Your mail");
-                Navigator.pushReplacementNamed(context, AppRouters.signPage);
+                Navigator.pushReplacementNamed(context, RoutesName.signPage);
               }).catchError((error) {
                 globalMethod.flutterToast(msg: "Error Occured: $error");
               });
@@ -138,7 +138,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     context: context,
                     function: () {
                       Navigator.pushReplacementNamed(
-                          context, AppRouters.signPage);
+                          context, RoutesName.signPage);
                     },
                     simpleText: "If you don't want to reset Password? "),
                 SizedBox(

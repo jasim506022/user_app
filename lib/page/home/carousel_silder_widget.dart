@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../const/const.dart';
-import '../../const/gobalcolor.dart';
-import '../../const/textstyle.dart';
+import '../../res/constants.dart';
+import '../../res/gobalcolor.dart';
+import '../../res/textstyle.dart';
 import '../../model/carsolemodel.dart';
 
 class CarouselSilderWidget extends StatelessWidget {
