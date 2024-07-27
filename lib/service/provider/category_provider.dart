@@ -1,25 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../res/constants.dart';
 
-class CategoryProvider with ChangeNotifier {
+class CategoryController extends GetxController {
   // Curent Category
-  String _category = allCategoryList.first;
+  final _category = allCategoryList.first.obs;
 
-  String get getCategory => _category;
+  String get getCategory => _category.value;
 
   setCategory({required String category}) {
-    _category = category;
-    notifyListeners();
-  }
-
-// Current Index
-  int _index = 0;
-
-  int get index => _index;
-
-  setIndex({required int index}) {
-    _index = index;
-    notifyListeners();
+    _category.value = category;
   }
 }

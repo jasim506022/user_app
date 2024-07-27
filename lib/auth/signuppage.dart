@@ -1,23 +1,17 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:provider/provider.dart';
 
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:user_app/auth/signinpage.dart';
+
+import '../controller/signup_controller.dart';
+import '../res/app_function.dart';
 import '../res/routes/routesname.dart';
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
-import '../../service/database/firebasedatabase.dart';
+import '../../res/app_colors.dart';
 
-import '../../widget/show_error_dialog_widget.dart';
 import '../../widget/textfieldformwidget.dart';
-import '../service/provider/imageaddremoveprovider.dart';
-import '../service/provider/loading_provider.dart';
-import '../widget/loading_widget.dart';
 import '../widget/select_photo_profile_widget.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -27,6 +21,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  SignUpController signUpController = Get.put(SignUpController(
+    Get.find(),
+  ));
+
   final TextEditingController _phontET = TextEditingController();
   final TextEditingController _nameET = TextEditingController();
   final TextEditingController _emailET = TextEditingController();
@@ -35,20 +33,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   String? number;
 
-  final ImagePicker _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        Provider.of<ImageAddRemoveProvider>(context, listen: false)
-          ..setSingleImageXFile(singleImageXFile: null)
-          ..setSingleImageUrl(singleImageUrl: "");
-      },
-    );
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -60,11 +45,256 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  Widget _buildSignUpButton(LoadingProvider loadingProvider,
-      ImageAddRemoveProvider imageAddRemoveProvider, BuildContext context) {
+  Widget _buildSignUpButton() {
     return SizedBox(
-      width: mq.width,
-      child: ElevatedButton(
+        width: mq.width,
+        child: CoustomButtonWidget(
+          onPressed: () async {
+            if (!_formKey.currentState!.validate()) return;
+            if (_passwordET.text.trim() != _confirmpasswordET.text.trim()) {
+              AppsFunction.errorDialog(
+                  icon: "asset/image/fruits.png",
+                  title: "Please Check Password",
+                  content:
+                      "Password and Confirm Password Is Not Match. Please Check Password",
+                  buttonText: "Okay");
+              return;
+            }
+
+            bool checkInternet = await AppsFunction.internetChecking();
+
+            if (checkInternet) {
+              AppsFunction.errorDialog(
+                  icon: "asset/image/fruits.png",
+                  title: "No Internet",
+                  content: "No Internet",
+                  buttonText: "Okay");
+            } else {
+              signUpController.createNewUser(
+                  name: _emailET.text,
+                  phone: "0${_phontET.text}",
+                  email: _emailET.text,
+                  password: _passwordET.text);
+            }
+          },
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Material(
+        color: AppColors.white,
+        child: SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: mq.width * .0444, vertical: mq.height * .024),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: mq.height * .071,
+                  ),
+                  Obx(
+                    () => InkWell(
+                      onTap: () async {
+                        Get.bottomSheet(
+                            backgroundColor: AppColors.white,
+                            const SelectPhotoProfile()
+                            // colo: AppColors.white
+
+                            );
+/*
+                        showModalBottomSheet(
+                          backgroundColor: ,
+                          context: context,
+                          builder: (context) {
+                            return const SelectPhotoProfile();
+                          },
+                        );
+                        */
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: AppColors.grey, width: 3)),
+                        child: CircleAvatar(
+                          radius: mq.width * .2,
+                          backgroundImage: signUpController.selectPhoto.value ==
+                                  null
+                              // imageAddRemoveProvider.singleImageXFile == null
+                              ? null
+                              : FileImage(signUpController.selectPhoto.value!),
+                          backgroundColor: AppColors.backgroundLightColor,
+                          foregroundColor: AppColors.black,
+                          child: signUpController.selectPhoto.value == null
+                              ? Icon(
+                                  Icons.add_photo_alternate,
+                                  size: mq.width * .2,
+                                  color: AppColors.grey,
+                                )
+                              : null,
+                        ),
+                      ),
+
+                      /*
+                      child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border:
+                                Border.all(color: AppColors.grey, width: 3)),
+                        child: CircleAvatar(
+                          radius: mq.width * .2,
+                          backgroundImage:
+                              imageAddRemoveProvider.singleImageXFile == null
+                                  ? null
+                                  : FileImage(File(imageAddRemoveProvider
+                                      .singleImageXFile!.path)),
+                          backgroundColor: AppColors.backgroundLightColor,
+                          foregroundColor: AppColors.black,
+                          child: imageAddRemoveProvider.singleImageXFile == null
+                              ? Icon(
+                                  Icons.add_photo_alternate,
+                                  size: mq.width * .2,
+                                  color: AppColors.grey,
+                                )
+                              : null,
+                        ),
+                      ),
+                      */
+                    ),
+                  ),
+                  SizedBox(
+                    height: mq.height * .018,
+                  ),
+                  Text(
+                    "Registration",
+                    style: GoogleFonts.poppins(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black),
+                  ),
+                  SizedBox(
+                    height: mq.height * .012,
+                  ),
+                  Text(
+                    "Check our fresh viggies from Jasim Grocery",
+                    style: GoogleFonts.poppins(
+                        fontSize: 16, color: AppColors.cardDarkColor),
+                  ),
+                  SizedBox(height: mq.height * .059),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFieldFormWidget(
+                          hintText: 'Md Jasim Uddin',
+                          controller: _nameET,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
+                          textInputType: TextInputType.name,
+                        ),
+                        TextFieldFormWidget(
+                          hintText: 'Email Address',
+                          controller: _emailET,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Email Address';
+                            } else if (globalMethod.isValidEmail(value) ==
+                                false) {
+                              return 'Please Enter a Valid Email Address';
+                            }
+                            return null;
+                          },
+                          textInputType: TextInputType.emailAddress,
+                        ),
+                        TextFieldFormWidget(
+                          obscureText: true,
+                          isShowPassword: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Password';
+                            }
+                            return null;
+                          },
+                          hintText: "Password",
+                          controller: _passwordET,
+                        ),
+                        TextFieldFormWidget(
+                          obscureText: true,
+                          isShowPassword: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your Confirm Password';
+                            }
+                            return null;
+                          },
+                          hintText: "Confirm Password",
+                          controller: _confirmpasswordET,
+                        ),
+                        SizedBox(
+                          height: mq.height * .012,
+                        ),
+                        IntlPhoneField(
+                          controller: _phontET,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).primaryColor),
+                          decoration: globalMethod.textFormFielddecoration(
+                              hintText: "Phone Number", function: () {}),
+                          languageCode: "en",
+                          initialCountryCode: 'BD',
+                          onChanged: (phone) {
+                            number = phone.completeNumber;
+                            setState(() {});
+                          },
+                          onCountryChanged: (country) {},
+                        ),
+                        SizedBox(
+                          height: mq.height * .024,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: mq.height * .018,
+                  ),
+                  _buildSignUpButton(),
+                  SizedBox(
+                    height: mq.height * .03,
+                  ),
+                  globalMethod.buldRichText(
+                      context: context,
+                      simpleText: "Already Create An Account? ",
+                      colorText: "Sign In",
+                      function: () {
+                        Navigator.pushReplacementNamed(
+                            context, RoutesName.signPage);
+                      }),
+                  SizedBox(
+                    height: mq.height * .12,
+                  ),
+                ],
+              )),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+        /*
+      ElevatedButton(
         style: globalMethod.elevateButtonStyle(),
         onPressed: () async {
           if (imageAddRemoveProvider.singleImageXFile == null) {
@@ -88,6 +318,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
                   loadingProvider.setLoading(loading: true);
 
+                  /*
                   String fileName =
                       "ju_grocery_${DateTime.now().millisecondsSinceEpoch}";
 
@@ -101,10 +332,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   TaskSnapshot taskSnapshot =
                       await uploadTask.whenComplete(() {});
 
-                  taskSnapshot.ref.getDownloadURL().then((downloadurl) {
-                    imageAddRemoveProvider.setSingleImageUrl(
-                        singleImageUrl: downloadurl);
-                  });
+              var iamge =    taskSnapshot.ref.getDownloadURL();
+                  
+                  // .then((downloadurl) {
+                  //   imageAddRemoveProvider.setSingleImageUrl(
+                  //       singleImageUrl: downloadurl);
+                  // });
 
                   await FirebaseDatabase.createUserWithEmilandPaswordSnaphsot(
                     email: _emailET.text,
@@ -118,7 +351,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   }).then((value) {
                     loadingProvider.setLoading(loading: false);
                   });
-
+*/
                   if (mounted) {
                     globalMethod.flutterToast(msg: "Successfully Register");
                     Navigator.pushReplacementNamed(
@@ -179,200 +412,17 @@ class _SignUpPageState extends State<SignUpPage> {
         child: loadingProvider.isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: white,
+                  backgroundColor: AppColors.white,
                 ),
               )
             : Text(
                 "Sign Up",
                 style: GoogleFonts.poppins(
-                    color: white, fontWeight: FontWeight.bold, fontSize: 14),
+                    color: AppColors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14),
               ),
       ),
-    );
-  }
+   
+   */
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Material(
-        color: white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: mq.width * .0444, vertical: mq.height * .024),
-            child: Consumer<ImageAddRemoveProvider>(
-              builder: (context, imageAddRemoveProvider, child) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: mq.height * .071,
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        showModalBottomSheet(
-                          backgroundColor: white,
-                          context: context,
-                          builder: (context) {
-                            return SelectPhotoProfile(
-                              imagePicker: _picker,
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: grey, width: 3)),
-                        child: CircleAvatar(
-                          radius: mq.width * .2,
-                          backgroundImage:
-                              imageAddRemoveProvider.singleImageXFile == null
-                                  ? null
-                                  : FileImage(File(imageAddRemoveProvider
-                                      .singleImageXFile!.path)),
-                          backgroundColor: backgroundLightColor,
-                          foregroundColor: black,
-                          child: imageAddRemoveProvider.singleImageXFile == null
-                              ? Icon(
-                                  Icons.add_photo_alternate,
-                                  size: mq.width * .2,
-                                  color: grey,
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: mq.height * .018,
-                    ),
-                    Text(
-                      "Registration",
-                      style: GoogleFonts.poppins(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: black),
-                    ),
-                    SizedBox(
-                      height: mq.height * .012,
-                    ),
-                    Text(
-                      "Check our fresh viggies from Jasim Grocery",
-                      style: GoogleFonts.poppins(
-                          fontSize: 16, color: cardDarkColor),
-                    ),
-                    SizedBox(height: mq.height * .059),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFieldFormWidget(
-                            hintText: 'Md Jasim Uddin',
-                            controller: _nameET,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your name';
-                              }
-                              return null;
-                            },
-                            textInputType: TextInputType.name,
-                          ),
-                          TextFieldFormWidget(
-                            hintText: 'Email Address',
-                            controller: _emailET,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Email Address';
-                              } else if (globalMethod.isValidEmail(value) ==
-                                  false) {
-                                return 'Please Enter a Valid Email Address';
-                              }
-                              return null;
-                            },
-                            textInputType: TextInputType.emailAddress,
-                          ),
-                          TextFieldFormWidget(
-                            obscureText: true,
-                            isShowPassword: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Password';
-                              }
-                              return null;
-                            },
-                            hintText: "Password",
-                            controller: _passwordET,
-                          ),
-                          TextFieldFormWidget(
-                            obscureText: true,
-                            isShowPassword: true,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter your Confirm Password';
-                              }
-                              return null;
-                            },
-                            hintText: "Confirm Password",
-                            controller: _confirmpasswordET,
-                          ),
-                          SizedBox(
-                            height: mq.height * .012,
-                          ),
-                          IntlPhoneField(
-                            controller: _phontET,
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor),
-                            decoration: globalMethod.textFormFielddecoration(
-                                hintText: "Phone Number", function: () {}),
-                            languageCode: "en",
-                            initialCountryCode: 'BD',
-                            onChanged: (phone) {
-                              number = phone.completeNumber;
-                              setState(() {});
-                            },
-                            onCountryChanged: (country) {},
-                          ),
-                          SizedBox(
-                            height: mq.height * .024,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: mq.height * .018,
-                    ),
-                    Consumer<LoadingProvider>(
-                      builder: (context, loadingProvider, child) {
-                        return _buildSignUpButton(
-                            loadingProvider, imageAddRemoveProvider, context);
-                      },
-                    ),
-                    SizedBox(
-                      height: mq.height * .03,
-                    ),
-                    globalMethod.buldRichText(
-                        context: context,
-                        simpleText: "Already Create An Account? ",
-                        colorText: "Sign In",
-                        function: () {
-                          Navigator.pushReplacementNamed(
-                              context, RoutesName.signPage);
-                        }),
-                    SizedBox(
-                      height: mq.height * .12,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

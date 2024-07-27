@@ -1,4 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import 'app_colors.dart';
+
+class Textstyle {
+ static BuildContext get context => Get.context!;
+
+ static ThemeData get theme => Theme.of(context);
+
+  // BuildContext context = Get.context!;
+
+  //        var theme = Theme.of(context);
+
+//   The instance member 'context' can't be accessed in an initializer.
+// Try replacing the reference to the instance member with a different expression
+
+ static TextStyle get largeText => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w700);
+
+ static TextStyle get largeBoldText => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 16,
+      fontWeight: FontWeight.bold);
+
+ static TextStyle get largestText => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 18,
+      fontWeight: FontWeight.bold);
+
+ static  TextStyle mediumText400lineThrough = GoogleFonts.roboto(
+      decoration: TextDecoration.lineThrough,
+      color: const Color(0xffcecfd2),
+      fontSize: 14,
+      fontWeight: FontWeight.w700);
+
+ static TextStyle get mediumText600 => GoogleFonts.roboto(
+      color: AppColors.red, fontSize: 14, fontWeight: FontWeight.w600);
+
+ static TextStyle get mediumTextbold => GoogleFonts.roboto(
+      color: AppColors.red, fontSize: 14, fontWeight: FontWeight.bold);
+
+  static TextStyle get smallText => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w700);
+
+ static TextStyle get smallestText => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 10,
+      fontWeight: FontWeight.normal);
+
+  static TextStyle emptyTestStyle = GoogleFonts.roboto(
+      color: AppColors.red, fontSize: 25, fontWeight: FontWeight.bold);
+}
+
+
+/*
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'gobalcolor.dart';
@@ -30,10 +91,10 @@ class Textstyle {
       fontWeight: FontWeight.w700);
 
   TextStyle get mediumText600 =>
-      GoogleFonts.roboto(color: red, fontSize: 14, fontWeight: FontWeight.w600);
+      GoogleFonts.roboto(color:AppColors. red, fontSize: 14, fontWeight: FontWeight.w600);
 
   TextStyle get mediumTextbold =>
-      GoogleFonts.roboto(color: red, fontSize: 14, fontWeight: FontWeight.bold);
+      GoogleFonts.roboto(color:AppColors. red, fontSize: 14, fontWeight: FontWeight.bold);
 
   TextStyle get smallText => GoogleFonts.roboto(
       color: Theme.of(context).primaryColor,
@@ -46,5 +107,6 @@ class Textstyle {
       fontWeight: FontWeight.normal);
 
   static TextStyle emptyTestStyle =
-      GoogleFonts.roboto(color: red, fontSize: 25, fontWeight: FontWeight.bold);
+      GoogleFonts.roboto(color:AppColors. red, fontSize: 25, fontWeight: FontWeight.bold);
 }
+*/

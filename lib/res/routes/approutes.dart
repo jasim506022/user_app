@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
+import 'package:user_app/view/product/details_product_page.dart';
+import 'package:user_app/view/product/product_page.dart';
 
 import '../../auth/forgetpasswordpage.dart';
 import '../../auth/signinpage.dart';
 import '../../auth/signuppage.dart';
-import '../../page/cart/cartpage.dart';
-import '../../page/main/mainpage.dart';
-import '../../page/search/searchpage.dart';
-import '../../page/splash/onboardingpage.dart';
-import '../../page/splash/splashpage.dart';
+import '../../view/cart/cartpage.dart';
+import '../../view/main/mainpage.dart';
+import '../../view/search/searchpage.dart';
+import '../../view/splash/onboardingpage.dart';
+import '../../view/splash/splashpage.dart';
 import 'routesname.dart';
 
 class AppRoutes {
@@ -24,5 +26,7 @@ class AppRoutes {
             page: () => const ForgetPasswordPage()),
         GetPage(name: RoutesName.cartPage, page: () => const CartPage()),
         GetPage(name: RoutesName.searchPage, page: () => const SearchPage()),
+        GetPage(name: RoutesName.productPage, page: () => const ProductPage(),),
+        GetPage(name: RoutesName.productDestailsPage, page: () => const ProductDetailsPage(),)
       ];
 }

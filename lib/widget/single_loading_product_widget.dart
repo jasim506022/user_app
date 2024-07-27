@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:user_app/res/utils.dart';
-import 'package:user_app/res/gobalcolor.dart';
+import 'package:user_app/res/app_colors.dart';
 
 class LoadingSingleProductWidget extends StatelessWidget {
   const LoadingSingleProductWidget({
@@ -15,11 +15,11 @@ class LoadingSingleProductWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Container(
         height: 160,
-        width: MediaQuery.of(context).size.width * .8,
+        width: MediaQuery.of(context).size.width * .9,
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: black,
+                color: AppColors.black,
                 spreadRadius: .05,
               )
             ],

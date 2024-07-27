@@ -39,7 +39,7 @@ dependencies:
   firebase_auth: ^4.6.3
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.4
-  firebase_storage: ^11.2.4
+  firebase_storage: ^11.7.7
   cloud_firestore: ^4.8.2
   fluttertoast: ^8.2.2
   shared_preferences: ^2.2.0
@@ -66,6 +66,7 @@ dependencies:
   nested: ^1.0.0
   google_sign_in: ^6.2.1
   get: ^4.6.6
+  connectivity_plus: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -92,10 +93,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/image/
+    - asset/icon/
     - asset/gridicon/
     - asset/payment/
     - asset/order/
     - asset/onboard/
+    - asset/error/
+    - asset/carousel_image/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

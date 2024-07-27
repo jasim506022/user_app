@@ -145,6 +145,7 @@ class FirebaseDatabase {
   }
 
 // Product Firebase
+  /*
   static Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
           {required String category}) =>
       category == "All"
@@ -157,7 +158,8 @@ class FirebaseDatabase {
               .where("productcategory", isEqualTo: category)
               .orderBy("publishDate", descending: true)
               .snapshots();
-
+*/
+/*
 // Popular Product Firebase
   static Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
           {required String category}) =>
@@ -171,6 +173,7 @@ class FirebaseDatabase {
               .where("productcategory", isEqualTo: category)
               .where("productrating", isGreaterThan: 3.5)
               .snapshots();
+              */
 
 // Similar  Product Firebase
   static Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(

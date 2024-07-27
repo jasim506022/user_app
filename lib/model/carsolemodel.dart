@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CarosleModel {
+import '../res/appasset/image_asset.dart';
+
+
+class CarouselModel {
   final String category;
   final String title;
   final String number;
   final String image;
   final Color color;
 
-  CarosleModel(
+  CarouselModel(
       {required this.category,
       required this.title,
       required this.number,
@@ -15,33 +18,33 @@ class CarosleModel {
       required this.color});
 }
 
-List<CarosleModel> caroselList = [
-  CarosleModel(
+List<CarouselModel> caroselList = [
+  CarouselModel(
     category: "Organice Food",
     title: "Savon Stories",
     number: "Buy 1 get 1 free",
-    image: "asset/gridicon/orange.png",
+    image: ImagesAsset.orangeCarousel,
     color: const Color.fromARGB(255, 245, 216, 219),
   ),
-  CarosleModel(
+  CarouselModel(
     category: "Milk",
     title: "Savon Stories",
     number: "Buy 1 get 1 free",
-    image: "asset/image/milk.png",
+    image: ImagesAsset.milkCarousel,
     color: const Color.fromARGB(255, 216, 230, 245),
   ),
-  CarosleModel(
+  CarouselModel(
     color: const Color.fromARGB(255, 202, 242, 219),
     category: "Fresh Vegetable",
     title: "Fresh Vegetable Stories",
     number: "Buy 1 get 1 free",
-    image: "asset/image/vegetable.png",
+    image: ImagesAsset.vegetable,
   ),
-  CarosleModel(
+  CarouselModel(
     color: const Color.fromARGB(255, 242, 245, 216),
     category: "Fruits",
     title: "Fresh Fruits Stories",
     number: "Buy 1 get 1 free",
-    image: "asset/image/fruits.png",
+    image: ImagesAsset.fruitsCarousel,
   ),
 ];

@@ -1,19 +1,16 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:user_app/auth/widget/app_sign_page_intro.dart';
+import 'package:user_app/controller/login_controller.dart';
+import 'package:user_app/res/app_function.dart';
 
+import '../controller/loading_controller.dart';
 import '../res/routes/routesname.dart';
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
-import '../res/textstyle.dart';
-import '../service/database/firebasedatabase.dart';
-import '../service/provider/loading_provider.dart';
+import '../res/app_colors.dart';
 import '../widget/loading_widget.dart';
-import '../widget/show_error_dialog_widget.dart';
 import '../widget/textfieldformwidget.dart';
 
 class SignInPage extends StatefulWidget {
@@ -29,13 +26,17 @@ class _SignInPageState extends State<SignInPage> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  LoginController loginController = Get.put(LoginController(
+    Get.find(),
+  ));
+
   @override
-  void initState() {
+  void didChangeDependencies() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: white,
+        statusBarColor: AppColors.white,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light));
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -47,13 +48,12 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    Textstyle txtStyle = Textstyle(context);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Material(
-        color: white,
+        color: AppColors.white,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -61,132 +61,26 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _signinPageIntro(txtStyle),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFieldFormWidget(
-                        hintText: 'Email Address',
-                        controller: _emailET,
-                        validator: (emailText) {
-                          if (emailText!.isEmpty) {
-                            return 'Please enter your Email Address';
-                          } else if (!globalMethod.isValidEmail(emailText)) {
-                            return 'Please Enter a Valid Email Address';
-                          }
-                          return null;
-                        },
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                      TextFieldFormWidget(
-                        isShowPassword: true,
-                        obscureText: true,
-                        validator: (passwordText) {
-                          if (passwordText!.isEmpty) {
-                            return 'Please enter your Password';
-                          } else if (passwordText.length < 6) {
-                            return 'Password Must be geather then 6 Characteris';
-                          }
-                          return null;
-                        },
-                        hintText: "Password",
-                        controller: _passwordET,
-                      ),
-                    ],
-                  ),
-                ),
+                const AppSignInPageIntro(title: "Welcome Back!"),
+                _buildLoginForm(),
                 const SizedBox(
                   height: 5,
                 ),
-                Align(
-                    alignment: Alignment.topRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, RoutesName.forgetPassword);
-                      },
-                      child: Text(
-                        "Forget Password",
-                        style: GoogleFonts.poppins(
-                            color: hintLightColor, fontWeight: FontWeight.w700),
-                      ),
-                    )),
+                _buildForgetPasswordButton(),
                 SizedBox(height: mq.height * .02),
-                Consumer<LoadingProvider>(
-                  builder: (context, loadingProivder, child) {
-                    return _singinButton(loadingProivder);
-                  },
-                ),
+                _buildLoginButton(),
                 SizedBox(
                   height: mq.height * .03,
                 ),
-                _buildWithOr(),
+                _buildOrDividerText(),
                 SizedBox(
                   height: mq.height * .024,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _signWithOtherWay(
-                          function: () {
-                            // User For Facebook . I already use in User
-                          },
-                          color: facebookColor,
-                          image: "asset/image/facebook.png",
-                          title: "Facebook"),
-                    ),
-                    SizedBox(
-                      width: mq.width * .0444,
-                    ),
-                    Expanded(
-                      child: _signWithOtherWay(
-                          function: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const LoadingWidget(
-                                    message: "Loading for sign with Gmail");
-                              },
-                            );
-
-                            FirebaseDatabase.signWithGoogle(context: context)
-                                .then((userCredentialGmail) async {
-                              Navigator.pop(context);
-                              if (userCredentialGmail != null) {
-                                if (await FirebaseDatabase.userExists()) {
-                                  if (mounted) {
-                                    Navigator.pushReplacementNamed(
-                                        context, RoutesName.mainPage);
-                                  }
-                                } else {
-                                  await FirebaseDatabase.createUserGmail()
-                                      .then((value) {
-                                    globalMethod.flutterToast(
-                                        msg: "Successfully Loging");
-                                    Navigator.pushReplacementNamed(
-                                        context, RoutesName.mainPage);
-                                  });
-                                }
-                              }
-                            });
-                          },
-                          color: red,
-                          image: "asset/image/gmail.png",
-                          title: "Gmail"),
-                    ),
-                  ],
-                ),
+                _buildSocialLoginOptions(context),
                 SizedBox(
                   height: mq.height * .03,
                 ),
-                globalMethod.buldRichText(
-                  colorText: "Create Account",
-                  context: context,
-                  function: () {
-                    Navigator.pushNamed(context, RoutesName.signupPage);
-                  },
-                  simpleText: "Don't Have An Account? ",
-                ),
+                _buildCreateAccount(context),
                 SizedBox(
                   height: mq.height * .12,
                 ),
@@ -198,7 +92,104 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  InkWell _signWithOtherWay(
+  Row _buildSocialLoginOptions(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildSocialLoginButton(
+              function: () {
+                // User For Facebook . I already use in User
+              },
+              color: AppColors.facebookColor,
+              image: "asset/image/facebook.png",
+              title: "Facebook"),
+        ),
+        SizedBox(
+          width: mq.width * .0444,
+        ),
+        Expanded(
+          child: _buildSocialLoginButton(
+              function: () async {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const LoadingWidget(
+                        message: "Loading for sign with Gmail");
+                  },
+                );
+                bool checkInternet = await AppsFunction.internetChecking();
+
+                if (checkInternet) {
+                  AppsFunction.errorDialog(
+                      icon: "asset/image/fruits.png",
+                      title: "No Internet",
+                      content: "Ever this is okay",
+                      buttonText: "Okay");
+                } else {
+                  await loginController.signWithGoogle();
+                }
+              },
+              color: AppColors.red,
+              image: "asset/image/gmail.png",
+              title: "Gmail"),
+        ),
+      ],
+    );
+  }
+
+  Form _buildLoginForm() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFieldFormWidget(
+            hintText: 'Email Address',
+            controller: _emailET,
+            validator: (emailText) {
+              if (emailText!.isEmpty) {
+                return 'Please enter your Email Address';
+              } else if (!globalMethod.isValidEmail(emailText)) {
+                return 'Please Enter a Valid Email Address';
+              }
+              return null;
+            },
+            textInputType: TextInputType.emailAddress,
+          ),
+          TextFieldFormWidget(
+            isShowPassword: true,
+            obscureText: true,
+            validator: (passwordText) {
+              if (passwordText!.isEmpty) {
+                return 'Please enter your Password';
+              } else if (passwordText.length < 6) {
+                return 'Password Must be geather then 6 Characteris';
+              }
+              return null;
+            },
+            hintText: "Password",
+            controller: _passwordET,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Align _buildForgetPasswordButton() {
+    return Align(
+        alignment: Alignment.topRight,
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, RoutesName.forgetPassword);
+          },
+          child: Text(
+            "Forget Password",
+            style: GoogleFonts.poppins(
+                color: AppColors.hintLightColor, fontWeight: FontWeight.w700),
+          ),
+        ));
+  }
+
+  InkWell _buildSocialLoginButton(
 
       // What is different Between Function and Void Callbackfund and Difference
       {required Function function,
@@ -223,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
                 image,
                 height: mq.height * .041,
                 width: mq.height * .041,
-                color: white,
+                color: AppColors.white,
               ),
               SizedBox(
                 width: mq.width * .033,
@@ -231,7 +222,9 @@ class _SignInPageState extends State<SignInPage> {
               Text(
                 title,
                 style: GoogleFonts.poppins(
-                    color: white, fontWeight: FontWeight.bold, fontSize: 14),
+                    color: AppColors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14),
               ),
             ],
           ),
@@ -240,7 +233,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Row _buildWithOr() {
+  Row _buildOrDividerText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -250,7 +243,7 @@ class _SignInPageState extends State<SignInPage> {
           padding: EdgeInsets.symmetric(horizontal: mq.width * .033),
           child: Text(
             "with Or",
-            style: TextStyle(color: grey),
+            style: TextStyle(color: AppColors.grey),
           ),
         ),
         _buildLine(),
@@ -262,120 +255,81 @@ class _SignInPageState extends State<SignInPage> {
     return Container(
       height: mq.height * .003,
       width: mq.width * .156,
-      color: grey,
+      color: AppColors.grey,
     );
   }
 
-  Widget _singinButton(
-    LoadingProvider loadingProvider,
-  ) {
+  SizedBox _buildLoginButton() {
     return SizedBox(
       width: mq.width,
-      child: ElevatedButton(
-        style: globalMethod.elevateButtonStyle(),
+      child: CoustomButtonWidget(
         onPressed: () async {
           if (!_formKey.currentState!.validate()) return;
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const LoadingWidget(message: "Loging......");
-            },
-          );
-          try {
-            final result = await InternetAddress.lookup('google.com');
-            if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-              loadingProvider.setLoading(loading: true);
-              await FirebaseDatabase.signInWithEmailAndPassword(
-                _emailET.text,
-                _passwordET.text,
-              ).then((userCredential) {
-                loadingProvider.setLoading(loading: false);
-              });
 
-              if (mounted) {
-                globalMethod.flutterToast(msg: "Sign in Successfully");
-                Navigator.pushReplacementNamed(context, RoutesName.mainPage);
-              }
-            } else {
-              globalMethod.flutterToast(msg: "No Internet Connection");
-            }
-          } on SocketException {
-            if (mounted) {
-              Navigator.pop(context);
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return const ShowErrorDialogWidget(
-                    message:
-                        "No Internect Connection. Please your Interenet Connection",
-                    title: 'No Internet Connection',
-                  );
-                },
-              );
-            }
-          } on FirebaseAuthException catch (e) {
-            if (mounted) {
-              globalMethod.handleError(context, e, loadingProvider);
-            }
-          } catch (e) {
-            if (mounted) {
-              Navigator.pop(context);
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return ShowErrorDialogWidget(
-                    message: e.toString(),
-                    title: 'Error Occurred',
-                  );
-                },
-              );
-            }
+          bool checkInternet = await AppsFunction.internetChecking();
 
-            loadingProvider.setLoading(loading: false);
+          if (checkInternet) {
+            AppsFunction.errorDialog(
+                icon: "asset/image/fruits.png",
+                title: "No Internet",
+                content: "Ever this is okay",
+                buttonText: "Okay");
+          } else {
+            loginController.signInWithEmailAndPassword(
+                email: _emailET.text, password: _passwordET.text);
           }
         },
-        child: loadingProvider.isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: white,
-                ),
-              )
-            : Text(
-                "Sign In",
-                style: GoogleFonts.poppins(
-                    color: white, fontWeight: FontWeight.bold, fontSize: 14),
-              ),
       ),
     );
   }
 
-  Column _signinPageIntro(Textstyle txtStyle) {
-    return Column(
-      children: [
-        SizedBox(
-          height: mq.height * .071,
-        ),
-        Image.asset(
-          "asset/image/logo.png",
-          height: mq.height * .177,
-          width: mq.height * .177,
-        ),
-        SizedBox(
-          height: mq.height * .012,
-        ),
-        Text("Welcome Back!",
-            style: txtStyle.largestText.copyWith(fontSize: 24, color: black)),
-        SizedBox(
-          height: mq.height * .012,
-        ),
-        Text(
-          "Check our fresh viggies from Jasim Grocery",
-          style: GoogleFonts.poppins(fontSize: 16, color: hintLightColor),
-        ),
-        SizedBox(
-          height: mq.height * .059,
-        ),
-      ],
+  RichText _buildCreateAccount(BuildContext context) {
+    return globalMethod.buldRichText(
+      colorText: "Create Account",
+      context: context,
+      function: () {
+        Get.toNamed(RoutesName.signupPage);
+
+        _passwordET.clear();
+        _emailET.clear();
+      },
+      simpleText: "Don't Have An Account? ",
     );
+  }
+}
+
+class CoustomButtonWidget extends StatelessWidget {
+  const CoustomButtonWidget({super.key, required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    LoadingController loadingController = Get.put(LoadingController());
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.greenColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: mq.width * 0.022, vertical: mq.height * 0.018),
+        ),
+        onPressed: onPressed,
+        child: Obx(
+          () => loadingController.loading.value
+              ? Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: AppColors.white,
+                  ),
+                )
+              : Text(
+                  "Sign In",
+                  style: GoogleFonts.poppins(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
+        ));
   }
 }

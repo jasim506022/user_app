@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../res/routes/routesname.dart';
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
+import '../../res/app_colors.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../widget/show_error_dialog_widget.dart';
 import '../../widget/textfieldformwidget.dart';
@@ -63,7 +63,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         child: Text(
           "Reset Password",
           style: GoogleFonts.poppins(
-              color: white, fontWeight: FontWeight.bold, fontSize: 14),
+              color:AppColors. white, fontWeight: FontWeight.bold, fontSize: 14),
         ),
       ),
     );
@@ -76,7 +76,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         FocusScope.of(context).unfocus();
       },
       child: Material(
-        color: white,
+        color:AppColors. white,
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -98,7 +98,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 Text(
                   "Forget Your Password?",
                   style: GoogleFonts.poppins(
-                      fontSize: 22, fontWeight: FontWeight.bold, color: black),
+                      fontSize: 22, fontWeight: FontWeight.bold, color:AppColors. black),
                 ),
                 SizedBox(
                   height: mq.height * 0.03,
@@ -109,7 +109,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      color: hintLightColor),
+                      color: AppColors.hintLightColor),
                 ),
                 SizedBox(
                   height: mq.height * 0.024,

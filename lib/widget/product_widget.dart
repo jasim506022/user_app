@@ -1,12 +1,15 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/routes/routesname.dart';
+import '../res/app_function.dart';
 import '../res/cartmethod.dart';
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
-import '../res/textstyle.dart';
+import '../../res/app_colors.dart';
+import '../res/Textstyle.dart';
 import '../model/productsmodel.dart';
-import '../page/product/detailsproductpage.dart';
+import '../view/product/details_product_page.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -16,7 +19,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
-    Textstyle textstyle = Textstyle(context);
+    // Textstyle Textstyle = Textstyle(context);
     bool isCart = false;
     List<String> productIdListFromCartLish =
         CartMethods.separeteProductIdUserCartList();
@@ -25,13 +28,14 @@ class ProductWidget extends StatelessWidget {
     }
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ProductDetailsPage(
-                productModel: productModel,
-              ),
-            ));
+        Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => ProductDetailsPage(
+        //         productModel: productModel,
+        //       ),
+        //     ));
       },
       child: Card(
         child: Container(
@@ -42,7 +46,7 @@ class ProductWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: white,
+                  color: AppColors.white,
                   spreadRadius: .08,
                 )
               ]),
@@ -57,7 +61,7 @@ class ProductWidget extends StatelessWidget {
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                        color: cardImageBg,
+                        color: AppColors.cardImageBg,
                         borderRadius: BorderRadius.circular(5)),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -75,12 +79,12 @@ class ProductWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 5),
                       decoration: BoxDecoration(
-                        border: Border.all(color: red, width: .5),
+                        border: Border.all(color: AppColors.red, width: .5),
                         borderRadius: BorderRadius.circular(15),
-                        color: lightred.withOpacity(.2),
+                        color: AppColors.lightred.withOpacity(.2),
                       ),
                       child: Text("${productModel.discount}% Off",
-                          style: textstyle.mediumText600),
+                          style: Textstyle.mediumText600),
                     ),
                   ),
                 ],
@@ -95,8 +99,9 @@ class ProductWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "৳. ${globalMethod.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-                            style: textstyle.largeText.copyWith(color: red),
+                            "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+                            style: Textstyle.largeText
+                                .copyWith(color: AppColors.red),
                           ),
                           const SizedBox(
                             width: 15,
@@ -113,7 +118,7 @@ class ProductWidget extends StatelessWidget {
                       FittedBox(
                         child: Text(
                           productModel.productname!,
-                          style: textstyle.largeText,
+                          style: Textstyle.largeText,
                         ),
                       ),
                       const SizedBox(
@@ -121,12 +126,14 @@ class ProductWidget extends StatelessWidget {
                       ),
                       InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProductDetailsPage(
-                                      productModel: productModel),
-                                ));
+                            Get.toNamed(RoutesName.productDestailsPage,
+                                arguments: productModel);
+                            // Navigator.pushReplacement(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => ProductDetailsPage(
+                            //           productModel: productModel),
+                            //     ));
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -134,12 +141,13 @@ class ProductWidget extends StatelessWidget {
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: isCart ? red : greenColor,
+                              color:
+                                  isCart ? AppColors.red : AppColors.greenColor,
                             ),
                             child: Text(
                               "Add To Cart",
-                              style: textstyle.largeText
-                                  .copyWith(color: white, fontSize: 14),
+                              style: Textstyle.largeText.copyWith(
+                                  color: AppColors.white, fontSize: 14),
                             ),
                           )),
                       const SizedBox(

@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
+import 'package:user_app/controller/signup_controller.dart';
 
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
+import '../../res/app_colors.dart';
 import '../res/textstyle.dart';
-import '../service/provider/imageaddremoveprovider.dart';
 
 class SelectPhotoProfile extends StatelessWidget {
-  const SelectPhotoProfile({super.key, required this.imagePicker});
-  final ImagePicker imagePicker;
+  const SelectPhotoProfile({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
-    Textstyle textstyle = Textstyle(context);
+    SignUpController signUpController = Get.put(SignUpController(
+      Get.find(),
+    ));
+    // Textstyle textstyle = Textstyle(context);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -33,50 +38,39 @@ class SelectPhotoProfile extends StatelessWidget {
           SizedBox(height: mq.height * .02),
           Align(
               alignment: Alignment.center,
-              child: Text("Select Photo", style: textstyle.largeBoldText)),
+              child: Text("Select Photo", style: Textstyle.largeBoldText)),
           SizedBox(
             height: mq.height * .01,
           ),
-          Row(
-            children: [
-              _showBottomModelItem(textstyle, "Camera", Icons.camera_alt, () {
-                Navigator.pop(context);
-
-                _captureImageSingle(
-                    context: context,
-                    imagePicker: imagePicker,
-                    imageSource: ImageSource.camera);
-              }),
-              SizedBox(
-                width: mq.width * .066,
-              ),
-              _showBottomModelItem(textstyle, "Gallery", Icons.photo_album, () {
-                Navigator.pop(context);
-
-                _captureImageSingle(
-                    context: context,
-                    imagePicker: imagePicker,
-                    imageSource: ImageSource.gallery);
-              }),
-            ],
-          )
+          _selectPhotoOption(signUpController)
         ],
       ),
     );
   }
 
-  _captureImageSingle(
-      {required BuildContext context,
-      required ImagePicker imagePicker,
-      required ImageSource imageSource}) async {
-    ImageAddRemoveProvider addUpdateProdcutProvider =
-        Provider.of<ImageAddRemoveProvider>(context, listen: false);
-    XFile? image = await imagePicker.pickImage(source: imageSource);
-    addUpdateProdcutProvider.setSingleImageXFile(singleImageXFile: image);
+  Row _selectPhotoOption(
+      SignUpController signUpController) {
+    return Row(
+      children: [
+        _buildPhotoOption("Camera", Icons.camera_alt, () {
+          Get.back();
+
+          signUpController.selectImage(imageSource: ImageSource.camera);
+        }),
+        SizedBox(
+          width: mq.width * .066,
+        ),
+        _buildPhotoOption("Gallery", Icons.photo_album, () {
+          Get.back();
+
+          signUpController.selectImage(imageSource: ImageSource.gallery);
+        }),
+      ],
+    );
   }
 
-  Padding _showBottomModelItem(
-      Textstyle textStyle, String title, IconData icon, VoidCallback funcion) {
+  Padding _buildPhotoOption(
+       String title, IconData icon, VoidCallback funcion) {
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: mq.width * .012, vertical: mq.height * .012),
@@ -84,16 +78,15 @@ class SelectPhotoProfile extends StatelessWidget {
         onTap: funcion,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: greenColor)),
+                  border: Border.all(color: AppColors.greenColor)),
               child: Icon(
                 icon,
-                color: greenColor,
+                color: AppColors.greenColor,
               ),
             ),
             SizedBox(
@@ -101,7 +94,8 @@ class SelectPhotoProfile extends StatelessWidget {
             ),
             Text(
               title,
-              style: textStyle.mediumText600.copyWith(color: greenColor),
+              style:
+                  Textstyle.mediumText600.copyWith(color: AppColors.greenColor),
             ),
           ],
         ),

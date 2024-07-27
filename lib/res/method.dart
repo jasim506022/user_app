@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,8 @@ import 'package:user_app/service/provider/image_upload_provider.dart';
 import '../service/database/firebasedatabase.dart';
 import '../service/provider/loading_provider.dart';
 import '../widget/show_error_dialog_widget.dart';
-import 'gobalcolor.dart';
+import 'app_colors.dart';
+
 
 class GlobalMethod {
   final ImagePicker picker = ImagePicker();
@@ -30,7 +30,7 @@ class GlobalMethod {
 
 // Elevate Button Style
   ButtonStyle elevateButtonStyle() => ElevatedButton.styleFrom(
-        backgroundColor: greenColor,
+        backgroundColor: AppColors.greenColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -106,7 +106,7 @@ class GlobalMethod {
     return InputDecoration(
       labelStyle:
           GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
-      fillColor: searchLightColor,
+      fillColor: AppColors.searchLightColor,
       filled: true,
       hintText: hintText,
       enabledBorder: OutlineInputBorder(
@@ -120,7 +120,7 @@ class GlobalMethod {
               },
               icon: Icon(
                 Icons.password,
-                color: obscureText ? hintLightColor : red,
+                color: obscureText ?AppColors. hintLightColor :AppColors. red,
               ))
           : null,
       contentPadding: EdgeInsets.symmetric(
@@ -136,8 +136,8 @@ class GlobalMethod {
         msg: msg,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: red,
-        textColor: Colors.white,
+        backgroundColor:AppColors. red,
+        textColor: AppColors.white,
         fontSize: 16.0);
   }
 
@@ -152,7 +152,7 @@ class GlobalMethod {
       TextSpan(
         text: simpleText,
         style: GoogleFonts.poppins(
-            color: cardDarkColor, fontWeight: FontWeight.w500),
+            color: AppColors.cardDarkColor, fontWeight: FontWeight.w500),
       ),
       TextSpan(
 
@@ -166,7 +166,7 @@ class GlobalMethod {
               textStyle: const TextStyle(
                 decoration: TextDecoration.underline,
               ),
-              color: greenColor,
+              color:AppColors. greenColor,
               fontWeight: FontWeight.w800))
     ]));
   }
@@ -208,10 +208,10 @@ class GlobalMethod {
     imageUploadProvider.setImage(imageXFiles!);
   }
 
-//Product Price
-  double productPrice(double productprice, double discount) {
-    return productprice - (productprice * discount / 100);
-  }
+// //Product Price
+//   double productPrice(double productprice, double discount) {
+//     return productprice - (productprice * discount / 100);
+//   }
 
   String getFormateDate(
       {required BuildContext context, required String datetime}) {

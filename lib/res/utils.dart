@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/gobalcolor.dart';
+import 'package:user_app/res/app_colors.dart';
 
 import '../service/provider/theme_provider.dart';
 
@@ -26,18 +26,18 @@ class Utils {
   Color get green200 =>
       getTheme ? Colors.green.shade700 : Colors.green.shade200;
 
-  Color? get green50 => getTheme ? cardDarkColor : Colors.green[50];
+  Color? get green50 => getTheme ?AppColors. cardDarkColor : Colors.green[50];
 
   Color? get profileTextColor => getTheme ? Colors.white54 : Colors.black54;
 
   Color? get bottomTotalBill =>
-      getTheme ? cardDarkColor : greenColor.withOpacity(.1);
+      getTheme ?AppColors. cardDarkColor :AppColors. greenColor.withOpacity(.1);
 
   Color? get categoryUnselectBackground =>
-      getTheme ? cardDarkColor : const Color.fromARGB(255, 238, 236, 236);
+      getTheme ?AppColors. cardDarkColor : const Color.fromARGB(255, 238, 236, 236);
 
   Color? get categoryUnSelectTextColor =>
-      getTheme ? white.withOpacity(.7) : black;
+      getTheme ?AppColors. white.withOpacity(.7) :AppColors. black;
 
-  Color? get categorySelectBackground => getTheme ? greenColor : black;
+  Color? get categorySelectBackground => getTheme ?AppColors. greenColor :AppColors. black;
 }

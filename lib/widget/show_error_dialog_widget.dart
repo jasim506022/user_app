@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../res/app_colors.dart';
 import '../res/constants.dart';
-import '../res/gobalcolor.dart';
+
 
 class ShowErrorDialogWidget extends StatelessWidget {
   const ShowErrorDialogWidget({
@@ -16,14 +17,14 @@ class ShowErrorDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: white,
+      backgroundColor:AppColors. white,
       title: Row(
         children: [
           Flexible(
             child: Text(
               "$title Error",
               style: GoogleFonts.poppins(
-                  color: black,
+                  color:AppColors. black,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.bold,
                   fontSize: 16),
@@ -34,14 +35,14 @@ class ShowErrorDialogWidget extends StatelessWidget {
           ),
           Icon(
             Icons.error_sharp,
-            color: red,
+            color:AppColors. red,
           )
         ],
       ),
       content: Text(
         message,
         style: GoogleFonts.poppins(
-            color: black, fontWeight: FontWeight.w500, fontSize: 14),
+            color:AppColors. black, fontWeight: FontWeight.w500, fontSize: 14),
       ),
       actions: [
         TextButton(
@@ -51,7 +52,7 @@ class ShowErrorDialogWidget extends StatelessWidget {
             child: Text(
               "Okay",
               style: GoogleFonts.poppins(
-                  color: black, fontWeight: FontWeight.bold, fontSize: 16),
+                  color:AppColors. black, fontWeight: FontWeight.bold, fontSize: 16),
             ))
       ],
     );
