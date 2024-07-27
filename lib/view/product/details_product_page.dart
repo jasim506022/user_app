@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/app_function.dart';
@@ -220,17 +219,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     //           const CartPage(),
                                     //     ));
                                   },
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.greenColor,
-                                        shape: BoxShape.circle),
-                                    child: CartBadge(
-                                      color: AppColors.white,
-                                      itemCount:
-                                          cartProductCountController.getCounts,
-                                      icon: Icons.shopping_cart,
+                                  child: Obx(
+                                    () => Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.greenColor,
+                                          shape: BoxShape.circle),
+                                      child: CartBadge(
+                                        color: AppColors.white,
+                                        itemCount: cartProductCountController
+                                            .getCounts,
+                                        icon: Icons.shopping_cart,
+                                      ),
                                     ),
                                   ),
                                 )

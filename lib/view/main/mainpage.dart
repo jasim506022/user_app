@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:user_app/controller/product_controller.dart';
+import 'package:user_app/controller/profile_controller.dart';
 import '../../res/app_colors.dart';
 import '../home/home_page.dart';
 import '../order/orderpage.dart';
@@ -19,7 +19,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ProductController firebaseAllDataController = Get.put(ProductController(
+  final ProfileController firebaseAllDataController = Get.put(ProfileController(
     Get.find(),
   ));
 
