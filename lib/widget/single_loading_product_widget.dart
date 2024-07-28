@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:user_app/res/utils.dart';
 import 'package:user_app/res/app_colors.dart';
@@ -15,7 +16,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Container(
         height: 160,
-        width: MediaQuery.of(context).size.width * .9,
+        width: Get.width * .9,
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -82,7 +83,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
                     children: [
                       Container(
                         height: 30,
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: Get.width * 0.7,
                         color: utils.widgetShimmerColor,
                       ),
                       const SizedBox(
@@ -90,7 +91,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
                       ),
                       Container(
                         height: 30,
-                        width: MediaQuery.of(context).size.width,
+                        width: Get.width,
                         color: utils.widgetShimmerColor,
                       ),
                       const SizedBox(
@@ -99,7 +100,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
                       Container(
                         alignment: Alignment.center,
                         height: 30,
-                        width: MediaQuery.of(context).size.width,
+                        width: Get.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: utils.widgetShimmerColor,

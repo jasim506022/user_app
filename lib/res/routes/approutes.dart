@@ -6,7 +6,7 @@ import '../../auth/forgetpasswordpage.dart';
 import '../../auth/signinpage.dart';
 import '../../auth/signuppage.dart';
 import '../../view/cart/cartpage.dart';
-import '../../view/main/mainpage.dart';
+import '../../view/main/main_page.dart';
 import '../../view/search/searchpage.dart';
 import '../../view/splash/onboardingpage.dart';
 import '../../view/splash/splashpage.dart';

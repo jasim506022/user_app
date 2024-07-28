@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../model/carsolemodel.dart';
 import '../../res/constants.dart';
@@ -20,7 +21,7 @@ class CarouselWidget extends StatelessWidget {
     return Container(
         width: mq.width,
         padding: EdgeInsets.only(
-            left: mq.width * .055,
+            left: Get.width * .055,
             bottom: mq.height * .02,
             top: mq.height * .02),
         margin: EdgeInsets.symmetric(horizontal: mq.width * .022),

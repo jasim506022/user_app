@@ -7,7 +7,7 @@ import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../service/provider/theme_provider.dart';
-import '../main/mainpage.dart';
+import '../main/main_page.dart';
 import '../order/historypage.dart';
 import '../order/orderpage.dart';
 import 'editprofilescrren.dart';

@@ -117,11 +117,11 @@ class ProductListWidget extends StatelessWidget {
   const ProductListWidget({
     super.key,
     this.isPopular = false,
-    this.isMovie = true,
+    this.isScroll = true,
   });
 
   final bool? isPopular;
-  final bool? isMovie;
+  final bool? isScroll;
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +151,7 @@ class ProductListWidget extends StatelessWidget {
 
             return GridView.builder(
               shrinkWrap: true,
-              physics: isMovie!
+              physics: isScroll!
                   ? const AlwaysScrollableScrollPhysics()
                   : const NeverScrollableScrollPhysics(),
               itemCount: snapshot.data!.docs.length,
@@ -174,6 +174,7 @@ class ProductListWidget extends StatelessWidget {
         ));
   }
 
+/*
   Obx productL(ProductController firebaseAllDataController,
       CategoryController categoryController) {
     return Obx(() => StreamBuilder(
@@ -217,8 +218,11 @@ class ProductListWidget extends StatelessWidget {
           },
         ));
   }
+
+*/
 }
 
+/*
 Widget buildProductList({bool? isPopular = false, bool? isMovie = true}) {
   final ProductController firebaseAllDataController =
       Get.put(ProductController(Get.find()));
@@ -269,3 +273,4 @@ Widget buildProductList({bool? isPopular = false, bool? isMovie = true}) {
         },
       ));
 }
+*/

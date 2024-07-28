@@ -19,7 +19,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ProfileController firebaseAllDataController = Get.put(ProfileController(
+  final ProfileController profileController = Get.put(ProfileController(
     Get.find(),
   ));
 
@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    firebaseAllDataController.getUserInformationSnapshot();
+    profileController.getUserInformationSnapshot();
   }
 
   int currentIndex = 0;

@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   var productController = Get.put(ProductController(
     Get.find(),
   ));
-
   var cartProductCountController = Get.put(CartProductCountController());
 
   @override
@@ -57,8 +56,8 @@ class _HomePageState extends State<HomePage> {
       child: SafeArea(
         child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: mq.width * .03,
-            ),
+                // horizontal: mq.width * .03,
+                horizontal: Get.width * .03),
             child: Column(
               children: [
                 // Header
@@ -67,7 +66,10 @@ class _HomePageState extends State<HomePage> {
                     // user Profile
                     _buildUserProfile(),
 
-                    SizedBox(height: mq.height * .015),
+                    SizedBox(
+                      // height: mq.height * .015
+                      height: Get.height * .015,
+                    ),
                     // Search
                     InkWell(
                       onTap: () {
@@ -83,23 +85,23 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: mq.height * .25,
-                        width: mq.width,
+                        height: Get.height * .25,
+                        width: Get.width,
                         child: const CarouselSilderWidget(),
                       ),
-                      SizedBox(height: mq.height * .013),
+                      SizedBox(height: Get.height * .013),
                       const CategoryWidget(),
-                      SizedBox(height: mq.height * .02),
+                      SizedBox(height: Get.height * .02),
                       RowWidget(
                         text: "Popular Product",
                         function: () {
                           Get.toNamed(RoutesName.productPage, arguments: true);
                         },
                       ),
-                      SizedBox(height: mq.height * .01),
+                      SizedBox(height: Get.height * .01),
                       _buildPopularProductList(),
                       SizedBox(
-                        height: mq.height * .012,
+                        height: Get.height * .012,
                       ),
                       RowWidget(
                         text: "Product",
@@ -108,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       const ProductListWidget(
-                        isMovie: false,
+                        isScroll: false,
                       )
                     ],
                   ),
@@ -121,7 +123,7 @@ class _HomePageState extends State<HomePage> {
 
   SizedBox _buildPopularProductList() {
     return SizedBox(
-        height: mq.height * .19,
+        height: Get.height * .19,
         width: double.infinity,
         child: Obx(
           () => StreamBuilder(
@@ -175,14 +177,14 @@ class _HomePageState extends State<HomePage> {
         sharedPreference?.getString(StringConstant.nameSharedPreference);
 
     return SizedBox(
-      height: mq.height * .08,
-      width: mq.width,
+      height: Get.height * .08,
+      width: Get.width,
       child: Row(
         children: [
           // User Profile Image
           Container(
-            height: mq.height * .08,
-            width: mq.height * .08,
+            height: Get.height * .08,
+            width: Get.height * .08,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.red, width: 3)),
@@ -199,7 +201,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           SizedBox(
-            width: mq.width * .03,
+            width: Get.width * .03,
           ),
 
           // User Informatiokn
@@ -229,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icons.shopping_bag),
               )),
           SizedBox(
-            width: mq.width * .02,
+            width: Get.width * .02,
           ),
         ],
       ),
@@ -239,14 +241,14 @@ class _HomePageState extends State<HomePage> {
   // Search
   Container _buildSearchBar() {
     return Container(
-      height: mq.height * .065,
-      margin: EdgeInsets.symmetric(vertical: mq.height * .02),
-      width: mq.width,
+      height: Get.height * .065,
+      margin: EdgeInsets.symmetric(vertical: Get.height * .02),
+      width: Get.width,
       decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(15)),
       child: Padding(
-        padding: EdgeInsets.only(left: mq.width * .07),
+        padding: EdgeInsets.only(left: Get.width * .07),
         child: Row(
           children: [
             Text(
@@ -262,7 +264,7 @@ class _HomePageState extends State<HomePage> {
               color: Theme.of(context).primaryColor,
             ),
             SizedBox(
-              width: mq.width * 0.022,
+              width: Get.width * 0.022,
             ),
           ],
         ),

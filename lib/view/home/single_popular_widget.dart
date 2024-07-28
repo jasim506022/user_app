@@ -10,7 +10,6 @@ import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../model/productsmodel.dart';
-import '../product/details_product_page.dart';
 
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({

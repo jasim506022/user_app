@@ -13,7 +13,7 @@ import '../../res/constants.dart';
 
 import '../../res/app_colors.dart';
 import '../../model/profilemodel.dart';
-import '../main/mainpage.dart';
+import '../main/main_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.isEdit});
