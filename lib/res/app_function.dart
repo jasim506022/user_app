@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_colors.dart';
 
 class AppsFunction {
-
   static Future<bool> internetChecking() async {
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());
@@ -76,13 +75,16 @@ class AppsFunction {
         ));
   }
 
-
 //Product Price
- static double productPrice(double productprice, double discount) {
+  static double productPrice(double productprice, double discount) {
     return productprice - (productprice * discount / 100);
   }
 
-
+  //Product Price
+  static double productPriceWithQuantity(
+      double productprice, double discount, int quantity) {
+    return (productprice - (productprice * discount / 100)) * quantity;
+  }
 }
 
 class CustomRoundButtonWidget extends StatelessWidget {

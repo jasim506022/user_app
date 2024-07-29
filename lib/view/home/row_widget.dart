@@ -16,7 +16,7 @@ class RowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Textstyle Textstyle = Textstyle(context);
+
     return Row(
       children: [
         Text(

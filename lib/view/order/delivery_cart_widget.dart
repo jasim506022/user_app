@@ -6,11 +6,9 @@ import 'package:user_app/res/Textstyle.dart';
 import 'package:user_app/res/routes/routesname.dart';
 
 import '../../res/app_function.dart';
-import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../cart/dotlineprinter.dart';
-import '../product/details_product_page.dart';
 
 class DeliveryCartWidget extends StatelessWidget {
   const DeliveryCartWidget({

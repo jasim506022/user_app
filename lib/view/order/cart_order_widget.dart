@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../res/app_function.dart';
-import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../model/productsmodel.dart';

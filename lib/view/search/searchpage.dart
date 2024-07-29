@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/widget/empty_widget.dart';
@@ -10,7 +9,6 @@ import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../service/database/firebasedatabase.dart';
-import '../../service/provider/cart_product_counter_provider.dart';
 import '../../service/provider/category_provider.dart';
 import '../../widget/product_widget.dart';
 

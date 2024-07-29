@@ -135,13 +135,17 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
               child: Column(
                 children: [
                   TextFieldFormWidget(
-                    validator: (p0) {},
+                    validator: (p0) {
+                      return null;
+                    },
                     controller: nameTEC,
                     hintText: 'Name',
                     textInputType: TextInputType.text,
                   ),
                   TextFieldFormWidget(
-                    validator: (p0) {},
+                    validator: (p0) {
+                      return null;
+                    },
                     controller: phoneTEC,
                     hintText: 'Phone',
                     textInputType: TextInputType.phone,

@@ -4,13 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/controller/product_controller.dart';
-import 'package:user_app/res/appasset/image_asset.dart';
 import 'package:user_app/res/constant/string_constant.dart';
-import 'package:user_app/view/product/product_page.dart';
+import 'package:user_app/view/home/popular_product_list_widget.dart';
 
-import '../../model/productsmodel.dart';
+
+
 import '../../res/routes/routesname.dart';
 
 import '../../res/constants.dart';
@@ -19,13 +18,13 @@ import '../../res/Textstyle.dart';
 
 import '../../service/provider/cart_product_counter_provider.dart';
 import '../../widget/cart_badge.dart';
-import '../../widget/single_empty_widget.dart';
-import '../../widget/single_loading_product_widget.dart';
 
+
+import '../product/product_list_widget.dart';
 import 'carousel_silder_widget.dart';
 import 'category_widget.dart';
 import 'row_widget.dart';
-import 'single_popular_widget.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -56,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       child: SafeArea(
         child: Padding(
             padding: EdgeInsets.symmetric(
-                // horizontal: mq.width * .03,
+        
                 horizontal: Get.width * .03),
             child: Column(
               children: [
@@ -67,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                     _buildUserProfile(),
 
                     SizedBox(
-                      // height: mq.height * .015
+                   
                       height: Get.height * .015,
                     ),
                     // Search
@@ -99,7 +98,8 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       SizedBox(height: Get.height * .01),
-                      _buildPopularProductList(),
+                      // _buildPopularProductList(),
+                      const PopularProductListWidget(),
                       SizedBox(
                         height: Get.height * .012,
                       ),
@@ -121,53 +121,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  SizedBox _buildPopularProductList() {
-    return SizedBox(
-        height: Get.height * .19,
-        width: double.infinity,
-        child: Obx(
-          () => StreamBuilder(
-              stream: productController.popularProductSnapshot(
-                  category: productController.categoryController.getCategory),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return const LoadingSingleProductWidget();
-                    },
-                  );
-                }
 
-                if (!snapshot.hasData ||
-                    snapshot.data!.docs.isEmpty ||
-                    snapshot.hasError) {
-                  return SingleEmptyWidget(
-                    image: ImagesAsset.errorSingle,
-                    title: snapshot.hasError
-                        ? 'Error Occure: ${snapshot.error}'
-                        : 'No Data Available',
-                  );
-                }
-
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data!.docs.length > 5
-                      ? 5
-                      : snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    ProductModel productModel =
-                        ProductModel.fromMap(snapshot.data!.docs[index].data());
-                    return ChangeNotifierProvider.value(
-                      value: productModel,
-                      child: const SingleProductWidget(),
-                    );
-                  },
-                );
-              }),
-        ));
-  }
 
   //Profile User
   SizedBox _buildUserProfile() {
@@ -272,3 +226,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+

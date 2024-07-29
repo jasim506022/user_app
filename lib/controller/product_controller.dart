@@ -8,7 +8,6 @@ import '../repository/product_reposity.dart';
 
 import '../res/cartmethod.dart';
 
-
 class ProductController extends GetxController {
   final ProductReposity _firebaseAllDataRepositry;
 
@@ -19,12 +18,15 @@ class ProductController extends GetxController {
   // var productModel = Rx<ProductModel>(ProductModel());
   var isCart = false.obs;
 
+  checkIsCart({required bool isCart}) {
+    this.isCart.value = isCart;
+  }
+
   var countNumber = 1.obs;
 
   updateProductCountNumber(bool isIncrement) {
     isIncrement ? countNumber.value++ : countNumber.value--;
   }
-
 
   Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
           {required String category}) =>
@@ -33,6 +35,14 @@ class ProductController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
           {required String category}) =>
       _firebaseAllDataRepositry.productSnapshots(category: category);
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
+      {required ProductModel productModel}) {
+    return _firebaseAllDataRepositry.similarProductSnapshot(
+        productModel: productModel);
+
+    //
+  }
 
   void checkIfInCart({required ProductModel productModel}) {
     List<String> productIdListFromCartList =

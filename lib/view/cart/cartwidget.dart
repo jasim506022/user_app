@@ -5,10 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import '../../res/cartmethod.dart';
-import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
-import '../product/details_product_page.dart';
 import 'dotlineprinter.dart';
 
 class CardWidget extends StatefulWidget {

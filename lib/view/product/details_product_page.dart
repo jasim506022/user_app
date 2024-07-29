@@ -4,28 +4,23 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/app_function.dart';
+import 'package:user_app/view/product/similar_product_list.dart';
 import '../../res/routes/routesname.dart';
 import '../../res/cartmethod.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../res/utils.dart';
-import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/cart_product_counter_provider.dart';
 import '../../res/constants.dart';
 import '../../model/productsmodel.dart';
 import '../../widget/cart_badge.dart';
-import '../../widget/single_empty_widget.dart';
 import 'details_card_swiper.dart';
-import 'loading_similar_widet.dart';
-import 'similar_product_widget.dart';
+
 
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({
     super.key,
-
-    // required this.productModel
   });
-  // final ProductModel productModel;
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -35,17 +30,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   ProductModel? productModel;
 
   bool isCart = false;
-  // int countNumber = 1;
 
   List<String> productIdListFromCartLish =
       CartMethods.separeteProductIdUserCartList();
 
   var cartProductCountController = Get.put(CartProductCountController());
   var productController = Get.put(ProductController(Get.find()));
-
-  //   var productController = Get.put(ProductController(
-  //   Get.find(),
-  // ));
 
   @override
   void initState() {
@@ -69,7 +59,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Textstyle Textstyle = Textstyle(context);
     Utils utils = Utils(context);
     return PopScope(
       canPop: false,
@@ -77,6 +66,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         // Understand All  Push and Pop
         // Navigator.pushReplacementNamed(context, RoutesName.mainPage,
         //     arguments: 0);
+        // understand this Code
         Get.offAndToNamed(RoutesName.mainPage);
         // Navigator.pushReplacement(
         //     context,
@@ -209,15 +199,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 InkWell(
                                   onTap: () {
                                     Get.toNamed(RoutesName.cartPage);
-                                    // Navigator.pushNamed(
-                                    //     context, RoutesName.cartPage);
-
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           const CartPage(),
-                                    //     ));
                                   },
                                   child: Obx(
                                     () => Container(
@@ -325,28 +306,28 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "৳. ${AppsFunction.productPrice(productModel!.productprice!, productModel!.discount!.toDouble())}",
-                          style: Textstyle.largeText.copyWith(
-                            color: AppColors.greenColor,
-                            letterSpacing: 1.2,
+                    Obx(
+                      () => Row(
+                        children: [
+                          Text(
+                            "৳. ${AppsFunction.productPriceWithQuantity(productModel!.productprice!, productModel!.discount!.toDouble(), productController.countNumber.value)}",
+                            style: Textstyle.largeText.copyWith(
+                              color: AppColors.greenColor,
+                              letterSpacing: 1.2,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Obx(
-                          () => Row(
+                          const SizedBox(
+                            width: 20,
+                          ),
+
+                          Row(
                             children: [
                               //Increament Button
                               _buildIncreandDecrementButton(
                                 () {
                                   productController
                                       .updateProductCountNumber(true);
-                                  // countNumber++;
-                                  // setState(() {});
+                                  
                                 },
                                 Icons.add,
                               ),
@@ -375,62 +356,42 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 },
                                 Icons.remove,
                               ),
-                              // InkWell(
-                              //   onTap: () {
-                              //     if (countNumber == 1) {
-                              //       globalMethod.flutterToast(
-                              //           msg:
-                              //               "The Quantity cannot be less then 1");
-                              //     } else {
-                              //       countNumber--;
-                              //       setState(() {});
-                              //     }
-                              //   },
-                              //   child: Container(
-                              //     padding: const EdgeInsets.all(5),
-                              //     decoration: BoxDecoration(
-                              //         color: greenColor,
-                              //         borderRadius: BorderRadius.circular(10)),
-                              //     child: Icon(
-                              //       Icons.remove,
-                              //       color: white,
-                              //     ),
-                              //   ),
-                              // ),
+                              
                             ],
                           ),
-                        ),
-                        const Spacer(),
-                        // Rattting Product
-                        Row(
-                          children: [
-                            Icon(Icons.star, color: AppColors.yellow),
-                            RichText(
-                              text: TextSpan(
-                                  style: Textstyle.mediumText600.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                  ),
-                                  children: [
-                                    const TextSpan(text: "( "),
-                                    TextSpan(
-                                        text:
-                                            "${productModel!.productrating!}"),
-                                    TextSpan(
-                                      text: " Rattings ",
-                                      style: GoogleFonts.poppins(
-                                        color: Theme.of(context).hintColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                      ),
+
+                          const Spacer(),
+                          // Rattting Product
+                          Row(
+                            children: [
+                              Icon(Icons.star, color: AppColors.yellow),
+                              RichText(
+                                text: TextSpan(
+                                    style: Textstyle.mediumText600.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
                                     ),
-                                    const TextSpan(text: ")"),
-                                  ]),
-                            ),
-                          ],
-                        ),
-                      ],
+                                    children: [
+                                      const TextSpan(text: "( "),
+                                      TextSpan(
+                                          text:
+                                              "${productModel!.productrating!}"),
+                                      TextSpan(
+                                        text: " Rattings ",
+                                        style: GoogleFonts.poppins(
+                                          color: Theme.of(context).hintColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                      const TextSpan(text: ")"),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -446,7 +407,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    _buildSimilarProjectList(),
+                    // _buildSimilarProjectList(),
+                    SimilarProductList(productModel: productModel),
                     const SizedBox(
                       height: 20,
                     ),
@@ -460,59 +422,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-// Similar Project List
-  SizedBox _buildSimilarProjectList() {
-    return SizedBox(
-      height: 150,
-      width: mq.width,
-      child: StreamBuilder(
-        stream: FirebaseDatabase.similarProductSnapshot(
-            productModel: productModel!),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingSimilierWidget();
-          } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const SingleEmptyWidget(
-              image: 'asset/payment/emptytow.png',
-              title: 'No Data Available',
-            );
-          } else if (snapshot.hasError) {
-            return SingleEmptyWidget(
-              image: 'asset/payment/emptytow.png',
-              title: 'Error Occure: ${snapshot.error}',
-            );
-          }
-          if (snapshot.hasData) {
-            return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data!.docs.length > 5
-                    ? 5
-                    : snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  ProductModel models =
-                      ProductModel.fromMap(snapshot.data!.docs[index].data());
-                  return InkWell(
-                    onTap: () {
-                      Get.toNamed(RoutesName.productDestailsPage,
-                          arguments: models);
 
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => ProductDetailsPage(
-                      //         productModel: models,
-                      //       ),
-                      //     ));
-                    },
-                    child: SimilarProductWidget(models: models),
-                  );
-                });
-          }
-          return const LoadingSimilierWidget();
-        },
-      ),
-    );
-  }
 
 // Increment and Decrement Buttton
   InkWell _buildIncreandDecrementButton(VoidCallback function, IconData icon) {
@@ -549,7 +459,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               seller: productModel!.sellerId!,
               context: context);
           isCart = true;
-          setState(() {});
+          // setState(() {});
         }
       },
       icon: Icon(

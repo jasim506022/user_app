@@ -9,7 +9,6 @@ import '../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../res/Textstyle.dart';
 import '../model/productsmodel.dart';
-import '../view/product/details_product_page.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -19,7 +18,7 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
-    // Textstyle Textstyle = Textstyle(context);
+    
     bool isCart = false;
     List<String> productIdListFromCartLish =
         CartMethods.separeteProductIdUserCartList();
@@ -29,13 +28,7 @@ class ProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => ProductDetailsPage(
-        //         productModel: productModel,
-        //       ),
-        //     ));
+        
       },
       child: Card(
         child: Container(
@@ -128,12 +121,7 @@ class ProductWidget extends StatelessWidget {
                           onTap: () {
                             Get.toNamed(RoutesName.productDestailsPage,
                                 arguments: productModel);
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => ProductDetailsPage(
-                            //           productModel: productModel),
-                            //     ));
+                         
                           },
                           child: Container(
                             alignment: Alignment.center,

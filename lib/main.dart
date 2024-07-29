@@ -56,49 +56,58 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
-        iconTheme:
-            IconThemeData(color: themeProvder.getDarkTheme ?AppColors. white :AppColors. black),
+        iconTheme: IconThemeData(
+            color:
+                themeProvder.getDarkTheme ? AppColors.white : AppColors.black),
         appBarTheme: AppBarTheme(
-          iconTheme:
-              IconThemeData(color: themeProvder.getDarkTheme ?AppColors. white :AppColors. black),
+          iconTheme: IconThemeData(
+              color: themeProvder.getDarkTheme
+                  ? AppColors.white
+                  : AppColors.black),
           backgroundColor: themeProvder.getDarkTheme
-              ?AppColors. backgroundDarkColor
+              ? AppColors.backgroundDarkColor
               : AppColors.backgroundLightColor,
           titleTextStyle: GoogleFonts.roboto(
-              color: themeProvder.getDarkTheme ?AppColors. white :AppColors. black,
+              color:
+                  themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
               fontSize: 18,
               fontWeight: FontWeight.bold),
           centerTitle: true,
         ),
         // Scaffold Background Color
         scaffoldBackgroundColor: themeProvder.getDarkTheme
-            ?AppColors. backgroundDarkColor
-            :AppColors. backgroundLightColor,
+            ? AppColors.backgroundDarkColor
+            : AppColors.backgroundLightColor,
         //Card Color
-        cardColor: themeProvder.getDarkTheme ?AppColors. cardDarkColor :AppColors. white,
+        cardColor: themeProvder.getDarkTheme
+            ? AppColors.cardDarkColor
+            : AppColors.white,
         //CanvasColor
-        canvasColor:
-            themeProvder.getDarkTheme ?AppColors. cardDarkColor :AppColors. searchLightColor,
+        canvasColor: themeProvder.getDarkTheme
+            ? AppColors.cardDarkColor
+            : AppColors.searchLightColor,
         // Indicator Color
         indicatorColor: themeProvder.getDarkTheme
-            ?AppColors. indicatorColorDarkColor
-            :AppColors. indicatorColorightColor,
-        primaryColorDark:AppColors. white,
-        primaryColorLight:AppColors. black,
+            ? AppColors.indicatorColorDarkColor
+            : AppColors.indicatorColorightColor,
+        primaryColorDark: AppColors.white,
+        primaryColorLight: AppColors.black,
 
         // Hint Color
-        hintColor: themeProvder.getDarkTheme ?AppColors. hintDarkColor :AppColors. hintLightColor,
+        hintColor: themeProvder.getDarkTheme
+            ? AppColors.hintDarkColor
+            : AppColors.hintLightColor,
         //brightness
         // brightness:
         //     themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
         // Primary
 
-        primaryColor: themeProvder.getDarkTheme ?AppColors. white :AppColors. black);
+        primaryColor:
+            themeProvder.getDarkTheme ? AppColors.white : AppColors.black);
   }
 
   List<SingleChildWidget> get providerAllList {
     return [
-     
       ChangeNotifierProvider(
         create: (context) {
           return SearchTextProvider();

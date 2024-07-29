@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../model/productsmodel.dart';
 import '../../model/profilemodel.dart';
 
 abstract class BaseFirebaseService {
@@ -30,11 +31,11 @@ abstract class BaseFirebaseService {
   Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
       {required String category});
 
-       Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-          {required String category});
-    
+  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
+      {required String category});
 
-
+  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
+      {required ProductModel productModel});
 
   /*
 Future<void> createUserByEmailPassword(

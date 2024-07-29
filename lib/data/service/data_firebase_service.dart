@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:user_app/data/service/base_firebase_service.dart';
+import 'package:user_app/model/productsmodel.dart';
 
 import '../../model/profilemodel.dart';
 
@@ -127,4 +128,16 @@ class DataFirebaseService implements BaseFirebaseService {
               .where("productcategory", isEqualTo: category)
               .orderBy("publishDate", descending: true)
               .snapshots();
+
+  @override
+     Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
+      {required ProductModel productModel}) {
+    return firebaseFirestore
+        .collection("products")
+        .where("productId", isNotEqualTo: productModel.productId)
+        .where("productcategory", isEqualTo: productModel.productcategory)
+        .snapshots();
+
+    //
+  }
 }

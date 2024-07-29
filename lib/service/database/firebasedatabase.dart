@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app/model/productsmodel.dart';
 
 import '../../res/cartmethod.dart';
 import '../../res/constants.dart';
@@ -54,6 +53,7 @@ class FirebaseDatabase {
       // I don't use Mounted . What is problem to show error
       // ignore: use_build_context_synchronously
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) {
           return ShowErrorDialogWidget(
@@ -176,6 +176,8 @@ class FirebaseDatabase {
               */
 
 // Similar  Product Firebase
+
+/*
   static Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
       {required ProductModel productModel}) {
     return FirebaseFirestore.instance
@@ -186,6 +188,7 @@ class FirebaseDatabase {
 
     //
   }
+  */
 
 // Cart Seller
   static Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {

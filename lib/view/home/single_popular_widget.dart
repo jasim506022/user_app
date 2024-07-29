@@ -29,14 +29,6 @@ class SingleProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
-
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => ProductDetailsPage(
-        //         productModel: productModel,
-        //       ),
-        //     ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
