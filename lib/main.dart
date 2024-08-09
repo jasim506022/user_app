@@ -17,7 +17,6 @@ import 'service/provider/imageaddremoveprovider.dart';
 import 'service/provider/loading_provider.dart';
 import 'service/provider/searchtextprovider.dart';
 import 'service/provider/theme_provider.dart';
-import 'service/provider/totalamountrpovider.dart';
 
 void main() async {
   Stripe.publishableKey = publishKey;
@@ -29,6 +28,10 @@ void main() async {
   runApp(const MyApp());
 }
 
+
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 // OnboardingRepository
@@ -36,20 +39,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     mq = MediaQuery.of(context).size;
 
-    return Material(
-      child: MultiProvider(
-        providers: providerAllList,
-        child: Consumer<ThemeProvider>(
-          builder: (context, themeProvder, child) {
-            return GetMaterialApp(
-              initialBinding: InitialBinding(),
-              debugShowCheckedModeBanner: false,
-              theme: themeData(themeProvder),
-              initialRoute: RoutesName.initailRoutes,
-              getPages: AppRoutes.appRoutes(),
-            );
-          },
-        ),
+    return MultiProvider(
+      providers: providerAllList,
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvder, child) {
+          return GetMaterialApp(
+            
+            initialBinding: InitialBinding(),
+            debugShowCheckedModeBanner: false,
+            theme: themeData(themeProvder),
+            initialRoute: RoutesName.signPage,
+            getPages: AppRoutes.appRoutes(),
+          );
+        },
       ),
     );
   }
@@ -118,11 +120,11 @@ class MyApp extends StatelessWidget {
           return CartProductCountProvider();
         },
       ),
-      ChangeNotifierProvider(
-        create: (context) {
-          return TotalAmountProvider();
-        },
-      ),
+      // ChangeNotifierProvider(
+      //   create: (context) {
+      //     return TotalAmountProvider();
+      //   },
+      // ),
       ChangeNotifierProvider(
         create: (context) {
           return ImageUploadProvider();
@@ -292,4 +294,196 @@ class MyApp extends StatelessWidget {
     ];
   }
 }
+*/
+
+
+
+/*
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      initialBinding: InitialBinding(),
+      debugShowCheckedModeBanner: false,
+      initialRoute: RoutesName.initialRoutes,
+      getPages: AppRoutes.appRoutes(),
+    );
+  }
+}
+
+class LoginRepository {
+  // Example method
+  void loginUser(String username, String password) {
+    // Login logic here
+  }
+}
+
+class SignUpRepository {
+  // Example method
+  void signUpUser(String username, String password) {
+    // Sign up logic here
+  }
+}
+
+class LoginController extends GetxController {
+  final LoginRepository loginRepository;
+
+  LoginController(this.loginRepository);
+
+  // Example properties
+  var username = ''.obs;
+  var password = ''.obs;
+
+  // Example method
+  void login() {
+    loginRepository.loginUser(username.value, password.value);
+  }
+}
+
+class SignUpController extends GetxController {
+  final SignUpRepository signUpRepository;
+
+  SignUpController(this.signUpRepository);
+
+  // Example properties
+  var username = ''.obs;
+  var password = ''.obs;
+
+  // Example method
+  void signUp() {
+    signUpRepository.signUpUser(username.value, password.value);
+  }
+}
+
+class InitialBinding extends Bindings {
+  @override
+  void dependencies() {
+    // Initialize global controllers and repositories here if needed
+  }
+}
+
+class SignUpBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<SignUpRepository>(() => SignUpRepository());
+    Get.lazyPut<SignUpController>(
+        () => SignUpController(Get.find<SignUpRepository>()));
+  }
+}
+
+class LoginBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<LoginRepository>(() => LoginRepository());
+    Get.lazyPut<LoginController>(
+        () => LoginController(Get.find<LoginRepository>()));
+  }
+}
+
+class RoutesName {
+  static const String initialRoutes = '/';
+  static const String login = '/login';
+  static const String signUp = '/sign-up';
+}
+
+class AppRoutes {
+  static List<GetPage> appRoutes() {
+    return [
+      GetPage(
+          name: RoutesName.initialRoutes,
+          page: () => LoginPage(),
+          binding: LoginBinding()),
+      GetPage(
+          name: RoutesName.login,
+          page: () => LoginPage(),
+          binding: LoginBinding()),
+      GetPage(
+          name: RoutesName.signUp,
+          page: () => SignUpPage(),
+          binding: SignUpBinding()),
+    ];
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Accessing LoginController instance
+    final LoginController loginController = Get.find();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              onChanged: (value) => loginController.username.value = value,
+              decoration: InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              onChanged: (value) => loginController.password.value = value,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            ElevatedButton(
+              onPressed: loginController.login,
+              child: Text('Login'),
+            ),
+            ElevatedButton(
+              onPressed: () => Get.toNamed(RoutesName.signUp),
+              child: Text('Go to Sign Up Page'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SignUpPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Accessing SignUpController instance
+    final SignUpController signUpController = Get.find();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Sign Up Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              onChanged: (value) => signUpController.username.value = value,
+              decoration: InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              onChanged: (value) => signUpController.password.value = value,
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: Text('Sign Up'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
 */

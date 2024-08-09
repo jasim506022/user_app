@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bkash/flutter_bkash.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/constants.dart';
 import '../../res/app_colors.dart';
 import 'package:user_app/model/addressmodel.dart';
@@ -48,13 +48,15 @@ class _BillPageState extends State<BillPage> {
   String? totalAmount;
 
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+  var totalAmountController = Get.put(TotalAmountController());
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
-      var amount = Provider.of<TotalAmountProvider>(context, listen: false)
-          .amount
-          .toInt();
+      // var amount = Provider.of<TotalAmountProvider>(context, listen: false)
+      //     .amount
+      //     .toInt();
+      var amount = totalAmountController.amount.value.toInt();
       totalAmount = amount.toString();
     });
 
@@ -82,7 +84,7 @@ class _BillPageState extends State<BillPage> {
                       children: [
                         Text("Delivery Address",
                             style: Textstyle.largeBoldText
-                                .copyWith(color:AppColors. greenColor)),
+                                .copyWith(color: AppColors.greenColor)),
                         const Spacer(),
                         InkWell(
                           onTap: () {
@@ -201,14 +203,14 @@ class _BillPageState extends State<BillPage> {
                         alignment: Alignment.center,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            color:AppColors. greenColor,
+                            color: AppColors.greenColor,
                             borderRadius: BorderRadius.circular(15)),
                         child: Text(
                             card == Payment.card.name
                                 ? "Payment By Card"
                                 : "Payment By Bkask",
                             style: Textstyle.mediumTextbold
-                                .copyWith(color:AppColors. white)),
+                                .copyWith(color: AppColors.white)),
                       ),
                     ),
                   ],

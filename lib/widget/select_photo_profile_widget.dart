@@ -14,10 +14,12 @@ class SelectPhotoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignUpController signUpController = Get.put(SignUpController(
-      Get.find(),
-    ));
+    // SignUpController signUpController = Get.put(SignUpController(
+    //   Get.find(),
+    // ));
+      //  SignUpController signUpController = Get.put(SignUpController());
     // Textstyle textstyle = Textstyle(context);
+SignUpController signUpController = Get.find();
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(

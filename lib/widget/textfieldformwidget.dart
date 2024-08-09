@@ -14,6 +14,7 @@ class TextFieldFormWidget extends StatefulWidget {
       this.isShowPassword = false,
       this.textInputAction = TextInputAction.next,
       this.maxLines = 1,
+      this.enabled = true,
       this.textInputType = TextInputType.text,
       this.validator});
   final String hintText;
@@ -24,6 +25,7 @@ class TextFieldFormWidget extends StatefulWidget {
   int? maxLines;
   bool? obscureText;
   bool? isShowPassword;
+  bool? enabled;
   final String? Function(String?)? validator;
 
   @override
@@ -36,6 +38,7 @@ class _TextFieldFormWidgetState extends State<TextFieldFormWidget> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: mq.height * .012),
       child: TextFormField(
+          enabled: widget.enabled,
           controller: widget.controller,
           autofocus: widget.autofocus!,
           maxLines: widget.maxLines,
@@ -44,6 +47,7 @@ class _TextFieldFormWidgetState extends State<TextFieldFormWidget> {
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
           style: GoogleFonts.poppins(
+            
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).primaryColor),

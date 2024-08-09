@@ -9,10 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:user_app/res/utils.dart';
 
+import '../../res/app_function.dart';
 import '../../res/constants.dart';
 
 import '../../res/app_colors.dart';
 import '../../model/profilemodel.dart';
+import '../../widget/textfieldformwidget.dart';
 import '../main/main_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -83,14 +85,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         "phone": phoneTEC.text,
                         "imageurl": image,
                       }).then((value) {
-                        globalMethod.flutterToast(msg: "Bangladesh");
+                        AppsFunction.flutterToast(msg: "Bangladesh");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const MainPage(),
                             ));
                       }).catchError((error) {
-                        globalMethod.flutterToast(msg: "Error $error");
+                        AppsFunction.flutterToast(msg: "Error $error");
                       });
                     } else {
                       await FirebaseFirestore.instance
@@ -102,14 +104,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         "address": addressTEC.text,
                         "phone": phoneTEC.text,
                       }).then((value) {
-                        globalMethod.flutterToast(msg: "indian");
+                        AppsFunction.flutterToast(msg: "indian");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const MainPage(),
                             ));
                       }).catchError((error) {
-                        globalMethod.flutterToast(msg: "Error $error");
+                        AppsFunction.flutterToast(msg: "Error $error");
                       });
                     }
                   },
@@ -181,7 +183,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             width: 180,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color:AppColors. red, width: 2)),
+                                border:
+                                    Border.all(color: AppColors.red, width: 2)),
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(image),
                             ),
@@ -205,10 +208,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    // TextFieldFormWidget(
-                    //   controller: nameTEC,
-                    //   enabled: widget.isEdit == false ? false : true, hintText: 'f',
-                    // ),
+                    TextFieldFormWidget(
+                      controller: nameTEC,
+                      enabled: widget.isEdit == false ? false : true,
+                      hintText: 'f',
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -234,29 +238,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     const SizedBox(
                       height: 5,
                     ),
-                    // widget.isEdit == false
-                    //     ? Container(
-                    //         alignment: Alignment.centerLeft,
-                    //         padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //         height: 58,
-                    //         width: MediaQuery.of(context).size.width,
-                    //         decoration: BoxDecoration(
-                    //             border: Border.all(
-                    //                 color: Theme.of(context).canvasColor,
-                    //                 width: 1),
-                    //             color: Theme.of(context).canvasColor,
-                    //             borderRadius: BorderRadius.circular(15)),
-                    //         child: Text("+88${profileModel.phone!}",
-                    //             style: GoogleFonts.poppins(
-                    //               fontSize: 14,
-                    //               fontWeight: FontWeight.w600,
-                    //               color: utils.profileTextColor,
-                    //             )),
-                    //       )
-                    //     : TextFieldForProfile(
-                    //         controller: phoneTEC,
-                    //         enabled: widget.isEdit == false ? false : true,
-                    //       ),
+                    widget.isEdit == false
+                        ? Container(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            height: 58,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).canvasColor,
+                                    width: 1),
+                                color: Theme.of(context).canvasColor,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Text("+88${profileModel.phone!}",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: utils.profileTextColor,
+                                )),
+                          )
+                        : TextFieldFormWidget(
+                            controller: phoneTEC,
+                            enabled: widget.isEdit == false ? false : true,
+                            hintText: '',
+                          ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -279,10 +284,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    // TextFieldForProfile(
-                    //   controller: emailTEC,
-                    //   enabled: false,
-                    // ),
+                    TextFieldFormWidget(
+                      controller: emailTEC,
+                      enabled: false,
+                      hintText: 'hello',
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -305,10 +311,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    // TextFieldForProfile(
-                    //   controller: addressTEC,
-                    //   enabled: widget.isEdit == false ? false : true,
-                    // ),
+                    TextFieldFormWidget(
+                      hintText: "Hello",
+                      controller: addressTEC,
+                      enabled: widget.isEdit == false ? false : true,
+                    ),
                   ],
                 );
               }

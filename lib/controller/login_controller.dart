@@ -1,77 +1,111 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:user_app/res/constants.dart';
-import 'package:user_app/res/routes/routesname.dart';
 
 import '../model/app_exception.dart';
 import '../repository/login_repository.dart';
 import '../res/app_function.dart';
+import '../res/appasset/icon_asset.dart';
+import '../res/routes/routesname.dart';
 import 'loading_controller.dart';
 
 class LoginController extends GetxController {
+  final TextEditingController passwordET = TextEditingController();
+  final TextEditingController emailET = TextEditingController();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   final LoginRepository _loginRepository;
 
   LoadingController loadingController = Get.put(LoadingController());
 
   LoginController(this._loginRepository);
 
-  Future<void> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
-    try {
-      loadingController.setLoading(true);
+  @override
+  void onClose() {
+    passwordET.dispose();
+    emailET.dispose();
+    super.onClose();
+  }
 
-      await _loginRepository.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+  Future<void> signInWithEmailAndPassword() async {
+    if (!formKey.currentState!.validate()) return;
 
-      loadingController.setLoading(false);
-      Get.offNamed(RoutesName.mainPage);
+    bool checkInternet = await AppsFunction.internetChecking();
 
-      globalMethod.flutterToast(msg: "Sign in Successfully");
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: "asset/image/fruits.png",
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+    if (checkInternet) {
+      AppsFunction.errorDialog(
+          icon: IconAsset.warningIcon,
+          title: "No Internet Connection",
+          content: "Please check your internet settings and try again.",
+          buttonText: "Okay");
+    } else {
+      try {
+        loadingController.setLoading(true);
+
+        await _loginRepository.signInWithEmailAndPassword(
+          email: emailET.text,
+          password: passwordET.text,
+        );
+
+        loadingController.setLoading(false);
+        Get.offNamed(RoutesName.mainPage);
+
+        AppsFunction.flutterToast(msg: "Sign in Successfully");
+      } catch (e) {
+        if (e is AppException) {
+          AppsFunction.errorDialog(
+              icon: IconAsset.warningIcon,
+              title: e.title!,
+              content: e.message,
+              buttonText: "Okay");
+        }
+      } finally {
+        loadingController.setLoading(false);
       }
-    } finally {
-      loadingController.setLoading(false);
     }
   }
 
   Future<void> signWithGoogle() async {
-    try {
+    bool checkInternet = await AppsFunction.internetChecking();
+
+    if (checkInternet) {
       AppsFunction.errorDialog(
-        barrierDismissible: false,
-        icon: "asset/image/fruits.png",
-        title: "Loading for sign with Gmail \n Pleasing Waiting........",
-      );
-
-      var userCredentialGmail = await _loginRepository.signWithGoogle();
-
-      if (userCredentialGmail != null) {
-        if (await _loginRepository.userExists()) {
-          Get.back();
-          Get.offNamed(RoutesName.mainPage);
-          globalMethod.flutterToast(msg: "Successfully Loging");
-        } else {
-          await _loginRepository.createUserGmail(
-              user: userCredentialGmail.user!);
-          Get.back();
-          Get.offNamed(RoutesName.mainPage);
-          globalMethod.flutterToast(msg: "Successfully Loging");
-        }
-      }
-    } catch (e) {
-      if (e is AppException) {
+          icon: IconAsset.warningIcon,
+          title: "No Internet Connection",
+          content: "Please check your internet settings and try again.",
+          buttonText: "Okay");
+    } else {
+      try {
         AppsFunction.errorDialog(
-            icon: "asset/image/fruits.png",
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+          barrierDismissible: true,
+          icon: IconAsset.warningIcon,
+          title: "Loading for sign with Gmail \n Pleasing Waiting........",
+        );
+
+        var userCredentialGmail = await _loginRepository.signWithGoogle();
+
+        if (userCredentialGmail != null) {
+          Get.back();
+          if (await _loginRepository.userExists()) {
+            Get.offNamed(RoutesName.mainPage);
+            AppsFunction.flutterToast(msg: "Successfully Loging");
+          } else {
+            await _loginRepository.createUserGmail(
+                user: userCredentialGmail.user!);
+
+            Get.offNamed(RoutesName.mainPage);
+            AppsFunction.flutterToast(msg: "Successfully Loging");
+          }
+        }
+      } catch (e) {
+        Get.back();
+        if (e is AppException) {
+          AppsFunction.errorDialog(
+              icon: IconAsset.warningIcon,
+              title: e.title!,
+              content: e.message,
+              buttonText: "Okay");
+        }
       }
     }
   }

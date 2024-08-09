@@ -1,12 +1,11 @@
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/model/profilemodel.dart';
 import 'package:user_app/service/provider/image_upload_provider.dart';
@@ -21,12 +20,7 @@ class GlobalMethod {
   final ImagePicker picker = ImagePicker();
 
 // IsValidEmail
-  bool isValidEmail(String email) {
-    // understand Easly RegExp with Example
-    String emailRegex = r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,7}$';
-    RegExp regex = RegExp(emailRegex);
-    return regex.hasMatch(email);
-  }
+ 
 
 // Elevate Button Style
   ButtonStyle elevateButtonStyle() => ElevatedButton.styleFrom(
@@ -131,45 +125,17 @@ class GlobalMethod {
     );
   }
 
-  flutterToast({required String msg}) {
-    Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor:AppColors. red,
-        textColor: AppColors.white,
-        fontSize: 16.0);
-  }
+  // flutterToast({required String msg}) {
+  //   Fluttertoast.showToast(
+  //       msg: msg,
+  //       toastLength: Toast.LENGTH_LONG,
+  //       gravity: ToastGravity.BOTTOM,
+  //       backgroundColor:AppColors. red,
+  //       textColor: AppColors.white,
+  //       fontSize: 16.0);
+  // }
 
-// Rich Text
-  RichText buldRichText(
-      {required BuildContext context,
-      required String simpleText,
-      required String colorText,
-      required Function function}) {
-    return RichText(
-        text: TextSpan(children: [
-      TextSpan(
-        text: simpleText,
-        style: GoogleFonts.poppins(
-            color: AppColors.cardDarkColor, fontWeight: FontWeight.w500),
-      ),
-      TextSpan(
 
-          // Differece reognizer.Why use this
-          recognizer: TapGestureRecognizer()
-            ..onTap = () {
-              function();
-            },
-          text: colorText,
-          style: GoogleFonts.poppins(
-              textStyle: const TextStyle(
-                decoration: TextDecoration.underline,
-              ),
-              color:AppColors. greenColor,
-              fontWeight: FontWeight.w800))
-    ]));
-  }
 
 // Get User All Information on Share
   getUserInformation() async {
@@ -191,12 +157,12 @@ class GlobalMethod {
                 profileModel.cartlist!.map((e) => e.toString()).toList();
             await sharedPreference!.setStringList("cartlist", list);
           } else {
-            flutterToast(msg: "User Doesn't Exist");
+          AppsFunction.  flutterToast(msg: "User Doesn't Exist");
           }
         }
       });
     } catch (error) {
-      flutterToast(msg: "Error:  $error");
+    AppsFunction.  flutterToast(msg: "Error:  $error");
     }
   }
 

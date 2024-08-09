@@ -16,7 +16,6 @@ import '../../model/productsmodel.dart';
 import '../../widget/cart_badge.dart';
 import 'details_card_swiper.dart';
 
-
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({
     super.key,
@@ -30,6 +29,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   ProductModel? productModel;
 
   bool isCart = false;
+
+  int counter = 1;
 
   List<String> productIdListFromCartLish =
       CartMethods.separeteProductIdUserCartList();
@@ -306,93 +307,87 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Obx(
-                      () => Row(
-                        children: [
-                          Text(
-                            "৳. ${AppsFunction.productPriceWithQuantity(productModel!.productprice!, productModel!.discount!.toDouble(), productController.countNumber.value)}",
-                            style: Textstyle.largeText.copyWith(
-                              color: AppColors.greenColor,
-                              letterSpacing: 1.2,
+                    Row(
+                      children: [
+                        Text(
+                          "৳. ${AppsFunction.productPriceWithQuantity(productModel!.productprice!, productModel!.discount!.toDouble(), counter).toStringAsFixed(2)}",
+                          style: Textstyle.largeText.copyWith(
+                            color: AppColors.greenColor,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+
+                        Row(
+                          children: [
+                            //Increament Button
+                            _buildIncreandDecrementButton(
+                              () {
+                                counter++;
+                                setState(() {});
+                              },
+                              Icons.add,
                             ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
 
-                          Row(
-                            children: [
-                              //Increament Button
-                              _buildIncreandDecrementButton(
-                                () {
-                                  productController
-                                      .updateProductCountNumber(true);
-                                  
-                                },
-                                Icons.add,
-                              ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(counter.toString(),
+                                  style: Textstyle.largestText),
+                            ),
 
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                    productController.countNumber.value
-                                        .toString(),
-                                    style: Textstyle.largestText),
-                              ),
+                            //Increament Button
+                            _buildIncreandDecrementButton(
+                              () {
+                                if (counter == 1) {
+                                  AppsFunction.flutterToast(
+                                      msg:
+                                          "The Quantity cannot be less then 1");
+                                } else {
+                                  counter--;
+                                  setState(() {});
+                                }
+                              },
+                              Icons.remove,
+                            ),
+                          ],
+                        ),
 
-                              //Increament Button
-                              _buildIncreandDecrementButton(
-                                () {
-                                  if (productController.countNumber.value ==
-                                      1) {
-                                    globalMethod.flutterToast(
-                                        msg:
-                                            "The Quantity cannot be less then 1");
-                                  } else {
-                                    productController
-                                        .updateProductCountNumber(false);
-                                  }
-                                },
-                                Icons.remove,
-                              ),
-                              
-                            ],
-                          ),
-
-                          const Spacer(),
-                          // Rattting Product
-                          Row(
-                            children: [
-                              Icon(Icons.star, color: AppColors.yellow),
-                              RichText(
-                                text: TextSpan(
-                                    style: Textstyle.mediumText600.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13,
-                                    ),
-                                    children: [
-                                      const TextSpan(text: "( "),
-                                      TextSpan(
-                                          text:
-                                              "${productModel!.productrating!}"),
-                                      TextSpan(
-                                        text: " Rattings ",
-                                        style: GoogleFonts.poppins(
-                                          color: Theme.of(context).hintColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 13,
-                                        ),
+                        const Spacer(),
+                        // Rattting Product
+                        Row(
+                          children: [
+                            Icon(Icons.star, color: AppColors.yellow),
+                            RichText(
+                              text: TextSpan(
+                                  style: Textstyle.mediumText600.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                  children: [
+                                    const TextSpan(text: "( "),
+                                    TextSpan(
+                                        text:
+                                            "${productModel!.productrating!}"),
+                                    TextSpan(
+                                      text: " Rattings ",
+                                      style: GoogleFonts.poppins(
+                                        color: Theme.of(context).hintColor,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
                                       ),
-                                      const TextSpan(text: ")"),
-                                    ]),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                    ),
+                                    const TextSpan(text: ")"),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -422,8 +417,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-
-
 // Increment and Decrement Buttton
   InkWell _buildIncreandDecrementButton(VoidCallback function, IconData icon) {
     return InkWell(
@@ -447,19 +440,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     return FloatingActionButton.extended(
       backgroundColor: isCart ? AppColors.red : AppColors.greenColor,
       onPressed: () {
+        print(counter);
         List<String> cartItemIdList =
             CartMethods.separeteProductIdUserCartList();
 
         if (cartItemIdList.contains(productModel!.productId)) {
-          globalMethod.flutterToast(msg: "Item is already  in cart");
+          AppsFunction.flutterToast(msg: "Item is already  in cart");
         } else {
           CartMethods.addItemToCartWithSeller(
               productId: productModel!.productId!,
-              productCounter: productController.countNumber.value,
+              productCounter: counter,
               seller: productModel!.sellerId!,
               context: context);
           isCart = true;
-          // setState(() {});
+          setState(() {});
         }
       },
       icon: Icon(

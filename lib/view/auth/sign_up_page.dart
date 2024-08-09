@@ -3,16 +3,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:user_app/auth/signinpage.dart';
 
-import '../controller/signup_controller.dart';
-import '../res/app_function.dart';
-import '../res/routes/routesname.dart';
-import '../res/constants.dart';
-import '../../res/app_colors.dart';
+import '../../controller/signup_controller.dart';
+import '../../res/app_function.dart';
+import '../../res/constants.dart';
+import '../../../res/app_colors.dart';
 
-import '../../widget/textfieldformwidget.dart';
-import '../widget/select_photo_profile_widget.dart';
+import '../../../widget/textfieldformwidget.dart';
+import 'widget/custom_button_widget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -21,9 +19,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  SignUpController signUpController = Get.put(SignUpController(
-    Get.find(),
-  ));
+  // SignUpController signUpController = Get.put(SignUpController(
+  //   Get.find(),
+  // ));
+
+  // SignUpController signUpController = Get.put(SignUpController());
+  SignUpController signUpController = Get.find();
 
   final TextEditingController _phontET = TextEditingController();
   final TextEditingController _nameET = TextEditingController();
@@ -48,7 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _buildSignUpButton() {
     return SizedBox(
         width: mq.width,
-        child: CoustomButtonWidget(
+        child: CustomButtonWidget(
           onPressed: () async {
             if (!_formKey.currentState!.validate()) return;
             if (_passwordET.text.trim() != _confirmpasswordET.text.trim()) {
@@ -70,11 +71,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   content: "No Internet",
                   buttonText: "Okay");
             } else {
-              signUpController.createNewUser(
-                  name: _emailET.text,
-                  phone: "0${_phontET.text}",
-                  email: _emailET.text,
-                  password: _passwordET.text);
+              // signUpController.createNewUser(
+              //     name: _emailET.text,
+              //     phone: "0${_phontET.text}",
+              //     email: _emailET.text,
+              //     password: _passwordET.text);
             }
           },
         ));
@@ -98,6 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     height: mq.height * .071,
                   ),
+                  /*
                   Obx(
                     () => InkWell(
                       onTap: () async {
@@ -122,6 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             shape: BoxShape.circle,
                             border:
                                 Border.all(color: AppColors.grey, width: 3)),
+                        /*
                         child: CircleAvatar(
                           radius: mq.width * .2,
                           backgroundImage: signUpController.selectPhoto.value ==
@@ -139,6 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 )
                               : null,
                         ),
+                        */
                       ),
 
                       /*
@@ -168,6 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       */
                     ),
                   ),
+                 */
                   SizedBox(
                     height: mq.height * .018,
                   ),
@@ -208,8 +213,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please enter your Email Address';
-                            } else if (globalMethod.isValidEmail(value) ==
-                                false) {
+                            } else if (!AppsFunction.isValidEmail(value)) {
                               return 'Please Enter a Valid Email Address';
                             }
                             return null;
@@ -272,13 +276,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     height: mq.height * .03,
                   ),
-                  globalMethod.buldRichText(
+                  AppsFunction.buldRichText(
                       context: context,
                       simpleText: "Already Create An Account? ",
                       colorText: "Sign In",
                       function: () {
-                        Navigator.pushReplacementNamed(
-                            context, RoutesName.signPage);
+                        Get.back();
                       }),
                   SizedBox(
                     height: mq.height * .12,

@@ -4,6 +4,9 @@ class ImagesAsset {
   static String secondImageOnboard = "asset/onboard/all_grocery.png";
   static String thirdImageOnboard = "asset/onboard/delivery.png";
 
+  //
+  static String appLogoImage = "asset/image/logo.png";
+
   // Error
   static String errorSingle = "asset/error/empty_single.png";
   static String error = "asset/error/empty.png";

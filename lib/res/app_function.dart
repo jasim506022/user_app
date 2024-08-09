@@ -1,11 +1,114 @@
+import 'dart:io';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_colors.dart';
 
+import '../data/response/app_data_exception.dart';
+import '../widget/custom_text_button_widget.dart';
+
 class AppsFunction {
+  static Future<bool?> showBackDialog() {
+    return Get.dialog<bool>(AlertDialog(
+      backgroundColor: AppColors.white,
+      title: Row(
+        children: [
+          Text("Exit",
+              style: GoogleFonts.poppins(
+                  letterSpacing: 1.8,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black)),
+          const SizedBox(
+            width: 5,
+          ),
+          Container(
+              padding: const EdgeInsets.all(5),
+              decoration:
+                  BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
+              child: Icon(
+                Icons.question_mark_rounded,
+                color: AppColors.white,
+              )),
+        ],
+      ),
+      content: Text('Are you sure you want to Exit this Apps?',
+          style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.black)),
+      actions: [
+        CustomTextButtonWidget(
+          textColor: AppColors.red,
+          colorBorder: AppColors.red,
+          title: "Yes",
+          onPressed: () {
+            Get.back(result: true);
+          },
+        ),
+        CustomTextButtonWidget(
+          colorBorder: AppColors.greenColor,
+          title: "No",
+          onPressed: () {
+            Get.back(result: false);
+          },
+        ),
+      ],
+    ));
+  }
+
+  static bool isValidEmail(String email) {
+    // understand Easly RegExp with Example
+    String emailRegex = r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)*[a-zA-Z]{2,7}$';
+    RegExp regex = RegExp(emailRegex);
+    return regex.hasMatch(email);
+  }
+
+  static void handleException(Object e) {
+    if (e is FirebaseAuthException) {
+      throw FirebaseAuthExceptions(e);
+    } else if (e is SocketException) {
+      throw InternetException(e.toString());
+    } else {
+      throw OthersException(e.toString());
+    }
+  }
+
+  // Rich Text
+  static RichText buldRichText(
+      {required BuildContext context,
+      required String simpleText,
+      required String colorText,
+      required Function function}) {
+    return RichText(
+        text: TextSpan(children: [
+      TextSpan(
+        text: simpleText,
+        style: GoogleFonts.poppins(
+            color: AppColors.cardDarkColor, fontWeight: FontWeight.w500),
+      ),
+      TextSpan(
+
+          // Differece reognizer.Why use this
+          recognizer: TapGestureRecognizer()
+            ..onTap = () {
+              function();
+            },
+          text: colorText,
+          style: GoogleFonts.poppins(
+              textStyle: const TextStyle(
+                decoration: TextDecoration.underline,
+              ),
+              color: AppColors.greenColor,
+              fontWeight: FontWeight.w800))
+    ]));
+  }
+
   static Future<bool> internetChecking() async {
     final List<ConnectivityResult> connectivityResult =
         await (Connectivity().checkConnectivity());
@@ -28,7 +131,8 @@ class AppsFunction {
       required String title,
       String? content,
       String? buttonText,
-      bool? barrierDismissible}) {
+      bool? barrierDismissible,
+      bool? checkInternet}) {
     Get.defaultDialog(
         barrierDismissible: barrierDismissible ?? true,
         contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../auth/signinpage.dart';
+import '../auth/sign_in_page.dart';
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/res/constants.dart';
 
-import '../../res/app_colors.dart';
-import '../../res/textstyle.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/appasset/image_asset.dart';
+import '../../../res/textstyle.dart';
 
 class AppSignInPageIntro extends StatelessWidget {
   const AppSignInPageIntro({
@@ -15,25 +16,25 @@ class AppSignInPageIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Textstyle txtStyle = Textstyle(context);
+   
     return Column(
       children: [
         SizedBox(
-          height: mq.height * .071,
+          height: Get.height * .071,
         ),
         Image.asset(
-          "asset/image/logo.png",
-          height: mq.height * .177,
-          width: mq.height * .177,
+          ImagesAsset.appLogoImage,
+          height: Get.height * .177,
+          width: Get.height * .177,
         ),
         SizedBox(
-          height: mq.height * .012,
+          height: Get.height * .012,
         ),
         Text(title,
             style: Textstyle.largestText
                 .copyWith(fontSize: 24, color: AppColors.black)),
         SizedBox(
-          height: mq.height * .012,
+          height: Get.height * .012,
         ),
         Text(
           "Check our fresh viggies from Jasim Grocery",
@@ -41,7 +42,7 @@ class AppSignInPageIntro extends StatelessWidget {
               fontSize: 16, color: AppColors.hintLightColor),
         ),
         SizedBox(
-          height: mq.height * .059,
+          height: Get.height * .059,
         ),
       ],
     );

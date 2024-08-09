@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/routes/routesname.dart';
 import 'package:user_app/service/provider/cart_product_counter_provider.dart';
 import 'package:user_app/res/constants.dart';
-import 'package:user_app/view/cart/cartpage.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
-
 
 
 class CartMethods {
@@ -26,11 +26,10 @@ class CartMethods {
         .collection("users")
         .doc(sharedPreference!.getString("uid")!)
         .update({"cartlist": tempList}).then((value) {
-      globalMethod.flutterToast(msg: "Item Add Successfully");
+      AppsFunction.flutterToast(msg: "Item Add Successfully");
       sharedPreference!.setStringList("cartlist", tempList);
 
       controller.addCartItem();
-
 
       separeteProductIdUserCartList();
       separteProductQuantityUserCartList();
@@ -49,7 +48,7 @@ class CartMethods {
         .collection("users")
         .doc(sharedPreference!.getString("uid")!)
         .update({"cartlist": tempList}).then((value) {
-      globalMethod.flutterToast(msg: "Item Add Successfully");
+      AppsFunction.flutterToast(msg: "Item Add Successfully");
 
       sharedPreference!.setStringList("cartlist", tempList);
 
@@ -64,23 +63,31 @@ class CartMethods {
   static void removeProdctFromCart(
       {required int index, required BuildContext context}) async {
     List<String> cartList = sharedPreference!.getStringList("cartlist")!;
+    print(cartList[index]);
+    cartList.remove(cartList[index]);
 
-    cartList.removeAt(index);
     await FirebaseDatabase.currentUserSnaphots()
         .update({"cartlist": cartList}).then((value) {
-      globalMethod.flutterToast(msg: "Item remove Successfully");
+      AppsFunction.flutterToast(msg: "Item remove Successfully");
 
       sharedPreference!.setStringList("cartlist", cartList);
+
       CartMethods.separeteProductIdUserCartList();
       CartMethods.separteProductQuantityUserCartList();
 
-      Provider.of<CartProductCountProvider>(context, listen: false)
-          .removeCartItem();
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const CartPage(),
-          ));
+      // Provider.of<CartProductCountProvider>(context, listen: false)
+      //     .removeCartItem();
+      var controller = Get.put(CartProductCountController());
+      controller.removeCartItem();
+
+      // print(cartList.length);
+
+      // Navigator.pushReplacement(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => const CartPage(),
+      //     ));
+      Get.toNamed(RoutesName.mainPage);
     });
   }
 
@@ -96,7 +103,7 @@ class CartMethods {
 */
     FirebaseDatabase.currentUserSnaphots()
         .update({"cartlist": emptyCart}).then((value) {
-      globalMethod.flutterToast(msg: "Remove All Cart Successfully");
+      AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
     });
   }
 

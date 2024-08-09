@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../res/routes/routesname.dart';
-import '../res/constants.dart';
-import '../../res/app_colors.dart';
-import '../../service/database/firebasedatabase.dart';
-import '../../widget/show_error_dialog_widget.dart';
-import '../../widget/textfieldformwidget.dart';
+import '../../res/app_function.dart';
+import '../../res/routes/routesname.dart';
+import '../../res/constants.dart';
+import '../../../res/app_colors.dart';
+import '../../../service/database/firebasedatabase.dart';
+import '../../../widget/show_error_dialog_widget.dart';
+import '../../../widget/textfieldformwidget.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
@@ -38,13 +39,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               await FirebaseDatabase.forgetPasswordSnapshot(
                       email: _emailET.text)
                   .then((value) {
-                globalMethod.flutterToast(msg: "Please Check Your mail");
+                AppsFunction.flutterToast(msg: "Please Check Your mail");
                 Navigator.pushReplacementNamed(context, RoutesName.signPage);
               }).catchError((error) {
-                globalMethod.flutterToast(msg: "Error Occured: $error");
+                AppsFunction.flutterToast(msg: "Error Occured: $error");
               });
             } else {
-              globalMethod.flutterToast(msg: "No Internet Connection");
+              AppsFunction.flutterToast(msg: "No Internet Connection");
             }
           } catch (e) {
             if (mounted) {
@@ -120,7 +121,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter your Email';
-                    } else if (globalMethod.isValidEmail(value)) {
+                    } else if (!AppsFunction.isValidEmail(value)) {
                       return 'Please Enter a Valid Email Address';
                     }
                     return null;
@@ -133,7 +134,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 SizedBox(
                   height: mq.height * 0.03,
                 ),
-                globalMethod.buldRichText(
+                AppsFunction.buldRichText(
                     colorText: "Sign In",
                     context: context,
                     function: () {

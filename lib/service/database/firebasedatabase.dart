@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import '../../res/app_function.dart';
 import '../../res/cartmethod.dart';
 import '../../res/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -47,7 +48,7 @@ class FirebaseDatabase {
 
         return await auth.signInWithCredential(credential);
       } else {
-        globalMethod.flutterToast(msg: "No Internet Connection");
+        AppsFunction.flutterToast(msg: "No Internet Connection");
       }
     } catch (e) {
       // I don't use Mounted . What is problem to show error

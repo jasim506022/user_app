@@ -22,12 +22,6 @@ class ProductController extends GetxController {
     this.isCart.value = isCart;
   }
 
-  var countNumber = 1.obs;
-
-  updateProductCountNumber(bool isIncrement) {
-    isIncrement ? countNumber.value++ : countNumber.value--;
-  }
-
   Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
           {required String category}) =>
       _firebaseAllDataRepositry.popularProductSnapshot(category: category);
@@ -50,3 +44,5 @@ class ProductController extends GetxController {
     isCart.value = productIdListFromCartList.contains(productModel.productId);
   }
 }
+
+

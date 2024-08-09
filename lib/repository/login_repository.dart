@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:user_app/data/response/app_data_exception.dart';
 import 'package:user_app/data/service/data_firebase_service.dart';
+
+import '../res/app_function.dart';
 
 class LoginRepository {
   final _dataFirebaseService = DataFirebaseService();
@@ -13,7 +12,7 @@ class LoginRepository {
       return await _dataFirebaseService.signInWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
-      handleException(e);
+      AppsFunction.handleException(e);
       rethrow;
     }
   }
@@ -22,7 +21,7 @@ class LoginRepository {
     try {
       return await _dataFirebaseService.signWithGoogle();
     } catch (e) {
-      handleException(e);
+      AppsFunction.handleException(e);
       rethrow;
     }
   }
@@ -31,7 +30,7 @@ class LoginRepository {
     try {
       return await _dataFirebaseService.userExists();
     } catch (e) {
-      handleException(e);
+      AppsFunction.handleException(e);
       rethrow;
     }
   }
@@ -40,17 +39,7 @@ class LoginRepository {
     try {
       await _dataFirebaseService.createUserGmail(user: user);
     } catch (e) {
-      handleException(e);
-    }
-  }
-
-  void handleException(Object e) {
-    if (e is FirebaseAuthException) {
-      throw FirebaseAuthExceptions(e);
-    } else if (e is SocketException) {
-      throw InternetException(e.toString());
-    } else {
-      throw OthersException(e.toString());
+      AppsFunction.handleException(e);
     }
   }
 }
