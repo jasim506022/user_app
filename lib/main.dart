@@ -10,7 +10,6 @@ import 'package:user_app/res/routes/approutes.dart';
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
 import 'res/routes/routesname.dart';
-import 'service/provider/cart_product_counter_provider.dart';
 import 'res/constants.dart';
 import 'service/provider/image_upload_provider.dart';
 import 'service/provider/imageaddremoveprovider.dart';
@@ -115,11 +114,7 @@ class MyApp extends StatelessWidget {
           return SearchTextProvider();
         },
       ),
-      ChangeNotifierProvider(
-        create: (context) {
-          return CartProductCountProvider();
-        },
-      ),
+     
       // ChangeNotifierProvider(
       //   create: (context) {
       //     return TotalAmountProvider();

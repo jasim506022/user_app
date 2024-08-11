@@ -1,4 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -124,15 +125,23 @@ class _CardWidgetState extends State<CardWidget> {
                                   onTap: () async {
                                     List<String> cartList = sharedPreference!
                                         .getStringList("cartlist")!;
-                                    print(widget.productModel.productname);
-                                    print(
-                                        cartList[widget.index] + "Bangladesh");
+                                    if (kDebugMode) {
+                                      print(widget.productModel.productname);
+                                    }
+                                    if (kDebugMode) {
+                                      print(
+                                        "${cartList[widget.index]}Bangladesh");
+                                    }
                                     CartMethods.removeProdctFromCart(
                                         index: widget.index, context: context);
                                     for (int i = 0; i < cartList.length; i++) {
-                                      print(cartList[i]);
+                                      if (kDebugMode) {
+                                        print(cartList[i]);
+                                      }
                                     }
-                                    print(cartList.length);
+                                    if (kDebugMode) {
+                                      print(cartList.length);
+                                    }
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(3),

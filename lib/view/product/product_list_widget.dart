@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../controller/product_controller.dart';
 import '../../model/productsmodel.dart';
 import '../../res/appasset/image_asset.dart';
-import '../../service/provider/category_provider.dart';
 import '../../widget/empty_widget.dart';
 import '../../widget/loading_product_widget.dart';
 import '../../widget/product_widget.dart';
@@ -23,29 +21,30 @@ class ProductListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductController firebaseAllDataController =
+    final ProductController productController =
         Get.put(ProductController(Get.find()));
 
-    var categoryController = Get.put(CategoryController());
     return Obx(() => StreamBuilder(
           stream: isPopular!
-              ? firebaseAllDataController.popularProductSnapshot(
-                  category: categoryController.getCategory)
-              : firebaseAllDataController.productSnapshots(
-                  category: categoryController.getCategory),
+              ? productController.popularProductSnapshot(
+                  category: productController.categoryController.getCategory)
+              : productController.productSnapshots(
+                  category: productController.categoryController.getCategory),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const LoadingProductWidget();
             }
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return EmptyWidget(
-                  image: ImagesAsset.error, title: 'No Data Available');
-            }
-            if (snapshot.hasError) {
-              return EmptyWidget(
-                  image: ImagesAsset.error,
-                  title: 'Error Occured: ${snapshot.error}');
-            }
+            if (!snapshot.hasData ||
+                snapshot.data!.docs.isEmpty ||
+                snapshot.hasError) {
+                  return EmptyWidget(
+                    image: ImagesAsset.error,
+                    title: snapshot.hasError
+                        ? 'Error Occure: ${snapshot.error}'
+                        : 'No Data Available',
+                  );
+                }
+          
 
             return GridView.builder(
               shrinkWrap: true,
@@ -71,8 +70,4 @@ class ProductListWidget extends StatelessWidget {
           },
         ));
   }
-
-
-
 }
-

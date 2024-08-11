@@ -103,6 +103,20 @@ class FirebaseExceptions extends AppException {
         title = 'Invalid Checksum';
         message = 'The file upload failed due to an invalid checksum.';
         break;
+      case 'permission-denied':
+        title = 'Permission Denied';
+        message = 'You do not have permission to access this data.';
+        break;
+
+      case 'unavailable':
+        title = 'Service Unavailable';
+        message =
+            'The service is temporarily unavailable. Please try again later.';
+        break;
+      case 'deadline-exceeded':
+        title = 'Timeout';
+        message = 'The request took too long to complete. Please try again.';
+        break;
       default:
         title = 'Firebase Error';
         message = 'Failed to upload image: ${e.message}';

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import 'package:user_app/service/provider/cart_product_counter_provider.dart';
@@ -51,9 +50,9 @@ class CartMethods {
       AppsFunction.flutterToast(msg: "Item Add Successfully");
 
       sharedPreference!.setStringList("cartlist", tempList);
-
-      Provider.of<CartProductCountProvider>(context, listen: false)
-          .addCartItem();
+      // try to add
+      // Provider.of<CartProductCountProvider>(context, listen: false)
+      //     .addCartItem();
       separeteProductIdUserCartList();
       separteProductQuantityUserCartList();
     });
@@ -63,7 +62,9 @@ class CartMethods {
   static void removeProdctFromCart(
       {required int index, required BuildContext context}) async {
     List<String> cartList = sharedPreference!.getStringList("cartlist")!;
-    print(cartList[index]);
+    if (kDebugMode) {
+      print(cartList[index]);
+    }
     cartList.remove(cartList[index]);
 
     await FirebaseDatabase.currentUserSnaphots()

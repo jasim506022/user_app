@@ -4,27 +4,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/controller/product_controller.dart';
-import 'package:user_app/res/constant/string_constant.dart';
-import 'package:user_app/view/home/popular_product_list_widget.dart';
 
-
-
+import '../../controller/product_controller.dart';
+import '../../res/app_function.dart';
+import '../../res/appasset/icon_asset.dart';
+import '../../res/constant/string_constant.dart';
 import '../../res/routes/routesname.dart';
 
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
-
-import '../../service/provider/cart_product_counter_provider.dart';
 import '../../widget/cart_badge.dart';
-
 
 import '../product/product_list_widget.dart';
 import 'carousel_silder_widget.dart';
 import 'category_widget.dart';
+import 'popular_product_list_widget.dart';
 import 'row_widget.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,7 +33,24 @@ class _HomePageState extends State<HomePage> {
   var productController = Get.put(ProductController(
     Get.find(),
   ));
-  var cartProductCountController = Get.put(CartProductCountController());
+
+  @override
+  void initState() {
+    showInternetDialog();
+    super.initState();
+  }
+
+  showInternetDialog() async {
+    bool checkInternet = await AppsFunction.internetChecking();
+
+    if (checkInternet) {
+      AppsFunction.errorDialog(
+          icon: IconAsset.warningIcon,
+          title: "No Internet Connection",
+          content: "Please check your internet settings and try again.",
+          buttonText: "Okay");
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -54,9 +67,7 @@ class _HomePageState extends State<HomePage> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-            padding: EdgeInsets.symmetric(
-        
-                horizontal: Get.width * .03),
+            padding: EdgeInsets.symmetric(horizontal: Get.width * .03),
             child: Column(
               children: [
                 // Header
@@ -66,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                     _buildUserProfile(),
 
                     SizedBox(
-                   
                       height: Get.height * .015,
                     ),
                     // Search
@@ -121,8 +131,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
-
   //Profile User
   SizedBox _buildUserProfile() {
     String? imageUrl =
@@ -176,12 +184,13 @@ class _HomePageState extends State<HomePage> {
 
           InkWell(
               onTap: () {
-                Navigator.pushNamed(context, RoutesName.cartPage);
+                Get.toNamed(RoutesName.cartPage);
               },
               child: Obx(
                 () => CartBadge(
                     color: AppColors.greenColor,
-                    itemCount: cartProductCountController.getCounts,
+                    itemCount:
+                        productController.cartProductCountController.getCounts,
                     icon: Icons.shopping_bag),
               )),
           SizedBox(
@@ -226,4 +235,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

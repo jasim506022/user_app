@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import '../../res/app_colors.dart';
@@ -23,7 +24,8 @@ class CartBadge extends StatelessWidget {
               color: color,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, RoutesName.cartPage);
+              
+              Get.toNamed(RoutesName.cartPage);
             }),
         if (itemCount > 0)
           Positioned(
@@ -32,7 +34,7 @@ class CartBadge extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
-                color:AppColors. red,
+                color: AppColors.red,
                 borderRadius: BorderRadius.circular(15),
               ),
               constraints: const BoxConstraints(
@@ -42,7 +44,7 @@ class CartBadge extends StatelessWidget {
               child: Text(
                 itemCount.toString(),
                 style: GoogleFonts.roboto(
-                    color:AppColors. white, // Text color for the badge
+                    color: AppColors.white, // Text color for the badge
                     fontSize: 10,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,

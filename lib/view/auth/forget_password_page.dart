@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/forget_password_controller.dart';
 
 import '../../res/app_function.dart';
 import '../../res/routes/routesname.dart';
-import '../../res/constants.dart';
 import '../../../res/app_colors.dart';
 import '../../widget/text_form_field_widget.dart';
 import 'widget/app_sign_page_intro.dart';

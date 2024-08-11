@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -151,8 +152,10 @@ class _CartPageState extends State<CartPage> {
                                                   totalAmountPerSeller);
                                             });
 
-                                            print(
+                                            if (kDebugMode) {
+                                              print(
                                                 "${totalAmountPerSeller}Bangladesh");
+                                            }
 
                                             // if (itemIndex == 0) {
                                             //   totalAmount = 0;
@@ -249,7 +252,9 @@ class _CartPageState extends State<CartPage> {
                       ),
                       child: Obx(() {
                         totalAmount += totalAmountController.amount.value;
-                        print(totalAmount.toString());
+                        if (kDebugMode) {
+                          print(totalAmount.toString());
+                        }
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
