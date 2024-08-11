@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvder, child) {
           return GetMaterialApp(
-            
             initialBinding: InitialBinding(),
             debugShowCheckedModeBanner: false,
             theme: themeData(themeProvder),

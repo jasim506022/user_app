@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     // Search
                     InkWell(
                       onTap: () {
-                        Get.toNamed(RoutesName.searchPage);
+                        Get.toNamed(RoutesName.mainPage, arguments: 2);
                       },
                       child: _buildSearchBar(),
                     ),

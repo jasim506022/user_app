@@ -30,15 +30,14 @@ class SimilarProductList extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingSimilierWidget();
-          } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          } else if (!snapshot.hasData ||
+              snapshot.data!.docs.isEmpty ||
+              snapshot.hasError) {
             return SingleEmptyWidget(
               image: ImagesAsset.errorSingle,
-              title: 'No Data Available',
-            );
-          } else if (snapshot.hasError) {
-            return SingleEmptyWidget(
-              image: ImagesAsset.errorSingle,
-              title: 'Error Occure: ${snapshot.error}',
+              title: snapshot.hasError
+                  ? 'Error Occure: ${snapshot.error}'
+                  : 'No Data Available',
             );
           }
           if (snapshot.hasData) {

@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void didChangeDependencies() {
-    final dynamic data = ModalRoute.of(context)!.settings.arguments;
+    int? data = Get.arguments;
     indexValue = data;
     super.didChangeDependencies();
   }

@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../controller/product_controller.dart';
 import '../../res/constants.dart';
-import '../../service/provider/category_provider.dart';
 
+import '../../res/routes/routesname.dart';
 import 'product_list_widget.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
-
-  // final bool? isPopular;
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  var firebaseAllDataController = Get.put(ProductController(
+  var productController = Get.put(ProductController(
     Get.find(),
   ));
-  var categoryController = Get.put(CategoryController());
-
-  // var isPopular = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +31,9 @@ class _ProductPageState extends State<ProductPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(RoutesName.mainPage, arguments: 2);
+            },
             icon: Icon(
               Icons.search,
               color: Theme.of(context).primaryColor,
@@ -56,7 +54,7 @@ class _ProductPageState extends State<ProductPage> {
             const SizedBox(
               height: 15,
             ),
-             Expanded(
+            Expanded(
                 child: ProductListWidget(
               isPopular: isPopular,
             )),
@@ -83,7 +81,7 @@ class _ProductPageState extends State<ProductPage> {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       ),
-      value: categoryController.getCategory,
+      value: productController.categoryController.getCategory,
       isExpanded: true,
       style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
@@ -96,61 +94,8 @@ class _ProductPageState extends State<ProductPage> {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
       onChanged: (value) {
-        categoryController.setCategory(category: value!);
+        productController.categoryController.setCategory(category: value!);
       },
     );
   }
 }
-
-/*
-Widget buildProductList({bool? isPopular = false, bool? isMovie = true}) {
-  final ProductController firebaseAllDataController =
-      Get.put(ProductController(Get.find()));
-
-  var categoryController = Get.put(CategoryController());
-
-  return Obx(() => StreamBuilder(
-        stream: isPopular!
-            ? firebaseAllDataController.popularProductSnapshot(
-                category: categoryController.getCategory)
-            : firebaseAllDataController.productSnapshots(
-                category: categoryController.getCategory),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingProductWidget();
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const EmptyWidget(
-                image: 'asset/payment/empty.png', title: 'No Data Available');
-          }
-          if (snapshot.hasError) {
-            return EmptyWidget(
-                image: 'asset/payment/empty.png',
-                title: 'Error Occured: ${snapshot.error}');
-          }
-
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: isMovie!
-                ? const AlwaysScrollableScrollPhysics()
-                : const NeverScrollableScrollPhysics(),
-            itemCount: snapshot.data!.docs.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: .78,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-            ),
-            itemBuilder: (context, index) {
-              ProductModel productModel =
-                  ProductModel.fromMap(snapshot.data!.docs[index].data());
-              return ChangeNotifierProvider.value(
-                value: productModel,
-                child: const ProductWidget(),
-              );
-            },
-          );
-        },
-      ));
-}
-*/
