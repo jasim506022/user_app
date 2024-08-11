@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../res/constants.dart';
 
 // ignore: must_be_immutable
-class TextFieldFormWidget extends StatefulWidget {
-  TextFieldFormWidget(
+class TextFormFieldWidget extends StatefulWidget {
+  TextFormFieldWidget(
       {super.key,
       required this.hintText,
       required this.controller,
@@ -29,10 +29,10 @@ class TextFieldFormWidget extends StatefulWidget {
   final String? Function(String?)? validator;
 
   @override
-  State<TextFieldFormWidget> createState() => _TextFieldFormWidgetState();
+  State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
 }
 
-class _TextFieldFormWidgetState extends State<TextFieldFormWidget> {
+class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +47,6 @@ class _TextFieldFormWidgetState extends State<TextFieldFormWidget> {
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
           style: GoogleFonts.poppins(
-            
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).primaryColor),

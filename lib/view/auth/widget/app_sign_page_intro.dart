@@ -10,13 +10,14 @@ class AppSignInPageIntro extends StatelessWidget {
   const AppSignInPageIntro({
     super.key,
     required this.title,
+    required this.subTitle,
   });
 
   final String title;
+  final String subTitle;
 
   @override
   Widget build(BuildContext context) {
-   
     return Column(
       children: [
         SizedBox(
@@ -37,7 +38,8 @@ class AppSignInPageIntro extends StatelessWidget {
           height: Get.height * .012,
         ),
         Text(
-          "Check our fresh viggies from Jasim Grocery",
+          subTitle,
+          textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
               fontSize: 16, color: AppColors.hintLightColor),
         ),

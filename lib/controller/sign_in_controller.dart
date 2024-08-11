@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../model/app_exception.dart';
-import '../repository/login_repository.dart';
+import '../repository/sign_in_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/routes/routesname.dart';
 import 'loading_controller.dart';
 
-class LoginController extends GetxController {
+class SignInController extends GetxController {
   final TextEditingController passwordET = TextEditingController();
   final TextEditingController emailET = TextEditingController();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final LoginRepository _loginRepository;
+
+  final SignInRepository _loginRepository;
 
   LoadingController loadingController = Get.put(LoadingController());
 
-  LoginController(this._loginRepository);
+  SignInController(this._loginRepository);
 
   @override
   void onClose() {
@@ -28,7 +28,7 @@ class LoginController extends GetxController {
   }
 
   Future<void> signInWithEmailAndPassword() async {
-    if (!formKey.currentState!.validate()) return;
+   
 
     bool checkInternet = await AppsFunction.internetChecking();
 

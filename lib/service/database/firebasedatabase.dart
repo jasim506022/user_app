@@ -118,9 +118,9 @@ class FirebaseDatabase {
   }
 
   // forget Password Snapshort
-  static Future<void> forgetPasswordSnapshot({required String email}) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-  }
+  // static Future<void> forgetPasswordSnapshot({required String email}) async {
+  //   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  // }
 
 // Current User All Firestore Data Data
   static Future<DocumentSnapshot<Map<String, dynamic>>>

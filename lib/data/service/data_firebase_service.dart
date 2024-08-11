@@ -130,7 +130,7 @@ class DataFirebaseService implements BaseFirebaseService {
               .snapshots();
 
   @override
-     Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
+  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
       {required ProductModel productModel}) {
     return firebaseFirestore
         .collection("products")
@@ -139,5 +139,10 @@ class DataFirebaseService implements BaseFirebaseService {
         .snapshots();
 
     //
+  }
+
+  @override
+  Future<void> forgetPasswordSnapshot({required String email}) async {
+    await firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }

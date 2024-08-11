@@ -3,7 +3,7 @@ import 'package:user_app/data/service/data_firebase_service.dart';
 
 import '../res/app_function.dart';
 
-class LoginRepository {
+class SignInRepository {
   final _dataFirebaseService = DataFirebaseService();
 
   Future<UserCredential> signInWithEmailAndPassword(

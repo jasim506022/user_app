@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../controller/login_controller.dart';
+import '../../controller/sign_in_controller.dart';
 import '../../res/app_function.dart';
 import '../../res/appasset/icon_asset.dart';
 import '../../res/routes/routesname.dart';
 import '../../res/app_colors.dart';
-import '../../widget/textfieldformwidget.dart';
+import '../../widget/text_form_field_widget.dart';
 import 'widget/app_sign_page_intro.dart';
 import 'widget/custom_button_widget.dart';
 
@@ -20,7 +20,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  LoginController loginController = Get.find();
+  SignInController loginController = Get.find();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -75,7 +76,10 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const AppSignInPageIntro(title: "Welcome Back!"),
+                  const AppSignInPageIntro(
+                    title: "Welcome Back!",
+                    subTitle: "Check our fresh viggies from Jasim Grocery",
+                  ),
                   _buildLoginForm(),
                   const SizedBox(
                     height: 5,
@@ -135,10 +139,10 @@ class _SignInPageState extends State<SignInPage> {
 
   Form _buildLoginForm() {
     return Form(
-      key: loginController.formKey,
+      key: formKey,
       child: Column(
         children: [
-          TextFieldFormWidget(
+          TextFormFieldWidget(
             hintText: 'Email Address',
             controller: loginController.emailET,
             validator: (emailText) {
@@ -151,7 +155,7 @@ class _SignInPageState extends State<SignInPage> {
             },
             textInputType: TextInputType.emailAddress,
           ),
-          TextFieldFormWidget(
+          TextFormFieldWidget(
             isShowPassword: true,
             obscureText: true,
             validator: (passwordText) {
@@ -258,8 +262,10 @@ class _SignInPageState extends State<SignInPage> {
       width: Get.width,
       child: CustomButtonWidget(
         onPressed: () async {
+          if (!formKey.currentState!.validate()) return;
           loginController.signInWithEmailAndPassword();
         },
+        title: 'Sign In',
       ),
     );
   }

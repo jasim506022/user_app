@@ -4,7 +4,7 @@ import 'package:user_app/bindings/sign_up_binding.dart';
 import 'package:user_app/view/product/details_product_page.dart';
 import 'package:user_app/view/product/product_page.dart';
 
-import '../../view/auth/forgetpasswordpage.dart';
+import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';
 import '../../view/auth/sign_up_page.dart';
 

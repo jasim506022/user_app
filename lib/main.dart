@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             initialBinding: InitialBinding(),
             debugShowCheckedModeBanner: false,
             theme: themeData(themeProvder),
-            initialRoute: RoutesName.signPage,
+            initialRoute: RoutesName.initailRoutes,
             getPages: AppRoutes.appRoutes(),
           );
         },

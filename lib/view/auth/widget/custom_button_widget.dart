@@ -6,9 +6,11 @@ import '../../../controller/loading_controller.dart';
 import '../../../res/app_colors.dart';
 
 class CustomButtonWidget extends StatelessWidget {
-  const CustomButtonWidget({super.key, required this.onPressed});
+  const CustomButtonWidget(
+      {super.key, required this.onPressed, required this.title});
 
   final VoidCallback onPressed;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class CustomButtonWidget extends StatelessWidget {
                   ),
                 )
               : Text(
-                  "Sign In",
+                  title,
                   style: GoogleFonts.poppins(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,

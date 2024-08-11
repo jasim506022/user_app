@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:user_app/controller/signup_controller.dart';
+import 'package:user_app/controller/sign_up_controller.dart';
 
-import '../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../res/textstyle.dart';
 
@@ -14,12 +13,6 @@ class SelectPhotoProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SignUpController signUpController = Get.put(SignUpController(
-    //   Get.find(),
-    // ));
-      //  SignUpController signUpController = Get.put(SignUpController());
-    // Textstyle textstyle = Textstyle(context);
-SignUpController signUpController = Get.find();
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -30,39 +23,39 @@ SignUpController signUpController = Get.find();
           Align(
             alignment: Alignment.center,
             child: Container(
-              width: mq.width * .22,
-              height: mq.height * .005,
+              width: Get.width * .22,
+              height: Get.height * .005,
               decoration: BoxDecoration(
                   color: Theme.of(context).indicatorColor,
                   borderRadius: BorderRadius.circular(2)),
             ),
           ),
-          SizedBox(height: mq.height * .02),
+          SizedBox(height: Get.height * .02),
           Align(
               alignment: Alignment.center,
               child: Text("Select Photo", style: Textstyle.largeBoldText)),
           SizedBox(
-            height: mq.height * .01,
+            height: Get.height * .01,
           ),
-          _selectPhotoOption(signUpController)
+          _selectPhotoOption()
         ],
       ),
     );
   }
 
-  Row _selectPhotoOption(
-      SignUpController signUpController) {
+  Row _selectPhotoOption() {
+    SignUpController signUpController = Get.find();
     return Row(
       children: [
-        _buildPhotoOption("Camera", Icons.camera_alt, () {
+        _buildTakePhotoOption("Camera", Icons.camera_alt, () {
           Get.back();
 
           signUpController.selectImage(imageSource: ImageSource.camera);
         }),
         SizedBox(
-          width: mq.width * .066,
+          width: Get.width * .066,
         ),
-        _buildPhotoOption("Gallery", Icons.photo_album, () {
+        _buildTakePhotoOption("Gallery", Icons.photo_album, () {
           Get.back();
 
           signUpController.selectImage(imageSource: ImageSource.gallery);
@@ -71,11 +64,11 @@ SignUpController signUpController = Get.find();
     );
   }
 
-  Padding _buildPhotoOption(
-       String title, IconData icon, VoidCallback funcion) {
+  Padding _buildTakePhotoOption(
+      String title, IconData icon, VoidCallback funcion) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: mq.width * .012, vertical: mq.height * .012),
+          horizontal: Get.width * .012, vertical: Get.height * .012),
       child: InkWell(
         onTap: funcion,
         child: Column(
@@ -92,7 +85,7 @@ SignUpController signUpController = Get.find();
               ),
             ),
             SizedBox(
-              height: mq.width * .01,
+              height: Get.width * .01,
             ),
             Text(
               title,

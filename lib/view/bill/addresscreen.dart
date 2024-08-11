@@ -8,7 +8,7 @@ import '../../res/app_function.dart';
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../model/addressmodel.dart';
-import '../../widget/textfieldformwidget.dart';
+import '../../widget/text_form_field_widget.dart';
 
 // ignore: must_be_immutable
 class AddOrUpdateAddressScreen extends StatefulWidget {
@@ -67,7 +67,7 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          backgroundColor:AppColors. greenColor,
+          backgroundColor: AppColors.greenColor,
           onPressed: () {
             if (key.currentState!.validate()) {
               if (widget.isUpdate!) {
@@ -135,7 +135,7 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
               key: key,
               child: Column(
                 children: [
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     validator: (p0) {
                       return null;
                     },
@@ -143,7 +143,7 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
                     hintText: 'Name',
                     textInputType: TextInputType.text,
                   ),
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     validator: (p0) {
                       return null;
                     },
@@ -151,22 +151,22 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
                     hintText: 'Phone',
                     textInputType: TextInputType.phone,
                   ),
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     controller: flatHouseNumberTEC,
                     hintText: 'Flat/House Number',
                     textInputType: TextInputType.text,
                   ),
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     controller: streetnameornumberTEC,
                     hintText: 'Street Number or name',
                     textInputType: TextInputType.text,
                   ),
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     controller: villageTEC,
                     hintText: 'Village Name',
                     textInputType: TextInputType.text,
                   ),
-                  TextFieldFormWidget(
+                  TextFormFieldWidget(
                     controller: cityTEC,
                     hintText: 'City Name',
                     textInputType: TextInputType.text,
@@ -175,7 +175,7 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
                     children: [
                       Flexible(
                         flex: 5,
-                        child: TextFieldFormWidget(
+                        child: TextFormFieldWidget(
                           controller: countryTEC,
                           hintText: 'Country Name',
                           textInputType: TextInputType.text,
@@ -189,8 +189,8 @@ class _AddOrUpdateAddressScreenState extends State<AddOrUpdateAddressScreen> {
                           child: DropdownButton<String>(
                             value: dropdownValue,
                             elevation: 16,
-                            style:
-                                Textstyle.mediumText600.copyWith(color:AppColors. black),
+                            style: Textstyle.mediumText600
+                                .copyWith(color: AppColors.black),
                             underline: Container(
                               height: 2,
                               color: AppColors.greenColor,

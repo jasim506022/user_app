@@ -14,7 +14,7 @@ import '../../res/constants.dart';
 
 import '../../res/app_colors.dart';
 import '../../model/profilemodel.dart';
-import '../../widget/textfieldformwidget.dart';
+import '../../widget/text_form_field_widget.dart';
 import '../main/main_page.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -208,7 +208,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    TextFieldFormWidget(
+                    TextFormFieldWidget(
                       controller: nameTEC,
                       enabled: widget.isEdit == false ? false : true,
                       hintText: 'f',
@@ -257,7 +257,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   color: utils.profileTextColor,
                                 )),
                           )
-                        : TextFieldFormWidget(
+                        : TextFormFieldWidget(
                             controller: phoneTEC,
                             enabled: widget.isEdit == false ? false : true,
                             hintText: '',
@@ -284,7 +284,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    TextFieldFormWidget(
+                    TextFormFieldWidget(
                       controller: emailTEC,
                       enabled: false,
                       hintText: 'hello',
@@ -311,7 +311,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                    TextFieldFormWidget(
+                    TextFormFieldWidget(
                       hintText: "Hello",
                       controller: addressTEC,
                       enabled: widget.isEdit == false ? false : true,

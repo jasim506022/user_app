@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,8 +74,18 @@ class AppsFunction {
   static void handleException(Object e) {
     if (e is FirebaseAuthException) {
       throw FirebaseAuthExceptions(e);
+    } else if (e is FirebaseException) {
+      throw FirebaseExceptions(e);
     } else if (e is SocketException) {
       throw InternetException(e.toString());
+    } else if (e is PlatformException) {
+      throw PlatformExceptions(e);
+    } else if (e is FileSystemException) {
+      throw FileSystemExceptions(e.toString());
+    } else if (e is OutOfMemoryError) {
+      throw OutOfMemoryErrors(e.toString());
+    } else if (e is TimeoutException) {
+      throw TimeOutExceptions(e.message.toString());
     } else {
       throw OthersException(e.toString());
     }

@@ -37,6 +37,14 @@ abstract class BaseFirebaseService {
   Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
       {required ProductModel productModel});
 
+  Future<void> forgetPasswordSnapshot({required String email});
+
+  /*
+   // static Future<void> forgetPasswordSnapshot({required String email}) async {
+  //   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  // }
+  */
+
   /*
 Future<void> createUserByEmailPassword(
       {required UserCredential userCredential,
