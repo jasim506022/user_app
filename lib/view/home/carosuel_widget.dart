@@ -1,10 +1,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../model/carsolemodel.dart';
-import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 
@@ -19,12 +19,12 @@ class CarouselWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: mq.width,
+        width: Get.width,
         padding: EdgeInsets.only(
             left: Get.width * .055,
-            bottom: mq.height * .02,
-            top: mq.height * .02),
-        margin: EdgeInsets.symmetric(horizontal: mq.width * .022),
+            bottom: Get.height * .02,
+            top: Get.height * .02),
+        margin: EdgeInsets.symmetric(horizontal: Get.width * .022),
         decoration: BoxDecoration(
             color: carouselModel.color, borderRadius: BorderRadius.circular(15)),
         child: Stack(
@@ -34,8 +34,8 @@ class CarouselWidget extends StatelessWidget {
               right: 0,
               child: Image.asset(
                 carouselModel.image,
-                height: mq.height * .19,
-                width: mq.height * .19,
+                height: Get.height * .19,
+                width: Get.height * .19,
                 fit: BoxFit.contain,
               ),
             ),
@@ -65,7 +65,7 @@ class CarouselWidget extends StatelessWidget {
                 Text(
                   carouselModel.title,
                   style: Textstyle.largestText
-                      .copyWith(fontSize: 24, color: AppColors.black),
+                      .copyWith(fontSize: 24.sp, color: AppColors.black),
                 ),
                 Row(
                   children: [
@@ -77,8 +77,8 @@ class CarouselWidget extends StatelessWidget {
                         color: AppColors.black,
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
+                     SizedBox(
+                      width: 10.w,
                     ),
                     Text(
                       carouselModel.number.toUpperCase(),
@@ -91,14 +91,14 @@ class CarouselWidget extends StatelessWidget {
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(10)),
                   child: Text("Shop Now",
                       style: Textstyle.largeBoldText.copyWith(
                         color: AppColors.black,
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         letterSpacing: 1,
                       )),
                 )

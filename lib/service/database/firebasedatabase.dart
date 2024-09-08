@@ -192,30 +192,31 @@ class FirebaseDatabase {
   */
 
 // Cart Seller
-  static Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
-    return FirebaseFirestore.instance
-        .collection("seller")
-        .where("uid", whereIn: CartMethods.separteSellerListUserList())
-        .snapshots();
+  // static Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
+  //   return FirebaseFirestore.instance
+  //       .collection("seller")
+  //       .where("uid", whereIn: CartMethods.separteSellerListUserList())
+  //       .snapshots();
 
-    //
-  }
+  //   //
+  // }
 
 // Cart Product
-  static Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
-      {required String sellerId}) {
-    return FirebaseFirestore.instance
-        .collection("products")
-        .where("sellerId", isEqualTo: sellerId)
-        .where("productId",
-            whereIn: CartMethods.separeteProductIdUserCartList())
-        .orderBy("publishDate", descending: true)
-        .snapshots();
+  // static Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
+  //     {required String sellerId}) {
+  //   return FirebaseFirestore.instance
+  //       .collection("products")
+  //       .where("sellerId", isEqualTo: sellerId)
+  //       .where("productId",
+  //           whereIn: CartMethods.separeteProductIdUserCartList())
+  //       .orderBy("publishDate", descending: true)
+  //       .snapshots();
 
-    //
-  }
+  //   //
+  // }
 
 // All Address Firebase
+/*
   static DocumentReference<Map<String, dynamic>> allorUpdateAddressSnapshot(
       {required String id}) {
     var address = FirebaseFirestore.instance
@@ -226,6 +227,8 @@ class FirebaseDatabase {
     return address;
     //
   }
+  */
+/*
 
 // All User Address
   static Stream<QuerySnapshot<Map<String, dynamic>>> alluserAddressSnapshot() {
@@ -238,6 +241,7 @@ class FirebaseDatabase {
     //
   }
 
+*/
 // Save Order Details For user
   static saveOrderDetailsForUser(
       {required Map<String, dynamic> orderDetailsMap,
@@ -260,6 +264,22 @@ class FirebaseDatabase {
         .set(orderDetailsMap);
   }
 
+  Future<void> saveOrderDetails(
+      {required Map<String, dynamic> orderMetailsMap,
+      required String orderId}) async {
+    String userId = sharedPreference!.getString("uid")!;
+    final userPath = "users/$userId/orders";
+    const sellerPth = "orders"; // What is different between final and const;
+    final firestore = FirebaseFirestore.instance;
+    final userUpload =
+        firestore.collection(userPath).doc(orderId).set(orderMetailsMap);
+    final sellerUpload =
+        firestore.collection(sellerPth).doc(orderId).set(orderMetailsMap);
+
+    await Future.wait([userUpload, sellerUpload]);
+  }
+
+/*
 // All Order Snpashot
   static Stream<QuerySnapshot<Map<String, dynamic>>> allOrderSnapshots() {
     return FirebaseFirestore.instance
@@ -271,6 +291,8 @@ class FirebaseDatabase {
 
     //
   }
+  
+  */
 
 // All Order Snpashot
   static Stream<QuerySnapshot<Map<String, dynamic>>> allCompleteSnapshots() {
@@ -311,12 +333,15 @@ class FirebaseDatabase {
 // Order Product Snpashot
   static Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
       {required Map<String, dynamic> snpshot}) {
+    // var name = (snpshot)["uid"];
+    // var imags = CartMethods.separteOrderProductIdList((snpshot)["productIds"]);
+
     return FirebaseFirestore.instance
         .collection("products")
         .where("productId",
             whereIn:
                 CartMethods.separteOrderProductIdList((snpshot)["productIds"]))
-        .where("orderBy", whereIn: (snpshot)["uid"])
+        // .where("orderBy", whereIn: (snpshot)["uid"])
         .orderBy("publishDate", descending: true)
         .get();
 

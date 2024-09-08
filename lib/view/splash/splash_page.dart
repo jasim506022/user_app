@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/controller/splash_controller.dart';
-import 'package:user_app/res/appasset/icon_asset.dart';
-import 'package:user_app/res/appasset/image_asset.dart';
 
-import '../../res/constants.dart';
+import '../../controller/splash_controller.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
+import '../../res/appasset/icon_asset.dart';
+import '../../res/appasset/image_asset.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(SplashController(
-      repository: Get.find(),
-    ));
+    Get.find<SplashController>();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
-    // Textstyle Textstyle = Textstyle(context);
     return Material(
       child: Container(
-        height: mq.height,
-        width: mq.width,
+        height: 1.sh,
+        width: 1.sw,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(ImagesAsset.splashImage),
-          ),
+              image: AssetImage(ImagesAsset.splashImage), fit: BoxFit.fill),
         ),
         child: Center(
           child: Column(
@@ -36,12 +32,17 @@ class SplashPage extends StatelessWidget {
             children: [
               Image.asset(
                 IconAsset.appIcon,
-                height: mq.height * .176,
-                width: mq.height * .176,
+                height: 0.176.sh,
+                width: 0.176.sh,
+              ),
+              SizedBox(
+                height: 10.h,
               ),
               Text("Grocery Apps",
-                  style: Textstyle.largestText
-                      .copyWith(color: AppColors.greenColor, fontSize: 22)),
+                  style: Textstyle.largestText.copyWith(
+                      color: AppColors.greenColor,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold)),
             ],
           ),
         ),

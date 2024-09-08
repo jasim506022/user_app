@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/routes/routesname.dart';
+import '../../controller/cart_controller.dart';
+import '../../res/appasset/icon_asset.dart';
 import '../../res/cartmethod.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../res/constants.dart';
-import 'dotlineprinter.dart';
+import 'dot_line_printer.dart';
 
 class CardWidget extends StatefulWidget {
   const CardWidget({
@@ -27,15 +29,13 @@ class CardWidget extends StatefulWidget {
 }
 
 class _CardWidgetState extends State<CardWidget> {
+  var cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
-   
     return InkWell(
       onTap: () {
         Get.toNamed(RoutesName.productDestailsPage,
             arguments: widget.productModel);
-
-   
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -54,7 +54,7 @@ class _CardWidgetState extends State<CardWidget> {
                     children: [
                       Container(
                         height: 110,
-                        width: 140,
+                        width: 100, //140
                         alignment: Alignment.center,
                         margin: const EdgeInsets.all(10),
                         padding: const EdgeInsets.all(20),
@@ -117,30 +117,26 @@ class _CardWidgetState extends State<CardWidget> {
                                 ),
                               ),
                               const SizedBox(
-                                width: 15,
+                                width: 10,
                               ),
                               Flexible(
                                 flex: 1,
                                 child: InkWell(
                                   onTap: () async {
-                                    List<String> cartList = sharedPreference!
-                                        .getStringList("cartlist")!;
-                                    if (kDebugMode) {
-                                      print(widget.productModel.productname);
-                                    }
-                                    if (kDebugMode) {
-                                      print(
-                                        "${cartList[widget.index]}Bangladesh");
-                                    }
-                                    CartMethods.removeProdctFromCart(
-                                        index: widget.index, context: context);
-                                    for (int i = 0; i < cartList.length; i++) {
-                                      if (kDebugMode) {
-                                        print(cartList[i]);
-                                      }
-                                    }
-                                    if (kDebugMode) {
-                                      print(cartList.length);
+                                    bool checkInternet =
+                                        await AppsFunction.internetChecking();
+
+                                    if (checkInternet) {
+                                      AppsFunction.errorDialog(
+                                          icon: IconAsset.warningIcon,
+                                          title: "No Internet Connection",
+                                          content:
+                                              "Please check your internet settings and try again.",
+                                          buttonText: "Okay");
+                                    } else {
+                                      cartController.removeProdctFromCart(
+                                        index: widget.index,
+                                      );
                                     }
                                   },
                                   child: Container(
@@ -185,7 +181,7 @@ class _CardWidgetState extends State<CardWidget> {
                                     "${1 * widget.itemQunter} * ",
                                     style: GoogleFonts.poppins(
                                         color: AppColors.greenColor,
-                                        fontSize: 14,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
@@ -196,7 +192,7 @@ class _CardWidgetState extends State<CardWidget> {
                                         .toStringAsFixed(2),
                                     style: GoogleFonts.poppins(
                                         color: AppColors.greenColor,
-                                        fontSize: 14,
+                                        fontSize: 13,
                                         letterSpacing: 1.2,
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -207,7 +203,7 @@ class _CardWidgetState extends State<CardWidget> {
                                 "= ৳. ${(AppsFunction.productPrice(widget.productModel.productprice!, widget.productModel.discount!.toDouble()) * widget.itemQunter).toStringAsFixed(2)}",
                                 style: GoogleFonts.poppins(
                                     color: AppColors.greenColor,
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     letterSpacing: 1.2,
                                     fontWeight: FontWeight.w900),
                               ),

@@ -23,7 +23,7 @@ class SimilarProductList extends StatelessWidget {
     var productController = Get.put(ProductController(Get.find()));
     return SizedBox(
       height: 150,
-      width: mq.width,
+      width: Get.width,
       child: StreamBuilder(
         stream: productController.similarProductSnapshot(
             productModel: productModel!),

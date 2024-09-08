@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/network_controller.dart';
 import '../../controller/sign_in_controller.dart';
 import '../../res/app_function.dart';
 import '../../res/appasset/icon_asset.dart';
@@ -54,6 +55,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    DependencyInjection.init();
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {
@@ -61,6 +63,7 @@ class _SignInPageState extends State<SignInPage> {
           return;
         }
         final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
+        
         if (shouldPop) {
           SystemNavigator.pop();
         }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -42,7 +43,6 @@ class _HomePageState extends State<HomePage> {
 
   showInternetDialog() async {
     bool checkInternet = await AppsFunction.internetChecking();
-
     if (checkInternet) {
       AppsFunction.errorDialog(
           icon: IconAsset.warningIcon,
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Get.width * .03),
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Column(
               children: [
                 // Header
@@ -139,17 +139,17 @@ class _HomePageState extends State<HomePage> {
         sharedPreference?.getString(StringConstant.nameSharedPreference);
 
     return SizedBox(
-      height: Get.height * .08,
+      height: 36.h,
       width: Get.width,
       child: Row(
         children: [
           // User Profile Image
           Container(
-            height: Get.height * .08,
-            width: Get.height * .08,
+            height: 36.h,
+            width: 36.h,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.red, width: 3)),
+                border: Border.all(color: AppColors.red, width: 3.w)),
             child: ClipOval(
               child: CachedNetworkImage(
                 placeholder: (context, url) => CircularProgressIndicator(
@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           SizedBox(
-            width: Get.width * .03,
+            width: 13.w,
           ),
 
           // User Informatiokn
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
               "Search...........",
               style: GoogleFonts.roboto(
                 color: Theme.of(context).hintColor,
-                fontSize: 15,
+                fontSize: 15.sp,
               ),
             ),
             const Spacer(),

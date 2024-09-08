@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../res/app_colors.dart';
@@ -31,7 +32,7 @@ class ShowErrorDialogWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: mq.width * .033,
+            width: Get.width * .033,
           ),
           Icon(
             Icons.error_sharp,

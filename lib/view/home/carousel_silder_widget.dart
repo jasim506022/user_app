@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../res/constants.dart';
 
@@ -15,7 +16,7 @@ class CarouselSilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-          height: mq.height * .22,
+          height: Get.height * .22,
           aspectRatio: 16 / 12,
           viewportFraction: 0.9,
           autoPlay: true,

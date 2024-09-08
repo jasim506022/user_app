@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'method.dart';
 import 'paymentmodel.dart';
+
+
 
 SharedPreferences? sharedPreference;
 int? isviewed;
 
 GlobalMethod globalMethod = GlobalMethod();
 
-String onBoardingSharedPre = "onBoarding";
+
 
 const List<String> allCategoryList = <String>[
   "All",
@@ -41,11 +43,8 @@ String publishKey =
 
 const List<String> list = <String>['Home', 'Office', 'Other'];
 
-Size mqs(BuildContext context) {
-  return MediaQuery.of(context).size;
-}
 
-late Size mq;
+// late Size mq;
 
 double countStarRatting = 0.0;
 String titleRating = "";

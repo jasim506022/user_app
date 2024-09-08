@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:user_app/model/address_model.dart';
 
 import '../../model/productsmodel.dart';
 import '../../model/profilemodel.dart';
@@ -11,6 +12,8 @@ abstract class BaseFirebaseService {
   FirebaseAuth get firebaseAuth;
   FirebaseFirestore get firebaseFirestore;
   FirebaseStorage get firebaseStorage;
+
+  Future<User?> getCurrentUser();
 
   Future<UserCredential> signInWithEmailAndPassword(
       {required String email, required String password});
@@ -38,6 +41,32 @@ abstract class BaseFirebaseService {
       {required ProductModel productModel});
 
   Future<void> forgetPasswordSnapshot({required String email});
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot();
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
+      {required String sellerId});
+
+  Future<void> uploadOrUpdateAddress(
+      {required AddressModel addressModel, required bool isUpdate});
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot();
+  Future<void> deleteAddress({required String addressId});
+
+  Future<void> saveOrderDetails(
+      {required Map<String, dynamic> orderMetailsMap, required String orderId});
+
+  Future<Map<String, dynamic>> postRequest(
+      {required String endpoint,
+      required Map<String, String> body,
+      required String baseUrl,
+      required Map<String, String> headers});
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> allOrderSnapshots();
+
+  // Order Product Snpashot
+  Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
+      {required List<dynamic> itemIDDetails});
 
   /*
    // static Future<void> forgetPasswordSnapshot({required String email}) async {

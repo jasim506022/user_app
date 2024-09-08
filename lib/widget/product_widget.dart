@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routesname.dart';
@@ -32,8 +33,8 @@ class ProductWidget extends StatelessWidget {
       },
       child: Card(
         child: Container(
-          height: mq.height,
-          width: mq.width,
+          height: Get.height,
+          width: Get.width,
           decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20),
@@ -49,17 +50,18 @@ class ProductWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: mqs(context).height * .125,
+                    height:    .125.sh,
+                    // mqs(context).height * .125,
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(20),
+                    margin:  EdgeInsets.all(10.r),
+                    padding:  EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
                         color: AppColors.cardImageBg,
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5).w),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: FancyShimmerImage(
-                        height: mqs(context).height * .85,
+                        height: .85.sh,
                         boxFit: BoxFit.contain,
                         imageUrl: productModel.productimage![0],
                       ),
@@ -69,8 +71,8 @@ class ProductWidget extends StatelessWidget {
                     left: 10,
                     top: 10,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 5),
+                      padding:  EdgeInsets.symmetric(
+                          horizontal: 8.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         border: Border.all(color: AppColors.red, width: .5),
                         borderRadius: BorderRadius.circular(15),
@@ -96,7 +98,7 @@ class ProductWidget extends StatelessWidget {
                             style: Textstyle.largeText
                                 .copyWith(color: AppColors.red),
                           ),
-                          const SizedBox(
+                           SizedBox(
                             width: 15,
                           ),
                           Text(
@@ -125,7 +127,7 @@ class ProductWidget extends StatelessWidget {
                           },
                           child: Container(
                             alignment: Alignment.center,
-                            height: mqs(context).height * .045,
+                            height: .045.sh,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),

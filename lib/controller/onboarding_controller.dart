@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import 'package:user_app/repository/onboarding_repository.dart';
 
-class OnboardingController extends GetxController {
+class OnBoardingController extends GetxController {
   final OnBoardingRepository onBoardingRepository;
 
   var currentIndex = 0.obs;
 
-  OnboardingController({required this.onBoardingRepository});
+  OnBoardingController({required this.onBoardingRepository});
 
   Future<void> completeOnboarding() async {
     await onBoardingRepository.setOnboardingViewed();

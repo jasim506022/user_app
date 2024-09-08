@@ -1,7 +1,7 @@
 import '../res/appasset/image_asset.dart';
-import 'onboardmodel.dart';
+import '../model/onboardmodel.dart';
 
-class OnBoardData {
+class OnBoardingListData {
   static List<OnboardModel> onboarddataList() => [
         OnboardModel(
           img: ImagesAsset.firstImageOnboard,

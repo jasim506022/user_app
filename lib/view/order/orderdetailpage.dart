@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/res/Textstyle.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
@@ -50,7 +51,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                     ProfileModel profileModel =
                         ProfileModel.fromMap(userSnapshot.data!.data()!);
                     return Container(
-                      width: mqs(context).width,
+                      width: 1.sw,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 25, vertical: 20),
                       decoration:
@@ -174,7 +175,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
             ),
             Expanded(
               child: Container(
-                width: mqs(context).width,
+                width: 1.sw,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 decoration: BoxDecoration(color: Theme.of(context).cardColor),

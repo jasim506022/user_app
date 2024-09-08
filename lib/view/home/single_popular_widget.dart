@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routesname.dart';
@@ -31,10 +32,10 @@ class SingleProductWidget extends StatelessWidget {
         Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        padding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         child: Container(
-          height: mq.height * .17,
-          width: mq.width * .8,
+          height: Get.height * .17,
+          width: Get.width * .8,
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -50,8 +51,8 @@ class SingleProductWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: mq.height * .145,
-                    width: mq.height * .145,
+                    height: Get.height * .145,
+                    width: Get.height * .145,
                     alignment: Alignment.center,
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(20),
@@ -128,8 +129,8 @@ class SingleProductWidget extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        height: mq.height * .045,
-                        width: mq.width,
+                        height: Get.height * .045,
+                        width: Get.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: productController.isCart.value

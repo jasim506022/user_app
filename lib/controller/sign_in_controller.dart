@@ -38,6 +38,7 @@ class SignInController extends GetxController {
           title: "No Internet Connection",
           content: "Please check your internet settings and try again.",
           buttonText: "Okay");
+          
     } else {
       try {
         loadingController.setLoading(true);

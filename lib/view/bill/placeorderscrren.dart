@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import 'package:user_app/res/constants.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
-
 
 class PlaceOrderScreen extends StatefulWidget {
   const PlaceOrderScreen({
@@ -50,13 +50,15 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor:AppColors. greenColor,
+                  backgroundColor: AppColors.greenColor,
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30)),
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, RoutesName.mainPage, (route) => false,
-                    arguments: 0);
+                Get.offAllNamed(RoutesName.mainPage, arguments: 0);
+
+                // Navigator.pushNamedAndRemoveUntil(
+                //     context, RoutesName.mainPage, (route) => false,
+                //     arguments: 0);
                 // Navigator.pushAndRemoveUntil(
                 //     context,
                 //     MaterialPageRoute(
@@ -66,8 +68,8 @@ class _PlaceOrderScreenState extends State<PlaceOrderScreen> {
               },
               child: Text(
                 "Home Page",
-                style:
-                    Textstyle.largestText.copyWith(color:AppColors. white, fontSize: 20),
+                style: Textstyle.largestText
+                    .copyWith(color: AppColors.white, fontSize: 20),
               ))
         ],
       ),

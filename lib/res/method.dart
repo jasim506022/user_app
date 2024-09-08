@@ -1,6 +1,6 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -15,12 +15,10 @@ import '../service/provider/loading_provider.dart';
 import '../widget/show_error_dialog_widget.dart';
 import 'app_colors.dart';
 
-
 class GlobalMethod {
   final ImagePicker picker = ImagePicker();
 
 // IsValidEmail
- 
 
 // Elevate Button Style
   ButtonStyle elevateButtonStyle() => ElevatedButton.styleFrom(
@@ -29,7 +27,7 @@ class GlobalMethod {
           borderRadius: BorderRadius.circular(15),
         ),
         padding: EdgeInsets.symmetric(
-            horizontal: mq.width * 0.022, vertical: mq.height * 0.018),
+            horizontal: Get.width * 0.022, vertical: Get.height * 0.018),
       );
 
   // Firebase Auth Error Handlig
@@ -103,6 +101,8 @@ class GlobalMethod {
       fillColor: AppColors.searchLightColor,
       filled: true,
       hintText: hintText,
+      border: OutlineInputBorder(
+          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
       focusedBorder: OutlineInputBorder(
@@ -114,11 +114,11 @@ class GlobalMethod {
               },
               icon: Icon(
                 Icons.password,
-                color: obscureText ?AppColors. hintLightColor :AppColors. red,
+                color: obscureText ? AppColors.hintLightColor : AppColors.red,
               ))
           : null,
       contentPadding: EdgeInsets.symmetric(
-          horizontal: mq.width * .033, vertical: mq.height * .025),
+          horizontal: Get.width * .033, vertical: Get.height * .025),
       hintStyle: const TextStyle(
         color: Color(0xffc8c8d5),
       ),
@@ -134,8 +134,6 @@ class GlobalMethod {
   //       textColor: AppColors.white,
   //       fontSize: 16.0);
   // }
-
-
 
 // Get User All Information on Share
   getUserInformation() async {
@@ -157,22 +155,22 @@ class GlobalMethod {
                 profileModel.cartlist!.map((e) => e.toString()).toList();
             await sharedPreference!.setStringList("cartlist", list);
           } else {
-          AppsFunction.  flutterToast(msg: "User Doesn't Exist");
+            AppsFunction.flutterToast(msg: "User Doesn't Exist");
           }
         }
       });
     } catch (error) {
-    AppsFunction.  flutterToast(msg: "Error:  $error");
+      AppsFunction.flutterToast(msg: "Error:  $error");
     }
   }
 
-  getImageFromDevice(BuildContext context, ImageSource imageSource) async {
-    ImageUploadProvider imageUploadProvider =
-        Provider.of<ImageUploadProvider>(context, listen: false);
-    XFile? imageXFiles = await picker.pickImage(source: imageSource);
+  // getImageFromDevice(BuildContext context, ImageSource imageSource) async {
+  //   ImageUploadProvider imageUploadProvider =
+  //       Provider.of<ImageUploadProvider>(context, listen: false);
+  //   XFile? imageXFiles = await picker.pickImage(source: imageSource);
 
-    imageUploadProvider.setImage(imageXFiles!);
-  }
+  //   imageUploadProvider.setImage(imageXFiles!);
+  // }
 
 // //Product Price
 //   double productPrice(double productprice, double discount) {

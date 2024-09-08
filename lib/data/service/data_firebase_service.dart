@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,9 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:user_app/data/service/base_firebase_service.dart';
+import 'package:user_app/model/address_model.dart';
 import 'package:user_app/model/productsmodel.dart';
+import 'package:http/http.dart' as http;
 
 import '../../model/profilemodel.dart';
+import '../../res/cartmethod.dart';
+import '../../res/constants.dart';
 
 class DataFirebaseService implements BaseFirebaseService {
   @override
@@ -18,6 +23,11 @@ class DataFirebaseService implements BaseFirebaseService {
 
   @override
   FirebaseStorage get firebaseStorage => FirebaseStorage.instance;
+
+  @override
+  Future<User?> getCurrentUser() async {
+    return firebaseAuth.currentUser;
+  }
 
   @override
   Future<UserCredential> signInWithEmailAndPassword(
@@ -144,5 +154,121 @@ class DataFirebaseService implements BaseFirebaseService {
   @override
   Future<void> forgetPasswordSnapshot({required String email}) async {
     await firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
+    return firebaseFirestore
+        .collection("seller")
+        .where("uid", whereIn: CartMethods.separteSellerListUserList())
+        .snapshots();
+
+    //
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
+      {required String sellerId}) {
+    return firebaseFirestore
+        .collection("products")
+        .where("sellerId", isEqualTo: sellerId)
+        .where("productId",
+            whereIn: CartMethods.separeteProductIdUserCartList())
+        .orderBy("publishDate", descending: true)
+        .snapshots();
+
+    //
+  }
+
+  @override
+  Future<void> uploadOrUpdateAddress(
+      {required AddressModel addressModel, required bool isUpdate}) async {
+    if (isUpdate) {
+      firebaseFirestore
+          .collection("users")
+          .doc(sharedPreference!.getString("uid")!)
+          .collection("useraddress")
+          .doc(addressModel.addressId)
+          .update(addressModel.toMap());
+    } else {
+      firebaseFirestore
+          .collection("users")
+          .doc(sharedPreference!.getString("uid")!)
+          .collection("useraddress")
+          .doc(addressModel.addressId)
+          .set(addressModel.toMap());
+    }
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
+    return firebaseFirestore
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+        .collection("useraddress")
+        .snapshots();
+  }
+
+  @override
+  Future<void> deleteAddress({required String addressId}) async {
+    await firebaseFirestore
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+        .collection("useraddress")
+        .doc(addressId)
+        .delete();
+  }
+
+  @override
+  Future<void> saveOrderDetails(
+      {required Map<String, dynamic> orderMetailsMap,
+      required String orderId}) async {
+    String userId = sharedPreference!.getString("uid")!;
+    final userPath = "users/$userId/orders";
+    const sellerPth = "orders"; // What is different between final and const;
+    final firestore = FirebaseFirestore.instance;
+    final userUpload =
+        firestore.collection(userPath).doc(orderId).set(orderMetailsMap);
+    final sellerUpload =
+        firestore.collection(sellerPth).doc(orderId).set(orderMetailsMap);
+
+    await Future.wait([userUpload, sellerUpload]);
+  }
+
+  @override
+  Future<Map<String, dynamic>> postRequest(
+      {required String endpoint,
+      required Map<String, String> body,
+      required String baseUrl,
+      required Map<String, String> headers}) async {
+    final Uri url = Uri.parse(baseUrl);
+    final response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data: ${response.statusCode}');
+    }
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> allOrderSnapshots() {
+    return firebaseFirestore
+        .collection("users")
+        .doc(sharedPreference!.getString("uid"))
+        .collection("orders")
+        .where("status", isEqualTo: "normal")
+        .snapshots();
+  }
+
+  // Order Product Snpashot
+  @override
+  Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
+      {required List<dynamic> itemIDDetails}) {
+    var imags = CartMethods.separteOrderProductIdList(itemIDDetails);
+    return firebaseFirestore
+        .collection("products")
+        .where("productId", whereIn: imags)
+        .orderBy("publishDate", descending: true)
+        .get();
   }
 }

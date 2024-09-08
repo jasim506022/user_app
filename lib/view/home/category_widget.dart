@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,14 +18,14 @@ class CategoryWidget extends StatelessWidget {
     var categoryController = Get.put(CategoryController());
     Utils utils = Utils(context);
     return SizedBox(
-      height: mq.height * .058,
-      width: mq.width,
+      height: Get.height * .058,
+      width: Get.width,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: allCategoryList.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.only(left: mq.width * .022),
+            padding: EdgeInsets.only(left: Get.width * .022),
             child: InkWell(
               onTap: () {
                 categoryController.setCategory(
@@ -36,7 +37,7 @@ class CategoryWidget extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(
-                      horizontal: mq.width * .044, vertical: mq.height * .015),
+                      horizontal: Get.width * .044, vertical: Get.height * .015),
                   decoration: BoxDecoration(
                       color: isSelect
                           ? utils.categorySelectBackground
@@ -48,7 +49,7 @@ class CategoryWidget extends StatelessWidget {
                         color: isSelect
                             ? AppColors.white
                             : utils.categoryUnSelectTextColor,
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         letterSpacing: 1,
                         fontWeight: FontWeight.w700),
                   ),

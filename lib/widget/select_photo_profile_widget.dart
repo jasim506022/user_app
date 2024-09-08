@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/controller/sign_up_controller.dart';
 
 import '../../res/app_colors.dart';
@@ -44,7 +45,10 @@ class SelectPhotoProfile extends StatelessWidget {
   }
 
   Row _selectPhotoOption() {
-    SignUpController signUpController = Get.find();
+    // SignUpController signUpController = Get.find();
+    final ProfileController signUpController = Get.put(ProfileController(
+      Get.find(),
+    ));
     return Row(
       children: [
         _buildTakePhotoOption("Camera", Icons.camera_alt, () {

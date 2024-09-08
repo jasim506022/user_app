@@ -24,7 +24,6 @@ class CartOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Textstyle Textstyle = Textstyle(context);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -41,7 +40,7 @@ class CartOrderWidget extends StatelessWidget {
         elevation: 5,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        shadowColor:AppColors. black,
+        shadowColor: AppColors.black,
         child: Container(
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.all(10),
@@ -65,12 +64,12 @@ class CartOrderWidget extends StatelessWidget {
                       children: [
                         Container(
                           height: 95,
-                          width: 140,
+                          width: 80, //140
                           alignment: Alignment.center,
                           margin: const EdgeInsets.all(10),
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              color:AppColors. cardImageBg,
+                              color: AppColors.cardImageBg,
                               borderRadius: BorderRadius.circular(5)),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
@@ -88,14 +87,15 @@ class CartOrderWidget extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 5),
                             decoration: BoxDecoration(
-                              border: Border.all(color:AppColors. red, width: .5),
+                              border:
+                                  Border.all(color: AppColors.red, width: .5),
                               borderRadius: BorderRadius.circular(15),
-                              color:AppColors. lightred.withOpacity(.2),
+                              color: AppColors.lightred.withOpacity(.2),
                             ),
                             child: Text(
                               "${model.discount}% Off",
                               style: GoogleFonts.poppins(
-                                color:AppColors. red,
+                                color: AppColors.red,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -139,20 +139,20 @@ class CartOrderWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text("${seperateQuantilies[index]} * ",
-                                        style: Textstyle.mediumText600
-                                            .copyWith(color:AppColors. greenColor)),
+                                        style: Textstyle.mediumText600.copyWith(
+                                            color: AppColors.greenColor)),
                                     Text(
                                         "${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble())}",
                                         style: Textstyle.mediumText600.copyWith(
                                             letterSpacing: 1.2,
-                                            color:AppColors. greenColor)),
+                                            color: AppColors.greenColor)),
                                   ],
                                 ),
                                 const Spacer(),
                                 Text(
                                     "= ৳. ${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble()) * seperateQuantilies[index]}",
                                     style: Textstyle.mediumTextbold.copyWith(
-                                      color:AppColors. greenColor,
+                                      color: AppColors.greenColor,
                                       fontSize: 16,
                                       letterSpacing: 1.2,
                                     )),

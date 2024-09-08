@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,6 +59,103 @@ class AppsFunction {
           title: "No",
           onPressed: () {
             Get.back(result: false);
+          },
+        ),
+      ],
+    ));
+  }
+
+  static saveDialog() {
+    return Get.dialog<bool>(AlertDialog(
+      backgroundColor: AppColors.white,
+      title: Row(
+        children: [
+          Text("Save Changed?",
+              style: GoogleFonts.poppins(
+                  letterSpacing: 1.8,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black)),
+          const SizedBox(
+            width: 5,
+          ),
+          Container(
+              padding: const EdgeInsets.all(5),
+              decoration:
+                  BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
+              child: Icon(
+                Icons.question_mark_rounded,
+                color: AppColors.white,
+              )),
+        ],
+      ),
+      content: Text('do you want to save change?',
+          style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.black)),
+      actions: [
+        CustomTextButtonWidget(
+          textColor: AppColors.red,
+          colorBorder: AppColors.red,
+          title: "Yes",
+          onPressed: () {
+            Get.back();
+          },
+        ),
+        CustomTextButtonWidget(
+          colorBorder: AppColors.greenColor,
+          title: "No",
+          onPressed: () {
+            Get.back();
+            Get.back();
+          },
+        ),
+      ],
+    ));
+  }
+
+  static deleteDialog({required VoidCallback function}) {
+    return Get.dialog(AlertDialog(
+      backgroundColor: AppColors.white,
+      title: Row(
+        children: [
+          Text("Confirm Deletion?",
+              style: GoogleFonts.poppins(
+                  letterSpacing: 1.8,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.black)),
+          const SizedBox(
+            width: 5,
+          ),
+          Container(
+              padding: const EdgeInsets.all(5),
+              decoration:
+                  BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
+              child: Icon(
+                Icons.delete,
+                color: AppColors.white,
+              )),
+        ],
+      ),
+      content: Text(
+          'Are you sure you want to delete this item? This action cannot be undone.',
+          style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.black)),
+      actions: [
+        CustomTextButtonWidget(
+            textColor: AppColors.red,
+            colorBorder: AppColors.red,
+            title: "Yes",
+            onPressed: function),
+        CustomTextButtonWidget(
+          colorBorder: AppColors.greenColor,
+          title: "No",
+          onPressed: () {
+            Get.back();
           },
         ),
       ],

@@ -37,14 +37,13 @@ class ProductListWidget extends StatelessWidget {
             if (!snapshot.hasData ||
                 snapshot.data!.docs.isEmpty ||
                 snapshot.hasError) {
-                  return EmptyWidget(
-                    image: ImagesAsset.error,
-                    title: snapshot.hasError
-                        ? 'Error Occure: ${snapshot.error}'
-                        : 'No Data Available',
-                  );
-                }
-          
+              return EmptyWidget(
+                image: ImagesAsset.error,
+                title: snapshot.hasError
+                    ? 'Error Occure: ${snapshot.error}'
+                    : 'No Data Available',
+              );
+            }
 
             return GridView.builder(
               shrinkWrap: true,
@@ -54,7 +53,8 @@ class ProductListWidget extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: .78,
+                // childAspectRatio: .78,
+                childAspectRatio: .72,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),

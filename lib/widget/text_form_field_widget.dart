@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../res/constants.dart';
+import '../res/utils.dart';
 
 // ignore: must_be_immutable
 class TextFormFieldWidget extends StatefulWidget {
@@ -16,6 +18,7 @@ class TextFormFieldWidget extends StatefulWidget {
       this.maxLines = 1,
       this.enabled = true,
       this.textInputType = TextInputType.text,
+      this.onChanged,
       this.validator});
   final String hintText;
   final TextEditingController controller;
@@ -27,6 +30,7 @@ class TextFormFieldWidget extends StatefulWidget {
   bool? isShowPassword;
   bool? enabled;
   final String? Function(String?)? validator;
+  Function(String)? onChanged;
 
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
@@ -35,9 +39,11 @@ class TextFormFieldWidget extends StatefulWidget {
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
+    Utils utils = Utils(context);
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: mq.height * .012),
+      padding: EdgeInsets.symmetric(vertical: Get.height * .012),
       child: TextFormField(
+          onChanged: widget.onChanged,
           enabled: widget.enabled,
           controller: widget.controller,
           autofocus: widget.autofocus!,
@@ -49,7 +55,9 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           style: GoogleFonts.poppins(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Theme.of(context).primaryColor),
+              color: widget.enabled!
+                  ? Theme.of(context).primaryColor
+                  : utils.profileTextColor),
           decoration: globalMethod.textFormFielddecoration(
               hintText: widget.hintText,
               isShowPassword: widget.isShowPassword!,

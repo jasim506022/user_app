@@ -28,6 +28,7 @@ class CartMethods {
       AppsFunction.flutterToast(msg: "Item Add Successfully");
       sharedPreference!.setStringList("cartlist", tempList);
       controller.addCartItem();
+      
       separeteProductIdUserCartList();
       separteProductQuantityUserCartList();
     });
@@ -57,8 +58,8 @@ class CartMethods {
   }
 
 //Remove Product from Cart
-  static void removeProdctFromCart(
-      {required int index, required BuildContext context}) async {
+/*
+  static void removeProdctFromCart({required int index}) async {
     List<String> cartList = sharedPreference!.getStringList("cartlist")!;
     if (kDebugMode) {
       print(cartList[index]);
@@ -86,10 +87,10 @@ class CartMethods {
       //     MaterialPageRoute(
       //       builder: (context) => const CartPage(),
       //     ));
-      Get.toNamed(RoutesName.mainPage);
+      Get.offNamed(RoutesName.cartPage);
     });
   }
-
+*/
 // Clear All Cart
   static void clearCart() {
     sharedPreference!.setStringList("cartlist", ["initial"]);

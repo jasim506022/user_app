@@ -43,6 +43,8 @@ class ProductController extends GetxController {
     }
   }
 
+
+
   Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
       {required String category}) {
     try {
@@ -58,6 +60,8 @@ class ProductController extends GetxController {
       rethrow;
     }
   }
+
+
 
   Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
       {required ProductModel productModel}) {

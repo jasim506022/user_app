@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/Textstyle.dart';
@@ -8,7 +9,7 @@ import 'package:user_app/res/routes/routesname.dart';
 import '../../res/app_function.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
-import '../cart/dotlineprinter.dart';
+import '../cart/dot_line_printer.dart';
 
 class DeliveryCartWidget extends StatelessWidget {
   const DeliveryCartWidget({
@@ -52,8 +53,8 @@ class DeliveryCartWidget extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        height: 110,
-                        width: 140,
+                        height: 110.h,
+                        width: 140.w,
                         alignment: Alignment.center,
                         margin: const EdgeInsets.all(10),
                         padding: const EdgeInsets.all(20),
@@ -63,7 +64,7 @@ class DeliveryCartWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: FancyShimmerImage(
-                            height: 120,
+                            height: 120.h,
                             boxFit: BoxFit.contain,
                             imageUrl: productModel.productimage![0],
                           ),
@@ -94,8 +95,8 @@ class DeliveryCartWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 12, top: 15, bottom: 15),
+                      padding: EdgeInsets.only(
+                          left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,8 +114,8 @@ class DeliveryCartWidget extends StatelessWidget {
                             style: Textstyle.mediumTextbold
                                 .copyWith(color: Theme.of(context).hintColor),
                           ),
-                          const SizedBox(
-                            height: 5,
+                          SizedBox(
+                            height: 5.h,
                           ),
                           Row(
                             children: [
