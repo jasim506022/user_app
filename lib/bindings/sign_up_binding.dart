@@ -7,6 +7,6 @@ class SignUpBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<SignUpRepository>(() => SignUpRepository());
     Get.lazyPut<SignUpController>(
-        () => SignUpController(Get.find<SignUpRepository>()));
+        () => SignUpController(signUpRepository: Get.find<SignUpRepository>()));
   }
 }

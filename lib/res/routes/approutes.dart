@@ -1,7 +1,4 @@
 import 'package:get/get.dart';
-import 'package:user_app/bindings/addressbinding.dart';
-import 'package:user_app/bindings/login_binding.dart';
-import 'package:user_app/bindings/sign_up_binding.dart';
 import 'package:user_app/view/bill/billlscreen.dart';
 import 'package:user_app/view/bill/placeorderscrren.dart';
 import 'package:user_app/view/product/details_product_page.dart';
@@ -27,7 +24,7 @@ class AppRoutes {
         GetPage(
             name: RoutesName.signPage,
             page: () => const SignInPage(),
-            binding: LoginBinding()),
+            ),
         GetPage(
             name: RoutesName.signupPage,
             page: () => const SignUpPage(),

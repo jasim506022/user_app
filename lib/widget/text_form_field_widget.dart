@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/res/app_function.dart';
 
 import '../res/constants.dart';
 import '../res/utils.dart';
@@ -58,7 +59,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               color: widget.enabled!
                   ? Theme.of(context).primaryColor
                   : utils.profileTextColor),
-          decoration: globalMethod.textFormFielddecoration(
+          decoration: AppsFunction.textFormFielddecoration(
               hintText: widget.hintText,
               isShowPassword: widget.isShowPassword!,
               obscureText: widget.obscureText!,

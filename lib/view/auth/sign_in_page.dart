@@ -21,28 +21,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  SignInController loginController = Get.find();
+  SignInController signInController = Get.find();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      showInternetDialog();
-    });
-    super.initState();
-  }
-
-  showInternetDialog() async {
-    bool checkInternet = await AppsFunction.internetChecking();
-
-    if (checkInternet) {
-      AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
-          title: "No Internet Connection",
-          content: "Please check your internet settings and try again.",
-          buttonText: "Okay");
-    }
-  }
 
   @override
   void didChangeDependencies() {
@@ -63,7 +43,7 @@ class _SignInPageState extends State<SignInPage> {
           return;
         }
         final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
-        
+
         if (shouldPop) {
           SystemNavigator.pop();
         }
@@ -130,7 +110,7 @@ class _SignInPageState extends State<SignInPage> {
         Expanded(
           child: _buildSocialLoginButton(
               function: () async {
-                await loginController.signWithGoogle();
+                await signInController.signWithGoogle();
               },
               color: AppColors.red,
               image: IconAsset.gmailIcon,
@@ -147,7 +127,7 @@ class _SignInPageState extends State<SignInPage> {
         children: [
           TextFormFieldWidget(
             hintText: 'Email Address',
-            controller: loginController.emailET,
+            controller: signInController.emailET,
             validator: (emailText) {
               if (emailText!.isEmpty) {
                 return 'Please enter your Email Address';
@@ -170,7 +150,7 @@ class _SignInPageState extends State<SignInPage> {
               return null;
             },
             hintText: "Password",
-            controller: loginController.passwordET,
+            controller: signInController.passwordET,
           ),
         ],
       ),
@@ -182,7 +162,8 @@ class _SignInPageState extends State<SignInPage> {
         alignment: Alignment.topRight,
         child: TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, RoutesName.forgetPassword);
+            Get.toNamed(RoutesName.forgetPassword);
+            signInController.cleanTextField();
           },
           child: Text(
             "Forget Password",
@@ -266,7 +247,7 @@ class _SignInPageState extends State<SignInPage> {
       child: CustomButtonWidget(
         onPressed: () async {
           if (!formKey.currentState!.validate()) return;
-          loginController.signInWithEmailAndPassword();
+          signInController.signInWithEmailAndPassword();
         },
         title: 'Sign In',
       ),

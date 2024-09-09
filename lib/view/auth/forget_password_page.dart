@@ -19,9 +19,7 @@ class ForgetPasswordPage extends StatefulWidget {
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  var forgetPasswordController = Get.put(ForgetPasswordController(
-    Get.find(),
-  ));
+  var forgetPasswordController = Get.find<ForgetPasswordController>();
   Widget _buildForgetPassword() {
     return SizedBox(
       width: Get.width,

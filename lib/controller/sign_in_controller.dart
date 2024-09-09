@@ -9,16 +9,13 @@ import '../res/routes/routesname.dart';
 import 'loading_controller.dart';
 
 class SignInController extends GetxController {
+  final SignInRepository signInRepository;
+  var loadingController = Get.find<LoadingController>();
+
   final TextEditingController passwordET = TextEditingController();
   final TextEditingController emailET = TextEditingController();
 
-
-
-  final SignInRepository _loginRepository;
-
-  LoadingController loadingController = Get.put(LoadingController());
-
-  SignInController(this._loginRepository);
+  SignInController({required this.signInRepository});
 
   @override
   void onClose() {
@@ -27,30 +24,32 @@ class SignInController extends GetxController {
     super.onClose();
   }
 
+  void cleanTextField() {
+    passwordET.clear();
+    emailET.clear();
+  }
+
   Future<void> signInWithEmailAndPassword() async {
-   
-
     bool checkInternet = await AppsFunction.internetChecking();
-
     if (checkInternet) {
       AppsFunction.errorDialog(
           icon: IconAsset.warningIcon,
           title: "No Internet Connection",
           content: "Please check your internet settings and try again.",
           buttonText: "Okay");
-          
     } else {
       try {
         loadingController.setLoading(true);
 
-        await _loginRepository.signInWithEmailAndPassword(
+        await signInRepository.signInWithEmailAndPassword(
           email: emailET.text,
           password: passwordET.text,
         );
 
         loadingController.setLoading(false);
-        Get.offNamed(RoutesName.mainPage);
 
+        Get.offNamed(RoutesName.mainPage);
+        cleanTextField();
         AppsFunction.flutterToast(msg: "Sign in Successfully");
       } catch (e) {
         if (e is AppException) {
@@ -83,15 +82,15 @@ class SignInController extends GetxController {
           title: "Loading for sign with Gmail \n Pleasing Waiting........",
         );
 
-        var userCredentialGmail = await _loginRepository.signWithGoogle();
+        var userCredentialGmail = await signInRepository.signWithGoogle();
 
         if (userCredentialGmail != null) {
           Get.back();
-          if (await _loginRepository.userExists()) {
+          if (await signInRepository.userExists()) {
             Get.offNamed(RoutesName.mainPage);
             AppsFunction.flutterToast(msg: "Successfully Loging");
           } else {
-            await _loginRepository.createUserGmail(
+            await signInRepository.createUserGmail(
                 user: userCredentialGmail.user!);
 
             Get.offNamed(RoutesName.mainPage);

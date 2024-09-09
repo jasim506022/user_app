@@ -1,18 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/model/profilemodel.dart';
-import 'package:user_app/service/provider/image_upload_provider.dart';
+
 
 import '../service/database/firebasedatabase.dart';
-import '../service/provider/loading_provider.dart';
-import '../widget/show_error_dialog_widget.dart';
+
 import 'app_colors.dart';
 
 class GlobalMethod {
@@ -31,6 +28,7 @@ class GlobalMethod {
       );
 
   // Firebase Auth Error Handlig
+ /*
   void handleError(
     BuildContext context,
     dynamic e,
@@ -88,42 +86,9 @@ class GlobalMethod {
 
     loadingProvider.setLoading(loading: false);
   }
-
+*/
 // Text Form Field Decoration
-  InputDecoration textFormFielddecoration(
-      {bool isShowPassword = false,
-      required String hintText,
-      bool obscureText = false,
-      required Function function}) {
-    return InputDecoration(
-      labelStyle:
-          GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
-      fillColor: AppColors.searchLightColor,
-      filled: true,
-      hintText: hintText,
-      border: OutlineInputBorder(
-          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
-      enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
-      focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
-      suffixIcon: isShowPassword
-          ? IconButton(
-              onPressed: () {
-                function();
-              },
-              icon: Icon(
-                Icons.password,
-                color: obscureText ? AppColors.hintLightColor : AppColors.red,
-              ))
-          : null,
-      contentPadding: EdgeInsets.symmetric(
-          horizontal: Get.width * .033, vertical: Get.height * .025),
-      hintStyle: const TextStyle(
-        color: Color(0xffc8c8d5),
-      ),
-    );
-  }
+  
 
   // flutterToast({required String msg}) {
   //   Fluttertoast.showToast(

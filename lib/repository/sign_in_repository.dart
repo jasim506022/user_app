@@ -45,6 +45,12 @@ class SignInRepository {
   }
 }
 
+
+
+
+
+
+
 class CartRepository {
   final _dataFirebaseService = DataFirebaseService();
 
@@ -55,8 +61,6 @@ class CartRepository {
       AppsFunction.handleException(e);
       rethrow;
     }
-
-    //
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
@@ -67,6 +71,5 @@ class CartRepository {
       AppsFunction.handleException(e);
       rethrow;
     }
-    //
   }
 }

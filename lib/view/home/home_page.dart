@@ -5,6 +5,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/controller/profile_controller.dart';
 
 import '../../controller/product_controller.dart';
 import '../../res/app_function.dart';
@@ -132,72 +133,86 @@ class _HomePageState extends State<HomePage> {
   }
 
   //Profile User
-  SizedBox _buildUserProfile() {
+  Widget _buildUserProfile() {
+    final ProfileController profileController = Get.put(ProfileController(
+      Get.find(),
+    ));
     String? imageUrl =
         sharedPreference?.getString(StringConstant.imageSharedPreference);
     String? name =
         sharedPreference?.getString(StringConstant.nameSharedPreference);
 
-    return SizedBox(
-      height: 36.h,
-      width: Get.width,
-      child: Row(
-        children: [
-          // User Profile Image
-          Container(
+    return FutureBuilder(
+      future: profileController.getUserData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasData) {
+          return SizedBox(
             height: 36.h,
-            width: 36.h,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.red, width: 3.w)),
-            child: ClipOval(
-              child: CachedNetworkImage(
-                placeholder: (context, url) => CircularProgressIndicator(
-                  backgroundColor: AppColors.white,
+            width: Get.width,
+            child: Row(
+              children: [
+                // User Profile Image
+                Container(
+                  height: 36.h,
+                  width: 36.h,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.red, width: 3.w)),
+                  child: ClipOval(
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => CircularProgressIndicator(
+                        backgroundColor: AppColors.white,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      imageUrl: imageUrl ?? snapshot.data!["imageurl"],
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                imageUrl: imageUrl!,
-                fit: BoxFit.fill,
-              ),
+
+                SizedBox(
+                  width: 13.w,
+                ),
+
+                // User Informatiokn
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Hi!",
+                        style: Textstyle.largestText
+                            .copyWith(color: AppColors.greenColor)),
+                    Text(
+                      name ?? snapshot.data!["name"],
+                      style: Textstyle.largeText,
+                    )
+                  ],
+                ),
+                const Spacer(),
+
+                InkWell(
+                    onTap: () {
+                      Get.toNamed(RoutesName.cartPage);
+                    },
+                    child: Obx(
+                      () => CartBadge(
+                          color: AppColors.greenColor,
+                          itemCount: productController
+                              .cartProductCountController.getCounts,
+                          icon: Icons.shopping_bag),
+                    )),
+                SizedBox(
+                  width: Get.width * .02,
+                ),
+              ],
             ),
-          ),
-
-          SizedBox(
-            width: 13.w,
-          ),
-
-          // User Informatiokn
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Hi!",
-                  style: Textstyle.largestText
-                      .copyWith(color: AppColors.greenColor)),
-              Text(
-                name!,
-                style: Textstyle.largeText,
-              )
-            ],
-          ),
-          const Spacer(),
-
-          InkWell(
-              onTap: () {
-                Get.toNamed(RoutesName.cartPage);
-              },
-              child: Obx(
-                () => CartBadge(
-                    color: AppColors.greenColor,
-                    itemCount:
-                        productController.cartProductCountController.getCounts,
-                    icon: Icons.shopping_bag),
-              )),
-          SizedBox(
-            width: Get.width * .02,
-          ),
-        ],
-      ),
+          );
+        }
+        return Text("SomeWorn");
+      },
     );
   }
 

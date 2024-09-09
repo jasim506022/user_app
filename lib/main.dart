@@ -65,8 +65,11 @@ class MyApp extends StatelessWidget {
           backgroundColor: themeProvder.getDarkTheme
               ? AppColors.backgroundDarkColor
               : AppColors.backgroundLightColor,
-          titleTextStyle:  GoogleFonts.roboto(
-      color:  themeProvder.getDarkTheme ? AppColors.white : AppColors.black, fontSize: 18.sp, fontWeight: FontWeight.bold),
+          titleTextStyle: GoogleFonts.roboto(
+              color:
+                  themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold),
           centerTitle: true,
         ),
         // Scaffold Background Color
@@ -93,8 +96,8 @@ class MyApp extends StatelessWidget {
             ? AppColors.hintDarkColor
             : AppColors.hintLightColor,
         //brightness
-        brightness:
-            themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
+        // brightness:
+        //     themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
         // Primary
 
         primaryColor:

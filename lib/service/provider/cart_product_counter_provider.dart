@@ -7,7 +7,9 @@ class CartProductCountController extends GetxController {
   @override
   void onInit() {
     cartListItemCounter.value =
-        (sharedPreference!.getStringList("cartlist")!.length) - 1;
+        sharedPreference!.getStringList("cartlist") == null
+            ? 0
+            : (sharedPreference!.getStringList("cartlist")!.length) - 1;
     super.onInit();
   }
 

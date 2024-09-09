@@ -8,7 +8,7 @@ class LoginBinding extends Bindings {
     Get.lazyPut<SignInRepository>(() => SignInRepository());
 
     Get.lazyPut<SignInController>(
-        () => SignInController(Get.find<SignInRepository>()));
+        () => SignInController(signInRepository: Get.find<SignInRepository>()));
   }
 }
 

@@ -88,7 +88,7 @@ class DataFirebaseService implements BaseFirebaseService {
   @override
   Future<UserCredential> createUserWithEmilandPasword(
           {required String email, required String password}) async =>
-      await firebaseAuth.createUserWithEmailAndPassword(
+      firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -153,7 +153,7 @@ class DataFirebaseService implements BaseFirebaseService {
 
   @override
   Future<void> forgetPasswordSnapshot({required String email}) async {
-    await firebaseAuth.sendPasswordResetEmail(email: email);
+    firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   @override

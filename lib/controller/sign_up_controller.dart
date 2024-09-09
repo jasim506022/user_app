@@ -1,112 +1,122 @@
-import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../model/app_exception.dart';
 import '../model/profilemodel.dart';
 import '../repository/sign_up_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/routes/routesname.dart';
 import 'loading_controller.dart';
+import 'select_image_controller.dart';
 
 class SignUpController extends GetxController {
+  final SignUpRepository signUpRepository;
+  LoadingController loadingController = Get.find();
+  SelectImageController selectImageController = Get.find();
+
   final TextEditingController phontET = TextEditingController();
   final TextEditingController nameET = TextEditingController();
   final TextEditingController emailET = TextEditingController();
   final TextEditingController passwordET = TextEditingController();
   final TextEditingController confirmpasswordET = TextEditingController();
 
-  final SignUpRepository _signUpRepository;
-
-  LoadingController loadingController = Get.put(LoadingController());
-
-  SignUpController(this._signUpRepository);
-
-  var selectPhoto = Rx<File?>(null);
+  SignUpController({required this.signUpRepository});
 
   @override
   void onClose() {
     passwordET.dispose();
     emailET.dispose();
+    emailET.text = "";
     phontET.dispose();
     confirmpasswordET.dispose();
     nameET.dispose();
-    super.onClose();
-  }
-
-  void selectImage({required ImageSource imageSource}) async {
-    try {
-      var image =
-          await _signUpRepository.captureImageSingle(imageSource: imageSource);
-      selectPhoto.value = image;
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-    }
   }
 
   Future<void> createNewUserButton() async {
-    if (passwordET.text.trim() != confirmpasswordET.text.trim()) {
-      AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
-          title: "Please Check Password",
-          content:
-              "Password and Confirm Password Is Not Match. Please Check Password",
-          buttonText: "Okay");
+    if (phontET.text.trim().isEmpty) {
+      AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
+      return;
+    }
+    if (!_validateInput()) return;
+
+    bool hasInternet = await AppsFunction.internetChecking();
+    if (hasInternet) {
+      _showErrorDialog("No Internet Connection",
+          "Please check your internet settings and try again.");
       return;
     }
 
-    bool checkInternet = await AppsFunction.internetChecking();
+    try {
+      loadingController.setLoading(true);
 
-    if (checkInternet) {
+      var userProfileImageUrl = await signUpRepository.uploadUserImgeUrl(
+          file: selectImageController.selectPhoto.value!);
+
+      var user = await signUpRepository.createUserWithEmilandPasword(
+          email: emailET.text.trim(), password: passwordET.text.trim());
+
+      ProfileModel profileModel = ProfileModel(
+        address: "",
+        cartlist: ["initial"],
+        email: emailET.text.trim(),
+        name: nameET.text.trim(),
+        imageurl: userProfileImageUrl,
+        phone: "0${phontET.text.trim()}",
+        status: "approved",
+        uid: user.user!.uid,
+      );
+
+      signUpRepository.uploadNewUserCreatingDocument(
+          profileModel: profileModel, firebaseDocument: user.user!.uid);
+      clearField();
+      Get.offNamed(RoutesName.mainPage);
+      AppsFunction.flutterToast(msg: "Sign up Successfully");
+      selectImageController.selectPhoto.value = null;
+    } on FirebaseAuthException catch (e) {
       AppsFunction.errorDialog(
           icon: IconAsset.warningIcon,
-          title: "No Internet Connection",
-          content: "Please check your internet settings and try again.",
+          title: "Exception",
+          content: e.message,
           buttonText: "Okay");
-    } else {
-      try {
-        loadingController.setLoading(true);
-        var userProfileImageUrl =
-            await _signUpRepository.uploadUserImgeUrl(file: selectPhoto.value!);
-
-        var user = await _signUpRepository.createUserWithEmilandPasword(
-            email: emailET.text.trim(), password: passwordET.text.trim());
-
-        ProfileModel profileModel = ProfileModel(
-          address: "",
-          cartlist: ["initial"],
-          email: emailET.text.trim(),
-          name: nameET.text.trim(),
-          imageurl: userProfileImageUrl,
-          phone: "0${phontET.text.trim()}",
-          status: "approved",
-          uid: user.user!.uid,
-        );
-
-        _signUpRepository.uploadNewUserCreatingDocument(
-            profileModel: profileModel, firebaseDocument: user.user!.uid);
-        Get.offNamed(RoutesName.signPage);
-        AppsFunction.flutterToast(msg: "Sign in Successfully");
-      } catch (e) {
-        if (e is AppException) {
-          AppsFunction.errorDialog(
-              icon: "asset/image/fruits.png",
-              title: e.title!,
-              content: e.message,
-              buttonText: "Okay");
-        }
-      } finally {
-        loadingController.setLoading(false);
-      }
+    } catch (e) {
+      AppsFunction.errorDialog(
+          icon: IconAsset.warningIcon,
+          title: "Exception",
+          content: e.toString(),
+          buttonText: "Okay");
+    } finally {
+      loadingController.setLoading(false);
     }
+  }
+
+  bool _validateInput() {
+    if (passwordET.text != confirmpasswordET.text) {
+      _showErrorDialog("Please Check Password",
+          "Password and Confirm Password do not match.");
+      return false;
+    }
+    if (selectImageController.selectPhoto.value == null) {
+      _showErrorDialog("No Image Selected", "Please select a profile image.",
+          IconAsset.noImage);
+      return false;
+    }
+    return true;
+  }
+
+  void _showErrorDialog(String title, String content, [String? icon]) {
+    AppsFunction.errorDialog(
+        icon: icon ?? IconAsset.warningIcon,
+        title: title,
+        content: content,
+        buttonText: "Okay");
+  }
+
+  clearField() {
+    passwordET.clear();
+    emailET.clear();
+    phontET.clear();
+    confirmpasswordET.clear();
+    nameET.clear();
   }
 }

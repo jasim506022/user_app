@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,14 +24,14 @@ class AppsFunction {
           Text("Exit",
               style: GoogleFonts.poppins(
                   letterSpacing: 1.8,
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColors.black)),
-          const SizedBox(
-            width: 5,
+          SizedBox(
+            width: 5.w,
           ),
           Container(
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(5.r),
               decoration:
                   BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
               child: Icon(
@@ -42,7 +42,7 @@ class AppsFunction {
       ),
       content: Text('Are you sure you want to Exit this Apps?',
           style: GoogleFonts.poppins(
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.black)),
       actions: [
@@ -298,6 +298,41 @@ class AppsFunction {
   static double productPriceWithQuantity(
       double productprice, double discount, int quantity) {
     return (productprice - (productprice * discount / 100)) * quantity;
+  }
+
+  static InputDecoration textFormFielddecoration(
+      {bool isShowPassword = false,
+      required String hintText,
+      bool obscureText = false,
+      required Function function}) {
+    return InputDecoration(
+      labelStyle:
+          GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500),
+      fillColor: AppColors.searchLightColor,
+      filled: true,
+      hintText: hintText,
+      border: OutlineInputBorder(
+          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
+      enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none, borderRadius: BorderRadius.circular(15)),
+      suffixIcon: isShowPassword
+          ? IconButton(
+              onPressed: () {
+                function();
+              },
+              icon: Icon(
+                Icons.password,
+                color: obscureText ? AppColors.hintLightColor : AppColors.red,
+              ))
+          : null,
+      contentPadding: EdgeInsets.symmetric(
+          horizontal: Get.width * .033, vertical: Get.height * .025),
+      hintStyle: const TextStyle(
+        color: Color(0xffc8c8d5),
+      ),
+    );
   }
 }
 

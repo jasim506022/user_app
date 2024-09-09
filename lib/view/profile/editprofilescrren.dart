@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/utils.dart';
 
 import '../../controller/profile_controller.dart';
@@ -145,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       color: isEdit
                           ? Theme.of(context).primaryColor
                           : utils.profileTextColor),
-                  decoration: globalMethod.textFormFielddecoration(
+                  decoration: AppsFunction.textFormFielddecoration(
                       hintText: "Phone Number", function: () {}),
                   languageCode: "en",
                   initialCountryCode: 'BD',

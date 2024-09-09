@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:user_app/model/app_exception.dart';
 import 'package:user_app/repository/sign_in_repository.dart';

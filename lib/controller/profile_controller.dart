@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,9 +16,7 @@ import '../res/constants.dart';
 
 class ProfileController extends GetxController {
   final ProfileRepository _profileRepository;
-
   SignUpRepository signUpRepository = SignUpRepository();
-
   TextEditingController nameTEC = TextEditingController();
   TextEditingController addressTEC = TextEditingController();
   TextEditingController phoneTEC = TextEditingController();
@@ -28,6 +27,8 @@ class ProfileController extends GetxController {
   var imageFile = Rx<File?>(null);
   var isChangeProfilePicture = false.obs;
 
+  // DocumentSnapshot<Map<String, dynamic>> snapshot;
+
   ProfileController(this._profileRepository);
 
   // getImageFromGaller() async {
@@ -36,11 +37,10 @@ class ProfileController extends GetxController {
   //   isChangeProfilePicture.value = true;
   // }
 
-   void selectImage({required ImageSource imageSource}) async {
+  void selectImage({required ImageSource imageSource}) async {
     try {
-       imageFile.value =
-          await signUpRepository.captureImageSingle(imageSource: imageSource);
-      
+      //  imageFile.value =
+      // await signUpRepository.captureImageSingle(imageSource: imageSource);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -54,8 +54,11 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
-    // imageFile.value = null;
     super.onInit();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
+    return await _profileRepository.getUserInformationSnapshot();
   }
 
   getUserInformationSnapshot() async {

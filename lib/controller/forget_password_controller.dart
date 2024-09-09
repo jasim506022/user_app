@@ -42,7 +42,7 @@ class ForgetPasswordController extends GetxController {
       } catch (e) {
         if (e is AppException) {
           AppsFunction.errorDialog(
-              icon: "asset/image/fruits.png",
+              icon: IconAsset.warningIcon,
               title: e.title!,
               content: e.message,
               buttonText: "Okay");
