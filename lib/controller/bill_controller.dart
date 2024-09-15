@@ -4,7 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/address_controller.dart';
-import 'package:user_app/res/cartmethod.dart';
+import 'package:user_app/res/cart_funtion.dart';
 
 import '../repository/bill_repository.dart';
 import '../res/constants.dart';
@@ -63,7 +63,7 @@ class BillController extends GetxController {
           repository.saveOrderDetails(
               orderMetailsMap: orderMetailsMap("Payment By Carrd"),
               orderId: orderId);
-          CartMethods.clearCart();
+          CartFunctions.clearCart();
           Fluttertoast.showToast(
               msg: "Congratulations, Order has been placed Successfully");
           Get.snackbar('Successfully', 'Successfully Done');
@@ -111,7 +111,7 @@ class BillController extends GetxController {
       "productIds": sharedPreference!.getStringList("cartlist"), //
       "paymentDetails": payment, //
       "orderId": orderId, //
-      "seller": CartMethods.seperateSEllerSet(), //
+      "seller": CartFunctions.seperateSEllerSet(), //
       // seperateSEllerSet
       "orderTime": orderId, //
       "isSuccess": true, //

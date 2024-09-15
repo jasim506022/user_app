@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:user_app/res/textstyle.dart';
 
 class SingleEmptyWidget extends StatelessWidget {
@@ -14,17 +15,17 @@ class SingleEmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 170,
-      width: MediaQuery.of(context).size.width * .9,
+      height: 170.h,
+      width: .9.sw,
       child: Row(
         children: [
           Image.asset(
             image,
-            height: 160,
-            width: 160,
+            height: 160.h,
+            width: 160.w,
           ),
-          const SizedBox(
-            width: 10,
+           SizedBox(
+            width: 10.w,
           ),
           Expanded(
             child: Text(title, style: Textstyle.emptyTestStyle),

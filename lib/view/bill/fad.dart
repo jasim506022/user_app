@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:user_app/res/constants.dart';
 
 import '../../controller/address_controller.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../service/database/firebasedatabase.dart';
 import '../../service/provider/totalamountrpovider.dart';
 
@@ -123,8 +123,7 @@ class PaymentViewModel extends GetxController {
               style: ThemeMode.dark,
               merchantDisplayName: 'ANNIE'));
 
-      displayPaymentSheet()
-      .whenComplete(() {
+      displayPaymentSheet().whenComplete(() {
         if (isSucess) {
           orderDetaisl("Payment By Carrd");
           Get.snackbar('Successfull', 'Successful');
@@ -184,7 +183,7 @@ class PaymentViewModel extends GetxController {
       "productIds": sharedPreference!.getStringList("cartlist"),
       "paymentDetails": payment,
       "orderId": orderId,
-      "seller": CartMethods.seperateSEllerSet(),
+      "seller": CartFunctions.seperateSEllerSet(),
       // seperateSEllerSet
       "orderTime": orderId,
       "isSuccess": true,
@@ -203,14 +202,14 @@ class PaymentViewModel extends GetxController {
         "orderId": orderId,
         "orderTime": orderId,
         "isSuccess": true,
-        "seller": CartMethods.seperateSEllerSet(),
+        "seller": CartFunctions.seperateSEllerSet(),
         "status": "normal",
         "deliverydate": estimateDeliveryDate,
         "deliverypartner": "BD-DEX",
         "trackingnumber": "bddex$orderId"
       }, orderId: orderId)
           .whenComplete(() {
-        CartMethods.clearCart();
+        CartFunctions.clearCart();
         Fluttertoast.showToast(
             msg: "Congratulations, Order has been placed Successfully");
       });

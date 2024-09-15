@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/constant/string_constant.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import '../auth/sign_in_page.dart';
 import '../../res/constants.dart';
@@ -231,7 +232,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    await sharedPreference?.setString(
+                        StringConstant.imageSharedPreference, "");
+                    await sharedPreference?.setString(
+                        StringConstant.nameSharedPreference, "");
                     FirebaseAuth.instance.signOut();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (c) => const SignInPage()));

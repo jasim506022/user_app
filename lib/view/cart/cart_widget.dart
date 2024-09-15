@@ -7,7 +7,7 @@ import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import '../../controller/cart_controller.dart';
 import '../../res/appasset/icon_asset.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../res/constants.dart';

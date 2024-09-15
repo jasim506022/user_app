@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../model/carsolemodel.dart';
-import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
+import '../../../model/carsolemodel.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/Textstyle.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({
@@ -21,12 +21,12 @@ class CarouselWidget extends StatelessWidget {
     return Container(
         width: Get.width,
         padding: EdgeInsets.only(
-            left: Get.width * .055,
-            bottom: Get.height * .02,
-            top: Get.height * .02),
-        margin: EdgeInsets.symmetric(horizontal: Get.width * .022),
+            left: 24.w,
+            bottom:15.h,
+            top: 15.h),
+        margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
-            color: carouselModel.color, borderRadius: BorderRadius.circular(15)),
+            color: carouselModel.color, borderRadius: BorderRadius.circular(15.r)),
         child: Stack(
           children: [
             Positioned(
@@ -34,8 +34,8 @@ class CarouselWidget extends StatelessWidget {
               right: 0,
               child: Image.asset(
                 carouselModel.image,
-                height: Get.height * .19,
-                width: Get.height * .19,
+                height:  .19.sh,
+                width:  .19.sh,
                 fit: BoxFit.contain,
               ),
             ),

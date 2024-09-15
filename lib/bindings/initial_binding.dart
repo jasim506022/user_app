@@ -1,21 +1,25 @@
 import 'package:get/get.dart';
-import 'package:user_app/controller/forget_password_controller.dart';
-import 'package:user_app/controller/onboarding_controller.dart';
-import 'package:user_app/controller/select_image_controller.dart';
-import 'package:user_app/controller/sign_in_controller.dart';
-import 'package:user_app/controller/sign_up_controller.dart';
-import 'package:user_app/controller/splash_controller.dart';
-import 'package:user_app/repository/address_repository.dart';
-import 'package:user_app/repository/forget_password_repository.dart';
-import 'package:user_app/repository/select_image_repository.dart';
-import 'package:user_app/repository/sign_in_repository.dart';
-import 'package:user_app/repository/sign_up_repository.dart';
+import 'package:user_app/controller/product_controller.dart';
 
+import '../controller/forget_password_controller.dart';
 import '../controller/loading_controller.dart';
+import '../controller/onboarding_controller.dart';
+import '../controller/profile_controller.dart';
+import '../controller/select_image_controller.dart';
+import '../controller/sign_in_controller.dart';
+import '../controller/sign_up_controller.dart';
+import '../controller/splash_controller.dart';
+import '../repository/address_repository.dart';
+import '../repository/forget_password_repository.dart';
 import '../repository/onboarding_repository.dart';
 import '../repository/product_reposity.dart';
 import '../repository/profile_repository.dart';
+import '../repository/select_image_repository.dart';
+import '../repository/sign_in_repository.dart';
+import '../repository/sign_up_repository.dart';
 import '../repository/splash_repository.dart';
+import '../controller/cart_product_counter_controller.dart';
+import '../service/provider/category_provider.dart';
 
 class InitialBinding extends Bindings {
   @override
@@ -36,23 +40,36 @@ class InitialBinding extends Bindings {
     Get.lazyPut<OnBoardingController>(() => OnBoardingController(
         onBoardingRepository: Get.find<OnBoardingRepository>()));
 
-        Get.lazyPut<SignInController>(
-        () => SignInController( signInRepository:  Get.find<SignInRepository>()));
+    Get.lazyPut<SignInController>(
+        () => SignInController(signInRepository: Get.find<SignInRepository>()));
 
     Get.lazyPut<ForgetPasswordController>(
-        () => ForgetPasswordController( Get.find<ForgetPasswordRepository>()));
+        () => ForgetPasswordController(Get.find<ForgetPasswordRepository>()));
 
     Get.lazyPut<SelectImageController>(() => SelectImageController(
         selectImageRepository: Get.find<SelectImageRepository>()));
 
-        Get.lazyPut<SelectImageController>(() => SelectImageController(
+    Get.lazyPut<SelectImageController>(() => SelectImageController(
         selectImageRepository: Get.find<SelectImageRepository>()));
 
     Get.put<SignUpController>(
         SignUpController(signUpRepository: Get.find<SignUpRepository>()));
 
-    Get.lazyPut<ProductReposity>(() => ProductReposity());
+    Get.lazyPut<ProductReposity>(() => ProductReposity(), fenix: true);
     Get.lazyPut<AddressRepository>(() => AddressRepository());
-    Get.lazyPut<ProfileRepository>(() => ProfileRepository());
+    Get.lazyPut<ProfileRepository>(() => ProfileRepository(), fenix: true);
+
+    Get.lazyPut<ProfileController>(
+        () => ProfileController(repository: Get.find<ProfileRepository>()),
+        fenix: true);
+    Get.lazyPut<ProductController>(
+        () => ProductController(Get.find<ProductReposity>()),
+        fenix: true);
+
+    Get.lazyPut<CartProductCountController>(() => CartProductCountController(),
+        fenix: true);
+
+         Get.lazyPut<CategoryController>(() => CategoryController(),
+        fenix: true);
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:user_app/controller/profile_controller.dart';
+import '../../controller/network_controller.dart';
+import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
 import '../home/home_page.dart';
 import '../order/orderpage.dart';
@@ -19,11 +20,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ProfileController profileController = Get.put(ProfileController(
-    Get.find(),
-  ));
+  final ProfileController profileController = Get.find();
+  int currentIndex = 0;
+  // int? indexValue;
 
-  List<Widget> widgetOptions = [
+  late List<Widget> widgetOptions = [
     const HomePage(),
     const OrderPage(),
     const SearchPage(),
@@ -34,73 +35,71 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     profileController.getUserInformationSnapshot();
+    _initializeIndex();
   }
 
-  int currentIndex = 0;
-  int? indexValue;
-
-  @override
-  void didChangeDependencies() {
+  void _initializeIndex() {
     int? data = Get.arguments;
-    indexValue = data;
-    super.didChangeDependencies();
+    if (data != null) {
+      setState(() {
+        currentIndex = data;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    DependencyInjection.init();
+    _setStatusBarStle();
+    return Scaffold(
+        bottomNavigationBar: SalomonBottomBar(
+          backgroundColor: Theme.of(context).cardColor,
+          currentIndex: currentIndex,
+          onTap: (i) => setState(() {
+            currentIndex = i;
+            // indexValue = null;
+          }),
+          items: [
+            _buildBottomBarItem(
+                icon: Icons.home_outlined,
+                activeIcon: Icons.home,
+                title: "Home"),
+            _buildBottomBarItem(
+                icon: Icons.favorite_border_outlined,
+                activeIcon: Icons.favorite_border,
+                title: "Likes"),
+            _buildBottomBarItem(
+                icon: Icons.search_outlined,
+                activeIcon: Icons.search,
+                title: "Search"),
+            _buildBottomBarItem(
+                activeIcon: Icons.person,
+                icon: Icons.person_outline,
+                title: "Profile"),
+          ],
+        ),
+        body: widgetOptions[currentIndex]);
+  }
+
+  void _setStatusBarStle() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Theme.of(context).scaffoldBackgroundColor,
         statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Theme.of(context).brightness));
-    return Scaffold(
-        bottomNavigationBar: SalomonBottomBar(
-          backgroundColor: Theme.of(context).cardColor,
-          currentIndex: indexValue ?? currentIndex,
-          onTap: (i) => setState(() {
-            currentIndex = i;
-            indexValue = null;
-          }),
-          items: [
-            SalomonBottomBarItem(
-                activeIcon: Icon(
-                  Icons.home,
-                  color: AppColors.greenColor,
-                ),
-                icon: const Icon(Icons.home_outlined),
-                title: const Text(
-                  "Home",
-                ),
-                selectedColor: AppColors.greenColor,
-                unselectedColor: Theme.of(context).indicatorColor),
-            SalomonBottomBarItem(
-                activeIcon: Icon(
-                  Icons.favorite_border,
-                  color: AppColors.greenColor,
-                ),
-                icon: const Icon(Icons.favorite_border_outlined),
-                title: const Text("Likes"),
-                unselectedColor: Theme.of(context).indicatorColor,
-                selectedColor: AppColors.greenColor),
-            SalomonBottomBarItem(
-                activeIcon: Icon(
-                  Icons.search,
-                  color: AppColors.greenColor,
-                ),
-                icon: const Icon(Icons.search_outlined),
-                title: const Text("Search"),
-                unselectedColor: Theme.of(context).indicatorColor,
-                selectedColor: AppColors.greenColor),
-            SalomonBottomBarItem(
-                activeIcon: Icon(
-                  Icons.person,
-                  color: AppColors.greenColor,
-                ),
-                icon: const Icon(Icons.person_outline),
-                unselectedColor: Theme.of(context).indicatorColor,
-                title: const Text("Profile"),
-                selectedColor: AppColors.greenColor),
-          ],
+  }
+
+  SalomonBottomBarItem _buildBottomBarItem(
+      {required IconData icon,
+      required IconData activeIcon,
+      required String title}) {
+    return SalomonBottomBarItem(
+        activeIcon: Icon(
+          activeIcon,
+          color: AppColors.greenColor,
         ),
-        body: widgetOptions[indexValue ?? currentIndex]);
+        icon: Icon(icon),
+        unselectedColor: Theme.of(context).indicatorColor,
+        title: Text(title),
+        selectedColor: AppColors.greenColor);
   }
 }

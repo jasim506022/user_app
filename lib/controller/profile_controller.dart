@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_app/repository/profile_repository.dart';
 
 import '../model/app_exception.dart';
@@ -15,7 +14,7 @@ import '../res/appasset/icon_asset.dart';
 import '../res/constants.dart';
 
 class ProfileController extends GetxController {
-  final ProfileRepository _profileRepository;
+  final ProfileRepository repository;
   SignUpRepository signUpRepository = SignUpRepository();
   TextEditingController nameTEC = TextEditingController();
   TextEditingController addressTEC = TextEditingController();
@@ -29,7 +28,7 @@ class ProfileController extends GetxController {
 
   // DocumentSnapshot<Map<String, dynamic>> snapshot;
 
-  ProfileController(this._profileRepository);
+  ProfileController({required this.repository});
 
   // getImageFromGaller() async {
   //   final ImagePicker picker = ImagePicker();
@@ -52,39 +51,44 @@ class ProfileController extends GetxController {
     }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
-    return await _profileRepository.getUserInformationSnapshot();
+    return await repository.getUserInformationSnapshot();
   }
 
-  getUserInformationSnapshot() async {
-    var snapshot = await _profileRepository.getUserInformationSnapshot();
+  Future<void> getUserInformationSnapshot() async {
+    try {
+      var snapshot = await repository.getUserInformationSnapshot();
+      if (snapshot.exists) {
+        profileModel.value = ProfileModel.fromMap(snapshot.data()!);
+        if (profileModel.value.status == "approved") {
+          final prefsTasks = [
+            sharedPreference!.setString("uid", profileModel.value.uid!),
+            sharedPreference!.setString("email", profileModel.value.email!),
+            sharedPreference!.setString("name", profileModel.value.name!),
+            sharedPreference!
+                .setString("imageurl", profileModel.value.imageurl!),
+            sharedPreference!.setString("phone", profileModel.value.phone!),
+            sharedPreference!.setStringList("cartlist",
+                profileModel.value.cartlist!.map((e) => e.toString()).toList())
+          ];
+          await Future.wait(prefsTasks);
 
-    if (snapshot.exists) {
-      profileModel.value = ProfileModel.fromMap(snapshot.data()!);
-      if (profileModel.value.status == "approved") {
-        sharedPreference = await SharedPreferences.getInstance();
-        await sharedPreference!.setString("uid", profileModel.value.uid!);
-        await sharedPreference!.setString("email", profileModel.value.email!);
-        await sharedPreference!.setString("name", profileModel.value.name!);
-        await sharedPreference!
-            .setString("imageurl", profileModel.value.imageurl!);
-        await sharedPreference!.setString("phone", profileModel.value.phone!);
-        List<String> list =
-            profileModel.value.cartlist!.map((e) => e.toString()).toList();
-        await sharedPreference!.setStringList("cartlist", list);
-
-        nameTEC.text = profileModel.value.name!;
-        addressTEC.text = profileModel.value.address!;
-        phoneTEC.text = profileModel.value.phone!;
-        emailTEC.text = profileModel.value.email!;
-        image.value = profileModel.value.imageurl!;
-      } else {
-        AppsFunction.flutterToast(msg: "User Doesn't Exist");
+          nameTEC.text = profileModel.value.name!;
+          addressTEC.text = profileModel.value.address!;
+          phoneTEC.text = profileModel.value.phone!;
+          emailTEC.text = profileModel.value.email!;
+          image.value = profileModel.value.imageurl!;
+        } else {
+          AppsFunction.flutterToast(msg: "User Doesn't Exist");
+        }
+      }
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: IconAsset.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: "Okay");
       }
     }
   }

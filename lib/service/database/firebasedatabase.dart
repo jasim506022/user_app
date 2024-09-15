@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import '../../res/app_function.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -339,8 +339,8 @@ class FirebaseDatabase {
     return FirebaseFirestore.instance
         .collection("products")
         .where("productId",
-            whereIn:
-                CartMethods.separteOrderProductIdList((snpshot)["productIds"]))
+            whereIn: CartFunctions.separteOrderProductIdList(
+                (snpshot)["productIds"]))
         // .where("orderBy", whereIn: (snpshot)["uid"])
         .orderBy("publishDate", descending: true)
         .get();
@@ -354,7 +354,7 @@ class FirebaseDatabase {
     return FirebaseFirestore.instance
         .collection("products")
         .where("productId",
-            whereIn: CartMethods.separteOrderProductIdList(list))
+            whereIn: CartFunctions.separteOrderProductIdList(list))
         .orderBy("publishDate", descending: true)
         .get();
 

@@ -5,7 +5,7 @@ import 'package:user_app/res/Textstyle.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 import '../../res/routes/routesname.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../model/profilemodel.dart';
@@ -102,8 +102,8 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               height: MediaQuery.of(context).size.height * .5,
               child: StreamBuilder(
                 stream: FirebaseDatabase.orderSelerSnapshots(
-                    list:
-                        CartMethods.separateOrderSellerCartList(widget.order)),
+                    list: CartFunctions.separateOrderSellerCartList(
+                        widget.order)),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -127,7 +127,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                                     TextSpan(
                                       text: sellerId,
                                       style: Textstyle.largeBoldText
-                                          .copyWith(color:AppColors. red),
+                                          .copyWith(color: AppColors.red),
                                     )
                                   ])),
                             ),
@@ -184,7 +184,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   children: [
                     Text("Order #${widget.orderId}",
                         style: Textstyle.largeBoldText.copyWith(
-                          color:AppColors. greenColor,
+                          color: AppColors.greenColor,
                         )),
                     const SizedBox(
                       height: 7,
@@ -200,7 +200,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       alignment: Alignment.center,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor:AppColors. greenColor,
+                              backgroundColor: AppColors.greenColor,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 30)),
                           onPressed: () {
@@ -217,7 +217,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           child: Text(
                             "Home Page",
                             style: Textstyle.largestText
-                                .copyWith(color:AppColors. white, fontSize: 20),
+                                .copyWith(color: AppColors.white, fontSize: 20),
                           )),
                     )
                   ],

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/order_controller.dart';
-import 'package:user_app/res/cartmethod.dart';
+import 'package:user_app/res/cart_funtion.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 import '../../res/appasset/image_asset.dart';
@@ -71,7 +71,7 @@ class _OrderPageState extends State<OrderPage> {
                         );
                       } else {
                         List<int> listItem =
-                            CartMethods.separateOrderItemQuantities((snapshot
+                            CartFunctions.separateOrderItemQuantities((snapshot
                                 .data!.docs[index]
                                 .data())["productIds"]);
 

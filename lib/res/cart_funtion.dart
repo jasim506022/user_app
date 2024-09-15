@@ -3,12 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/routes/routesname.dart';
-import 'package:user_app/service/provider/cart_product_counter_provider.dart';
+import 'package:user_app/controller/cart_product_counter_controller.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
-class CartMethods {
+class CartFunctions {
   // Add Item to CartWithSeller
   // Okay Done
   static void addItemToCartWithSeller(
@@ -28,8 +27,8 @@ class CartMethods {
       AppsFunction.flutterToast(msg: "Item Add Successfully");
       sharedPreference!.setStringList("cartlist", tempList);
       controller.addCartItem();
-      
-      separeteProductIdUserCartList();
+
+      separateProductID();
       separteProductQuantityUserCartList();
     });
   }
@@ -52,7 +51,7 @@ class CartMethods {
       // try to add
       // Provider.of<CartProductCountProvider>(context, listen: false)
       //     .addCartItem();
-      separeteProductIdUserCartList();
+      separateProductID();
       separteProductQuantityUserCartList();
     });
   }
@@ -108,20 +107,11 @@ class CartMethods {
   }
 
 // Separet Product Id From CartList
-  static List<String> separeteProductIdUserCartList() {
-    // List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+  static List<String> separateProductID() {
     return [
       for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
         item.toString().split(":")[0]
     ];
-    // List<String> productIdList = [];
-    // for (int i = 1; i < userCartList.length; i++) {
-    //   String item = userCartList[i].toString();
-    //   int indexChatePositionProductColon = item.indexOf(":");
-    //   String productId = item.substring(0, indexChatePositionProductColon);
-    //   productIdList.add(productId);
-    // }
-    // return productIdList;
   }
 
 // Separet Product Quantity List From CartList

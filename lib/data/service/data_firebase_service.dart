@@ -11,7 +11,7 @@ import 'package:user_app/model/productsmodel.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/profilemodel.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/constants.dart';
 
 class DataFirebaseService implements BaseFirebaseService {
@@ -160,7 +160,7 @@ class DataFirebaseService implements BaseFirebaseService {
   Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
     return firebaseFirestore
         .collection("seller")
-        .where("uid", whereIn: CartMethods.separteSellerListUserList())
+        .where("uid", whereIn: CartFunctions.separteSellerListUserList())
         .snapshots();
 
     //
@@ -172,8 +172,7 @@ class DataFirebaseService implements BaseFirebaseService {
     return firebaseFirestore
         .collection("products")
         .where("sellerId", isEqualTo: sellerId)
-        .where("productId",
-            whereIn: CartMethods.separeteProductIdUserCartList())
+        .where("productId", whereIn: CartFunctions.separateProductID())
         .orderBy("publishDate", descending: true)
         .snapshots();
 
@@ -264,7 +263,7 @@ class DataFirebaseService implements BaseFirebaseService {
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
       {required List<dynamic> itemIDDetails}) {
-    var imags = CartMethods.separteOrderProductIdList(itemIDDetails);
+    var imags = CartFunctions.separteOrderProductIdList(itemIDDetails);
     return firebaseFirestore
         .collection("products")
         .where("productId", whereIn: imags)

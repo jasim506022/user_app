@@ -5,12 +5,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routesname.dart';
 
-import '../../controller/product_controller.dart';
-import '../../res/app_function.dart';
-import '../../res/constants.dart';
-import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
-import '../../model/productsmodel.dart';
+import '../../../res/app_function.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/Textstyle.dart';
+import '../../../model/productsmodel.dart';
+import '../../../res/cart_funtion.dart';
 
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({
@@ -21,21 +20,18 @@ class SingleProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
 
-    var productController = Get.put(ProductController(
-      Get.find(),
-    ));
-
-    productController.checkIfInCart(productModel: productModel);
+    bool isCart =
+        CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
       onTap: () {
         Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
       },
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         child: Container(
-          height: Get.height * .17,
-          width: Get.width * .8,
+          height: .17.sh,
+          width: .8.sw,
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -51,32 +47,32 @@ class SingleProductWidget extends StatelessWidget {
               Stack(
                 children: [
                   Container(
-                    height: Get.height * .145,
-                    width: Get.height * .145,
+                    height: .145.sh,
+                    width: .145.sh,
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(20),
+                    margin: EdgeInsets.all(10.r),
+                    padding: EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
                         color: AppColors.cardImageBg,
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5.r)),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10.r),
                       child: FancyShimmerImage(
-                        height: 120,
+                        height: 120.h,
                         boxFit: BoxFit.contain,
                         imageUrl: productModel.productimage![0],
                       ),
                     ),
                   ),
                   Positioned(
-                    left: 10,
-                    top: 10,
+                    left: 10.w,
+                    top: 10.h,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 5),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.red, width: .5),
-                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: AppColors.red, width: .5.w),
+                        borderRadius: BorderRadius.circular(15.r),
                         color: AppColors.lightred.withOpacity(.2),
                       ),
                       child: Text("${productModel.discount}% Off",
@@ -87,8 +83,8 @@ class SingleProductWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 12, top: 15, bottom: 15),
+                  padding: EdgeInsets.only(
+                      left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +96,8 @@ class SingleProductWidget extends StatelessWidget {
                             style: Textstyle.largeText
                                 .copyWith(color: AppColors.red),
                           ),
-                          const SizedBox(
-                            width: 15,
+                          SizedBox(
+                            width: 15.w,
                           ),
                           Text(
                             "${(productModel.productprice!)}",
@@ -109,8 +105,8 @@ class SingleProductWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       RichText(
                         text: TextSpan(children: [
@@ -129,13 +125,11 @@ class SingleProductWidget extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        height: Get.height * .045,
-                        width: Get.width,
+                        height: 25.h,
+                        // width: 1.sw,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: productController.isCart.value
-                              ? AppColors.red
-                              : AppColors.greenColor,
+                          borderRadius: BorderRadius.circular(15.r),
+                          color: isCart ? AppColors.red : AppColors.greenColor,
                         ),
                         child: Text(
                           "Add To Cart",

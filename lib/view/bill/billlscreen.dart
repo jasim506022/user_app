@@ -25,7 +25,7 @@ import '../../res/app_colors.dart';
 import 'package:user_app/view/bill/paymentwidget.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 import 'package:user_app/service/provider/totalamountrpovider.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/Textstyle.dart';
 import 'placeorderscrren.dart';
 

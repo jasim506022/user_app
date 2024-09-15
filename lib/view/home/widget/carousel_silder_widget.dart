@@ -1,10 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../res/constants.dart';
-
-import '../../model/carsolemodel.dart';
+import '../../../model/carsolemodel.dart';
 import 'carosuel_widget.dart';
 
 class CarouselSilderWidget extends StatelessWidget {
@@ -16,7 +14,7 @@ class CarouselSilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-          height: Get.height * .22,
+          height: .22.sh,
           aspectRatio: 16 / 12,
           viewportFraction: 0.9,
           autoPlay: true,
@@ -24,12 +22,12 @@ class CarouselSilderWidget extends StatelessWidget {
       items: caroselList.map((carouselModel) {
         return Builder(
           builder: (BuildContext context) {
-            return CarouselWidget(carouselModel: carouselModel,);
+            return CarouselWidget(
+              carouselModel: carouselModel,
+            );
           },
         );
       }).toList(),
     );
   }
 }
-
-

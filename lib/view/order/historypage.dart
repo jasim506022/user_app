@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app/res/cartmethod.dart';
+import 'package:user_app/res/cart_funtion.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 import '../../widget/empty_widget.dart';
@@ -66,7 +66,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         );
                       } else {
                         List<int> listItem =
-                            CartMethods.separateOrderItemQuantities((snapshot
+                            CartFunctions.separateOrderItemQuantities((snapshot
                                 .data!.docs[index]
                                 .data())["productIds"]);
                         return CartOrderWidget(

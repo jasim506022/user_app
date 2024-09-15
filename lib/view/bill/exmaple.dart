@@ -6,7 +6,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:user_app/res/cartmethod.dart';
+import 'package:user_app/res/cart_funtion.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/res/routes/routesname.dart';
 
@@ -75,8 +75,6 @@ class PaymentRepository {
     return parsedAmount.toString();
   }
 }
-
-
 
 class PaymentViewModel extends GetxController {
   final PaymentRepository repository;
@@ -268,37 +266,37 @@ class PaymentViewModel extends GetxController {
     FirebaseDatabase.saveOrderDetailsForUser(orderDetailsMap: {
       "addressId": addressController.addressid.value, //
       "totalamount": totalAmount, //
-      "orderBy": sharedPreference!.getString("uid"),//
-      "productIds": sharedPreference!.getStringList("cartlist"),//
+      "orderBy": sharedPreference!.getString("uid"), //
+      "productIds": sharedPreference!.getStringList("cartlist"), //
       "paymentDetails": payment, //
       "orderId": orderId, //
-      "seller": CartMethods.seperateSEllerSet(),//
+      "seller": CartFunctions.seperateSEllerSet(), //
       // seperateSEllerSet
-      "orderTime": orderId,//
-      "isSuccess": true,//
-      "status": "normal",//
-      "deliverydate": estimateDeliveryDate,//
+      "orderTime": orderId, //
+      "isSuccess": true, //
+      "status": "normal", //
+      "deliverydate": estimateDeliveryDate, //
       "deliverypartner": "BD-DEX",
       "trackingnumber": "bddex$orderId"
     }, orderId: orderId)
         .whenComplete(() {
       FirebaseDatabase.saveOrderDetailsForSeller(orderDetailsMap: {
-        "addressId": addressController.addressid.value,//
+        "addressId": addressController.addressid.value, //
         "totalamount": totalAmount, //
         "orderBy": sharedPreference!.getString("uid"), //
-        "productIds": sharedPreference!.getStringList("cartlist"),//
+        "productIds": sharedPreference!.getStringList("cartlist"), //
         "paymentDetails": payment, //
-        "orderId": orderId,//
-        "orderTime": orderId,//
-        "isSuccess": true,//
-        "seller": CartMethods.seperateSEllerSet(),//
-        "status": "normal",//
-        "deliverydate": estimateDeliveryDate,//
+        "orderId": orderId, //
+        "orderTime": orderId, //
+        "isSuccess": true, //
+        "seller": CartFunctions.seperateSEllerSet(), //
+        "status": "normal", //
+        "deliverydate": estimateDeliveryDate, //
         "deliverypartner": "BD-DEX",
         "trackingnumber": "bddex$orderId"
       }, orderId: orderId)
           .whenComplete(() {
-        CartMethods.clearCart();
+        CartFunctions.clearCart();
         Fluttertoast.showToast(
             msg: "Congratulations, Order has been placed Successfully");
       });

@@ -24,9 +24,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  final ProfileController profileController = Get.put(ProfileController(
-    Get.find(),
-  ));
+  final ProfileController profileController = Get.find();
 
   @override
   void initState() {

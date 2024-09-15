@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:user_app/res/utils.dart';
 import 'package:user_app/res/app_colors.dart';
@@ -13,10 +13,10 @@ class LoadingSingleProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Utils utils = Utils(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       child: Container(
-        height: 160,
-        width: Get.width * .9,
+        height: 160.h,
+        width: .9.sw,
         decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -32,75 +32,44 @@ class LoadingSingleProductWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 140,
-                    width: 140,
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.all(10),
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        color: const Color(0xfff6f5f1),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        height: 120,
-                        color: utils.widgetShimmerColor,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    top: 10,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color(0xffed6767), width: .5),
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromARGB(255, 251, 196, 192)
-                            .withOpacity(.2),
-                      ),
-                      child: Container(
-                        height: 20,
-                        width: 20,
-                        color: utils.widgetShimmerColor,
-                      ),
-                    ),
-                  ),
-                ],
+              Container(
+                height: 140.h,
+                width: 140.w,
+                alignment: Alignment.center,
+                margin: EdgeInsets.all(10.r),
+                padding: EdgeInsets.all(20.r),
+                decoration: BoxDecoration(
+                    color: const Color(0xfff6f5f1),
+                    borderRadius: BorderRadius.circular(5.r)),
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 12, top: 15, bottom: 15),
+                  padding: EdgeInsets.only(
+                      left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 30,
-                        width: Get.width * 0.7,
+                        height: 15.h,
+                        width: 0.7.sw,
                         color: utils.widgetShimmerColor,
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Container(
-                        height: 30,
-                        width: Get.width,
+                        height: 15.h,
+                        width: 1.sw,
                         color: utils.widgetShimmerColor,
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: 5.h,
                       ),
                       Container(
                         alignment: Alignment.center,
-                        height: 30,
-                        width: Get.width,
+                        height: 20.h,
+                        width: 1.sw,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: utils.widgetShimmerColor,

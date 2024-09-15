@@ -8,7 +8,7 @@ import 'package:user_app/controller/cart_controller.dart';
 import 'package:user_app/res/appasset/image_asset.dart';
 
 import '../../res/app_function.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
@@ -45,7 +45,7 @@ class _CartPageState extends State<CartPage> {
       cartController.totalAmountController.setAmount(0);
 
       productQuantityListFromCartList =
-          CartMethods.separteProductQuantityUserCartList();
+          CartFunctions.separteProductQuantityUserCartList();
     });
 
     super.initState();

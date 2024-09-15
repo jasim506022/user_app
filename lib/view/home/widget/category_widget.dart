@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../res/constants.dart';
-import '../../res/app_colors.dart';
-import '../../res/utils.dart';
-import '../../service/provider/category_provider.dart';
+import '../../../res/constants.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/utils.dart';
+import '../../../service/provider/category_provider.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
@@ -15,17 +15,17 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var categoryController = Get.put(CategoryController());
+    var categoryController = Get.find<CategoryController>();
     Utils utils = Utils(context);
     return SizedBox(
-      height: Get.height * .058,
-      width: Get.width,
+      height: 40.h,
+      width: 1.sw,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: allCategoryList.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.only(left: Get.width * .022),
+            padding: EdgeInsets.only(left: 10.w),
             child: InkWell(
               onTap: () {
                 categoryController.setCategory(
@@ -36,13 +36,13 @@ class CategoryWidget extends StatelessWidget {
                     categoryController.getCategory == allCategoryList[index];
                 return Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: Get.width * .044, vertical: Get.height * .015),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   decoration: BoxDecoration(
                       color: isSelect
                           ? utils.categorySelectBackground
                           : utils.categoryUnselectBackground,
-                      borderRadius: BorderRadius.circular(30)),
+                      borderRadius: BorderRadius.circular(30.r)),
                   child: Text(
                     allCategoryList[index],
                     style: GoogleFonts.poppins(

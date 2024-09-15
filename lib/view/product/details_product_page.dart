@@ -6,7 +6,7 @@ import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/view/product/similar_product_list.dart';
 import '../../res/routes/routesname.dart';
-import '../../res/cartmethod.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../res/utils.dart';
@@ -31,8 +31,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   int counter = 1;
 
-  List<String> productIdListFromCartLish =
-      CartMethods.separeteProductIdUserCartList();
+  List<String> productIdListFromCartLish = CartFunctions.separateProductID();
 
   var productController = Get.put(ProductController(Get.find()));
 
@@ -300,13 +299,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               AppsFunction.flutterToast(msg: "Item is already  in cart");
             }
           : () {
-              List<String> cartItemIdList =
-                  CartMethods.separeteProductIdUserCartList();
+              List<String> cartItemIdList = CartFunctions.separateProductID();
 
               if (cartItemIdList.contains(productModel!.productId)) {
                 AppsFunction.flutterToast(msg: "Item is already  in cart");
               } else {
-                CartMethods.addItemToCartWithSeller(
+                CartFunctions.addItemToCartWithSeller(
                     productId: productModel!.productId!,
                     productCounter: counter,
                     seller: productModel!.sellerId!,

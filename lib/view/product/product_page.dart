@@ -6,7 +6,7 @@ import '../../controller/product_controller.dart';
 import '../../res/constants.dart';
 
 import '../../res/routes/routesname.dart';
-import 'product_list_widget.dart';
+import '../../widget/product_list_widget.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});

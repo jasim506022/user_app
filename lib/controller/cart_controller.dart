@@ -5,10 +5,10 @@ import 'package:user_app/repository/sign_in_repository.dart';
 
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
-import '../res/cartmethod.dart';
+import '../res/cart_funtion.dart';
 import '../res/constants.dart';
 import '../service/database/firebasedatabase.dart';
-import '../service/provider/cart_product_counter_provider.dart';
+import 'cart_product_counter_controller.dart';
 import '../service/provider/totalamountrpovider.dart';
 
 class CartController extends GetxController {
@@ -80,8 +80,8 @@ class CartController extends GetxController {
 
       sharedPreference!.setStringList("cartlist", cartList);
 
-      CartMethods.separeteProductIdUserCartList();
-      CartMethods.separteProductQuantityUserCartList();
+      CartFunctions.separateProductID();
+      CartFunctions.separteProductQuantityUserCartList();
 
       var controller = Get.put(CartProductCountController());
       controller.removeCartItem();
