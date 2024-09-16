@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../res/constants.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/utils.dart';
-import '../../../service/provider/category_provider.dart';
+import '../../../controller/category_controller.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({

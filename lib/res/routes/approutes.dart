@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:user_app/view/bill/billlscreen.dart';
 import 'package:user_app/view/bill/placeorderscrren.dart';
-import 'package:user_app/view/product/details_product_page.dart';
+import 'package:user_app/view/product/product_details_page.dart';
 import 'package:user_app/view/product/product_page.dart';
 import 'package:user_app/view/profile/editprofilescrren.dart';
 import 'package:user_app/view/profile/profilescreen.dart';

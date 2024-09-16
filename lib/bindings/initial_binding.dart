@@ -19,7 +19,7 @@ import '../repository/sign_in_repository.dart';
 import '../repository/sign_up_repository.dart';
 import '../repository/splash_repository.dart';
 import '../controller/cart_product_counter_controller.dart';
-import '../service/provider/category_provider.dart';
+import '../controller/category_controller.dart';
 
 class InitialBinding extends Bindings {
   @override

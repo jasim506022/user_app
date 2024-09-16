@@ -14,7 +14,6 @@ import 'res/app_colors.dart';
 import 'res/routes/approutes.dart';
 import 'res/routes/routesname.dart';
 import 'res/constants.dart';
-import 'service/provider/loading_provider.dart';
 import 'service/provider/theme_provider.dart';
 
 void main() async {
@@ -106,11 +105,7 @@ class MyApp extends StatelessWidget {
 
   List<SingleChildWidget> get providerAllList {
     return [
-      ChangeNotifierProvider(
-        create: (context) {
-          return LoadingProvider();
-        },
-      ),
+      
       ChangeNotifierProvider(
         create: (context) {
           return ThemeProvider();

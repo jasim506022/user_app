@@ -1,46 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/utils.dart';
 
-import '../../model/productsmodel.dart';
-import '../../res/app_colors.dart';
-import '../../res/routes/routesname.dart';
-import '../../widget/cart_badge.dart';
+import '../../../controller/cart_product_counter_controller.dart';
+import '../../../model/productsmodel.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/routes/routesname.dart';
+import '../../../widget/cart_badge.dart';
 import 'details_card_swiper.dart';
 
 class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   const DetailsPageImageSlideWithCartBridgeWidget({
     super.key,
     required this.productModel,
-    required this.productController,
   });
 
-  final ProductController productController;
-  final ProductModel? productModel;
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
+    var cartProductCountController = Get.find<CartProductCountController>();
     Utils utils = Utils(context);
     return SizedBox(
-      height: 418,
-      width: Get.width,
+      height: 300.h,
+      width: 1.sw,
       child: Stack(
         children: [
           //understand this code carefully
           for (Map<String, dynamic> circleConfig in [
             {
-              'left': -200.00,
-              'right': -200.00,
-              'top': -400.00,
-              'size': 800.00,
+              'left': -200.00.w,
+              'right': -200.00.w,
+              'top': -400.00.h,
+              'size': 800.00.h,
               'color': utils.green100
             },
             {
-              'left': -80.00,
-              'right': -80.00,
-              'top': -300.00,
-              'size': 600.00,
+              'left': -80.00.w,
+              'right': -80.00.w,
+              'top': -300.00.h,
+              'size': 600.00.h,
               'color': utils.green200
             },
             {
@@ -103,13 +103,13 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
 
           Positioned(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +120,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                         },
                         child: Container(
                           alignment: Alignment.center,
-                          padding: const EdgeInsets.all(8),
+                          padding: EdgeInsets.all(8.r),
                           decoration: BoxDecoration(
                               color: AppColors.greenColor,
                               shape: BoxShape.circle),
@@ -137,15 +137,14 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                         },
                         child: Obx(
                           () => Container(
-                            height: 50,
-                            width: 50,
+                            height: 30.h,
+                            width: 50.w,
                             decoration: BoxDecoration(
                                 color: AppColors.greenColor,
                                 shape: BoxShape.circle),
                             child: CartBadge(
                               color: AppColors.white,
-                              itemCount: productController
-                                  .cartProductCountController.getCounts,
+                              itemCount: cartProductCountController.getCounts,
                               icon: Icons.shopping_cart,
                             ),
                           ),
@@ -153,7 +152,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                       )
                     ],
                   ),
-                  DetailsSwiperWidget(productModel: productModel!),
+                  DetailsSwiperWidget(productModel: productModel),
                   const SizedBox(
                     height: 15,
                   ),

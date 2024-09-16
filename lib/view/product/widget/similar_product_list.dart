@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
-import '../../controller/product_controller.dart';
-import '../../model/productsmodel.dart';
-import '../../res/appasset/image_asset.dart';
-import '../../res/constants.dart';
-import '../../res/routes/routesname.dart';
-import '../../widget/single_empty_widget.dart';
+import '../../../controller/product_controller.dart';
+import '../../../model/productsmodel.dart';
+import '../../../res/appasset/image_asset.dart';
+import '../../../widget/single_empty_widget.dart';
 import 'loading_similar_widet.dart';
 import 'similar_product_widget.dart';
 
@@ -16,17 +16,17 @@ class SimilarProductList extends StatelessWidget {
     required this.productModel,
   });
 
-  final ProductModel? productModel;
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
-    var productController = Get.put(ProductController(Get.find()));
+    var productController = Get.find<ProductController>();
     return SizedBox(
-      height: 150,
+      height: 150.h,
       width: Get.width,
       child: StreamBuilder(
         stream: productController.similarProductSnapshot(
-            productModel: productModel!),
+            productModel: productModel),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingSimilierWidget();
@@ -47,16 +47,11 @@ class SimilarProductList extends StatelessWidget {
                     ? 5
                     : snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  ProductModel models =
+                  ProductModel productModel =
                       ProductModel.fromMap(snapshot.data!.docs[index].data());
-                  return InkWell(
-                    onTap: () {
-                      Get.offAndToNamed(
-                        RoutesName.productDestailsPage,
-                        arguments: models,
-                      );
-                    },
-                    child: SimilarProductWidget(models: models),
+                  return ChangeNotifierProvider.value(
+                    value: productModel,
+                    child: const SimilarProductWidget(),
                   );
                 });
           }

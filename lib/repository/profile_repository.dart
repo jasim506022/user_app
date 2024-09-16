@@ -6,6 +6,14 @@ import '../res/app_function.dart';
 class ProfileRepository {
   final _dataFirebaseService = DataFirebaseService();
 
+  Future<void> updateUserData({required Map<String, dynamic> map}) async {
+    try {
+      await _dataFirebaseService.updateUserData(map: map);
+    } catch (e) {
+      AppsFunction.handleException(e);
+    }
+  }
+
   Future<DocumentSnapshot<Map<String, dynamic>>>
       getUserInformationSnapshot() async {
     try {

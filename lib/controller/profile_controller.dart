@@ -36,6 +36,20 @@ class ProfileController extends GetxController {
   //   isChangeProfilePicture.value = true;
   // }
 
+  Future<void> updateUserData({required Map<String, dynamic> map}) async {
+    try {
+      repository.updateUserData(map: map);
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: IconAsset.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: "Okay");
+      }
+    }
+  }
+
   void selectImage({required ImageSource imageSource}) async {
     try {
       //  imageFile.value =

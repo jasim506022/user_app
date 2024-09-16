@@ -270,4 +270,14 @@ class DataFirebaseService implements BaseFirebaseService {
         .orderBy("publishDate", descending: true)
         .get();
   }
+
+  @override
+  Future<void> updateUserData({required Map<String, dynamic> map}) async {
+    firebaseFirestore
+        .collection("users")
+        .doc(sharedPreference!.getString("uid")!)
+        .update(map);
+  }
 }
+
+//{"cartlist": tempList}

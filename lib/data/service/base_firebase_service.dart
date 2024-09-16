@@ -68,6 +68,8 @@ abstract class BaseFirebaseService {
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
       {required List<dynamic> itemIDDetails});
 
+  Future<void> updateUserData({required Map<String, dynamic> map});
+
   /*
    // static Future<void> forgetPasswordSnapshot({required String email}) async {
   //   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);

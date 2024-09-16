@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../res/constants.dart';
+import '../res/constants.dart';
 
 class CategoryController extends GetxController {
   final _category = allCategoryList.first.obs;

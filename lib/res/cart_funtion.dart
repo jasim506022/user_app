@@ -1,96 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/controller/cart_product_counter_controller.dart';
 import 'package:user_app/res/constants.dart';
 import 'package:user_app/service/database/firebasedatabase.dart';
 
 class CartFunctions {
-  // Add Item to CartWithSeller
-  // Okay Done
-  static void addItemToCartWithSeller(
-      {required String productId,
-      required int productCounter,
-      required String seller,
-      required BuildContext context}) {
+  static void addItemToCartWithSeller({
+    required String productId,
+    required int productCounter,
+    required String seller,
+  }) {
     List<String> tempList = sharedPreference!.getStringList("cartlist")!;
     tempList.add("$productId:$seller:$productCounter");
 
-    var controller = Get.put(CartProductCountController());
+    var controller = Get.find<CartProductCountController>();
+    var profileController = Get.find<ProfileController>();
+    profileController.updateUserData(map: {"cartlist": tempList});
+    AppsFunction.flutterToast(msg: "Item Add Successfully");
+    sharedPreference!.setStringList("cartlist", tempList);
+    controller.addCartItem();
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
-        .update({"cartlist": tempList}).then((value) {
-      AppsFunction.flutterToast(msg: "Item Add Successfully");
-      sharedPreference!.setStringList("cartlist", tempList);
-      controller.addCartItem();
-
-      separateProductID();
-      separteProductQuantityUserCartList();
-    });
+    // separateProductID();
+    // separteProductQuantityUserCartList();
   }
 
-  static void addItemToCart(
-      {required String productId,
-      required int productCounter,
-      required BuildContext context}) {
-    List<String> tempList = sharedPreference!.getStringList("cartlist")!;
-
-    tempList.add("$productId:$productCounter");
-
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
-        .update({"cartlist": tempList}).then((value) {
-      AppsFunction.flutterToast(msg: "Item Add Successfully");
-
-      sharedPreference!.setStringList("cartlist", tempList);
-      // try to add
-      // Provider.of<CartProductCountProvider>(context, listen: false)
-      //     .addCartItem();
-      separateProductID();
-      separteProductQuantityUserCartList();
-    });
-  }
-
-//Remove Product from Cart
-/*
-  static void removeProdctFromCart({required int index}) async {
-    List<String> cartList = sharedPreference!.getStringList("cartlist")!;
-    if (kDebugMode) {
-      print(cartList[index]);
-    }
-    cartList.remove(cartList[index]);
-
-    await FirebaseDatabase.currentUserSnaphots()
-        .update({"cartlist": cartList}).then((value) {
-      AppsFunction.flutterToast(msg: "Item remove Successfully");
-
-      sharedPreference!.setStringList("cartlist", cartList);
-
-      CartMethods.separeteProductIdUserCartList();
-      CartMethods.separteProductQuantityUserCartList();
-
-      // Provider.of<CartProductCountProvider>(context, listen: false)
-      //     .removeCartItem();
-      var controller = Get.put(CartProductCountController());
-      controller.removeCartItem();
-
-      // print(cartList.length);
-
-      // Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => const CartPage(),
-      //     ));
-      Get.offNamed(RoutesName.cartPage);
-    });
-  }
-*/
-// Clear All Cart
   static void clearCart() {
     sharedPreference!.setStringList("cartlist", ["initial"]);
     List<String> emptyCart = sharedPreference!.getStringList("cartlist")!;

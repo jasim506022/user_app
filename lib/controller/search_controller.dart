@@ -7,7 +7,7 @@ import '../model/app_exception.dart';
 import '../model/productsmodel.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
-import '../service/provider/category_provider.dart';
+import 'category_controller.dart';
 
 class SearchControllers extends GetxController {
   ProductReposity productReposity = ProductReposity();

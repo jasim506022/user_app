@@ -11,7 +11,7 @@ import '../../res/appasset/image_asset.dart';
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
-import '../../service/provider/category_provider.dart';
+import '../../controller/category_controller.dart';
 import '../../widget/empty_widget.dart';
 import '../../widget/product_widget.dart';
 

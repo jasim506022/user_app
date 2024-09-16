@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../controller/product_controller.dart';
+import '../../controller/category_controller.dart';
 import '../../res/constants.dart';
 
 import '../../res/routes/routesname.dart';
 import '../../widget/product_list_widget.dart';
 
-class ProductPage extends StatefulWidget {
+class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
-
-  @override
-  State<ProductPage> createState() => _ProductPageState();
-}
-
-class _ProductPageState extends State<ProductPage> {
-  var productController = Get.put(ProductController(
-    Get.find(),
-  ));
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +35,15 @@ class _ProductPageState extends State<ProductPage> {
             width: 10,
           ),
         ],
-        elevation: 0.3,
-        centerTitle: true,
+        //
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
         child: Column(
           children: [
-            _buildDropDownButton(),
-            const SizedBox(
-              height: 15,
+            _buildDropDownButton(context),
+            SizedBox(
+              height: 15.h,
             ),
             Expanded(
                 child: ProductListWidget(
@@ -64,8 +55,8 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-// Understand this code
-  DropdownButtonFormField<String> _buildDropDownButton() {
+  DropdownButtonFormField<String> _buildDropDownButton(BuildContext context) {
+    var categoryController = Get.find<CategoryController>();
     return DropdownButtonFormField(
       decoration: InputDecoration(
         fillColor: Theme.of(context).cardColor,
@@ -81,7 +72,7 @@ class _ProductPageState extends State<ProductPage> {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       ),
-      value: productController.categoryController.getCategory,
+      value: categoryController.getCategory,
       isExpanded: true,
       style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
@@ -89,12 +80,11 @@ class _ProductPageState extends State<ProductPage> {
           fontWeight: FontWeight.w700),
       focusColor: Theme.of(context).primaryColor,
       elevation: 16,
-      // Understand this code on dart
       items: allCategoryList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
       onChanged: (value) {
-        productController.categoryController.setCategory(category: value!);
+        categoryController.setCategory(category: value!);
       },
     );
   }

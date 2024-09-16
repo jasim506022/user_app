@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../res/app_colors.dart';
-import '../../model/productsmodel.dart';
+import '../../../res/app_colors.dart';
+import '../../../model/productsmodel.dart';
 
 class DetailsSwiperWidget extends StatelessWidget {
   const DetailsSwiperWidget({
@@ -18,7 +19,7 @@ class DetailsSwiperWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
-        height: 300,
+        height: 210.h,
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             return CachedNetworkImage(
@@ -35,8 +36,8 @@ class DetailsSwiperWidget extends StatelessWidget {
           itemCount: productModel.productimage!.length,
           pagination: SwiperPagination(
               alignment: Alignment.bottomCenter,
-              builder:
-                  DotSwiperPaginationBuilder(color:AppColors. white, activeColor:AppColors. red)),
+              builder: DotSwiperPaginationBuilder(
+                  color: AppColors.white, activeColor: AppColors.red)),
           control: const SwiperControl(color: Colors.transparent),
         ),
       ),
