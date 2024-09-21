@@ -26,8 +26,10 @@ class UserProfileHeaderWidget extends StatelessWidget {
         sharedPreference?.getString(StringConstant.imageSharedPreference);
     String? name =
         sharedPreference?.getString(StringConstant.nameSharedPreference);
+List<String>? cartList =
+        sharedPreference?.getStringList(StringConstant.cartListSharedPreference);
 
-    if ((imageUrl?.isEmpty ?? true) && (name?.isEmpty ?? true)) {
+    if ((imageUrl?.isEmpty ?? true) && (name?.isEmpty ?? true) && (cartList==null)) {
       return FutureBuilder(
         future: profileController.getUserData(),
         builder: (context, snapshot) {

@@ -1,41 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:user_app/model/app_exception.dart';
-import 'package:user_app/repository/sign_in_repository.dart';
 
+
+import '../model/app_exception.dart';
+import '../model/productsmodel.dart';
+import '../repository/cart_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/cart_funtion.dart';
+import '../res/constant/string_constant.dart';
 import '../res/constants.dart';
-import '../service/database/firebasedatabase.dart';
+
 import 'cart_product_counter_controller.dart';
-import '../service/provider/totalamountrpovider.dart';
+import 'profile_controller.dart';
 
 class CartController extends GetxController {
   final CartRepository _cartRepository = CartRepository();
 
   var shareP = 0.obs;
-  var sellerUser = <Map<String, dynamic>>[].obs;
-  var cartStream = Rxn<Stream<QuerySnapshot<Map<String, dynamic>>>>();
-  var cartProductSnapshots = Rxn<Stream<QuerySnapshot<Map<String, dynamic>>>>();
 
-  // CartController(this._cartRepository);
-
-  var totalAmountController = Get.put(TotalAmountController());
+  var profileController = Get.find<ProfileController>();
 
   @override
   void onInit() {
     super.onInit();
 
-    if (sharedPreference!.getStringList("cartlist")!.length > 1) {
-      cartStream.value = _cartRepository.cartSellerSnapshot();
-      shareP.value = sharedPreference!.getStringList("cartlist")!.length;
+    if (sharedPreference!
+            .getStringList(StringConstant.cartListSharedPreference)!
+            .length >
+        1) {
+      shareP.value = sharedPreference!
+          .getStringList(StringConstant.cartListSharedPreference)!
+          .length;
     }
   }
 
-  cartSellerSnapshot() {
+  var totalAmount = 0.0.obs;
+
+  void setAmount(ProductModel productModel, int itemIndex) {
+    totalAmount.value += ((AppsFunction.productPrice(
+          productModel.productprice!,
+          productModel.discount!.toDouble(),
+        ) *
+        CartFunctions.seperateProductQuantiyList()[itemIndex]));
+  }
+
+  setSzeo() {
+    totalAmount = 0.0.obs;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
     try {
-      cartStream.value = _cartRepository.cartSellerSnapshot();
+      return _cartRepository.cartSellerSnapshot();
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -43,19 +59,21 @@ class CartController extends GetxController {
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
+
         if (shareP.value == 1) {
           Get.back();
         }
       }
+      rethrow;
     }
   }
 
   //
 
-  cartproductSnapshot({required String sellerId}) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> cartproductSnapshot(
+      {required String sellerId}) {
     try {
-      cartProductSnapshots.value =
-          _cartRepository.cartProductSnapshot(sellerId: sellerId);
+      return _cartRepository.cartProductSnapshot(sellerId: sellerId);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -64,17 +82,64 @@ class CartController extends GetxController {
             content: e.message,
             buttonText: "Okay");
       }
+      rethrow;
     }
 
     //
   }
 
-  void removeProdctFromCart({required int index}) async {
+  void removeProductFromCart({required String productId}) async {
+    List<String> cartList = sharedPreference!.getStringList(StringConstant.cartListSharedPreference)!;
+
+    String itemToRemove = cartList.firstWhere(
+      (element) => element.contains(productId),
+      orElse: () => '',
+    );
+
+    if (itemToRemove.isNotEmpty) {
+      cartList.remove(itemToRemove);
+
+      try {
+        profileController.updateUserData(map: {"cartlist": cartList});
+        AppsFunction.flutterToast(msg: "Item remove Successfully");
+
+        sharedPreference!.setStringList(StringConstant.cartListSharedPreference, cartList);
+
+        CartFunctions.separateProductID();
+        CartFunctions.seperateProductQuantiyList();
+
+        var controller = Get.put(CartProductCountController());
+        controller.removeCartItem();
+
+        --shareP.value;
+
+        cartSellerSnapshot();
+      } catch (e) {
+        AppsFunction.flutterToast(msg: "Failed to remove item");
+      }
+    } else {
+      AppsFunction.flutterToast(msg: "Item not found in cart");
+    }
+  }
+}
+
+
+/*
+
+  void removeProdctFromCart({required String index}) async {
+    var stringId = "";
     List<String> cartList = sharedPreference!.getStringList("cartlist")!;
+    print("Example $index");
+    for (var indes in cartList) {
+      if (indes.contains(index)) {
+        stringId = indes;
+        print(stringId);
+      }
+    }
 
-    cartList.removeAt(index);
+    cartList.remove(stringId);
 
-    await FirebaseDatabase.currentUserSnaphots()
+    FirebaseDatabase.currentUserSnaphots()
         .update({"cartlist": cartList}).then((value) {
       AppsFunction.flutterToast(msg: "Item remove Successfully");
 
@@ -90,7 +155,8 @@ class CartController extends GetxController {
 
       cartSellerSnapshot();
 
-      totalAmountController.setAmount(0);
+      // totalAmountController.setAmount(0);
     });
   }
 }
+*/

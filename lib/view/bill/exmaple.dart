@@ -87,7 +87,7 @@ class PaymentViewModel extends GetxController {
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
   var totalAmount = "".obs;
 
-  var totalAmountController = Get.put(TotalAmountController());
+  // var totalAmountController = Get.put(TotalAmountController());
 
   var addressController = Get.put(AddressController(
     Get.find(),

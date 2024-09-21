@@ -50,20 +50,11 @@ class CartFunctions {
   }
 
 // Separet Product Quantity List From CartList
-  static List<int> separteProductQuantityUserCartList() {
-    // List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
+  static List<int> seperateProductQuantiyList() {
     return [
       for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
         int.parse(item.toString().split(":")[2])
     ];
-    // List<int> productQuanityList = [];
-    // for (int i = 1; i < userCartList.length; i++) {
-    //   String item = userCartList[i].toString();
-    //   List<String> splitCartList = item.split(":").toList();
-    //   int quatityProduct = int.parse(splitCartList[2].toString());
-    //   productQuanityList.add(quatityProduct);
-    // }
-    // return productQuanityList;
   }
 
 // Separete Seller List From CartList
@@ -159,3 +150,14 @@ class CartFunctions {
     return itemQuantity;
   }
 }
+
+/*
+ // List<int> productQuanityList = [];
+    // for (int i = 1; i < userCartList.length; i++) {
+    //   String item = userCartList[i].toString();
+    //   List<String> splitCartList = item.split(":").toList();
+    //   int quatityProduct = int.parse(splitCartList[2].toString());
+    //   productQuanityList.add(quatityProduct);
+    // }
+    // return productQuanityList;
+    */

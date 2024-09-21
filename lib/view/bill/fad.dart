@@ -90,7 +90,7 @@ class PaymentViewModel extends GetxController {
   var totalAmount = Rxn<String>();
 
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-  var totalAmountController = Get.put(TotalAmountController());
+  // var totalAmountController = Get.put(TotalAmountController());
 
   setCurrentIndex(int index) {
     currentPyamentIndex.value = index;

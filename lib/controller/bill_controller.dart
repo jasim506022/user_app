@@ -4,6 +4,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/address_controller.dart';
+import 'package:user_app/controller/cart_controller.dart';
 import 'package:user_app/res/cart_funtion.dart';
 
 import '../repository/bill_repository.dart';
@@ -22,7 +23,7 @@ class BillController extends GetxController {
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
   var totalAmount = "".obs;
 
-  var totalAmountController = Get.put(TotalAmountController());
+  var totalAmountController = Get.put(CartController());
 
   var addressController = Get.put(AddressController(
     Get.find(),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -44,25 +43,17 @@ class _BillPageState extends State<BillPage> {
   ));
   PaymentRepository payment = PaymentRepository();
   
-  // int currentAddressIndex = 0;
-
-  // String addressid = "";
-
-  // bool isLoading = false;
-
-  // List<AddressModel> _addressModelList = [];
+ 
   
 
   Map<String, dynamic>? paymentIntentData;
 
 
-  // AddressController addressController = Get.find();
-
   @override
   void initState() {
     viewModel.isLoading.value = false;
     Future.delayed(Duration.zero, () {
-      var amount = viewModel. totalAmountController.amount.value.toInt();
+      var amount = viewModel. totalAmountController.totalAmount.value.toInt();
      viewModel. totalAmount .value = amount.toString();
     });
 

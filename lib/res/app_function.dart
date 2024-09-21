@@ -245,36 +245,36 @@ class AppsFunction {
       bool? checkInternet}) {
     Get.defaultDialog(
         barrierDismissible: barrierDismissible ?? true,
-        contentPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        contentPadding:  EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
         title: "",
         content: Column(
           children: [
             Image.asset(
               icon,
-              height: 100,
-              width: 100,
+              height: 100.h,
+              width: 100.w,
             ),
-            const SizedBox(
-              height: 20,
+             SizedBox(
+              height: 20.h,
             ),
             Text(
               title,
               style: GoogleFonts.poppins(
                   color: AppColors.deepGreen,
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.w800),
             ),
-            const SizedBox(
-              height: 15,
+             SizedBox(
+              height: 15.h,
             ),
             if (content != null)
               Text(
                 content,
                 textAlign: TextAlign.center,
-                style: GoogleFonts.sourceSerif4(fontSize: 16),
+                style: GoogleFonts.sourceSerif4(fontSize: 16.sp),
               ),
-            const SizedBox(
-              height: 20,
+             SizedBox(
+              height: 20.h,
             ),
             if (buttonText != null)
               CustomRoundButtonWidget(
@@ -356,8 +356,8 @@ class CustomRoundButtonWidget extends StatelessWidget {
     return InkWell(
       onTap: onPress,
       child: Container(
-          height: height,
-          width: width,
+          height: height.h,
+          width: width.w,
           margin: EdgeInsets.symmetric(horizontal: Get.width * .2),
           decoration: BoxDecoration(
               color: buttonColors ?? AppColors.greenColor,
@@ -367,7 +367,7 @@ class CustomRoundButtonWidget extends StatelessWidget {
               title,
               style: TextStyle(
                   color: AppColors.white,
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.bold),
             ),
           )),

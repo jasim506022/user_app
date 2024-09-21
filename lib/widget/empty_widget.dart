@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../res/textstyle.dart';
 
@@ -18,17 +19,17 @@ class EmptyWidget extends StatelessWidget {
       children: [
         Image.asset(
           image,
-          height: 600,
-          width: 300,
+          height: 600.h,
+          width: 300.w,
         ),
         Positioned(
-          top: 120,
-          left: 130,
-          right: 40,
+          top: 120.h,
+          left: 130.w,
+          right: 40.w,
           child: Center(
             child: Container(
-              height: 300,
-              width: 130,
+              height: 300.h,
+              width: 130.w,
               alignment: Alignment.center,
               child: Text(title, style: Textstyle.emptyTestStyle),
             ),

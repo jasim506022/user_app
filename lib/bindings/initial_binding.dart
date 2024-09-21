@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:user_app/controller/cart_controller.dart';
 import 'package:user_app/controller/product_controller.dart';
 
 import '../controller/forget_password_controller.dart';
@@ -70,6 +71,8 @@ class InitialBinding extends Bindings {
         fenix: true);
 
          Get.lazyPut<CategoryController>(() => CategoryController(),
+        fenix: true);
+           Get.lazyPut<CartController>(() => CartController(),
         fenix: true);
   }
 }
