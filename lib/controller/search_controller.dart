@@ -7,7 +7,6 @@ import '../model/app_exception.dart';
 import '../model/productsmodel.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
-import 'category_controller.dart';
 
 class SearchControllers extends GetxController {
   ProductReposity productReposity = ProductReposity();
@@ -15,13 +14,14 @@ class SearchControllers extends GetxController {
   TextEditingController maxPriceTEC = TextEditingController();
   TextEditingController searchTextTEC = TextEditingController();
 
-  var categoryController = Get.put(CategoryController());
+  var selectSearchCategory = "All".obs;
 
-  var allProducts = <ProductModel>[].obs;
-  var searchList = <ProductModel>[].obs;
-  var filterList = <ProductModel>[].obs;
-  var isSearchList = false.obs;
-  var isfilter = false.obs;
+  var allProductList = <ProductModel>[].obs;
+  var searchProductList = <ProductModel>[].obs;
+  var filterProductList = <ProductModel>[].obs;
+
+  var isSearch = false.obs;
+  var isFilter = false.obs;
 
   @override
   void onInit() {
@@ -30,26 +30,46 @@ class SearchControllers extends GetxController {
     super.onInit();
   }
 
-  void searchAddProduct({required ProductModel productModel}) {
-    searchList.add(productModel);
+  void setCategory(String category) => selectSearchCategory.value = category;
+
+  void updateProductList(String text) {
+    searchProductList.clear();
+    var searchText = text.toLowerCase();
+
+    final productListToSearch =
+        isFilter.value ? filterProductList : allProductList;
+
+    searchProductList.addAll(productListToSearch.where((productModel) =>
+        productModel.productname!.toLowerCase().contains(searchText)));
+
+    setSearch(true);
   }
 
-  void filterAddProduct({required ProductModel productModel}) {
-    filterList.add(productModel);
+  void filterListAddProduct() {
+    filterProductList.clear();
+
+    double minPrice = double.parse(minPriceTEC.text);
+    double maxPrice = double.parse(maxPriceTEC.text);
+
+    filterProductList.addAll(allProductList.where((productModel) {
+      final double effectivePrice = AppsFunction.productPrice(
+        productModel.productprice!,
+        productModel.discount!.toDouble(),
+      );
+      return effectivePrice >= minPrice && effectivePrice <= maxPrice;
+    }));
+
+    setFilter(true);
   }
 
-  void setSearch(bool isSearch) {
-    isSearchList.value = isSearch;
-  }
+  void setSearch(bool isSearch) => this.isSearch.value = isSearch;
 
-  void setFilter(bool isFilter) {
-    isfilter.value = isFilter;
-  }
+  void setFilter(bool isFilter) => this.isFilter.value = isFilter;
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-      ) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots() {
     try {
-      return productReposity.productSnapshots(category: "All");
+      return productReposity.productSnapshots(
+          category: selectSearchCategory.value);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(

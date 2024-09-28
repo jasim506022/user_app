@@ -24,8 +24,6 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var productController = Get.find<ProductController>();
     ProductModel productModel = Get.arguments;
-
-    //Setting System Ui Overlay Style
     _setStatusBarStle(context);
 
     productController.resetCounter();

@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
+        dialogTheme: DialogTheme(backgroundColor: Colors.white),
         iconTheme: IconThemeData(
             color:
                 themeProvder.getDarkTheme ? AppColors.white : AppColors.black),
@@ -105,7 +106,6 @@ class MyApp extends StatelessWidget {
 
   List<SingleChildWidget> get providerAllList {
     return [
-      
       ChangeNotifierProvider(
         create: (context) {
           return ThemeProvider();

@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
+import 'package:user_app/controller/address_controller.dart';
+import 'package:user_app/controller/bill_controller.dart';
 import 'package:user_app/controller/cart_controller.dart';
 import 'package:user_app/controller/product_controller.dart';
+import 'package:user_app/repository/bill_repository.dart';
 
 import '../controller/forget_password_controller.dart';
 import '../controller/loading_controller.dart';
@@ -31,6 +34,7 @@ class InitialBinding extends Bindings {
     Get.lazyPut<OnBoardingRepository>(() => OnBoardingRepository());
     Get.lazyPut<SignInRepository>(() => SignInRepository());
     Get.lazyPut<SignUpRepository>(() => SignUpRepository());
+    Get.lazyPut<BillRepository>(() => BillRepository(), fenix: true);
     Get.lazyPut<SelectImageRepository>(() => SelectImageRepository());
     Get.put<LoadingController>(LoadingController());
 
@@ -38,6 +42,7 @@ class InitialBinding extends Bindings {
 
     Get.lazyPut<SplashController>(
         () => SplashController(repository: Get.find<SplashRepository>()));
+
     Get.lazyPut<OnBoardingController>(() => OnBoardingController(
         onBoardingRepository: Get.find<OnBoardingRepository>()));
 
@@ -57,7 +62,7 @@ class InitialBinding extends Bindings {
         SignUpController(signUpRepository: Get.find<SignUpRepository>()));
 
     Get.lazyPut<ProductReposity>(() => ProductReposity(), fenix: true);
-    Get.lazyPut<AddressRepository>(() => AddressRepository());
+    Get.lazyPut<AddressRepository>(() => AddressRepository(), fenix: true);
     Get.lazyPut<ProfileRepository>(() => ProfileRepository(), fenix: true);
 
     Get.lazyPut<ProfileController>(
@@ -67,12 +72,17 @@ class InitialBinding extends Bindings {
         () => ProductController(Get.find<ProductReposity>()),
         fenix: true);
 
+    Get.lazyPut<AddressController>(
+        () => AddressController(Get.find<AddressRepository>()),
+        fenix: true);
+
     Get.lazyPut<CartProductCountController>(() => CartProductCountController(),
         fenix: true);
 
-         Get.lazyPut<CategoryController>(() => CategoryController(),
-        fenix: true);
-           Get.lazyPut<CartController>(() => CartController(),
+    Get.lazyPut<CategoryController>(() => CategoryController(), fenix: true);
+    Get.lazyPut<CartController>(() => CartController(), fenix: true);
+    Get.lazyPut<BillController>(
+        () => BillController(repository: Get.find<BillRepository>()),
         fenix: true);
   }
 }

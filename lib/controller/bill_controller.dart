@@ -1,119 +1,122 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:user_app/controller/address_controller.dart';
-import 'package:user_app/controller/cart_controller.dart';
-import 'package:user_app/res/cart_funtion.dart';
 
 import '../repository/bill_repository.dart';
+import '../res/app_function.dart';
+import '../res/appasset/icon_asset.dart';
+import '../res/cart_funtion.dart';
 import '../res/constants.dart';
 import '../res/routes/routesname.dart';
-import '../service/provider/totalamountrpovider.dart';
+import 'address_controller.dart';
+import 'cart_controller.dart';
 
 class BillController extends GetxController {
   final BillRepository repository;
 
+  //Observable variable for reactive UI Update
+
   var isLoading = false.obs;
-
-  var paymentIntentData = Rxn<Map<String, dynamic>>();
+  Map<String, dynamic> paymentIntentData = {};
   var currentPyamentIndex = 0.obs;
-  bool isSucess = false;
-  String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-  var totalAmount = "".obs;
-
-  var totalAmountController = Get.put(CartController());
-
-  var addressController = Get.put(AddressController(
-    Get.find(),
-  ));
-
-  setCurrentIndex(int index) {
-    currentPyamentIndex.value = index;
-  }
-
   var card = Payment.card.name.obs;
+  var isSucess = false.obs;
 
-  setCurrentPayment(String card) {
-    this.card.value = card;
-  }
+  String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+  var totalAmountController = Get.put(CartController());
+  AddressController addressController = Get.find();
 
   BillController({required this.repository});
 
-  setLoading(bool isLoading) {
-    this.isLoading.value = isLoading;
-  }
+  /// Sets the loading state
+  void setLoading(bool isLoading) => this.isLoading.value = isLoading;
 
+  /// Sets the current selected payment method
+  void setCurrentPaymentIndex(int index) => currentPyamentIndex.value = index;
+
+  /// Sets the payment method (e.g., Card or Bkash)
+  void setCurrentPayment(String card) => this.card.value = card;
+
+  /// Creates and processes the payment
   Future<void> createPayment(String amount, String currency) async {
     try {
-      isLoading.value = true;
+      if (!await _checkInternetConnection()) return;
+      setLoading(true);
 
-      paymentIntentData.value =
+      paymentIntentData =
           await repository.createPaymentIntent(amount, currency);
-      var paymeinTents = paymentIntentData.value!['client_secret'];
 
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: paymeinTents,
+              paymentIntentClientSecret: paymentIntentData['client_secret'],
               style: ThemeMode.dark,
               merchantDisplayName: 'ANNIE'));
 
-      displayPaymentSheet().whenComplete(() {
-        if (isSucess) {
-          repository.saveOrderDetails(
-              orderMetailsMap: orderMetailsMap("Payment By Carrd"),
-              orderId: orderId);
-          CartFunctions.clearCart();
-          Fluttertoast.showToast(
-              msg: "Congratulations, Order has been placed Successfully");
-          Get.snackbar('Successfully', 'Successfully Done');
-          Get.offAllNamed(RoutesName.placeOrderScreen);
-        } else {
-          Fluttertoast.showToast(msg: "Payment Cencle");
-          isLoading.value = false;
-        }
-      });
-    } catch (e, s) {
-      if (kDebugMode) {
-        print(s);
-      }
+      await displayPaymentSheet(amount);
+    } catch (e) {
+      AppsFunction.flutterToast(msg: e.toString());
+      setLoading(false);
     } finally {
-      isLoading.value = true;
+      setLoading(false);
     }
   }
 
-  Future<void> displayPaymentSheet() async {
-    isLoading.value = true;
+  Future<void> displayPaymentSheet(String amount) async {
+    setLoading(true);
     try {
       await Stripe.instance.presentPaymentSheet();
-      paymentIntentData.value = null;
-      isSucess = true;
-      // print(isSucess);
+      paymentIntentData = {};
+      isSucess.value = true;
+      if (isSucess.value) {
+        _processSuccessfullPayment(double.parse(amount));
+      } else {
+        AppsFunction.flutterToast(msg: "Payment Cencle");
+
+        setLoading(false);
+      }
     } on StripeException catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
+      AppsFunction.flutterToast(msg: e.toString());
+      setLoading(false);
     } catch (e) {
-      if (kDebugMode) {
-        print('$e');
-      }
-    } finally {
-      isLoading.value = true;
+      AppsFunction.flutterToast(msg: e.toString());
+      setLoading(false);
     }
   }
 
-  Map<String, dynamic> orderMetailsMap(String payment) {
-    // FirebaseDatabase.saveOrderDetailsForUser(orderDetailsMap:
+  void _processSuccessfullPayment(double amount) {
+    repository.saveOrderDetails(
+        orderMetailsMap: orderMetailsMap("Payment By Carrd", amount),
+        orderId: orderId);
+    CartFunctions.clearCart();
+    Fluttertoast.showToast(
+        msg: "Congratulations, Order has been placed Successfully");
+    Get.snackbar('Successfully', 'Successfully Done');
+    Get.offAllNamed(RoutesName.placeOrderScreen);
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    if (await AppsFunction.internetChecking()) {
+      AppsFunction.errorDialog(
+        icon: IconAsset.warningIcon,
+        title: "No Internet Connection",
+        content: "Please check your internet settings and try again.",
+        buttonText: "Okay",
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Map<String, dynamic> orderMetailsMap(String payment, double amount) {
     return {
       "addressId": addressController.addressid.value, //
-      "totalamount": totalAmount, //
+      "totalamount": amount, //
       "orderBy": sharedPreference!.getString("uid"), //
       "productIds": sharedPreference!.getStringList("cartlist"), //
       "paymentDetails": payment, //
       "orderId": orderId, //
-      "seller": CartFunctions.seperateSEllerSet(), //
-      // seperateSEllerSet
+      "seller": CartFunctions.seperateSellerSet(), //
       "orderTime": orderId, //
       "isSuccess": true, //
       "status": "normal", //
@@ -121,33 +124,6 @@ class BillController extends GetxController {
       "deliverypartner": "BD-DEX",
       "trackingnumber": "bddex$orderId"
     };
-    /*
-    orderId: orderId)
-        .whenComplete(() {
-      FirebaseDatabase.saveOrderDetailsForSeller(orderDetailsMap: {
-        "addressId": addressController.addressid.value, //
-        "totalamount": totalAmount, //
-        "orderBy": sharedPreference!.getString("uid"), //
-        "productIds": sharedPreference!.getStringList("cartlist"), //
-        "paymentDetails": payment, //
-        "orderId": orderId, //
-        "orderTime": orderId, //
-        "isSuccess": true, //
-        "seller": CartMethods.seperateSEllerSet(), //
-        "status": "normal", //
-        "deliverydate": estimateDeliveryDate, //
-        "deliverypartner": "BD-DEX",
-        "trackingnumber": "bddex$orderId"
-      }, orderId: orderId)
-          .whenComplete(() {
-        CartMethods.clearCart();
-        Fluttertoast.showToast(
-            msg: "Congratulations, Order has been placed Successfully");
-      });
-
-      orderId = "";
-    });
-  */
   }
 
   String estimateDeliveryDate = DateTime.now()

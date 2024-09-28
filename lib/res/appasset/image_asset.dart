@@ -16,4 +16,5 @@ class ImagesAsset {
   static String milkCarousel = "asset/carousel_image/milk.png";
   static String orangeCarousel = "asset/carousel_image/orange.png";
   static String vegetable = "asset/carousel_image/vegetable.png";
+  static String confirmOrder = "asset/payment/orderconfirm.png";
 }

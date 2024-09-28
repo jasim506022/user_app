@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:user_app/view/cart/cart_page.dart';
 import '../../controller/network_controller.dart';
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
 import '../home/home_page.dart';
 import '../order/orderpage.dart';
 import '../profile/profilescreen.dart';
-import '../search/searchpage.dart';
+import '../search/search_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({
@@ -26,7 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   late List<Widget> widgetOptions = [
     const HomePage(),
-    const OrderPage(),
+    const CartPage(),
     const SearchPage(),
     const ProfileScreen(),
   ];

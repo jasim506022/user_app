@@ -1,33 +1,44 @@
 import 'package:user_app/data/service/data_firebase_service.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/constant/string_constant.dart';
 
 class BillRepository {
   final _dataFirebaseService = DataFirebaseService();
 
   Future<Map<String, dynamic>> createPaymentIntent(
       String amount, String currency) async {
-    const String baseUrl = 'https://api.stripe.com/v1/payment_intents';
+    try {
+      final Map<String, String> headers = {
+        'Authorization': StringConstant.athorization,
+        'Content-Type': StringConstant.contentType
+      };
+      final Map<String, String> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+        'payment_method_types[]': 'card',
+      };
+      final response = await _dataFirebaseService.postRequest(
+          endpoint: "",
+          body: body,
+          baseUrl: StringConstant.baseUrl,
+          headers: headers);
 
-    final Map<String, String> headers = {
-      'Authorization':
-          'Bearer sk_test_51NxWNQAVUbXW3f6RxbSobZOWNsS7ZQvYMmWEGYEayvWWdsNEO8EKh12Ehlnezl6iXr8N7KA6gP2taLHDN2dTwesu002uaYJMYf',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
-    final Map<String, String> body = {
-      'amount': calculateAmount(amount),
-      'currency': currency,
-      'payment_method_types[]': 'card',
-    };
-    final response = await _dataFirebaseService.postRequest(
-        endpoint: "", body: body, baseUrl: baseUrl, headers: headers);
-    return response;
-    // PaymentIntentModel.fromMap(response);
+      return response;
+    } catch (e) {
+      AppsFunction.flutterToast(msg: e.toString());
+      rethrow;
+    }
   }
 
   Future<void> saveOrderDetails(
       {required Map<String, dynamic> orderMetailsMap,
       required String orderId}) async {
-    await _dataFirebaseService.saveOrderDetails(
-        orderMetailsMap: orderMetailsMap, orderId: orderId);
+    try {
+      await _dataFirebaseService.saveOrderDetails(
+          orderMetailsMap: orderMetailsMap, orderId: orderId);
+    } catch (e) {
+      AppsFunction.flutterToast(msg: e.toString());
+    }
   }
 
   String calculateAmount(String amount) {

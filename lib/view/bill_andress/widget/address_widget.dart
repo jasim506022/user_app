@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../controller/address_controller.dart';
-import '../../model/address_model.dart';
-import '../../res/app_colors.dart';
-import '../../res/textstyle.dart';
-import '../../res/utils.dart';
+import '../../../controller/address_controller.dart';
+import '../../../model/address_model.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/routes/routesname.dart';
+import '../../../res/textstyle.dart';
+import '../../../res/utils.dart';
 
 class AddressWidget extends StatelessWidget {
   const AddressWidget({
     super.key,
-    // required this.currentIndex,
     required this.addressModel,
     required this.index,
   });
 
-  // final int currentIndex;
   final int index;
   final AddressModel addressModel;
 
   @override
   Widget build(BuildContext context) {
-    // Textstyle textstyle = Textstyle(context);
     var addressController = Get.put(AddressController(
       Get.find(),
     ));
@@ -32,9 +30,9 @@ class AddressWidget extends StatelessWidget {
     return Obx(
       () => Container(
         alignment: Alignment.center,
-        height: 120,
+        height: 85.h,
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 13.h),
         decoration: BoxDecoration(
             border: Border.all(
                 color: addressController.currentAddressIndex.value == index
@@ -42,7 +40,7 @@ class AddressWidget extends StatelessWidget {
                     : Theme.of(context).cardColor,
                 width: 2),
             color: utils.green50,
-            borderRadius: BorderRadius.circular(25)),
+            borderRadius: BorderRadius.circular(25.r)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -63,15 +61,15 @@ class AddressWidget extends StatelessWidget {
                               Icons.home_outlined,
                               size: 30,
                             ),
-                      const SizedBox(
-                        width: 5,
+                      SizedBox(
+                        width: 5.w,
                       ),
                       Text(addressModel.deliveryplace!,
                           style: Textstyle.largestText),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 8.h,
                   ),
                   Text(
                     addressModel.completeaddress!,
@@ -79,7 +77,7 @@ class AddressWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.poppins(
                       color: Colors.grey,
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   )
@@ -92,12 +90,6 @@ class AddressWidget extends StatelessWidget {
                   "isUpdate": true,
                   "addressModel": addressModel
                 });
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => AddOrUpdateAddressScreen(
-                //           isUpdate: true, addressModel: addressModel),
-                //     ));
               },
               child: Icon(Typicons.edit, size: 40, color: AppColors.greenColor),
             )

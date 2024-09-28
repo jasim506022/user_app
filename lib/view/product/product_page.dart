@@ -41,7 +41,7 @@ class ProductPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
         child: Column(
           children: [
-            _buildDropDownButton(context),
+            const DropdownCategoryWidget(),
             SizedBox(
               height: 15.h,
             ),
@@ -54,8 +54,21 @@ class ProductPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  DropdownButtonFormField<String> _buildDropDownButton(BuildContext context) {
+class DropdownCategoryWidget extends StatelessWidget {
+  const DropdownCategoryWidget({
+    super.key,
+    this.isSearch = false,
+    this.onChanged,
+    this.category,
+  });
+  final String? category;
+  final bool? isSearch;
+  final void Function(String?)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
     var categoryController = Get.find<CategoryController>();
     return DropdownButtonFormField(
       decoration: InputDecoration(
@@ -72,7 +85,7 @@ class ProductPage extends StatelessWidget {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
       ),
-      value: categoryController.getCategory,
+      value: isSearch! ? category : categoryController.getCategory,
       isExpanded: true,
       style: GoogleFonts.poppins(
           color: Theme.of(context).primaryColor,
@@ -83,9 +96,11 @@ class ProductPage extends StatelessWidget {
       items: allCategoryList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
-      onChanged: (value) {
-        categoryController.setCategory(category: value!);
-      },
+      onChanged: isSearch!
+          ? onChanged
+          : (value) {
+              categoryController.setCategory(category: value!.toString());
+            },
     );
   }
 }

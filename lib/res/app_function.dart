@@ -65,72 +65,27 @@ class AppsFunction {
     ));
   }
 
-  static saveDialog() {
-    return Get.dialog<bool>(AlertDialog(
-      backgroundColor: AppColors.white,
-      title: Row(
-        children: [
-          Text("Save Changed?",
-              style: GoogleFonts.poppins(
-                  letterSpacing: 1.8,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.black)),
-          const SizedBox(
-            width: 5,
-          ),
-          Container(
-              padding: const EdgeInsets.all(5),
-              decoration:
-                  BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
-              child: Icon(
-                Icons.question_mark_rounded,
-                color: AppColors.white,
-              )),
-        ],
-      ),
-      content: Text('do you want to save change?',
-          style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.black)),
-      actions: [
-        CustomTextButtonWidget(
-          textColor: AppColors.red,
-          colorBorder: AppColors.red,
-          title: "Yes",
-          onPressed: () {
-            Get.back();
-          },
-        ),
-        CustomTextButtonWidget(
-          colorBorder: AppColors.greenColor,
-          title: "No",
-          onPressed: () {
-            Get.back();
-            Get.back();
-          },
-        ),
-      ],
-    ));
-  }
-
-  static deleteDialog({required VoidCallback function}) {
+  static confirmationDialog({
+    required VoidCallback yesFunction,
+    required String title,
+    required String content,
+    VoidCallback? noFunction,
+  }) {
     return Get.dialog(AlertDialog(
       backgroundColor: AppColors.white,
       title: Row(
         children: [
-          Text("Confirm Deletion?",
+          Text(title,
               style: GoogleFonts.poppins(
                   letterSpacing: 1.8,
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColors.black)),
-          const SizedBox(
-            width: 5,
+          SizedBox(
+            width: 5.w,
           ),
           Container(
-              padding: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(5.r),
               decoration:
                   BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
               child: Icon(
@@ -139,10 +94,9 @@ class AppsFunction {
               )),
         ],
       ),
-      content: Text(
-          'Are you sure you want to delete this item? This action cannot be undone.',
+      content: Text(content,
           style: GoogleFonts.poppins(
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
               color: AppColors.black)),
       actions: [
@@ -150,13 +104,14 @@ class AppsFunction {
             textColor: AppColors.red,
             colorBorder: AppColors.red,
             title: "Yes",
-            onPressed: function),
+            onPressed: yesFunction),
         CustomTextButtonWidget(
           colorBorder: AppColors.greenColor,
           title: "No",
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: noFunction ??
+              () {
+                Get.back();
+              },
         ),
       ],
     ));
@@ -245,7 +200,7 @@ class AppsFunction {
       bool? checkInternet}) {
     Get.defaultDialog(
         barrierDismissible: barrierDismissible ?? true,
-        contentPadding:  EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
+        contentPadding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
         title: "",
         content: Column(
           children: [
@@ -254,7 +209,7 @@ class AppsFunction {
               height: 100.h,
               width: 100.w,
             ),
-             SizedBox(
+            SizedBox(
               height: 20.h,
             ),
             Text(
@@ -264,7 +219,7 @@ class AppsFunction {
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w800),
             ),
-             SizedBox(
+            SizedBox(
               height: 15.h,
             ),
             if (content != null)
@@ -273,7 +228,7 @@ class AppsFunction {
                 textAlign: TextAlign.center,
                 style: GoogleFonts.sourceSerif4(fontSize: 16.sp),
               ),
-             SizedBox(
+            SizedBox(
               height: 20.h,
             ),
             if (buttonText != null)
@@ -298,6 +253,21 @@ class AppsFunction {
   static double productPriceWithQuantity(
       double productprice, double discount, int quantity) {
     return (productprice - (productprice * discount / 100)) * quantity;
+  }
+
+  static InputDecoration inputDecoration({
+    required String hint,
+  }) {
+    return InputDecoration(
+      enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color(0xff00B761), width: 1),
+          borderRadius: BorderRadius.circular(15)),
+      focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Color(0xff00B761), width: 1),
+          borderRadius: BorderRadius.circular(15)),
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.grey),
+    );
   }
 
   static InputDecoration textFormFielddecoration(

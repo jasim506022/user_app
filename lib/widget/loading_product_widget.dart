@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../res/utils.dart';
-import '../res/app_colors.dart';
 
 class LoadingProductWidget extends StatelessWidget {
   const LoadingProductWidget({

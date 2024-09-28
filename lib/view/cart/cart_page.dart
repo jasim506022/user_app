@@ -40,7 +40,6 @@ class _CartPageState extends State<CartPage> {
       appBar: AppBar(title: const Text("Cart Item")),
       body: Obx(() {
         cartController.setSzeo();
-
         if (cartController.shareP.value == 1) {
           return EmptyWidget(
             image: ImagesAsset.error,

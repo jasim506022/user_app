@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_function.dart';
 
-import '../res/constants.dart';
 import '../res/utils.dart';
 
-// ignore: must_be_immutable
 class TextFormFieldWidget extends StatefulWidget {
   TextFormFieldWidget(
       {super.key,
-      required this.hintText,
+      this.hintText,
       required this.controller,
       this.autofocus = false,
       this.obscureText = false,
@@ -20,19 +18,22 @@ class TextFormFieldWidget extends StatefulWidget {
       this.enabled = true,
       this.textInputType = TextInputType.text,
       this.onChanged,
-      this.validator});
-  final String hintText;
+      this.validator,
+      this.isUdateDecoration = false,
+      this.decoration});
+  final String? hintText;
   final TextEditingController controller;
-  bool? autofocus;
-  TextInputAction? textInputAction;
-  TextInputType? textInputType;
-  int? maxLines;
+  final bool? autofocus;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
+  final int? maxLines;
   bool? obscureText;
-  bool? isShowPassword;
-  bool? enabled;
+  final bool? isShowPassword;
+  final bool? enabled;
   final String? Function(String?)? validator;
-  Function(String)? onChanged;
-
+  final Function(String)? onChanged;
+  final bool? isUdateDecoration;
+  final InputDecoration? decoration;
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
 }
@@ -59,14 +60,16 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               color: widget.enabled!
                   ? Theme.of(context).primaryColor
                   : utils.profileTextColor),
-          decoration: AppsFunction.textFormFielddecoration(
-              hintText: widget.hintText,
-              isShowPassword: widget.isShowPassword!,
-              obscureText: widget.obscureText!,
-              function: () {
-                widget.obscureText = !widget.obscureText!;
-                setState(() {});
-              })),
+          decoration: widget.isUdateDecoration!
+              ? widget.decoration
+              : AppsFunction.textFormFielddecoration(
+                  hintText: widget.hintText!,
+                  isShowPassword: widget.isShowPassword!,
+                  obscureText: widget.obscureText!,
+                  function: () {
+                    widget.obscureText = !widget.obscureText!;
+                    setState(() {});
+                  })),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:user_app/view/bill/billlscreen.dart';
-import 'package:user_app/view/bill/placeorderscrren.dart';
+import 'package:user_app/view/bill_andress/billl_page.dart';
+import 'package:user_app/view/bill_andress/place_order_page.dart';
 import 'package:user_app/view/product/product_details_page.dart';
 import 'package:user_app/view/product/product_page.dart';
 import 'package:user_app/view/profile/editprofilescrren.dart';
@@ -10,10 +10,10 @@ import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';
 import '../../view/auth/sign_up_page.dart';
 
-import '../../view/bill/address_page.dart';
+import '../../view/bill_andress/address_page.dart';
 import '../../view/cart/cart_page.dart';
 import '../../view/main/main_page.dart';
-import '../../view/search/searchpage.dart';
+import '../../view/search/search_page.dart';
 import '../../view/splash/onboarding_page.dart';
 import '../../view/splash/splash_page.dart';
 import 'routesname.dart';
@@ -22,13 +22,13 @@ class AppRoutes {
   static appRoutes() => [
         GetPage(name: RoutesName.initailRoutes, page: () => const SplashPage()),
         GetPage(
-            name: RoutesName.signPage,
-            page: () => const SignInPage(),
-            ),
+          name: RoutesName.signPage,
+          page: () => const SignInPage(),
+        ),
         GetPage(
-            name: RoutesName.signupPage,
-            page: () => const SignUpPage(),
-            ),
+          name: RoutesName.signupPage,
+          page: () => const SignUpPage(),
+        ),
         GetPage(name: RoutesName.mainPage, page: () => const MainPage()),
         GetPage(
             name: RoutesName.onBaordingPage,
@@ -56,7 +56,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.placeOrderScreen,
-          page: () => const PlaceOrderScreen(),
+          page: () => const PlaceOrderPage(),
         ),
         GetPage(
           name: RoutesName.profileScreen,

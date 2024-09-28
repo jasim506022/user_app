@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:user_app/res/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoadingAddressWidget extends StatelessWidget {
   const LoadingAddressWidget({
@@ -12,12 +13,12 @@ class LoadingAddressWidget extends StatelessWidget {
     Utils utils = Utils(context);
     return Container(
       alignment: Alignment.center,
-      height: 120,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+      height: 78.h,
+      width: 1.sw,
+      margin: EdgeInsets.symmetric(vertical: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       decoration: BoxDecoration(
-          color: utils.green50, borderRadius: BorderRadius.circular(25)),
+          color: utils.green50, borderRadius: BorderRadius.circular(25.r)),
       child: Shimmer.fromColors(
         baseColor: utils.baseShimmerColor,
         highlightColor: utils.highlightShimmerColor,
@@ -32,34 +33,34 @@ class LoadingAddressWidget extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        height: 30,
-                        width: 40,
+                        height: 20.h,
+                        width: 30.w,
                         color: utils.widgetShimmerColor,
                       ),
-                      const SizedBox(
-                        width: 20,
+                      SizedBox(
+                        width: 20.w,
                       ),
                       Container(
-                        height: 30,
-                        width: 60,
+                        height: 20.h,
+                        width: 45.w,
                         color: utils.widgetShimmerColor,
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width,
+                    height: 10.h,
+                    width: 1.sw,
                     color: utils.widgetShimmerColor,
                   ),
-                  const SizedBox(
-                    height: 10,
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width,
+                    height: 10.h,
+                    width: 1.sw,
                     color: utils.widgetShimmerColor,
                   ),
                 ],

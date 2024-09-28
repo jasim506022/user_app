@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_app/model/address_model.dart';
-import 'package:user_app/model/app_exception.dart';
-import 'package:user_app/res/constants.dart';
 
+import '../model/address_model.dart';
+import '../model/app_exception.dart';
 import '../repository/address_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
+import '../res/constants.dart';
 import '../res/routes/routesname.dart';
 
 class AddressController extends GetxController {
@@ -20,10 +20,23 @@ class AddressController extends GetxController {
   TextEditingController villageTEC = TextEditingController();
   TextEditingController cityTEC = TextEditingController();
   TextEditingController countryTEC = TextEditingController();
+
+  void clearInputField() {
+    nameTEC.clear();
+    phoneTEC.clear();
+    flatHouseNumberTEC.clear();
+    streetnameornumberTEC.clear();
+    villageTEC.clear();
+    cityTEC.clear();
+    countryTEC.clear();
+    currentDropdownAddress.value = list[0];
+  }
+
   AddressController(this._addressRepository);
 
-  var dropdownValue = list[0].obs;
-  var completeAdddress = "".obs;
+  var currentDropdownAddress = list[0].obs;
+
+  var completeAddress = "".obs;
 
   var addressid = "".obs;
   var currentAddressIndex = 0.obs;
@@ -46,12 +59,8 @@ class AddressController extends GetxController {
 
   var isChange = false.obs;
 
-  void markAsChange() {
-    isChange.value = true;
-  }
-
-  changeAddress(String values) {
-    dropdownValue.value = values;
+  setDropdownAddress(String location) {
+    currentDropdownAddress.value = location;
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
@@ -69,7 +78,7 @@ class AddressController extends GetxController {
     }
   }
 
-  deleteAddress({required String addressId}) {
+  void deleteAddress({required String addressId}) {
     try {
       _addressRepository.deleteAddress(addressId: addressId);
     } catch (e) {
@@ -96,65 +105,90 @@ class AddressController extends GetxController {
 
     for (var textField in controllers) {
       textField.addListener(() {
-        markAsChange();
+        isChange.value = true;
       });
     }
   }
 
-  uploadAndUpdateAddress(bool isUpdate) async {
-    bool checkInternet = await AppsFunction.internetChecking();
+  // Save Address
+  Future<void> saveAddress(bool isUpdate) async {
+    if (!await _checkInternetConnection()) return;
 
-    if (checkInternet) {
-      AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
-          title: "No Internet Connection",
-          content: "Please check your internet settings and try again.",
-          buttonText: "Okay");
-    } else {
-      try {
-        if (!isUpdate) {
-          id.value = DateTime.now().millisecondsSinceEpoch.toString();
-        }
-        completeAdddress.value =
-            "${flatHouseNumberTEC.text.trim()}, ${streetnameornumberTEC.text.trim()}, ${villageTEC.text.trim()}, ${cityTEC.text.trim()}, ${countryTEC.text.trim()}";
+    try {
+      if (!isUpdate) {
+        id.value = DateTime.now().millisecondsSinceEpoch.toString();
+      }
 
-        AddressModel addressModel = AddressModel(
-            addressId: id.value,
-            city: cityTEC.text.trim(),
-            completeaddress: completeAdddress.value,
-            country: countryTEC.text.trim(),
-            deliveryplace: dropdownValue.value,
-            flatno: flatHouseNumberTEC.text.trim(),
-            name: nameTEC.text.trim(),
-            phone: phoneTEC.text.trim(),
-            streetno: streetnameornumberTEC.text.trim(),
-            village: villageTEC.text.trim());
-
-        await _addressRepository.uploadOrUpdateAddress(
-            addressModel: addressModel, isUpdate: isUpdate);
-
-        Get.offNamed(RoutesName.billPage);
-
-        AppsFunction.flutterToast(
-            msg: isUpdate
-                ? "Sucessfully Update"
-                : "Successfully Upload a New Address");
-      } catch (e) {
-        if (e is AppException) {
-          AppsFunction.errorDialog(
-              icon: IconAsset.warningIcon,
-              title: e.title!,
-              content: e.message,
-              buttonText: "Okay");
-        }
+      _buildCompleteAddress();
+      AddressModel addressModel = _buildAddressModel();
+      await _addressRepository.uploadOrUpdateAddress(
+          addressModel: addressModel, isUpdate: isUpdate);
+      clearInputField();
+      isChange.value = false;
+      Get.offNamed(RoutesName.billPage);
+      AppsFunction.flutterToast(
+          msg: isUpdate
+              ? "Sucessfully Update"
+              : "Successfully Upload a New Address");
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: IconAsset.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: "Okay");
       }
     }
   }
 
-  @override
-  void onInit() {
-    isChange.value = false;
-    super.onInit();
+  void updateFiled(AddressModel addressModel) {
+    id.value = addressModel.addressId!;
+    nameTEC.text = addressModel.name!;
+    phoneTEC.text = addressModel.phone!;
+    flatHouseNumberTEC.text = addressModel.flatno!;
+    streetnameornumberTEC.text = addressModel.streetno!;
+    villageTEC.text = addressModel.village!;
+    cityTEC.text = addressModel.city!;
+    countryTEC.text = addressModel.country!;
+    currentDropdownAddress.value = addressModel.deliveryplace!;
+    completeAddress.value = addressModel.completeaddress!;
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    if (await AppsFunction.internetChecking()) {
+      AppsFunction.errorDialog(
+        icon: IconAsset.warningIcon,
+        title: "No Internet Connection",
+        content: "Please check your internet settings and try again.",
+        buttonText: "Okay",
+      );
+      return false;
+    }
+    return true;
+  }
+
+  void _buildCompleteAddress() {
+    completeAddress.value = [
+      flatHouseNumberTEC.text.trim(),
+      streetnameornumberTEC.text.trim(),
+      villageTEC.text.trim(),
+      cityTEC.text.trim(),
+      countryTEC.text.trim()
+    ].join(", ");
+  }
+
+  AddressModel _buildAddressModel() {
+    return AddressModel(
+        addressId: id.value,
+        city: cityTEC.text.trim(),
+        completeaddress: completeAddress.value,
+        country: countryTEC.text.trim(),
+        deliveryplace: currentDropdownAddress.value,
+        flatno: flatHouseNumberTEC.text.trim(),
+        name: nameTEC.text.trim(),
+        phone: phoneTEC.text.trim(),
+        streetno: streetnameornumberTEC.text.trim(),
+        village: villageTEC.text.trim());
   }
 
   @override

@@ -1,31 +1,22 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/constants.dart';
-import 'package:user_app/model/profilemodel.dart';
 
-
-import '../service/database/firebasedatabase.dart';
-
-import 'app_colors.dart';
 
 class GlobalMethod {
-  final ImagePicker picker = ImagePicker();
+  // final ImagePicker picker = ImagePicker();
 
 // IsValidEmail
 
 // Elevate Button Style
-  ButtonStyle elevateButtonStyle() => ElevatedButton.styleFrom(
-        backgroundColor: AppColors.greenColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        padding: EdgeInsets.symmetric(
-            horizontal: Get.width * 0.022, vertical: Get.height * 0.018),
-      );
+  // ButtonStyle elevateButtonSftyle() => ElevatedButton.styleFrom(
+  //       backgroundColor: AppColors.greenColor,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(15),
+  //       ),
+  //       padding: EdgeInsets.symmetric(
+  //           horizontal: Get.width * 0.022, vertical: Get.height * 0.018),
+  //     );
 
   // Firebase Auth Error Handlig
  /*
@@ -101,7 +92,9 @@ class GlobalMethod {
   // }
 
 // Get User All Information on Share
-  getUserInformation() async {
+  
+  /*
+  getUsersInformation() async {
     try {
       await FirebaseDatabase.currentUserDataSnapshot().then((snapshot) async {
         if (snapshot.exists) {
@@ -128,6 +121,8 @@ class GlobalMethod {
       AppsFunction.flutterToast(msg: "Error:  $error");
     }
   }
+
+*/
 
   // getImageFromDevice(BuildContext context, ImageSource imageSource) async {
   //   ImageUploadProvider imageUploadProvider =
