@@ -14,7 +14,7 @@ class SelectImageController extends GetxController {
   SelectImageController({required this.selectImageRepository});
   var selectPhoto = Rx<File?>(null);
 
-  String uploadImage = "";
+  // String uploadImage = "";
 
   void selectImage({required ImageSource imageSource}) async {
     try {
@@ -31,5 +31,4 @@ class SelectImageController extends GetxController {
       }
     }
   }
-
 }

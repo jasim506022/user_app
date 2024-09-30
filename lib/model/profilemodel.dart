@@ -1,3 +1,5 @@
+import '../res/constants.dart';
+
 class ProfileModel {
   String? address;
 
@@ -29,6 +31,19 @@ class ProfileModel {
       'status': status,
       'uid': uid,
       'cartlist': cartlist,
+    };
+  }
+
+  Map<String, dynamic> toMapProfileEdit() {
+    return <String, dynamic>{
+      'address': address,
+      'email': sharedPreference!.getString("email"),
+      'imageurl': imageurl,
+      'name': name,
+      'phone': phone,
+      'status': "approved",
+      'uid': sharedPreference!.getString("uid"),
+      'cartlist': sharedPreference!.getStringList("cartlist"),
     };
   }
 

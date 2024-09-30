@@ -70,6 +70,8 @@ abstract class BaseFirebaseService {
 
   Future<void> updateUserData({required Map<String, dynamic> map});
 
+  Future<void> signOutApp();
+
   /*
    // static Future<void> forgetPasswordSnapshot({required String email}) async {
   //   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);

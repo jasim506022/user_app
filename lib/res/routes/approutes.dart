@@ -3,8 +3,8 @@ import 'package:user_app/view/bill_andress/billl_page.dart';
 import 'package:user_app/view/bill_andress/place_order_page.dart';
 import 'package:user_app/view/product/product_details_page.dart';
 import 'package:user_app/view/product/product_page.dart';
-import 'package:user_app/view/profile/editprofilescrren.dart';
-import 'package:user_app/view/profile/profilescreen.dart';
+import 'package:user_app/view/profile/edit_profile_scrren.dart';
+import 'package:user_app/view/profile/profile_screen.dart';
 
 import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';

@@ -1,44 +1,70 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:user_app/repository/profile_repository.dart';
+import 'package:user_app/repository/sign_up_repository.dart';
+import 'package:user_app/res/routes/routesname.dart';
 
 import '../model/app_exception.dart';
 import '../model/profilemodel.dart';
-import '../repository/sign_up_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
+import '../res/constant/string_constant.dart';
 import '../res/constants.dart';
+import 'loading_controller.dart';
+import 'select_image_controller.dart';
 
 class ProfileController extends GetxController {
   final ProfileRepository repository;
+
+  LoadingController loadingController = Get.put(LoadingController());
+
   SignUpRepository signUpRepository = SignUpRepository();
+
   TextEditingController nameTEC = TextEditingController();
   TextEditingController addressTEC = TextEditingController();
   TextEditingController phoneTEC = TextEditingController();
   TextEditingController emailTEC = TextEditingController();
 
+  SelectImageController selectImageController = Get.find();
+
   var profileModel = ProfileModel().obs;
   var image = "".obs;
-  var imageFile = Rx<File?>(null);
-  var isChangeProfilePicture = false.obs;
 
-  // DocumentSnapshot<Map<String, dynamic>> snapshot;
+  var isChange = false.obs;
 
   ProfileController({required this.repository});
 
-  // getImageFromGaller() async {
-  //   final ImagePicker picker = ImagePicker();
-  //   imageFile.value = await picker.pickImage(source: ImageSource.gallery);
-  //   isChangeProfilePicture.value = true;
-  // }
-
-  Future<void> updateUserData({required Map<String, dynamic> map}) async {
+  Future<void> updateUserData({Map<String, dynamic>? map}) async {
+    if (phoneTEC.text.trim().isEmpty) {
+      AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
+      return;
+    }
+    bool hasInternet = await AppsFunction.internetChecking();
+    if (hasInternet) {
+      _showErrorDialog("No Internet Connection",
+          "Please check your internet settings and try again.");
+      return;
+    }
     try {
-      repository.updateUserData(map: map);
+      loadingController.setLoading(true);
+      if (selectImageController.selectPhoto.value != null) {
+        image.value = await signUpRepository.uploadUserImgeUrl(
+            file: selectImageController.selectPhoto.value!);
+      }
+
+      ProfileModel model = ProfileModel();
+      model.address = addressTEC.text.trim();
+      model.phone = phoneTEC.text.trim();
+      model.name = nameTEC.text.trim();
+      model.imageurl = image.value;
+
+      repository.updateUserData(map: map ?? model.toMapProfileEdit());
+      isChange.value = false;
+      loadingController.setLoading(false);
+      Get.offAllNamed(RoutesName.mainPage, arguments: 3);
+      AppsFunction.flutterToast(msg: "Succesfully Update");
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -47,6 +73,20 @@ class ProfileController extends GetxController {
             content: e.message,
             buttonText: "Okay");
       }
+    }
+  }
+
+  void addChangeListener() {
+    final controllers = [
+      nameTEC,
+      phoneTEC,
+      addressTEC,
+    ];
+
+    for (var textField in controllers) {
+      textField.addListener(() {
+        isChange.value = true;
+      });
     }
   }
 
@@ -65,8 +105,24 @@ class ProfileController extends GetxController {
     }
   }
 
+  Future<void> signOut() async {
+    await sharedPreference?.setString(StringConstant.imageSharedPreference, "");
+    await sharedPreference?.setString(StringConstant.nameSharedPreference, "");
+    repository.signOut();
+    AppsFunction.flutterToast(msg: "Successfully Signout ");
+    Get.offAllNamed(RoutesName.signPage);
+  }
+
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
     return await repository.getUserInformationSnapshot();
+  }
+
+  void _showErrorDialog(String title, String content, [String? icon]) {
+    AppsFunction.errorDialog(
+        icon: icon ?? IconAsset.warningIcon,
+        title: title,
+        content: content,
+        buttonText: "Okay");
   }
 
   Future<void> getUserInformationSnapshot() async {

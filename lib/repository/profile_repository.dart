@@ -14,6 +14,14 @@ class ProfileRepository {
     }
   }
 
+  Future<void> signOut() async {
+    try {
+      await _dataFirebaseService.signOutApp();
+    } catch (e) {
+      AppsFunction.handleException(e);
+    }
+  }
+
   Future<DocumentSnapshot<Map<String, dynamic>>>
       getUserInformationSnapshot() async {
     try {

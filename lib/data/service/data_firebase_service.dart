@@ -278,6 +278,11 @@ class DataFirebaseService implements BaseFirebaseService {
         .doc(sharedPreference!.getString("uid")!)
         .update(map);
   }
+
+  @override
+  Future<void> signOutApp() async {
+    firebaseAuth.signOut();
+  }
 }
 
 //{"cartlist": tempList}
