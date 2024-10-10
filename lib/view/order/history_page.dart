@@ -1,11 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app/res/cart_funtion.dart';
-import 'package:user_app/service/database/firebasedatabase.dart';
 
-import '../../widget/empty_widget.dart';
-import '../../widget/single_loading_product_widget.dart';
-import 'cart_order_widget.dart';
+import 'widget/order_status_list_widget.dart';
+
+class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const OrderStatusListWidget(
+      appBarTitle: "Order History",
+      orderStatus: "complete",
+    );
+  }
+}
+
+/*
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -29,14 +38,18 @@ class _HistoryPageState extends State<HistoryPage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return const EmptyWidget(
-                image: 'asset/payment/empty.png',
-                title: 'No Data Available',
+              return EmptyWidget(
+                image: ImagesAsset.error,
+                title: snapshot.hasError
+                    ? 'Error Occure: ${snapshot.error}'
+                    : 'No Data Available',
               );
             } else if (snapshot.hasError) {
               return EmptyWidget(
-                image: 'asset/payment/empty.png',
-                title: 'Error Occure: ${snapshot.error}',
+                image: ImagesAsset.error,
+                title: snapshot.hasError
+                    ? 'Error Occure: ${snapshot.error}'
+                    : 'No Data Available',
               );
             } else {
               return ListView.builder(
@@ -55,25 +68,29 @@ class _HistoryPageState extends State<HistoryPage> {
                         return const LoadingSingleProductWidget();
                       } else if (!snapshot.hasData ||
                           snapshot.data!.docs.isEmpty) {
-                        return const EmptyWidget(
-                          image: 'asset/payment/empty.png',
-                          title: 'No Product Available',
+                        return EmptyWidget(
+                          image: ImagesAsset.error,
+                          title: snapshot.hasError
+                              ? 'Error Occure: ${snapshot.error}'
+                              : 'No Data Available',
                         );
                       } else if (snapshot.hasError) {
                         return EmptyWidget(
-                          image: 'asset/payment/empty.png',
-                          title: 'Error Occure: ${snapshot.error}',
+                          image: ImagesAsset.error,
+                          title: snapshot.hasError
+                              ? 'Error Occure: ${snapshot.error}'
+                              : 'No Data Available',
                         );
                       } else {
                         List<int> listItem =
                             CartFunctions.separateOrderItemQuantities((snapshot
                                 .data!.docs[index]
                                 .data())["productIds"]);
-                        return CartOrderWidget(
-                          itemCount: datasnapshot.data!.docs.length,
-                          data: datasnapshot.data!.docs,
-                          orderId: snapshot.data!.docs[index].id,
-                          seperateQuantilies: listItem,
+                        return CartOrderItemWidget(
+                          // itemCount: datasnapshot.data!.docs.length,
+                          document: datasnapshot.data!.docs,
+                          // orderId: snapshot.data!.docs[index].id,
+                          // separateQuantities: listItem,
                         );
                       }
                     },
@@ -85,3 +102,5 @@ class _HistoryPageState extends State<HistoryPage> {
         ));
   }
 }
+
+*/

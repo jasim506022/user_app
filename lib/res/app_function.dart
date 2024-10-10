@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:user_app/res/app_colors.dart';
 
 import '../data/response/app_data_exception.dart';
@@ -242,6 +243,12 @@ class AppsFunction {
               )
           ],
         ));
+  }
+
+  static String formatDeliveryDate(
+      {required String datetime}) {
+    final date = DateTime.fromMillisecondsSinceEpoch(int.parse(datetime));
+    return DateFormat("yyyy-MM-dd").format(date);
   }
 
 //Product Price

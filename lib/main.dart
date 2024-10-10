@@ -30,8 +30,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    
     return ScreenUtilInit(
-      designSize: const Size(450, 582),
+      designSize: const Size(450, 851), //582
       builder: (_, child) {
         return MultiProvider(
           providers: providerAllList,
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
-        dialogTheme: DialogTheme(backgroundColor: Colors.white),
+        dialogTheme: const DialogTheme(backgroundColor: Colors.white),
         iconTheme: IconThemeData(
             color:
                 themeProvder.getDarkTheme ? AppColors.white : AppColors.black),

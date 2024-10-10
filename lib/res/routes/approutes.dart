@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:user_app/view/bill_andress/billl_page.dart';
 import 'package:user_app/view/bill_andress/place_order_page.dart';
+import 'package:user_app/view/order/order_delivery_page.dart';
+import 'package:user_app/view/order/order_detail_page.dart';
 import 'package:user_app/view/product/product_details_page.dart';
 import 'package:user_app/view/product/product_page.dart';
 import 'package:user_app/view/profile/edit_profile_scrren.dart';
@@ -65,6 +67,14 @@ class AppRoutes {
         GetPage(
           name: RoutesName.editProfileScreen,
           page: () => const EditProfileScreen(),
+        ),
+        GetPage(
+          name: RoutesName.deliveryScreen,
+          page: () => const OrderDeliveryScreen(),
+        ),
+        GetPage(
+          name: RoutesName.orderDetailsPage,
+          page: () => const OrderSummaryPage(),
         )
       ];
 }

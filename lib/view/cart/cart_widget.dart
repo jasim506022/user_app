@@ -72,7 +72,7 @@ class CardWidget extends StatelessWidget {
       productModel.productprice!,
       productModel.discount!.toDouble(),
     );
-    print("Hello $itemQunter");
+
     final total = price * itemQunter;
     return Expanded(
       child: Padding(

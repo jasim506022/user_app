@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../res/app_colors.dart';
-import '../res/constants.dart';
 
 
 class ShowErrorDialogWidget extends StatelessWidget {

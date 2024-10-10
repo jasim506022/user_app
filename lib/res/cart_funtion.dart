@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_function.dart';
@@ -100,8 +99,6 @@ class CartFunctions {
 
 */
 
-
-
   static Set<String> seperateSellerSet() {
     return sharedPreference!
         .getStringList("cartlist")!
@@ -117,6 +114,42 @@ class CartFunctions {
     ];
   }
 
+  static List<String> separateOrderSellerCartList(productIds) {
+    List<String> listProductIds = List<String>.from(productIds);
+    return [
+      for (var item in listProductIds.skip(1)) item.toString().split(":")[1]
+    ];
+  }
+
+  static List<String> separteOrderProductIdList(productIds) {
+    List<dynamic> listProductIds = List<dynamic>.from(productIds);
+
+    return [
+      for (var item in listProductIds.skip(1)) (item.toString().split(":")[0])
+    ];
+  }
+
+  static List<int> separateOrderItemQuantities(productIds) {
+    List<String> listProductIds = List<String>.from(productIds);
+    return [
+      for (var item in listProductIds.skip(1))
+        int.parse(item.toString().split(":")[2])
+    ];
+  }
+}
+
+/*
+ // List<int> productQuanityList = [];
+    // for (int i = 1; i < userCartList.length; i++) {
+    //   String item = userCartList[i].toString();
+    //   List<String> splitCartList = item.split(":").toList();
+    //   int quatityProduct = int.parse(splitCartList[2].toString());
+    //   productQuanityList.add(quatityProduct);
+    // }
+    // return productQuanityList;
+    */
+
+/*
   static separateOrderSellerCartList(productIds) {
     List<String> userCartList = List<String>.from(productIds);
     List<String> itemSellerDetails = [];
@@ -135,49 +168,4 @@ class CartFunctions {
     }
     return itemSellerDetails;
   }
-
-  static separteOrderProductIdList(productIds) {
-    List<dynamic> userCartList = List<dynamic>.from(productIds);
-
-    List<String> itemIDDetails = [];
-    for (int i = 1; i < userCartList.length; i++) {
-      String item = userCartList[i].toString();
-
-      var lastChaterPositionOfItembeforeColon = item.indexOf(":");
-      String getItemId = item.substring(0, lastChaterPositionOfItembeforeColon);
-
-      itemIDDetails.add(getItemId);
-    }
-
-    return itemIDDetails;
-  }
-
-  static separateOrderItemQuantities(productIds) {
-    List<String> userCartList = List<String>.from(productIds);
-    List<int> itemQuantity = [];
-
-    for (int i = 1; i < userCartList.length; i++) {
-      String item = userCartList[i].toString();
-      var colonAndafterCharaListh = item.split(":").toList();
-
-      int qunatityNumber = int.parse(colonAndafterCharaListh[2].toString());
-      itemQuantity.add(qunatityNumber);
-    }
-    if (kDebugMode) {
-      print("Item Qunaity List");
-    }
-
-    return itemQuantity;
-  }
-}
-
-/*
- // List<int> productQuanityList = [];
-    // for (int i = 1; i < userCartList.length; i++) {
-    //   String item = userCartList[i].toString();
-    //   List<String> splitCartList = item.split(":").toList();
-    //   int quatityProduct = int.parse(splitCartList[2].toString());
-    //   productQuanityList.add(quatityProduct);
-    // }
-    // return productQuanityList;
-    */
+  */

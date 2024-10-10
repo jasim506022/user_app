@@ -62,11 +62,21 @@ abstract class BaseFirebaseService {
       required String baseUrl,
       required Map<String, String> headers});
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> allOrderSnapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> orderSnapshots(
+      {required String orderStatus});
 
-  // Order Product Snpashot
+  // Order Product Snpashot   orderAddressSnapsot
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
-      {required List<dynamic> itemIDDetails});
+      {required List<String> listProductID});
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> orderAddressSnapsot(
+      {required String addressId});
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> sellerOrderSnapshot(
+      {required List<String> sellerList});
+
+  Future<QuerySnapshot<Map<String, dynamic>>> sellerProductSnapshot(
+      {required List<String> productList, required String sellerId});
 
   Future<void> updateUserData({required Map<String, dynamic> map});
 

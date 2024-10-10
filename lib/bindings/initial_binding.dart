@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 import 'package:user_app/controller/address_controller.dart';
 import 'package:user_app/controller/bill_controller.dart';
 import 'package:user_app/controller/cart_controller.dart';
+import 'package:user_app/controller/order_controller.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/repository/bill_repository.dart';
+import 'package:user_app/repository/order_repository.dart';
 
 import '../controller/forget_password_controller.dart';
 import '../controller/loading_controller.dart';
@@ -37,6 +39,8 @@ class InitialBinding extends Bindings {
     Get.lazyPut<BillRepository>(() => BillRepository(), fenix: true);
     Get.lazyPut<SelectImageRepository>(() => SelectImageRepository());
     Get.put<LoadingController>(LoadingController());
+
+    Get.lazyPut<OrderRepository>(() => OrderRepository(), fenix: true);
 
     // LoadingController loadingController = Get.put(LoadingController());
 
@@ -83,6 +87,9 @@ class InitialBinding extends Bindings {
     Get.lazyPut<CartController>(() => CartController(), fenix: true);
     Get.lazyPut<BillController>(
         () => BillController(repository: Get.find<BillRepository>()),
+        fenix: true);
+        Get.lazyPut<OrderController>(
+        () => OrderController( Get.find<OrderRepository>()),
         fenix: true);
   }
 }

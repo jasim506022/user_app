@@ -87,8 +87,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     );
                                   }),
                                   Positioned(
-                                    bottom: 0,
-                                    right: 0,
+                                    bottom: 5,
+                                    right: 5,
                                     child: _selectImage(),
                                   ),
                                 ],
@@ -187,7 +187,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             _rowTextFileTitle(utils, Icons.email, "Email"),
             TextFormFieldWidget(
               controller: profileController.emailTEC,
-              enabled: isEdit == false ? false : true,
+              enabled: false,
               hintText: 'eamil',
             ),
             SizedBox(
@@ -253,8 +253,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Container _imageShape({required Widget child}) {
     return Container(
-        height: 180,
-        width: 180,
+        height: 140.h,
+        width: 140.h,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: AppColors.red, width: 2)),

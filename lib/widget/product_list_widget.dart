@@ -52,7 +52,7 @@ class ProductListWidget extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: .78,
+                  childAspectRatio: .76, //78
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                 ),

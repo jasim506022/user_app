@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routesname.dart';
 import '../../res/app_colors.dart';
 import '../../service/provider/theme_provider.dart';
-import '../order/historypage.dart';
-import '../order/orderpage.dart';
+import '../order/history_page.dart';
+import '../order/order_page.dart';
 import 'widget/list_title_widget.dart';
 import 'widget/profile_header_widget.dart';
 
@@ -125,7 +126,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   colors: AppColors.red,
                   icon: Icons.exit_to_app,
                   title: 'Sign Out',
-                  funcion: () {},
+                  funcion: () {
+                    FirebaseAuth.instance.signOut();
+                  },
                 ),
               ],
             ),

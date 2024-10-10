@@ -250,25 +250,36 @@ class DataFirebaseService implements BaseFirebaseService {
   }
 
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> allOrderSnapshots() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> orderSnapshots(
+      {required String orderStatus}) {
     return firebaseFirestore
         .collection("users")
         .doc(sharedPreference!.getString("uid"))
         .collection("orders")
-        .where("status", isEqualTo: "normal")
+        .where("status", isEqualTo: orderStatus)
         .snapshots();
   }
 
   // Order Product Snpashot
   @override
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
-      {required List<dynamic> itemIDDetails}) {
-    var imags = CartFunctions.separteOrderProductIdList(itemIDDetails);
+      {required List<String> listProductID}) {
     return firebaseFirestore
         .collection("products")
-        .where("productId", whereIn: imags)
+        .where("productId", whereIn: listProductID)
         .orderBy("publishDate", descending: true)
         .get();
+  }
+
+  @override
+  Stream<DocumentSnapshot<Map<String, dynamic>>> orderAddressSnapsot(
+      {required String addressId}) {
+    return firebaseFirestore
+        .collection("users")
+        .doc(sharedPreference!.getString("uid"))
+        .collection("useraddress")
+        .doc(addressId)
+        .snapshots();
   }
 
   @override
@@ -277,6 +288,26 @@ class DataFirebaseService implements BaseFirebaseService {
         .collection("users")
         .doc(sharedPreference!.getString("uid")!)
         .update(map);
+  }
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> sellerOrderSnapshot(
+      {required List<String> sellerList}) {
+    return firebaseFirestore
+        .collection("seller")
+        .where("uid", whereIn: sellerList)
+        .snapshots();
+  }
+
+  @override
+  Future<QuerySnapshot<Map<String, dynamic>>> sellerProductSnapshot(
+      {required List<String> productList, required String sellerId}) async {
+    return FirebaseFirestore.instance
+        .collection("products")
+        .where("sellerId", isEqualTo: sellerId)
+        .where("productId", whereIn: productList)
+        .orderBy("publishDate", descending: true)
+        .get();
   }
 
   @override

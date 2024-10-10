@@ -23,7 +23,7 @@ class BillPage extends StatelessWidget {
           leading: IconButton(
               onPressed: () {
                 if (billController.isLoading.value) {
-                  print("Bangladesh");
+                  
                 } else {
                   Get.back();
                 }

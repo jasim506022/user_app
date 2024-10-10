@@ -137,9 +137,5 @@ class GlobalMethod {
 //     return productprice - (productprice * discount / 100);
 //   }
 
-  String getFormateDate(
-      {required BuildContext context, required String datetime}) {
-    final date = DateTime.fromMillisecondsSinceEpoch(int.parse(datetime));
-    return DateFormat("yyyy-MM-dd").format(date);
-  }
+ 
 }

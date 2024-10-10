@@ -16,4 +16,6 @@ class RoutesName {
   static const String placeOrderScreen = '/placeOrderPage';
   static const String profileScreen = '/profileScreen';
   static const String editProfileScreen = '/editProfileScreen';
+  static const String deliveryScreen = '/deliveryScreen';
+  static const String orderDetailsPage = '/orderDetailsPage';
 }

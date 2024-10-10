@@ -15,7 +15,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       child: Container(
-        height: 160.h,
+        height: 80.h, //160
         width: .9.sw,
         decoration: BoxDecoration(
             boxShadow: [
@@ -25,7 +25,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
               )
             ],
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(20)),
+            borderRadius: BorderRadius.circular(20.r)),
         child: Shimmer.fromColors(
           baseColor: utils.baseShimmerColor,
           highlightColor: utils.highlightShimmerColor,
@@ -33,7 +33,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 140.h,
+                height: 70.h, // 140.h
                 width: 140.w,
                 alignment: Alignment.center,
                 margin: EdgeInsets.all(10.r),
@@ -44,8 +44,8 @@ class LoadingSingleProductWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +68,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
                       ),
                       Container(
                         alignment: Alignment.center,
-                        height: 20.h,
+                        height: 15.h,
                         width: 1.sw,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
