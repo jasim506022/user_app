@@ -1,14 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/controller/profile_controller.dart';
+import 'package:user_app/res/routes/routes_name.dart';
+
 import '../../res/app_colors.dart';
+import '../../res/app_function.dart';
 import '../../service/provider/theme_provider.dart';
-import '../order/history_page.dart';
-import '../order/order_page.dart';
 import 'widget/list_title_widget.dart';
 import 'widget/profile_header_widget.dart';
 
@@ -20,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var profileConroller = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,11 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.reorder,
                   title: 'My Orders',
                   funcion: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OrderPage(),
-                        ));
+                    Get.toNamed(RoutesName.orderPage);
                   },
                 ),
 
@@ -81,17 +78,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.access_time,
                   title: 'History',
                   funcion: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HistoryPage(),
-                        ));
+                    Get.toNamed(RoutesName.historyPage);
                   },
                 ),
                 ListTitleWidget(
                   icon: Icons.search,
                   title: 'Search',
-                  funcion: () {},
+                  funcion: () {
+                    Get.offAndToNamed(RoutesName.mainPage, arguments: 2);
+                  },
                 ),
 
                 Consumer<ThemeProvider>(
@@ -127,7 +122,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   icon: Icons.exit_to_app,
                   title: 'Sign Out',
                   funcion: () {
-                    FirebaseAuth.instance.signOut();
+                    AppsFunction.confirmationDialog(
+                      title: "Sign Out",
+                      content: 'do you want to Sign Out?',
+                      yesFunction: () => profileConroller.signOut(),
+                      noFunction: () {
+                        Get.back();
+                      },
+                    );
                   },
                 ),
               ],

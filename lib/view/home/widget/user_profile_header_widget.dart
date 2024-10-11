@@ -9,7 +9,7 @@ import '../../../model/profilemodel.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/constant/string_constant.dart';
 import '../../../res/constants.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../res/textstyle.dart';
 import '../../../widget/cart_badge.dart';
 import '../../../widget/header_loading.dart';

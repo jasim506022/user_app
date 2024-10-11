@@ -6,7 +6,7 @@ import 'package:user_app/res/utils.dart';
 import '../../../controller/cart_product_counter_controller.dart';
 import '../../../model/productsmodel.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../widget/cart_badge.dart';
 import 'details_card_swiper.dart';
 

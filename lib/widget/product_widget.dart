@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 import '../res/app_function.dart';
 import '../res/cart_funtion.dart';
 

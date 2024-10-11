@@ -8,7 +8,7 @@ import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/cart_funtion.dart';
 import '../res/constants.dart';
-import '../res/routes/routesname.dart';
+import '../res/routes/routes_name.dart';
 import 'address_controller.dart';
 import 'cart_controller.dart';
 

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/appasset/image_asset.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';

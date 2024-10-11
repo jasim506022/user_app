@@ -9,7 +9,7 @@ import '../../../model/productsmodel.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/appasset/image_asset.dart';
 import '../../../res/cart_funtion.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../widget/card_product_widget.dart';
 import '../../cart/dot_line_printer.dart';
 import '../../../widget/empty_widget.dart';

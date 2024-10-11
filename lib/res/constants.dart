@@ -1,6 +1,6 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'method.dart';
+
 import 'paymentmodel.dart';
 
 
@@ -8,7 +8,7 @@ import 'paymentmodel.dart';
 SharedPreferences? sharedPreference;
 int? isviewed;
 
-GlobalMethod globalMethod = GlobalMethod();
+
 
 
 

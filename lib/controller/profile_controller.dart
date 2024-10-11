@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:user_app/repository/profile_repository.dart';
 import 'package:user_app/repository/sign_up_repository.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 
 import '../model/app_exception.dart';
 import '../model/profilemodel.dart';

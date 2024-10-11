@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/constants.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../res/textstyle.dart';
+import '../../../widget/routes_button_widget.dart';
 
 class ProifleHeaderWidget extends StatelessWidget {
   const ProifleHeaderWidget({
@@ -56,32 +56,13 @@ class ProifleHeaderWidget extends StatelessWidget {
                       SizedBox(
                         height: 8.h,
                       ),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                AppColors.greenColor),
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 12)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Get.toNamed(RoutesName.editProfileScreen,
-                                arguments: true);
-                          },
-                          child: Text(
-                            "Edit Profile",
-                            style: GoogleFonts.poppins(
-                              color: AppColors.white,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ))
+                      RoutesButtonWidget(
+                        title: "Edit Profile",
+                        onTap: () {
+                          Get.toNamed(RoutesName.editProfileScreen,
+                              arguments: true);
+                        },
+                      )
                     ],
                   ),
                 ),

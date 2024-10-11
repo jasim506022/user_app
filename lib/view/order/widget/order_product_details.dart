@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/Textstyle.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/view/order/widget/order_item_widget.dart';
 
 import '../../../model/order_model.dart';

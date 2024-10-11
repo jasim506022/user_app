@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../controller/category_controller.dart';
 import '../../res/constants.dart';
 
-import '../../res/routes/routesname.dart';
+import '../../res/routes/routes_name.dart';
 import '../../widget/product_list_widget.dart';
 
 class ProductPage extends StatelessWidget {

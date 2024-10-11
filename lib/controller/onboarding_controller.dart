@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/repository/onboarding_repository.dart';
 
 class OnBoardingController extends GetxController {

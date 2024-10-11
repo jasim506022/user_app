@@ -5,7 +5,7 @@ import '../model/app_exception.dart';
 import '../repository/forget_password_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
-import '../res/routes/routesname.dart';
+import '../res/routes/routes_name.dart';
 import 'loading_controller.dart';
 
 class ForgetPasswordController extends GetxController {

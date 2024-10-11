@@ -50,7 +50,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ? IconButton(
                     onPressed: () async {
                       if (!key.currentState!.validate()) return;
-
                       profileController.updateUserData();
                     },
                     icon:
@@ -127,7 +126,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         content: 'do you want to save change?',
         yesFunction: () => Get.back(),
         noFunction: () {
-          // addressController.clearInputField();
           profileController.isChange.value = false;
           Get.back();
           Get.back();

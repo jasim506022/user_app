@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../controller/address_controller.dart';
 import '../../../model/address_model.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../res/textstyle.dart';
 import '../../../res/utils.dart';
 

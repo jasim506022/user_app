@@ -6,7 +6,7 @@ import '../model/profilemodel.dart';
 import '../repository/sign_up_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
-import '../res/routes/routesname.dart';
+import '../res/routes/routes_name.dart';
 import 'loading_controller.dart';
 import 'select_image_controller.dart';
 

@@ -8,7 +8,7 @@ import 'package:user_app/res/app_colors.dart';
 
 import '../../../model/productsmodel.dart';
 import '../../../res/cart_funtion.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 
 class SimilarProductWidget extends StatelessWidget {
   const SimilarProductWidget({

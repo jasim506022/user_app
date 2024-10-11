@@ -6,7 +6,7 @@ import '../../../model/order_model.dart';
 import '../../../res/Textstyle.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 
 class OrderDetailsWidget extends StatelessWidget {
   const OrderDetailsWidget({

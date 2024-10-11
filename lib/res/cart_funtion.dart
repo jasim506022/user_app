@@ -4,7 +4,6 @@ import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/controller/cart_product_counter_controller.dart';
 import 'package:user_app/res/constants.dart';
-import 'package:user_app/service/database/firebasedatabase.dart';
 
 class CartFunctions {
   static void addItemToCartWithSeller({
@@ -35,10 +34,13 @@ class CartFunctions {
         .collection("users")
         .doc(sharedPreference!.getString("uid")!)
 */
-    FirebaseDatabase.currentUserSnaphots()
-        .update({"cartlist": emptyCart}).then((value) {
-      AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
-    });
+    var profileController = Get.find<ProfileController>();
+    profileController.updateUserData(map: {"cartlist": emptyCart});
+    AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
+    // FirebaseDatabase.currentUserSnaphots()
+    //     .update({"cartlist": emptyCart}).then((value) {
+    //   AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
+    // });
   }
 
 // Separet Product Id From CartList

@@ -11,8 +11,8 @@ import 'package:user_app/res/constant/string_constant.dart';
 
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
-import 'res/routes/approutes.dart';
-import 'res/routes/routesname.dart';
+import 'res/routes/app_routes.dart';
+import 'res/routes/routes_name.dart';
 import 'res/constants.dart';
 import 'service/provider/theme_provider.dart';
 

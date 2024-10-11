@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/view/product/widget/similar_product_list.dart';
-import '../../res/routes/routesname.dart';
+import '../../res/routes/routes_name.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../res/utils.dart';

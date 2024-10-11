@@ -8,7 +8,7 @@ import '../../controller/cart_controller.dart';
 import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../res/app_function.dart';
-import '../../res/routes/routesname.dart';
+import '../../res/routes/routes_name.dart';
 import 'dot_line_printer.dart';
 
 class CardWidget extends StatelessWidget {

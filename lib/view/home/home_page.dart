@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../res/routes/routesname.dart';
+import '../../res/routes/routes_name.dart';
 
 import '../../widget/product_list_widget.dart';
 import 'widget/carousel_silder_widget.dart';

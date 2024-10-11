@@ -11,7 +11,7 @@ import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 import '../../res/Textstyle.dart';
 import '../../model/productsmodel.dart';
-import '../../res/routes/routesname.dart';
+import '../../res/routes/routes_name.dart';
 import '../../res/utils.dart';
 
 import '../../widget/empty_widget.dart';

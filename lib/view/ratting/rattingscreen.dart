@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rating_bar_updated/rating_bar_updated.dart';
 import 'package:smooth_rating_bar/smooth_rating_bar.dart';
 import 'package:user_app/res/constants.dart';
-import 'package:user_app/res/routes/routesname.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 
 
 

@@ -8,7 +8,7 @@ import '../repository/address_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/constants.dart';
-import '../res/routes/routesname.dart';
+import '../res/routes/routes_name.dart';
 
 class AddressController extends GetxController {
   final AddressRepository _addressRepository;

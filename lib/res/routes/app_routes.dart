@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:user_app/view/bill_andress/billl_page.dart';
 import 'package:user_app/view/bill_andress/place_order_page.dart';
+import 'package:user_app/view/order/history_page.dart';
 import 'package:user_app/view/order/order_delivery_page.dart';
 import 'package:user_app/view/order/order_detail_page.dart';
+import 'package:user_app/view/order/order_page.dart';
 import 'package:user_app/view/product/product_details_page.dart';
 import 'package:user_app/view/product/product_page.dart';
 import 'package:user_app/view/profile/edit_profile_scrren.dart';
@@ -18,7 +20,7 @@ import '../../view/main/main_page.dart';
 import '../../view/search/search_page.dart';
 import '../../view/splash/onboarding_page.dart';
 import '../../view/splash/splash_page.dart';
-import 'routesname.dart';
+import 'routes_name.dart';
 
 class AppRoutes {
   static appRoutes() => [
@@ -75,6 +77,14 @@ class AppRoutes {
         GetPage(
           name: RoutesName.orderDetailsPage,
           page: () => const OrderSummaryPage(),
+        ),
+        GetPage(
+          name: RoutesName.orderPage,
+          page: () => const OrderPage(),
+        ),
+        GetPage(
+          name: RoutesName.historyPage,
+          page: () => const HistoryPage(),
         )
       ];
 }

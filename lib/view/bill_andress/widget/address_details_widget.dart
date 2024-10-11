@@ -8,7 +8,7 @@ import '../../../model/address_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/appasset/image_asset.dart';
-import '../../../res/routes/routesname.dart';
+import '../../../res/routes/routes_name.dart';
 import '../../../res/textstyle.dart';
 import '../../../widget/single_empty_widget.dart';
 import 'address_widget.dart';
