@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../model/order_model.dart';
-import '../../../res/Textstyle.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/routes/routes_name.dart';
 
 class OrderDetailsWidget extends StatelessWidget {
@@ -26,7 +26,7 @@ class OrderDetailsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Order #${orderModel.orderId}",
-              style: Textstyle.largeBoldText.copyWith(
+              style: AppsTextStyle.largeBoldText.copyWith(
                 color: AppColors.greenColor,
               )),
           SizedBox(
@@ -34,7 +34,7 @@ class OrderDetailsWidget extends StatelessWidget {
           ),
           Text(
               "Placed On ${AppsFunction.formatDeliveryDate(datetime: orderModel.orderId)}",
-              style: Textstyle.mediumText600
+              style: AppsTextStyle.mediumText600
                   .copyWith(color: Theme.of(context).hintColor)),
           SizedBox(
             height: 25.h,
@@ -51,7 +51,7 @@ class OrderDetailsWidget extends StatelessWidget {
                 },
                 child: Text(
                   "Home Page",
-                  style: Textstyle.largestText
+                  style: AppsTextStyle.largestText
                       .copyWith(color: AppColors.white, fontSize: 15.sp),
                 )),
           )

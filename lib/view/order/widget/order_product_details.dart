@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/Textstyle.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/view/order/widget/order_item_widget.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 
 class OrderProductDetails extends StatelessWidget {
   const OrderProductDetails({
@@ -29,7 +29,7 @@ class OrderProductDetails extends StatelessWidget {
             children: [
               Text(
                 "Order ${orderModel.orderId}",
-                style: Textstyle.largeText
+                style: AppsTextStyle.largeText
                     .copyWith(color: Theme.of(context).primaryColor),
               ),
               InkWell(

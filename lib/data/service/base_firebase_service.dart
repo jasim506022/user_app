@@ -13,7 +13,7 @@ abstract class BaseFirebaseService {
   FirebaseFirestore get firebaseFirestore;
   FirebaseStorage get firebaseStorage;
 
-  Future<User?> getCurrentUser();
+  User? getCurrentUser();
 
   Future<UserCredential> signInWithEmailAndPassword(
       {required String email, required String password});

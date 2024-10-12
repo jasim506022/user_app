@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/constants.dart';
 import '../../../res/routes/routes_name.dart';
-import '../../../res/textstyle.dart';
+
 import '../../../widget/routes_button_widget.dart';
 
 class ProifleHeaderWidget extends StatelessWidget {
@@ -46,11 +47,11 @@ class ProifleHeaderWidget extends StatelessWidget {
                     children: [
                       Text(sharedPreference!.getString("name")!,
                           maxLines: 1,
-                          style: Textstyle.largeText.copyWith(
+                          style: AppsTextStyle.largeText.copyWith(
                               fontSize: 20.sp,
                               color: Theme.of(context).primaryColor)),
                       Text(sharedPreference!.getString("email")!,
-                          style: Textstyle.mediumText600.copyWith(
+                          style: AppsTextStyle.mediumText600.copyWith(
                               fontSize: 15.sp,
                               color: Theme.of(context).hintColor)),
                       SizedBox(

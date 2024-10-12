@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:user_app/controller/bill_controller.dart';
 
 import '../../res/app_colors.dart';
-import 'package:user_app/res/Textstyle.dart';
 
+
+import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import '../../res/utils.dart';
 
@@ -46,7 +47,7 @@ class PaymentWidgetMethod extends StatelessWidget {
                   width: 60.w,
                 ),
                 Text(paymentList[index].title!,
-                    style: Textstyle.mediumTextbold),
+                    style: AppsTextStyle.mediumTextbold),
               ],
             ),
           ),

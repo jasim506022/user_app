@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/constant/string_constant.dart';
 
 import '../data/service/data_firebase_service.dart';
+import '../res/constants.dart';
 
 class SplashRepository {
   final DataFirebaseService _dataFirebaseService = DataFirebaseService();
@@ -18,7 +18,6 @@ class SplashRepository {
   }
 
   Future<int?> getOnboardingStatus() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getInt(StringConstant.onBoardingSharedPre);
+    return sharedPreference!.getInt(StringConstant.onBoardingSharedPre);
   }
 }

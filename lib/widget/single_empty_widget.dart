@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:user_app/res/textstyle.dart';
+
+import '../res/apps_text_style.dart';
+
 
 class SingleEmptyWidget extends StatelessWidget {
   const SingleEmptyWidget({
@@ -28,7 +30,7 @@ class SingleEmptyWidget extends StatelessWidget {
             width: 10.w,
           ),
           Expanded(
-            child: Text(title, style: Textstyle.emptyTestStyle),
+            child: Text(title, style: AppsTextStyle.emptyTestStyle),
           )
         ],
       ),

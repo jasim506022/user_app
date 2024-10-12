@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controller/bill_controller.dart';
 import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
+import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import 'widget/address_details_widget.dart';
 import 'payment_widget.dart';
@@ -23,7 +23,6 @@ class BillPage extends StatelessWidget {
           leading: IconButton(
               onPressed: () {
                 if (billController.isLoading.value) {
-                  
                 } else {
                   Get.back();
                 }
@@ -82,7 +81,8 @@ class BillPage extends StatelessWidget {
             billController.card.value == Payment.card.name
                 ? "Payment By Card"
                 : "Payment By Bkask",
-            style: Textstyle.mediumTextbold.copyWith(color: AppColors.white)),
+            style:
+                AppsTextStyle.mediumTextbold.copyWith(color: AppColors.white)),
       ),
     );
   }
@@ -93,7 +93,7 @@ class BillPage extends StatelessWidget {
       children: [
         Text(
           "Payment Method",
-          style: Textstyle.largestText,
+          style: AppsTextStyle.largestText,
         ),
         SizedBox(
           height: 10.h,

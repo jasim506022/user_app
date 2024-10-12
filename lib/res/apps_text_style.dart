@@ -5,17 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
-class Textstyle {
+class AppsTextStyle {
   static BuildContext get context => Get.context!;
 
   static ThemeData get theme => Theme.of(context);
 
-  // BuildContext context = Get.context!;
+  static TextStyle get appLogoFonts => GoogleFonts.roboto(
+      color: AppColors.greenColor,
+      fontSize: 22.sp,
+      fontWeight: FontWeight.w900);
 
-  //        var theme = Theme.of(context);
-
-//   The instance member 'context' can't be accessed in an initializer.
-// Try replacing the reference to the instance member with a different expression
+  static TextStyle get onBoardTextStyle => GoogleFonts.inter(
+      fontSize: 30.sp, fontWeight: FontWeight.w900, color: AppColors.black);
 
   static TextStyle get largeText => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.w700);
@@ -48,8 +49,6 @@ class Textstyle {
 
   static TextStyle emptyTestStyle = GoogleFonts.roboto(
       color: AppColors.red, fontSize: 25.sp, fontWeight: FontWeight.bold);
-
-  
 }
 
 

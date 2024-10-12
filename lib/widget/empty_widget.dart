@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../res/textstyle.dart';
+import '../res/apps_text_style.dart';
+
+
 
 class EmptyWidget extends StatelessWidget {
   const EmptyWidget({
@@ -31,7 +33,7 @@ class EmptyWidget extends StatelessWidget {
               height: 300.h,
               width: 130.w,
               alignment: Alignment.center,
-              child: Text(title, style: Textstyle.emptyTestStyle),
+              child: Text(title, style: AppsTextStyle.emptyTestStyle),
             ),
           ),
         )

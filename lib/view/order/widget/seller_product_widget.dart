@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/textstyle.dart';
+
+import '../../../res/apps_text_style.dart';
 import 'order_item_widget.dart';
 
 class SellerProductWidget extends StatelessWidget {
@@ -30,13 +31,13 @@ class SellerProductWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
           child: RichText(
             text: TextSpan(
-              style: Textstyle.largeBoldText
+              style: AppsTextStyle.largeBoldText
                   .copyWith(color: Theme.of(context).primaryColor),
               children: [
                 const TextSpan(text: "Seller Name:\t"),
                 TextSpan(
                   text: sellerName,
-                  style: Textstyle.largeBoldText.copyWith(color: AppColors.red),
+                  style: AppsTextStyle.largeBoldText.copyWith(color: AppColors.red),
                 ),
               ],
             ),

@@ -7,7 +7,8 @@ import 'package:user_app/widget/text_form_field_widget.dart';
 import '../../controller/search_controller.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_function.dart';
-import '../../res/textstyle.dart';
+
+import '../../res/apps_text_style.dart';
 import '../product/product_page.dart';
 
 class FilterDialogWidget extends StatelessWidget {
@@ -52,7 +53,7 @@ class FilterDialogWidget extends StatelessWidget {
             child: Text(
               "Filter Search",
               textAlign: TextAlign.center,
-              style: Textstyle.largeBoldText
+              style: AppsTextStyle.largeBoldText
                   .copyWith(color: AppColors.deepGreen, fontSize: 16.sp),
             ),
           ),
@@ -65,7 +66,7 @@ class FilterDialogWidget extends StatelessWidget {
           ),
           Text(
             'Product Category',
-            style: Textstyle.largeText.copyWith(fontSize: 15),
+            style: AppsTextStyle.largeText.copyWith(fontSize: 15),
           ),
           SizedBox(
             height: 10.h,
@@ -102,7 +103,7 @@ class FilterDialogWidget extends StatelessWidget {
             },
             child: Text(
               "Reset",
-              style: Textstyle.largeBoldText.copyWith(color: AppColors.red),
+              style: AppsTextStyle.largeBoldText.copyWith(color: AppColors.red),
             )),
         Row(
           children: [
@@ -137,7 +138,7 @@ class FilterDialogWidget extends StatelessWidget {
       children: [
         Text(
           'Product Price',
-          style: Textstyle.largeText.copyWith(fontSize: 15),
+          style: AppsTextStyle.largeText.copyWith(fontSize: 15),
         ),
         Row(
           children: [

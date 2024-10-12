@@ -25,7 +25,7 @@ class DataFirebaseService implements BaseFirebaseService {
   FirebaseStorage get firebaseStorage => FirebaseStorage.instance;
 
   @override
-  Future<User?> getCurrentUser() async {
+  User? getCurrentUser() {
     return firebaseAuth.currentUser;
   }
 

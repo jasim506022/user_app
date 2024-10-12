@@ -4,19 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/splash_controller.dart';
-import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
+
 import '../../res/appasset/icon_asset.dart';
 import '../../res/appasset/image_asset.dart';
+import '../../res/apps_text_style.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Get.find<SplashController>();
-
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     return Material(
       child: Container(
@@ -32,17 +31,13 @@ class SplashPage extends StatelessWidget {
             children: [
               Image.asset(
                 IconAsset.appIcon,
-                height: 0.176.sh,
-                width: 0.176.sh,
+                height: 0.15.sh,
+                width: 0.15.sh,
               ),
               SizedBox(
                 height: 10.h,
               ),
-              Text("Grocery Apps",
-                  style: Textstyle.largestText.copyWith(
-                      color: AppColors.greenColor,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold)),
+              Text("Grocery Apps", style: AppsTextStyle.appLogoFonts),
             ],
           ),
         ),

@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/address_model.dart';
 import '../../../model/order_model.dart';
-import '../../../res/textstyle.dart';
+import '../../../res/apps_text_style.dart';
+
 
 
 class OrderReceiverDetailsWidget extends StatelessWidget {
@@ -29,7 +30,7 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text(
               "Error: ${snapshot.error}",
-              style: Textstyle.mediumTextbold.copyWith(fontSize: 20),
+              style: AppsTextStyle.mediumTextbold.copyWith(fontSize: 20),
             );
           }
           if (snapshot.hasData) {
@@ -45,7 +46,7 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
                 children: [
                   Text(
                     "Receiver: ${addressModel.name!}",
-                    style: Textstyle.mediumText600.copyWith(
+                    style: AppsTextStyle.mediumText600.copyWith(
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
@@ -53,13 +54,13 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
                     height: 10.h,
                   ),
                   Text("0${addressModel.phone!}",
-                      style: Textstyle.mediumText600
+                      style: AppsTextStyle.mediumText600
                           .copyWith(color: Theme.of(context).primaryColor)),
                   SizedBox(
                     height: 10.h,
                   ),
                   Text(addressModel.completeaddress!,
-                      style: Textstyle.mediumText600
+                      style: AppsTextStyle.mediumText600
                           .copyWith(color: Theme.of(context).hintColor))
                 ],
               ),
@@ -67,7 +68,7 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
           }
           return Text(
             "No Address is Avaiable",
-            style: Textstyle.mediumTextbold.copyWith(fontSize: 20),
+            style: AppsTextStyle.mediumTextbold.copyWith(fontSize: 20),
           );
         });
   }

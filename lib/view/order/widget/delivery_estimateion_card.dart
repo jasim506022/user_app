@@ -5,8 +5,9 @@ import 'package:user_app/res/app_function.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 
-import '../../../res/textstyle.dart';
+
 
 class DeliveryEstimationCard extends StatelessWidget {
   const DeliveryEstimationCard({
@@ -31,13 +32,13 @@ class DeliveryEstimationCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("On The way From Dhaka!", //28
-              style: Textstyle.largestText
+              style: AppsTextStyle.largestText
                   .copyWith(color: AppColors.white, fontSize: 28.sp)),
           SizedBox(
             height: 20.h,
           ),
           Text("Estimated Delivery Date is",
-              style: Textstyle.largeText.copyWith(
+              style: AppsTextStyle.largeText.copyWith(
                 color: AppColors.white,
                 fontSize: 17.sp,
               )),
@@ -46,7 +47,7 @@ class DeliveryEstimationCard extends StatelessWidget {
           ),
           Text(
             AppsFunction.formatDeliveryDate(datetime: orderModel.deliveryDate),
-            style: Textstyle.largestText
+            style: AppsTextStyle.largestText
                 .copyWith(color: AppColors.white, fontSize: 28.sp),
           ),
         ],

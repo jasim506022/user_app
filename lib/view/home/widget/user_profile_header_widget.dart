@@ -7,10 +7,10 @@ import '../../../controller/product_controller.dart';
 import '../../../controller/profile_controller.dart';
 import '../../../model/profilemodel.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/constant/string_constant.dart';
 import '../../../res/constants.dart';
 import '../../../res/routes/routes_name.dart';
-import '../../../res/textstyle.dart';
 import '../../../widget/cart_badge.dart';
 import '../../../widget/header_loading.dart';
 
@@ -83,11 +83,11 @@ List<String>? cartList =
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Hi!",
-                  style: Textstyle.largestText
+                  style: AppsTextStyle.largestText
                       .copyWith(color: AppColors.greenColor)),
               Text(
                 name,
-                style: Textstyle.largeText,
+                style: AppsTextStyle.largeText,
               )
             ],
           ),

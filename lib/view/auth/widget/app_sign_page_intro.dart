@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/appasset/image_asset.dart';
-import '../../../res/textstyle.dart';
+import '../../../res/apps_text_style.dart';
+
 
 class AppSignInPageIntro extends StatelessWidget {
   const AppSignInPageIntro({
@@ -32,7 +33,7 @@ class AppSignInPageIntro extends StatelessWidget {
           height: 10.h,
         ),
         Text(title,
-            style: Textstyle.largestText
+            style: AppsTextStyle.largestText
                 .copyWith(fontSize: 22.sp, color: AppColors.black)),
         SizedBox(
           height: 10.h,

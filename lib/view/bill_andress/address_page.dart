@@ -5,9 +5,10 @@ import 'package:get/get.dart';
 import '../../controller/address_controller.dart';
 import '../../model/address_model.dart';
 import '../../res/app_function.dart';
+import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import '../../res/app_colors.dart';
-import '../../res/textstyle.dart';
+
 import '../../widget/text_form_field_widget.dart';
 
 class AddressPage extends StatefulWidget {
@@ -209,7 +210,7 @@ class _AddressPageState extends State<AddressPage> {
       () => DropdownButton<String>(
         value: addressController.currentDropdownAddress.value,
         elevation: 16,
-        style: Textstyle.mediumText600.copyWith(color: AppColors.black),
+        style: AppsTextStyle.mediumText600.copyWith(color: AppColors.black),
         underline: Container(
           height: 2,
           color: AppColors.greenColor,
@@ -223,7 +224,7 @@ class _AddressPageState extends State<AddressPage> {
             value: value,
             child: Text(
               value,
-              style: Textstyle.smallestText.copyWith(fontSize: 14.sp),
+              style: AppsTextStyle.smallestText.copyWith(fontSize: 14.sp),
             ),
           );
         }).toList(),

@@ -1,12 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../model/carsolemodel.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/Textstyle.dart';
+import '../../../res/apps_text_style.dart';
 
 class CarouselWidget extends StatelessWidget {
   const CarouselWidget({
@@ -20,13 +18,11 @@ class CarouselWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: Get.width,
-        padding: EdgeInsets.only(
-            left: 24.w,
-            bottom:15.h,
-            top: 15.h),
+        padding: EdgeInsets.only(left: 24.w, bottom: 15.h, top: 15.h),
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
-            color: carouselModel.color, borderRadius: BorderRadius.circular(15.r)),
+            color: carouselModel.color,
+            borderRadius: BorderRadius.circular(15.r)),
         child: Stack(
           children: [
             Positioned(
@@ -34,8 +30,8 @@ class CarouselWidget extends StatelessWidget {
               right: 0,
               child: Image.asset(
                 carouselModel.image,
-                height:  .19.sh,
-                width:  .19.sh,
+                height: .19.sh,
+                width: .19.sh,
                 fit: BoxFit.contain,
               ),
             ),
@@ -48,14 +44,14 @@ class CarouselWidget extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: "Cold Process",
-                        style: Textstyle.mediumText600.copyWith(
+                        style: AppsTextStyle.mediumText600.copyWith(
                           letterSpacing: .9,
                           color: Colors.black87,
                         ),
                       ),
                       TextSpan(
                           text: " ${carouselModel.category}",
-                          style: Textstyle.mediumTextbold.copyWith(
+                          style: AppsTextStyle.mediumTextbold.copyWith(
                             letterSpacing: .9,
                             color: AppColors.greenColor,
                           )),
@@ -64,7 +60,7 @@ class CarouselWidget extends StatelessWidget {
                 ),
                 Text(
                   carouselModel.title,
-                  style: Textstyle.largestText
+                  style: AppsTextStyle.largestText
                       .copyWith(fontSize: 24.sp, color: AppColors.black),
                 ),
                 Row(
@@ -77,12 +73,12 @@ class CarouselWidget extends StatelessWidget {
                         color: AppColors.black,
                       ),
                     ),
-                     SizedBox(
+                    SizedBox(
                       width: 10.w,
                     ),
                     Text(
                       carouselModel.number.toUpperCase(),
-                      style: Textstyle.largeBoldText.copyWith(
+                      style: AppsTextStyle.largeBoldText.copyWith(
                         letterSpacing: 1,
                         color: AppColors.greenColor,
                       ),
@@ -91,12 +87,12 @@ class CarouselWidget extends StatelessWidget {
                 ),
                 Container(
                   padding:
-                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(10)),
                   child: Text("Shop Now",
-                      style: Textstyle.largeBoldText.copyWith(
+                      style: AppsTextStyle.largeBoldText.copyWith(
                         color: AppColors.black,
                         fontSize: 15.sp,
                         letterSpacing: 1,

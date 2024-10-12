@@ -7,7 +7,7 @@ import 'package:user_app/res/appasset/image_asset.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
+import '../../res/apps_text_style.dart';
 
 class PlaceOrderPage extends StatefulWidget {
   const PlaceOrderPage({
@@ -35,7 +35,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         children: [
           Text(
             "Your order is confirmed",
-            style: Textstyle.largestText.copyWith(fontSize: 24.sp),
+            style: AppsTextStyle.largestText.copyWith(fontSize: 24.sp),
           ),
           SizedBox(
             height: 15.h,
@@ -61,7 +61,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
               },
               child: Text(
                 "Home Page",
-                style: Textstyle.largestText
+                style: AppsTextStyle.largestText
                     .copyWith(color: AppColors.white, fontSize: 20.sp),
               ))
         ],

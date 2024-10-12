@@ -7,8 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../controller/address_controller.dart';
 import '../../../model/address_model.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/routes/routes_name.dart';
-import '../../../res/textstyle.dart';
+
 import '../../../res/utils.dart';
 
 class AddressWidget extends StatelessWidget {
@@ -65,7 +66,7 @@ class AddressWidget extends StatelessWidget {
                         width: 5.w,
                       ),
                       Text(addressModel.deliveryplace!,
-                          style: Textstyle.largestText),
+                          style: AppsTextStyle.largestText),
                     ],
                   ),
                   SizedBox(

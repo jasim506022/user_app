@@ -7,10 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:user_app/res/constant/string_constant.dart';
 
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
+import 'res/constant/string_constant.dart';
 import 'res/routes/app_routes.dart';
 import 'res/routes/routes_name.dart';
 import 'res/constants.dart';
@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    
     return ScreenUtilInit(
       designSize: const Size(450, 851), //582
       builder: (_, child) {
@@ -54,10 +53,6 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
-        dialogTheme: const DialogTheme(backgroundColor: Colors.white),
-        iconTheme: IconThemeData(
-            color:
-                themeProvder.getDarkTheme ? AppColors.white : AppColors.black),
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
               color: themeProvder.getDarkTheme

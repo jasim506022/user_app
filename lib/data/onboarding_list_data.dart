@@ -4,21 +4,21 @@ import '../model/onboardmodel.dart';
 class OnBoardingListData {
   static List<OnboardModel> onboarddataList() => [
         OnboardModel(
-          img: ImagesAsset.firstImageOnboard,
-          text: "Welcome",
-          desc:
+          photo: ImagesAsset.firstImageOnboard,
+          title: "Welcome",
+          description:
               "Welcome to best online grocery store. Here you will find all the groceries at one place.",
         ),
         OnboardModel(
-          img: ImagesAsset.secondImageOnboard,
-          text: "Fresh Fruits & Vegetables",
-          desc:
+          photo: ImagesAsset.secondImageOnboard,
+          title: "Fresh Fruits & Vegetables",
+          description:
               "Buy farm fresh fruits & vegetables online at the best & affordable prices.",
         ),
         OnboardModel(
-          img: ImagesAsset.thirdImageOnboard,
-          text: "Quick & Fast Delivery",
-          desc:
+          photo: ImagesAsset.thirdImageOnboard,
+          title: "Quick & Fast Delivery",
+          description:
               "We offers speedy delivery of your groceries, bathroom supplies, baby care products, pet care items, stationary, etc within 30minutes at your doorstep.",
         )
       ];

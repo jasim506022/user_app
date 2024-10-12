@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 
 import '../../../model/order_model.dart';
-import '../../../res/textstyle.dart';
+import '../../../res/apps_text_style.dart';
 import 'order_receiver_details_widget.dart';
 
 class DeliveryInfoWidget extends StatelessWidget {
@@ -23,7 +23,7 @@ class DeliveryInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 15.w),
           decoration: BoxDecoration(color: Theme.of(context).cardColor),
           child: Text("Delivery Partner: ${orderModel.deliveryPartner}",
-              style: Textstyle.mediumText600
+              style: AppsTextStyle.mediumText600
                   .copyWith(color: Theme.of(context).primaryColor)),
         ),
         SizedBox(
@@ -34,13 +34,13 @@ class DeliveryInfoWidget extends StatelessWidget {
             children: [
               TextSpan(
                 text: "Tracking Number : ",
-                style: Textstyle.mediumText600.copyWith(
+                style: AppsTextStyle.mediumText600.copyWith(
                   color: Theme.of(context).primaryColor,
                 ),
               ),
               TextSpan(
                 text: orderModel.trackingNumber,
-                style: Textstyle.mediumText600.copyWith(),
+                style: AppsTextStyle.mediumText600.copyWith(),
               ),
             ],
           ),

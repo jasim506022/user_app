@@ -1,30 +1,34 @@
 import 'package:get/get.dart';
-import 'package:user_app/view/bill_andress/billl_page.dart';
-import 'package:user_app/view/bill_andress/place_order_page.dart';
-import 'package:user_app/view/order/history_page.dart';
-import 'package:user_app/view/order/order_delivery_page.dart';
-import 'package:user_app/view/order/order_detail_page.dart';
-import 'package:user_app/view/order/order_page.dart';
-import 'package:user_app/view/product/product_details_page.dart';
-import 'package:user_app/view/product/product_page.dart';
-import 'package:user_app/view/profile/edit_profile_scrren.dart';
-import 'package:user_app/view/profile/profile_screen.dart';
 
+import '../../bindings/splash_binding.dart';
 import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';
 import '../../view/auth/sign_up_page.dart';
 
 import '../../view/bill_andress/address_page.dart';
+import '../../view/bill_andress/billl_page.dart';
+import '../../view/bill_andress/place_order_page.dart';
 import '../../view/cart/cart_page.dart';
 import '../../view/main/main_page.dart';
+import '../../view/order/history_page.dart';
+import '../../view/order/order_delivery_page.dart';
+import '../../view/order/order_detail_page.dart';
+import '../../view/order/order_page.dart';
+import '../../view/product/product_details_page.dart';
+import '../../view/product/product_page.dart';
+import '../../view/profile/edit_profile_scrren.dart';
+import '../../view/profile/profile_screen.dart';
 import '../../view/search/search_page.dart';
 import '../../view/splash/onboarding_page.dart';
-import '../../view/splash/splash_page.dart';
+import '../../view/splash/splash_screen.dart';
 import 'routes_name.dart';
 
 class AppRoutes {
   static appRoutes() => [
-        GetPage(name: RoutesName.initailRoutes, page: () => const SplashPage()),
+        GetPage(
+            name: RoutesName.initailRoutes, page: () => const SplashScreen(),
+            binding: SplashBinding()
+            ),
         GetPage(
           name: RoutesName.signPage,
           page: () => const SignInPage(),

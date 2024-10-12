@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../controller/cart_controller.dart';
 import '../../res/appasset/image_asset.dart';
+import '../../res/apps_text_style.dart';
 import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
 import '../../model/productsmodel.dart';
 import '../../res/routes/routes_name.dart';
 import '../../res/utils.dart';
@@ -155,11 +154,11 @@ class _CartPageState extends State<CartPage> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
       child: RichText(
-          text: TextSpan(style: Textstyle.largestText, children: [
+          text: TextSpan(style: AppsTextStyle.largestText, children: [
         const TextSpan(text: "Seller Name:\t"),
         TextSpan(
           text: sellerName,
-          style: Textstyle.largestText.copyWith(color: AppColors.red),
+          style: AppsTextStyle.largestText.copyWith(color: AppColors.red),
         )
       ])),
     );
@@ -212,8 +211,8 @@ class _CartPageState extends State<CartPage> {
                 ),
                 child: Text(
                   "Continue",
-                  style:
-                      Textstyle.mediumTextbold.copyWith(color: AppColors.white),
+                  style: AppsTextStyle.mediumTextbold
+                      .copyWith(color: AppColors.white),
                 ),
               ),
             ),
@@ -230,13 +229,13 @@ class _CartPageState extends State<CartPage> {
       children: [
         Text(label,
             style: isBold
-                ? Textstyle.mediumTextbold
+                ? AppsTextStyle.mediumTextbold
                     .copyWith(color: Theme.of(context).primaryColor)
-                : Textstyle.mediumText600
+                : AppsTextStyle.mediumText600
                     .copyWith(color: Theme.of(context).hintColor)),
         Text(
           amount,
-          style: Textstyle.mediumTextbold
+          style: AppsTextStyle.mediumTextbold
               .copyWith(color: Theme.of(context).primaryColor),
         ),
       ],

@@ -7,8 +7,8 @@ import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../../res/app_function.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/Textstyle.dart';
 import '../../../model/productsmodel.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 
 class SingleProductWidget extends StatelessWidget {
@@ -76,7 +76,7 @@ class SingleProductWidget extends StatelessWidget {
                         color: AppColors.lightred.withOpacity(.2),
                       ),
                       child: Text("${productModel.discount}% Off",
-                          style: Textstyle.mediumText600),
+                          style: AppsTextStyle.mediumText600),
                     ),
                   ),
                 ],
@@ -93,7 +93,7 @@ class SingleProductWidget extends StatelessWidget {
                         children: [
                           Text(
                             "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-                            style: Textstyle.largeText
+                            style: AppsTextStyle.largeText
                                 .copyWith(color: AppColors.red),
                           ),
                           SizedBox(
@@ -101,7 +101,7 @@ class SingleProductWidget extends StatelessWidget {
                           ),
                           Text(
                             "${(productModel.productprice!)}",
-                            style: Textstyle.mediumText400lineThrough,
+                            style: AppsTextStyle.mediumText400lineThrough,
                           ),
                         ],
                       ),
@@ -112,11 +112,11 @@ class SingleProductWidget extends StatelessWidget {
                         text: TextSpan(children: [
                           TextSpan(
                             text: productModel.productname!,
-                            style: Textstyle.largeText,
+                            style: AppsTextStyle.largeText,
                           ),
                           TextSpan(
                             text: "(${productModel.productunit!})",
-                            style: Textstyle.smallestText,
+                            style: AppsTextStyle.smallestText,
                           ),
                         ]),
                       ),
@@ -133,7 +133,7 @@ class SingleProductWidget extends StatelessWidget {
                         ),
                         child: Text(
                           "Add To Cart",
-                          style: Textstyle.largeText
+                          style: AppsTextStyle.largeText
                               .copyWith(color: AppColors.white),
                         ),
                       ),

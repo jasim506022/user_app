@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import 'package:user_app/model/order_model.dart';
 
-import 'package:user_app/res/Textstyle.dart';
 
 import '../../res/app_colors.dart';
 
+import '../../res/apps_text_style.dart';
 import 'widget/order_details_widget.dart';
 import 'widget/order_product_section.dart';
 import 'widget/order_receiver_details_widget.dart';
@@ -33,7 +33,7 @@ class OrderSummaryPage extends StatelessWidget {
             children: [
               Text(
                 "Ship & Bill To",
-                style: Textstyle.largeBoldText
+                style: AppsTextStyle.largeBoldText
                     .copyWith(color: AppColors.red, fontSize: 20),
               ),
               OrderReceiverDetailsWidget(orderModel: orderModel),

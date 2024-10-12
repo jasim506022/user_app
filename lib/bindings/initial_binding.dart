@@ -14,7 +14,7 @@ import '../controller/profile_controller.dart';
 import '../controller/select_image_controller.dart';
 import '../controller/sign_in_controller.dart';
 import '../controller/sign_up_controller.dart';
-import '../controller/splash_controller.dart';
+
 import '../repository/address_repository.dart';
 import '../repository/forget_password_repository.dart';
 import '../repository/onboarding_repository.dart';
@@ -44,8 +44,7 @@ class InitialBinding extends Bindings {
 
     // LoadingController loadingController = Get.put(LoadingController());
 
-    Get.lazyPut<SplashController>(
-        () => SplashController(repository: Get.find<SplashRepository>()));
+    
 
     Get.lazyPut<OnBoardingController>(() => OnBoardingController(
         onBoardingRepository: Get.find<OnBoardingRepository>()));

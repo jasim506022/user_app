@@ -1,14 +1,11 @@
-
 class OnboardModel {
-  final String img;
-  final String text;
-  final String desc;
+  final String photo;
+  final String title;
+  final String description;
 
   OnboardModel({
-    required this.img,
-    required this.text,
-    required this.desc,
+    required this.photo,
+    required this.title,
+    required this.description,
   });
 }
-
-

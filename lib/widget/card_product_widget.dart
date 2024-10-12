@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import '../model/productsmodel.dart';
 import '../res/app_colors.dart';
 import '../res/app_function.dart';
-import '../res/textstyle.dart';
+import '../res/apps_text_style.dart';
+
 
 class CartProductWidget extends StatelessWidget {
   const CartProductWidget({super.key, required this.quantity});
@@ -45,7 +46,7 @@ class CartProductWidget extends StatelessWidget {
           FittedBox(
             child: Text(
               model.productname!,
-              style: Textstyle.largestText.copyWith(fontSize: 16.sp),
+              style: AppsTextStyle.largestText.copyWith(fontSize: 16.sp),
             ),
           ),
           SizedBox(
@@ -54,7 +55,7 @@ class CartProductWidget extends StatelessWidget {
           Row(
             children: [
               Text(model.productunit!.toString(),
-                  style: Textstyle.mediumTextbold.copyWith(
+                  style: AppsTextStyle.mediumTextbold.copyWith(
                     color: Theme.of(context).hintColor,
                   )),
             ],
@@ -68,18 +69,18 @@ class CartProductWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("$quantity * ",
-                      style: Textstyle.mediumText600
+                      style: AppsTextStyle.mediumText600
                           .copyWith(color: AppColors.greenColor)),
                   Text(
                       "${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble())}",
-                      style: Textstyle.mediumText600.copyWith(
+                      style: AppsTextStyle.mediumText600.copyWith(
                           letterSpacing: 1.2, color: AppColors.greenColor)),
                 ],
               ),
               const Spacer(),
               Text(
                   "= ৳. ${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble()) * quantity}",
-                  style: Textstyle.mediumTextbold.copyWith(
+                  style: AppsTextStyle.mediumTextbold.copyWith(
                     color: AppColors.greenColor,
                     fontSize: 16.sp,
                     letterSpacing: 1.2,

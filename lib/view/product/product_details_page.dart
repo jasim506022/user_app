@@ -6,9 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/view/product/widget/similar_product_list.dart';
+import '../../res/apps_text_style.dart';
 import '../../res/routes/routes_name.dart';
 import '../../res/app_colors.dart';
-import '../../res/Textstyle.dart';
+
 import '../../res/utils.dart';
 
 import '../../model/productsmodel.dart';
@@ -88,7 +89,7 @@ class ProductDetailsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(productModel.productname!,
-            style: Textstyle.largestText.copyWith(
+            style: AppsTextStyle.largestText.copyWith(
               color: Theme.of(context).primaryColor,
               fontSize: 20.sp,
               letterSpacing: 1.2,
@@ -163,7 +164,7 @@ class ProductDetailsPage extends StatelessWidget {
             Obx(
               () => Text(
                 "৳. ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), productController.counter.value).toStringAsFixed(2)}",
-                style: Textstyle.largeText.copyWith(
+                style: AppsTextStyle.largeText.copyWith(
                   color: AppColors.greenColor,
                   letterSpacing: 1.2,
                 ),
@@ -183,7 +184,7 @@ class ProductDetailsPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Obx(() => Text(
                       productController.counter.value.toString(),
-                      style: Textstyle.largestText)),
+                      style: AppsTextStyle.largestText)),
                 ),
 
                 //Increament Button
@@ -203,7 +204,7 @@ class ProductDetailsPage extends StatelessWidget {
                 Icon(Icons.star, color: AppColors.yellow),
                 RichText(
                   text: TextSpan(
-                      style: Textstyle.mediumText600.copyWith(
+                      style: AppsTextStyle.mediumText600.copyWith(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 13.sp,
@@ -284,7 +285,7 @@ class ProductDetailsPage extends StatelessWidget {
           productController.isCart.value
               ? "Item Already in Cart"
               : "Add To Cart",
-          style: Textstyle.smallText.copyWith(color: AppColors.white),
+          style: AppsTextStyle.smallText.copyWith(color: AppColors.white),
         ),
       ),
     );

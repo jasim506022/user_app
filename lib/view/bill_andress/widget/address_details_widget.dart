@@ -8,8 +8,9 @@ import '../../../model/address_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/appasset/image_asset.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/routes/routes_name.dart';
-import '../../../res/textstyle.dart';
+
 import '../../../widget/single_empty_widget.dart';
 import 'address_widget.dart';
 import 'loading_addres_swidget.dart';
@@ -116,7 +117,7 @@ class AddressDetailsWidget extends StatelessWidget {
       children: [
         Text("Delivery Address",
             style:
-                Textstyle.largeBoldText.copyWith(color: AppColors.greenColor)),
+                AppsTextStyle.largeBoldText.copyWith(color: AppColors.greenColor)),
         const Spacer(),
         InkWell(
           onTap: () {
@@ -130,7 +131,7 @@ class AddressDetailsWidget extends StatelessWidget {
             }
           },
           child: Text("+Add",
-              style: Textstyle.largeBoldText
+              style: AppsTextStyle.largeBoldText
                   .copyWith(color: AppColors.greenColor)),
         )
       ],

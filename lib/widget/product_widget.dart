@@ -5,10 +5,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import '../res/app_function.dart';
+import '../res/apps_text_style.dart';
 import '../res/cart_funtion.dart';
 
 import '../../res/app_colors.dart';
-import '../res/Textstyle.dart';
+
 import '../model/productsmodel.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -74,7 +75,7 @@ class ProductWidget extends StatelessWidget {
                         color: AppColors.lightred.withOpacity(.2),
                       ),
                       child: Text("${productModel.discount}% Off",
-                          style: Textstyle.mediumText600),
+                          style: AppsTextStyle.mediumText600),
                     ),
                   ),
                 ],
@@ -90,7 +91,7 @@ class ProductWidget extends StatelessWidget {
                         children: [
                           Text(
                             "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-                            style: Textstyle.largeText
+                            style: AppsTextStyle.largeText
                                 .copyWith(color: AppColors.red),
                           ),
                           SizedBox(
@@ -98,7 +99,7 @@ class ProductWidget extends StatelessWidget {
                           ),
                           Text(
                             "${(productModel.productprice!)}",
-                            style: Textstyle.mediumText400lineThrough,
+                            style: AppsTextStyle.mediumText400lineThrough,
                           ),
                         ],
                       ),
@@ -108,7 +109,7 @@ class ProductWidget extends StatelessWidget {
                       FittedBox(
                         child: Text(
                           productModel.productname!,
-                          style: Textstyle.largeText,
+                          style: AppsTextStyle.largeText,
                         ),
                       ),
                       SizedBox(
@@ -130,7 +131,7 @@ class ProductWidget extends StatelessWidget {
                             ),
                             child: Text(
                               "Add To Cart",
-                              style: Textstyle.largeText.copyWith(
+                              style: AppsTextStyle.largeText.copyWith(
                                   color: AppColors.white, fontSize: 14.sp),
                             ),
                           )),

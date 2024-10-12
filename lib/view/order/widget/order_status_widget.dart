@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../res/Textstyle.dart';
+
 import '../../../res/app_colors.dart';
+import '../../../res/apps_text_style.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   const OrderStatusWidget({
@@ -32,7 +32,7 @@ class OrderStatusWidget extends StatelessWidget {
             ),
             child: Text(
               title,
-              style: Textstyle.largestText.copyWith(color: AppColors.white),
+              style: AppsTextStyle.largestText.copyWith(color: AppColors.white),
             ),
           ),
         ],
@@ -40,4 +40,3 @@ class OrderStatusWidget extends StatelessWidget {
     );
   }
 }
-
