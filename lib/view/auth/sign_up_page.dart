@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -9,8 +8,11 @@ import '../../controller/sign_up_controller.dart';
 import '../../res/app_function.dart';
 import '../../../res/app_colors.dart';
 
+import '../../res/apps_text_style.dart';
+import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
-import '../../widget/select_photo_profile_widget.dart';
+
+import 'widget/capture_image_profile_widget.dart';
 import 'widget/custom_button_widget.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -31,8 +33,9 @@ class _SignUpPageState extends State<SignUpPage> {
         signUpController.clearField();
       },
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           FocusScope.of(context).unfocus();
+          AppsFunction.verifyInternetStatus();
         },
         child: Material(
           color: AppColors.white,
@@ -45,41 +48,40 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: 50.h,
                     ),
-                    _captureImageForProfile(),
+                    const CaptureImageProfileWidget(),
                     SizedBox(
                       height: 15.h,
                     ),
-                    Text(
-                      "Registration",
-                      style: GoogleFonts.poppins(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black),
-                    ),
+                    Text("Registration",
+                        style: AppsTextStyle.largeTitleTextStyle),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(
-                      "Check our fresh viggies from Jasim Grocery",
-                      style: GoogleFonts.poppins(
-                          fontSize: 16.sp, color: AppColors.cardDarkColor),
-                    ),
+                    Text("Check our fresh viggies from Jasim Grocery",
+                        style: AppsTextStyle.secondaryTextStyle),
                     SizedBox(height: 45.h),
                     _buildSignUpForm(),
                     SizedBox(
                       height: 15.h,
                     ),
-                    _buildSignUpButton(),
+                    CustomButtonWidget(
+                      onPressed: () async {
+                        if (!formKeySignUp.currentState!.validate()) return;
+                        signUpController.createNewUserButton();
+                      },
+                      title: 'Sign Up',
+                    ),
                     SizedBox(
                       height: 25.h,
                     ),
-                    AppsFunction.buldRichText(
-                        context: context,
+                    RichTextWidget(
                         simpleText: "Already Create An Account? ",
                         colorText: "Sign In",
-                        function: () {
-                          Get.back();
-                          signUpController.clearField();
+                        function: () async {
+                          if (!(await AppsFunction.verifyInternetStatus())) {
+                            Get.back();
+                            signUpController.clearField();
+                          }
                         }),
                     SizedBox(
                       height: .22.sh,
@@ -88,37 +90,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 )),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _captureImageForProfile() {
-    return InkWell(
-      onTap: () async {
-        Get.bottomSheet(
-            backgroundColor: AppColors.white, const SelectPhotoProfile());
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.grey, width: 3.w)),
-        child: Obx(() {
-          var imageFile =
-              signUpController.selectImageController.selectPhoto.value;
-          return CircleAvatar(
-            radius: 0.2.sw,
-            backgroundImage: imageFile == null ? null : FileImage(imageFile),
-            backgroundColor: AppColors.backgroundLightColor,
-            foregroundColor: AppColors.black,
-            child: imageFile == null
-                ? Icon(
-                    Icons.add_photo_alternate,
-                    size: 0.2.sw,
-                    color: AppColors.grey,
-                  )
-                : null,
-          );
-        }),
       ),
     );
   }
@@ -186,10 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
           IntlPhoneField(
             textInputAction: TextInputAction.done,
             controller: signUpController.phontET,
-            style: GoogleFonts.poppins(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context).primaryColor),
+            style: AppsTextStyle.textFieldInputTextStyle,
             decoration: AppsFunction.textFormFielddecoration(
                 hintText: "Phone Number", function: () {}),
             languageCode: "en",
@@ -212,17 +180,5 @@ class _SignUpPageState extends State<SignUpPage> {
         ],
       ),
     );
-  }
-
-  Widget _buildSignUpButton() {
-    return SizedBox(
-        width: Get.width,
-        child: CustomButtonWidget(
-          onPressed: () async {
-            if (!formKeySignUp.currentState!.validate()) return;
-            signUpController.createNewUserButton();
-          },
-          title: 'Sign Up',
-        ));
   }
 }

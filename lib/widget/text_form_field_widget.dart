@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
 import '../res/utils.dart';
 
@@ -55,9 +56,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           obscureText: widget.obscureText!,
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
-          style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+          style: AppsTextStyle.textFieldInputTextStyle.copyWith(
               color: widget.enabled!
                   ? Theme.of(context).primaryColor
                   : utils.profileTextColor),

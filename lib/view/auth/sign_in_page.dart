@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../controller/network_controller.dart';
 import '../../controller/sign_in_controller.dart';
 import '../../res/app_function.dart';
 import '../../res/appasset/icon_asset.dart';
-import '../../res/routes/routes_name.dart';
 import '../../res/app_colors.dart';
+import '../../res/apps_text_style.dart';
+import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 import 'widget/app_sign_page_intro.dart';
 import 'widget/custom_button_widget.dart';
+import 'widget/icon_with_button_widget.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -22,7 +25,10 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   SignInController signInController = Get.find();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  NetworkController networkController = Get.put(NetworkController());
 
   @override
   void didChangeDependencies() {
@@ -30,6 +36,8 @@ class _SignInPageState extends State<SignInPage> {
         statusBarColor: AppColors.white,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.didChangeDependencies();
   }
 
@@ -43,19 +51,19 @@ class _SignInPageState extends State<SignInPage> {
           return;
         }
         final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
-
         if (shouldPop) {
           SystemNavigator.pop();
         }
       },
       child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Material(
-          color: AppColors.white,
-          child: SingleChildScrollView(
+        onTap: () async {
+          FocusScope.of(context).unfocus();
+          AppsFunction.verifyInternetStatus();
+        },
+        child: Scaffold(
+          body: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Get.width * .044, vertical: Get.width * .024),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -64,26 +72,40 @@ class _SignInPageState extends State<SignInPage> {
                     subTitle: "Check our fresh viggies from Jasim Grocery",
                   ),
                   _buildLoginForm(),
-                  const SizedBox(
-                    height: 5,
+                  SizedBox(
+                    height: 5.h,
                   ),
                   _buildForgetPasswordButton(),
-                  SizedBox(height: Get.height * .02),
-                  _buildLoginButton(),
+                  SizedBox(height: 15.h),
+                  CustomButtonWidget(
+                    onPressed: () async {
+                      if (!formKey.currentState!.validate()) return;
+                      signInController.signInWithEmailAndPassword();
+                    },
+                    title: 'Sign In',
+                  ),
                   SizedBox(
-                    height: Get.height * .03,
+                    height: 25.h,
                   ),
                   _buildOrDividerText(),
                   SizedBox(
-                    height: Get.height * .024,
+                    height: 20.h,
                   ),
-                  _buildSocialLoginOptions(context),
+                  _buildSocialLoginOptions(),
                   SizedBox(
-                    height: Get.height * .03,
+                    height: 25.h,
                   ),
-                  _buildCreateAccount(context),
+                  RichTextWidget(
+                    colorText: "Create Account",
+                    function: () async {
+                      if (!(await AppsFunction.verifyInternetStatus())) {
+                        Get.toNamed(RoutesName.signupPage);
+                      }
+                    },
+                    simpleText: "Don't Have An Account? ",
+                  ),
                   SizedBox(
-                    height: Get.height * .12,
+                    height: .12.sh,
                   ),
                 ],
               ),
@@ -94,23 +116,27 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Row _buildSocialLoginOptions(BuildContext context) {
+  Row _buildSocialLoginOptions() {
     return Row(
       children: [
         Expanded(
-          child: _buildSocialLoginButton(
-              function: () {},
+          child: IconWithButtonWidget(
+              function: () async {
+                AppsFunction.verifyInternetStatus();
+              },
               color: AppColors.facebookColor,
               image: IconAsset.facebookIcon,
               title: "Facebook"),
         ),
         SizedBox(
-          width: Get.width * .0444,
+          width: 10.w,
         ),
         Expanded(
-          child: _buildSocialLoginButton(
+          child: IconWithButtonWidget(
               function: () async {
-                await signInController.signWithGoogle();
+                if (!(await AppsFunction.verifyInternetStatus())) {
+                  await signInController.signWithGoogle();
+                }
               },
               color: AppColors.red,
               image: IconAsset.gmailIcon,
@@ -161,58 +187,15 @@ class _SignInPageState extends State<SignInPage> {
     return Align(
         alignment: Alignment.topRight,
         child: TextButton(
-          onPressed: () {
-            Get.toNamed(RoutesName.forgetPassword);
-            signInController.cleanTextField();
+          onPressed: () async {
+            if (!(await AppsFunction.verifyInternetStatus())) {
+              Get.toNamed(RoutesName.forgetPassword);
+              signInController.cleanTextField();
+            }
           },
-          child: Text(
-            "Forget Password",
-            style: GoogleFonts.poppins(
-                color: AppColors.hintLightColor, fontWeight: FontWeight.w700),
-          ),
+          child: Text("Forget Password",
+              style: AppsTextStyle.forgetPasswordTextStyle),
         ));
-  }
-
-  InkWell _buildSocialLoginButton(
-      {required Function function,
-      required Color color,
-      required String image,
-      required String title}) {
-    return InkWell(
-      onTap: () {
-        function();
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: Get.height * 0.071,
-        width: Get.width,
-        decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(10)),
-        child: InkWell(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                image,
-                height: Get.height * .041,
-                width: Get.height * .041,
-                color: AppColors.white,
-              ),
-              SizedBox(
-                width: Get.width * .033,
-              ),
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Row _buildOrDividerText() {
@@ -222,7 +205,7 @@ class _SignInPageState extends State<SignInPage> {
       children: [
         _buildLine(),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width * .033),
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Text(
             "with Or",
             style: TextStyle(color: AppColors.grey),
@@ -235,33 +218,9 @@ class _SignInPageState extends State<SignInPage> {
 
   Container _buildLine() {
     return Container(
-      height: Get.height * .003,
-      width: Get.width * .156,
+      height: 2.5.h,
+      width: 70.w,
       color: AppColors.grey,
-    );
-  }
-
-  SizedBox _buildLoginButton() {
-    return SizedBox(
-      width: Get.width,
-      child: CustomButtonWidget(
-        onPressed: () async {
-          if (!formKey.currentState!.validate()) return;
-          signInController.signInWithEmailAndPassword();
-        },
-        title: 'Sign In',
-      ),
-    );
-  }
-
-  RichText _buildCreateAccount(BuildContext context) {
-    return AppsFunction.buldRichText(
-      colorText: "Create Account",
-      context: context,
-      function: () {
-        Get.toNamed(RoutesName.signupPage);
-      },
-      simpleText: "Don't Have An Account? ",
     );
   }
 }

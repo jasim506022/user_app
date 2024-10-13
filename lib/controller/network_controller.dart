@@ -9,11 +9,15 @@ class NetworkController extends GetxController {
 
   @override
   void onInit() {
-    _connectivity.onConnectivityChanged.listen(_updateConnectionState);
+    _connectivity.onConnectivityChanged.listen(updateConnectionState);
     super.onInit();
   }
 
-  void _updateConnectionState(List<ConnectivityResult> connectivityResult) {
+  void showInternetMessage() {
+    _connectivity.onConnectivityChanged.listen(updateConnectionState);
+  }
+
+  void updateConnectionState(List<ConnectivityResult> connectivityResult) {
     if (connectivityResult.contains(ConnectivityResult.none)) {
       AppsFunction.errorDialog(
           icon: IconAsset.warningIcon,

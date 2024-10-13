@@ -41,12 +41,13 @@ class ProfileController extends GetxController {
       AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
       return;
     }
-    bool hasInternet = await AppsFunction.internetChecking();
-    if (hasInternet) {
-      _showErrorDialog("No Internet Connection",
-          "Please check your internet settings and try again.");
-      return;
-    }
+    AppsFunction.internetChecking();
+    // bool hasInternet = await AppsFunction.internetChecking();
+    // if (hasInternet) {
+    //   _showErrorDialog("No Internet Connection",
+    //       "Please check your internet settings and try again.");
+    //   return;
+    // }
     try {
       loadingController.setLoading(true);
       if (selectImageController.selectPhoto.value != null) {
@@ -117,13 +118,13 @@ class ProfileController extends GetxController {
     return await repository.getUserInformationSnapshot();
   }
 
-  void _showErrorDialog(String title, String content, [String? icon]) {
-    AppsFunction.errorDialog(
-        icon: icon ?? IconAsset.warningIcon,
-        title: title,
-        content: content,
-        buttonText: "Okay");
-  }
+  // void _showErrorDialog(String title, String content, [String? icon]) {
+  //   AppsFunction.errorDialog(
+  //       icon: icon ?? IconAsset.warningIcon,
+  //       title: title,
+  //       content: content,
+  //       buttonText: "Okay");
+  // }
 
   Future<void> getUserInformationSnapshot() async {
     try {

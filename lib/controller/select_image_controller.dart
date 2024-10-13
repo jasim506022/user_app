@@ -9,17 +9,14 @@ import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 
 class SelectImageController extends GetxController {
-  final SelectImageRepository selectImageRepository;
+  final SelectImageRepository repository;
 
-  SelectImageController({required this.selectImageRepository});
+  SelectImageController({required this.repository});
   var selectPhoto = Rx<File?>(null);
-
-  // String uploadImage = "";
 
   void selectImage({required ImageSource imageSource}) async {
     try {
-      var image = await selectImageRepository.captureImageSingle(
-          imageSource: imageSource);
+      var image = await repository.captureImageSingle(imageSource: imageSource);
       selectPhoto.value = image;
     } catch (e) {
       if (e is AppException) {

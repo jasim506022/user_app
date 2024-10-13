@@ -4,7 +4,7 @@ import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/repository/onboarding_repository.dart';
 
 class OnBoardingController extends GetxController {
-  final OnBoardingRepository onBoardingRepository;
+  final OnBoardingRepository repository;
 
   final PageController pageController = PageController(initialPage: 0);
 
@@ -15,10 +15,10 @@ class OnBoardingController extends GetxController {
   }
   var currentIndex = 0.obs;
 
-  OnBoardingController({required this.onBoardingRepository});
+  OnBoardingController({required this.repository});
 
   Future<void> completeOnboarding() async {
-    await onBoardingRepository.setOnboardingViewed();
+    await repository.setOnboardingViewed();
     Get.offNamed(RoutesName.signPage);
   }
 

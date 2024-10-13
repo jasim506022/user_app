@@ -7,7 +7,6 @@ import '../../res/app_colors.dart';
 import '../controller/select_image_controller.dart';
 import '../res/apps_text_style.dart';
 
-
 class SelectPhotoProfile extends StatelessWidget {
   const SelectPhotoProfile({
     super.key,
@@ -35,7 +34,7 @@ class SelectPhotoProfile extends StatelessWidget {
           SizedBox(height: 10.h),
           Align(
               alignment: Alignment.center,
-              child: Text("Select Photo", style: AppsTextStyle.largeBoldText)),
+              child: Text("Select Photo", style: AppsTextStyle.titleTextStyle)),
           SizedBox(
             height: 10.h,
           ),
@@ -90,8 +89,8 @@ class SelectPhotoProfile extends StatelessWidget {
             ),
             Text(
               title,
-              style:
-                  AppsTextStyle.mediumText600.copyWith(color: AppColors.greenColor),
+              style: AppsTextStyle.boldBodyTextStyle
+                  .copyWith(color: AppColors.greenColor),
             ),
           ],
         ),

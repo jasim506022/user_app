@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+
+import '../../bindings/on_boarding_binding.dart';
 import '../../bindings/splash_binding.dart';
 import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';
@@ -19,28 +21,29 @@ import '../../view/product/product_page.dart';
 import '../../view/profile/edit_profile_scrren.dart';
 import '../../view/profile/profile_screen.dart';
 import '../../view/search/search_page.dart';
-import '../../view/splash/onboarding_page.dart';
+import '../../view/splash/onboarding_screen.dart';
 import '../../view/splash/splash_screen.dart';
 import 'routes_name.dart';
 
 class AppRoutes {
   static appRoutes() => [
         GetPage(
-            name: RoutesName.initailRoutes, page: () => const SplashScreen(),
-            binding: SplashBinding()
+            name: RoutesName.initailRoutes,
+            page: () => const SplashScreen(),
+            binding: SplashBinding()),
+        GetPage(
+            name: RoutesName.signPage,
+            page: () => const SignInPage(),
             ),
         GetPage(
-          name: RoutesName.signPage,
-          page: () => const SignInPage(),
-        ),
-        GetPage(
-          name: RoutesName.signupPage,
-          page: () => const SignUpPage(),
-        ),
+            name: RoutesName.signupPage,
+            page: () => const SignUpPage(),
+           ),
         GetPage(name: RoutesName.mainPage, page: () => const MainPage()),
         GetPage(
             name: RoutesName.onBaordingPage,
-            page: () => const OnboardingPage()),
+            page: () => const OnboardingScreen(),
+            binding: OnBoardingBinding()),
         GetPage(
             name: RoutesName.forgetPassword,
             page: () => const ForgetPasswordPage()),

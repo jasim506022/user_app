@@ -17,11 +17,11 @@ class ForgetPasswordController extends GetxController {
     super.onClose();
   }
 
-  final ForgetPasswordRepository _forgetPasswordRepository;
+  final ForgetPasswordRepository repository;
 
-  LoadingController loadingController = Get.put(LoadingController());
+  LoadingController loadingController = Get.find();
 
-  ForgetPasswordController(this._forgetPasswordRepository);
+  ForgetPasswordController({required this.repository});
 
   forgetPasswordButton() async {
     loadingController.setLoading(true);
@@ -35,8 +35,7 @@ class ForgetPasswordController extends GetxController {
           buttonText: "Okay");
     } else {
       try {
-        _forgetPasswordRepository.forgetPasswordSnapshot(
-            email: emailET.text.trim());
+        repository.forgetPasswordSnapshot(email: emailET.text.trim());
         AppsFunction.flutterToast(msg: "Sending a mail. Please Check ur Email");
         Get.toNamed(RoutesName.signPage);
       } catch (e) {

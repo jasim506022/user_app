@@ -11,8 +11,10 @@ import 'loading_controller.dart';
 import 'select_image_controller.dart';
 
 class SignUpController extends GetxController {
-  final SignUpRepository signUpRepository;
+  final SignUpRepository repository;
+
   LoadingController loadingController = Get.find();
+
   SelectImageController selectImageController = Get.find();
 
   final TextEditingController phontET = TextEditingController();
@@ -21,17 +23,7 @@ class SignUpController extends GetxController {
   final TextEditingController passwordET = TextEditingController();
   final TextEditingController confirmpasswordET = TextEditingController();
 
-  SignUpController({required this.signUpRepository});
-
-  @override
-  void onClose() {
-    passwordET.dispose();
-    emailET.dispose();
-    emailET.text = "";
-    phontET.dispose();
-    confirmpasswordET.dispose();
-    nameET.dispose();
-  }
+  SignUpController({required this.repository});
 
   Future<void> createNewUserButton() async {
     if (phontET.text.trim().isEmpty) {
@@ -50,10 +42,10 @@ class SignUpController extends GetxController {
     try {
       loadingController.setLoading(true);
 
-      var userProfileImageUrl = await signUpRepository.uploadUserImgeUrl(
+      var userProfileImageUrl = await repository.uploadUserImgeUrl(
           file: selectImageController.selectPhoto.value!);
 
-      var user = await signUpRepository.createUserWithEmilandPasword(
+      var user = await repository.createUserWithEmilandPasword(
           email: emailET.text.trim(), password: passwordET.text.trim());
 
       ProfileModel profileModel = ProfileModel(
@@ -67,7 +59,7 @@ class SignUpController extends GetxController {
         uid: user.user!.uid,
       );
 
-      signUpRepository.uploadNewUserCreatingDocument(
+      repository.uploadNewUserCreatingDocument(
           profileModel: profileModel, firebaseDocument: user.user!.uid);
       clearField();
       Get.offNamed(RoutesName.mainPage);

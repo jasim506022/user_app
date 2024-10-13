@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/res/app_colors.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
-class CustomTextButtonWidget extends StatelessWidget {
-  const CustomTextButtonWidget(
+class DialogTextButtonWidget extends StatelessWidget {
+  const DialogTextButtonWidget(
       {super.key,
       required this.onPressed,
       required this.colorBorder,
@@ -27,9 +26,7 @@ class CustomTextButtonWidget extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         onPressed: onPressed,
         child: Text(title,
-            style: GoogleFonts.poppins(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold,
-                color: textColor ?? AppColors.black)));
+            style: AppsTextStyle.buttonTextStyle
+                .copyWith(color: textColor ?? AppColors.black)));
   }
 }

@@ -9,15 +9,16 @@ import '../../data/onboarding_list_data.dart';
 import '../../res/app_colors.dart';
 
 import '../../res/apps_text_style.dart';
-import 'widget/onBarding_item.dart';
+import 'widget/onbarding_item.dart';
 
-class OnboardingPage extends StatelessWidget {
-  const OnboardingPage({super.key});
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+
     var onBoardingController = Get.find<OnBoardingController>();
 
     return Scaffold(

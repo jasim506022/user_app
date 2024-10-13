@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
 import '../../../controller/loading_controller.dart';
 import '../../../res/app_colors.dart';
@@ -15,30 +16,30 @@ class CustomButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoadingController loadingController = Get.put(LoadingController());
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.greenColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+    return SizedBox(
+      width: 1.sw,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.greenColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.r),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
           ),
-          padding: EdgeInsets.symmetric(
-              horizontal: Get.width * 0.022, vertical: Get.height * 0.018),
-        ),
-        onPressed: onPressed,
-        child: Obx(
-          () => loadingController.loading.value
-              ? Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: AppColors.white,
+          onPressed: onPressed,
+          child: Obx(
+            () => loadingController.loading.value
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: AppColors.white,
+                    ),
+                  )
+                : Text(
+                    title,
+                    style: AppsTextStyle.buttonTextStyle
+                        .copyWith(color: AppColors.white),
                   ),
-                )
-              : Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
-                ),
-        ));
+          )),
+    );
   }
 }
