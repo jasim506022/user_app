@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:user_app/res/utils.dart';
 
 import '../../../controller/cart_product_counter_controller.dart';
+import '../../../controller/product_controller.dart';
 import '../../../model/productsmodel.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/routes/routes_name.dart';
@@ -20,8 +21,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cartProductCountController = Get.find<CartProductCountController>();
-    Utils utils = Utils(context);
+    var controller = Get.find<ProductController>();    Utils utils = Utils(context);
     return SizedBox(
       height: 300.h,
       width: 1.sw,
@@ -30,17 +30,17 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
           //understand this code carefully
           for (Map<String, dynamic> circleConfig in [
             {
-              'left': -200.00.w,
-              'right': -200.00.w,
-              'top': -400.00.h,
+              'left': -300.00.w,
+              'right': -300.00.w,
+              'top': -600.00.h,
               'size': 800.00.h,
               'color': utils.green100
             },
             {
-              'left': -80.00.w,
-              'right': -80.00.w,
-              'top': -300.00.h,
-              'size': 600.00.h,
+              'left': -120.00.w,
+              'right': -120.00.w,
+              'top': -450.00.h,
+              'size': 800.00.h,
               'color': utils.green200
             },
             {
@@ -144,7 +144,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                                 shape: BoxShape.circle),
                             child: CartBadge(
                               color: AppColors.white,
-                              itemCount: cartProductCountController.getCounts,
+                              itemCount: controller.itemCount,
                               icon: Icons.shopping_cart,
                             ),
                           ),

@@ -26,18 +26,21 @@ class Utils {
   Color get green200 =>
       getTheme ? Colors.green.shade700 : Colors.green.shade200;
 
-  Color? get green50 => getTheme ?AppColors. cardDarkColor : Colors.green[50];
+  Color? get green50 => getTheme ? AppColors.cardDarkColor : Colors.green[50];
 
   Color? get profileTextColor => getTheme ? Colors.white54 : Colors.black54;
 
   Color? get bottomTotalBill =>
-      getTheme ?AppColors. cardDarkColor :AppColors. greenColor.withOpacity(.1);
+      getTheme ? AppColors.cardDarkColor : AppColors.greenColor.withOpacity(.1);
 
-  Color? get categoryUnselectBackground =>
-      getTheme ?AppColors. cardDarkColor : const Color.fromARGB(255, 238, 236, 236);
+  Color? get categoryUnselectBackground => getTheme
+      ? AppColors.cardDarkColor
+      : const Color.fromARGB(255, 238, 236, 236);
 
-  Color? get categoryUnSelectTextColor =>
-      getTheme ?AppColors. white.withOpacity(.7) :AppColors. black;
+  Color? get categoryUnSelectTextColor => getTheme
+      ? AppColors.white.withOpacity(.7)
+      : AppColors.black.withOpacity(.8);
 
-  Color? get categorySelectBackground => getTheme ?AppColors. greenColor :AppColors. black;
+  Color? get categorySelectBackground =>
+      getTheme ? AppColors.greenColor : AppColors.black;
 }

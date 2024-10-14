@@ -25,82 +25,86 @@ class CarouselWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(15.r)),
         child: Stack(
           children: [
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Image.asset(
-                carouselModel.image,
-                height: .19.sh,
-                width: .19.sh,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: "Cold Process",
-                        style: AppsTextStyle.mediumText600.copyWith(
-                          letterSpacing: .9,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      TextSpan(
-                          text: " ${carouselModel.category}",
-                          style: AppsTextStyle.mediumTextbold.copyWith(
-                            letterSpacing: .9,
-                            color: AppColors.greenColor,
-                          )),
-                    ],
-                  ),
-                ),
-                Text(
-                  carouselModel.title,
-                  style: AppsTextStyle.largestText
-                      .copyWith(fontSize: 24.sp, color: AppColors.black),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.greenColor, shape: BoxShape.circle),
-                      child: Icon(
-                        Icons.done,
-                        color: AppColors.black,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      carouselModel.number.toUpperCase(),
-                      style: AppsTextStyle.largeBoldText.copyWith(
-                        letterSpacing: 1,
-                        color: AppColors.greenColor,
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text("Shop Now",
-                      style: AppsTextStyle.largeBoldText.copyWith(
-                        color: AppColors.black,
-                        fontSize: 15.sp,
-                        letterSpacing: 1,
-                      )),
-                )
-              ],
-            ),
+            _buildContent(),
+            _buildImage(),
           ],
         ));
+  }
+
+  Column _buildContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: "Cold Process",
+                style: AppsTextStyle.bodyTextStyle.copyWith(
+                  letterSpacing: .9,
+                ),
+              ),
+              TextSpan(
+                  text: " ${carouselModel.category}",
+                  style: AppsTextStyle.boldBodyTextStyle.copyWith(
+                    letterSpacing: .9,
+                    color: AppColors.greenColor,
+                  )),
+            ],
+          ),
+        ),
+        Text(
+          carouselModel.title,
+          style: AppsTextStyle.largeTitleTextStyle,
+        ),
+        Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: AppColors.greenColor, shape: BoxShape.circle),
+              child: Icon(
+                Icons.done,
+                color: AppColors.black,
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Text(
+              carouselModel.number.toUpperCase(),
+              style: AppsTextStyle.largeBoldText.copyWith(
+                letterSpacing: 1,
+                color: AppColors.greenColor,
+              ),
+            )
+          ],
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          decoration: BoxDecoration(
+              color: AppColors.white, borderRadius: BorderRadius.circular(10)),
+          child: Text("Shop Now",
+              style: AppsTextStyle.buttonTextStyle
+                  .copyWith(color: AppColors.black)),
+        )
+      ],
+    );
+  }
+
+  Positioned _buildImage() {
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      child: Opacity(
+        opacity: .6,
+        child: Image.asset(
+          carouselModel.image,
+          height: .19.sh,
+          width: .19.sh,
+          fit: BoxFit.contain,
+        ),
+      ),
+    );
   }
 }

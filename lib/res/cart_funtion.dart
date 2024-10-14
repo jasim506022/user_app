@@ -5,6 +5,8 @@ import 'package:user_app/res/app_function.dart';
 import 'package:user_app/controller/cart_product_counter_controller.dart';
 import 'package:user_app/res/constants.dart';
 
+import '../controller/product_controller.dart';
+
 class CartFunctions {
   static void addItemToCartWithSeller({
     required String productId,
@@ -14,12 +16,12 @@ class CartFunctions {
     List<String> tempList = sharedPreference!.getStringList("cartlist")!;
     tempList.add("$productId:$seller:$productCounter");
 
-    var controller = Get.find<CartProductCountController>();
+     var controller = Get.find<ProductController>();
     var profileController = Get.find<ProfileController>();
     profileController.updateUserData(map: {"cartlist": tempList});
     AppsFunction.flutterToast(msg: "Item Add Successfully");
     sharedPreference!.setStringList("cartlist", tempList);
-    controller.addCartItem();
+    controller.incrementCartItem();
 
     // separateProductID();
     // separteProductQuantityUserCartList();

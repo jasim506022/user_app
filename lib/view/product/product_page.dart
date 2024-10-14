@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
 import '../../controller/category_controller.dart';
+import '../../res/app_function.dart';
 import '../../res/constants.dart';
 
 import '../../res/routes/routes_name.dart';
@@ -23,8 +24,10 @@ class ProductPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.toNamed(RoutesName.mainPage, arguments: 2);
+            onPressed: () async {
+              if (!(await AppsFunction.verifyInternetStatus())) {
+                Get.toNamed(RoutesName.mainPage, arguments: 2);
+              }
             },
             icon: Icon(
               Icons.search,
@@ -87,10 +90,7 @@ class DropdownCategoryWidget extends StatelessWidget {
       ),
       value: isSearch! ? category : categoryController.getCategory,
       isExpanded: true,
-      style: GoogleFonts.poppins(
-          color: Theme.of(context).primaryColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w700),
+      style: AppsTextStyle.boldBodyTextStyle,
       focusColor: Theme.of(context).primaryColor,
       elevation: 16,
       items: allCategoryList.map<DropdownMenuItem<String>>((String value) {

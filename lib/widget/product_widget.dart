@@ -11,6 +11,7 @@ import '../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 
 import '../model/productsmodel.dart';
+import '../view/home/widget/product_discount_widget.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -25,13 +26,15 @@ class ProductWidget extends StatelessWidget {
         CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
-      onTap: () {
-        Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
+      onTap: () async {
+        if (!(await AppsFunction.verifyInternetStatus())) {
+          Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
+        }
       },
       child: Card(
         child: Container(
-          height: Get.height,
-          width: Get.width,
+          height: 1.sh,
+          width: 1.sw,
           decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20.r),
@@ -44,108 +47,102 @@ class ProductWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: .125.sh,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.all(10.r),
-                    padding: EdgeInsets.all(20.r),
-                    decoration: BoxDecoration(
-                        color: AppColors.cardImageBg,
-                        borderRadius: BorderRadius.circular(5.r)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.r),
-                      child: FancyShimmerImage(
-                        height: .85.sh,
-                        boxFit: BoxFit.contain,
-                        imageUrl: productModel.productimage![0],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 10.w,
-                    top: 10.h,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.red, width: .5),
-                        borderRadius: BorderRadius.circular(15.r),
-                        color: AppColors.lightred.withOpacity(.2),
-                      ),
-                      child: Text("${productModel.discount}% Off",
-                          style: AppsTextStyle.mediumText600),
-                    ),
-                  ),
-                ],
-              ),
+              _buildProductImage(productModel),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-                            style: AppsTextStyle.largeText
-                                .copyWith(color: AppColors.red),
-                          ),
-                          SizedBox(
-                            width: 15.w,
-                          ),
-                          Text(
-                            "${(productModel.productprice!)}",
-                            style: AppsTextStyle.mediumText400lineThrough,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      FittedBox(
-                        child: Text(
-                          productModel.productname!,
-                          style: AppsTextStyle.largeText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            Get.toNamed(RoutesName.productDestailsPage,
-                                arguments: productModel);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 40, //.045.sh,
-                            width: 1.sw,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.r),
-                              color:
-                                  isCart ? AppColors.red : AppColors.greenColor,
-                            ),
-                            child: Text(
-                              "Add To Cart",
-                              style: AppsTextStyle.largeText.copyWith(
-                                  color: AppColors.white, fontSize: 14.sp),
-                            ),
-                          )),
-                      SizedBox(
-                        height: 7.h,
-                      ),
-                    ],
-                  ),
+                  child: _buildProductDetails(productModel, isCart),
                 ),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildProductDetails(ProductModel productModel, bool isCart) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+              style: AppsTextStyle.boldBodyTextStyle
+                  .copyWith(color: AppColors.red),
+            ),
+            SizedBox(
+              width: 15.w,
+            ),
+            Text(
+              "${(productModel.productprice!)}",
+              style: AppsTextStyle.mediumText400lineThrough,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 2.h,
+        ),
+        FittedBox(
+          child: Text(
+            productModel.productname!,
+            style: AppsTextStyle.boldBodyTextStyle,
+          ),
+        ),
+        SizedBox(
+          height: 5.h,
+        ),
+        InkWell(
+            onTap: () async {
+              if (!(await AppsFunction.verifyInternetStatus())) {
+                Get.toNamed(RoutesName.productDestailsPage,
+                    arguments: productModel);
+              }
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 45.h,
+              width: 1.sw,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.r),
+                color: isCart ? AppColors.red : AppColors.greenColor,
+              ),
+              child: Text(
+                "Add To Cart",
+                style: AppsTextStyle.buttonTextStyle,
+              ),
+            )),
+        SizedBox(
+          height: 7.h,
+        ),
+      ],
+    );
+  }
+
+  Stack _buildProductImage(ProductModel productModel) {
+    return Stack(
+      children: [
+        Container(
+          height: 100.h,
+          alignment: Alignment.center,
+          margin: EdgeInsets.all(10.r),
+          padding: EdgeInsets.all(20.r),
+          decoration: BoxDecoration(
+              color: AppColors.cardImageBg,
+              borderRadius: BorderRadius.circular(5.r)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.r),
+            child: FancyShimmerImage(
+              height: 90.h,
+              boxFit: BoxFit.contain,
+              imageUrl: productModel.productimage![0],
+            ),
+          ),
+        ),
+        ProductDiscountWidget(discount: productModel.discount!)
+      ],
     );
   }
 }

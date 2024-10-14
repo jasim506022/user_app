@@ -13,7 +13,7 @@ import '../../../res/routes/routes_name.dart';
 import '../../../widget/card_product_widget.dart';
 import '../../cart/dot_line_printer.dart';
 import '../../../widget/empty_widget.dart';
-import '../../../widget/single_loading_product_widget.dart';
+import '../../../loading_widget/loading_single_product_widget.dart';
 
 class OrderItemWidget extends StatelessWidget {
   const OrderItemWidget({

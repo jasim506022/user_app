@@ -109,6 +109,7 @@ class ProfileController extends GetxController {
   Future<void> signOut() async {
     await sharedPreference?.setString(StringConstant.imageSharedPreference, "");
     await sharedPreference?.setString(StringConstant.nameSharedPreference, "");
+    await sharedPreference?.setStringList(StringConstant.cartListSharedPreference, []);
     repository.signOut();
     AppsFunction.flutterToast(msg: "Successfully Signout ");
     Get.offAllNamed(RoutesName.signPage);
@@ -118,37 +119,39 @@ class ProfileController extends GetxController {
     return await repository.getUserInformationSnapshot();
   }
 
-  // void _showErrorDialog(String title, String content, [String? icon]) {
-  //   AppsFunction.errorDialog(
-  //       icon: icon ?? IconAsset.warningIcon,
-  //       title: title,
-  //       content: content,
-  //       buttonText: "Okay");
-  // }
-
   Future<void> getUserInformationSnapshot() async {
     try {
       var snapshot = await repository.getUserInformationSnapshot();
-      if (snapshot.exists) {
+      if (snapshot.exists && snapshot.data() != null) {
         profileModel.value = ProfileModel.fromMap(snapshot.data()!);
         if (profileModel.value.status == "approved") {
+          _saveProfileToSharedPreferences(profileModel.value);
+
+          /*
           final prefsTasks = [
-            sharedPreference!.setString("uid", profileModel.value.uid!),
-            sharedPreference!.setString("email", profileModel.value.email!),
-            sharedPreference!.setString("name", profileModel.value.name!),
-            sharedPreference!
-                .setString("imageurl", profileModel.value.imageurl!),
-            sharedPreference!.setString("phone", profileModel.value.phone!),
-            sharedPreference!.setStringList("cartlist",
+            sharedPreference!.setString(
+                StringConstant.uidSharedPreference, profileModel.value.uid!),
+            sharedPreference!.setString(StringConstant.emailSharedPreference,
+                profileModel.value.email!),
+            sharedPreference!.setString(
+                StringConstant.nameSharedPreference, profileModel.value.name!),
+            sharedPreference!.setString(StringConstant.imageSharedPreference,
+                profileModel.value.imageurl!),
+            sharedPreference!.setString(StringConstant.phoneSharedPreference,
+                profileModel.value.phone!),
+            sharedPreference!.setStringList(
+                StringConstant.cartListSharedPreference,
                 profileModel.value.cartlist!.map((e) => e.toString()).toList())
           ];
           await Future.wait(prefsTasks);
+*/
+          // nameTEC.text = profileModel.value.name!;
+          // addressTEC.text = profileModel.value.address!;
+          // phoneTEC.text = profileModel.value.phone!;
+          // emailTEC.text = profileModel.value.email!;
+          // image.value = profileModel.value.imageurl!;
 
-          nameTEC.text = profileModel.value.name!;
-          addressTEC.text = profileModel.value.address!;
-          phoneTEC.text = profileModel.value.phone!;
-          emailTEC.text = profileModel.value.email!;
-          image.value = profileModel.value.imageurl!;
+          _updateTextControllers();
         } else {
           AppsFunction.flutterToast(msg: "User Doesn't Exist");
         }
@@ -162,5 +165,31 @@ class ProfileController extends GetxController {
             buttonText: "Okay");
       }
     }
+  }
+
+  Future<void> _saveProfileToSharedPreferences(ProfileModel profile) async {
+    final prefsTasks = [
+      sharedPreference!
+          .setString(StringConstant.uidSharedPreference, profile.uid!),
+      sharedPreference!
+          .setString(StringConstant.emailSharedPreference, profile.email!),
+      sharedPreference!
+          .setString(StringConstant.nameSharedPreference, profile.name!),
+      sharedPreference!
+          .setString(StringConstant.imageSharedPreference, profile.imageurl!),
+      sharedPreference!
+          .setString(StringConstant.phoneSharedPreference, profile.phone!),
+      sharedPreference!.setStringList(StringConstant.cartListSharedPreference,
+          profile.cartlist!.map((e) => e.toString()).toList())
+    ];
+    await Future.wait(prefsTasks);
+  }
+
+  void _updateTextControllers() {
+    nameTEC.text = profileModel.value.name ?? '';
+    addressTEC.text = profileModel.value.address ?? '';
+    phoneTEC.text = profileModel.value.phone ?? '';
+    emailTEC.text = profileModel.value.email ?? '';
+    image.value = profileModel.value.imageurl ?? '';
   }
 }

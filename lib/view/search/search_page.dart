@@ -11,7 +11,7 @@ import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
 import '../../res/appasset/image_asset.dart';
 import '../../widget/empty_widget.dart';
-import '../../widget/loading_product_widget.dart';
+import '../../loading_widget/loading_list_product_widget.dart';
 import '../../widget/product_widget.dart';
 import 'filter_dialog_widget.dart';
 
@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
               return _buildProductGridContent();
             }
 
-            return const LoadingProductWidget();
+            return const LoadingListProductWidget();
           },
         ),
       ),

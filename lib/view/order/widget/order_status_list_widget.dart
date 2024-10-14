@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +6,7 @@ import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
 import '../../../res/appasset/image_asset.dart';
 import '../../../widget/empty_widget.dart';
-import '../../../widget/list_loading_single_product_widget.dart';
+import '../../../loading_widget/loading_list_single_product_widget.dart';
 import 'order_item_widget.dart';
 
 class OrderStatusListWidget extends StatelessWidget {
@@ -33,7 +32,7 @@ class OrderStatusListWidget extends StatelessWidget {
           stream: orderController.orderSnapshots(orderStatus: orderStatus),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const ListLoadingSingleProductWidget();
+              return const LoadingListSingleProductWidget();
             } else if (!snapshot.hasData ||
                 snapshot.data!.docs.isEmpty ||
                 snapshot.hasError) {
@@ -56,7 +55,7 @@ class OrderStatusListWidget extends StatelessWidget {
                 },
               );
             } else {
-              return const ListLoadingSingleProductWidget();
+              return const LoadingListSingleProductWidget();
             }
           },
         ));

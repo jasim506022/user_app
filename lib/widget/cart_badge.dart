@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:user_app/res/routes/routes_name.dart';
+
 import '../../res/app_colors.dart';
+import '../res/app_function.dart';
+import '../res/apps_text_style.dart';
+import '../res/routes/routes_name.dart';
 
 class CartBadge extends StatelessWidget {
   final int itemCount;
@@ -23,9 +25,10 @@ class CartBadge extends StatelessWidget {
               icon,
               color: color,
             ),
-            onPressed: () {
-              
-              Get.toNamed(RoutesName.cartPage);
+            onPressed: () async {
+              if (!(await AppsFunction.verifyInternetStatus())) {
+                Get.toNamed(RoutesName.cartPage);
+              }
             }),
         if (itemCount > 0)
           Positioned(
@@ -43,10 +46,7 @@ class CartBadge extends StatelessWidget {
               ),
               child: Text(
                 itemCount.toString(),
-                style: GoogleFonts.roboto(
-                    color: AppColors.white, // Text color for the badge
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold),
+                style: AppsTextStyle.buttonTextStyle.copyWith(fontSize: 10),
                 textAlign: TextAlign.center,
               ),
             ),

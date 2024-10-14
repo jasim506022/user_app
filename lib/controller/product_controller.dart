@@ -9,15 +9,39 @@ import '../repository/product_reposity.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/cart_funtion.dart';
+import '../res/constant/string_constant.dart';
+import '../res/constants.dart';
 import 'category_controller.dart';
-import 'cart_product_counter_controller.dart';
 
 class ProductController extends GetxController {
   var categoryController = Get.find<CategoryController>();
-  var cartProductCountController = Get.find<CartProductCountController>();
-  final ProductReposity _productRepository;
 
-  ProductController(this._productRepository);
+  final ProductReposity repository;
+  ProductController({required this.repository});
+
+  @override
+  void onInit() {
+    updateCartItemCount();
+    super.onInit();
+  }
+
+  // Cart Item Counter
+  var cartItemCounter = 0.obs;
+  void updateCartItemCount() {
+    cartItemCounter.value = (sharedPreference!
+            .getStringList(StringConstant.cartListSharedPreference)!
+            .length) -
+        1;
+  }
+
+  int get itemCount => cartItemCounter.value;
+  incrementCartItem() {
+    ++cartItemCounter;
+  }
+
+  decrementCartItem() {
+    --cartItemCounter;
+  }
 
   var isCart = false.obs;
   var counter = 1.obs;
@@ -56,10 +80,11 @@ class ProductController extends GetxController {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
-      {required String category}) {
+// Popular Products Snapshot
+  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot() {
     try {
-      return _productRepository.popularProductSnapshot(category: category);
+      return repository.popularProductSnapshot(
+          category: categoryController.getCategory);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -72,10 +97,11 @@ class ProductController extends GetxController {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-      {required String category}) {
+// Product Snapshot
+  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots() {
     try {
-      return _productRepository.productSnapshots(category: category);
+      return repository.productSnapshots(
+          category: categoryController.getCategory);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -91,8 +117,7 @@ class ProductController extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
       {required ProductModel productModel}) {
     try {
-      return _productRepository.similarProductSnapshot(
-          productModel: productModel);
+      return repository.similarProductSnapshot(productModel: productModel);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(

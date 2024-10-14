@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:user_app/view/cart/cart_page.dart';
 import '../../controller/network_controller.dart';
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
+import '../cart/cart_page.dart';
 import '../home/home_page.dart';
 import '../profile/profile_screen.dart';
 import '../search/search_page.dart';
@@ -22,7 +22,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final ProfileController profileController = Get.find();
   int currentIndex = 0;
-  // int? indexValue;
 
   late List<Widget> widgetOptions = [
     const HomePage(),
@@ -86,6 +85,8 @@ class _MainPageState extends State<MainPage> {
         statusBarColor: Theme.of(context).scaffoldBackgroundColor,
         statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Theme.of(context).brightness));
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   }
 
   SalomonBottomBarItem _buildBottomBarItem(

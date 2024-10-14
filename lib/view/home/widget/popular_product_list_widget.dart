@@ -7,7 +7,7 @@ import '../../../controller/product_controller.dart';
 import '../../../model/productsmodel.dart';
 import '../../../res/appasset/image_asset.dart';
 import '../../../widget/single_empty_widget.dart';
-import '../../../widget/single_loading_product_widget.dart';
+import '../../../loading_widget/loading_single_product_widget.dart';
 import 'single_popular_widget.dart';
 
 class PopularProductListWidget extends StatelessWidget {
@@ -19,21 +19,14 @@ class PopularProductListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var productController = Get.find<ProductController>();
     return SizedBox(
-        height: .19.sh,
+        height: 145.h,
         width: double.infinity,
         child: Obx(
           () => StreamBuilder(
-              stream: productController.popularProductSnapshot(
-                  category: productController.categoryController.getCategory),
+              stream: productController.popularProductSnapshot(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return const LoadingSingleProductWidget();
-                    },
-                  );
+                  return const LoadingSingleProductWidget();
                 }
 
                 if (!snapshot.hasData ||

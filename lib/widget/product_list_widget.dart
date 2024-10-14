@@ -6,7 +6,7 @@ import '../controller/product_controller.dart';
 import '../model/productsmodel.dart';
 import '../res/appasset/image_asset.dart';
 import 'empty_widget.dart';
-import 'loading_product_widget.dart';
+import '../loading_widget/loading_list_product_widget.dart';
 import 'product_widget.dart';
 
 class ProductListWidget extends StatelessWidget {
@@ -25,13 +25,11 @@ class ProductListWidget extends StatelessWidget {
 
     return Obx(() => StreamBuilder(
           stream: isPopular!
-              ? productController.popularProductSnapshot(
-                  category: productController.categoryController.getCategory)
-              : productController.productSnapshots(
-                  category: productController.categoryController.getCategory),
+              ? productController.popularProductSnapshot()
+              : productController.productSnapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingProductWidget();
+              return const LoadingListProductWidget();
             }
             if (!snapshot.hasData ||
                 snapshot.data!.docs.isEmpty ||
@@ -66,7 +64,7 @@ class ProductListWidget extends StatelessWidget {
                 },
               );
             }
-            return const LoadingProductWidget();
+            return const LoadingListProductWidget();
           },
         ));
   }

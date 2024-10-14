@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'single_loading_product_widget.dart';
+import 'loading_single_product_widget.dart';
 
-class ListLoadingSingleProductWidget extends StatelessWidget {
-  const ListLoadingSingleProductWidget({
+class LoadingListSingleProductWidget extends StatelessWidget {
+  const LoadingListSingleProductWidget({
     super.key,
   });
 

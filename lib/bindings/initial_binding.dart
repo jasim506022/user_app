@@ -65,15 +65,15 @@ class InitialBinding extends Bindings {
         () => ProfileController(repository: Get.find<ProfileRepository>()),
         fenix: true);
     Get.lazyPut<ProductController>(
-        () => ProductController(Get.find<ProductReposity>()),
+        () => ProductController(repository: Get.find<ProductReposity>()),
         fenix: true);
 
     Get.lazyPut<AddressController>(
         () => AddressController(Get.find<AddressRepository>()),
         fenix: true);
 
-    Get.lazyPut<CartProductCountController>(() => CartProductCountController(),
-        fenix: true);
+    // Get.lazyPut<CartProductCountController>(() => CartProductCountController(),
+    //     fenix: true);
 
     Get.lazyPut<CategoryController>(() => CategoryController(), fenix: true);
     Get.lazyPut<CartController>(() => CartController(), fenix: true);

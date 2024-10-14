@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
+import 'package:user_app/controller/product_controller.dart';
 
 import '../model/app_exception.dart';
 import '../model/productsmodel.dart';
@@ -89,7 +89,8 @@ class CartController extends GetxController {
   }
 
   void removeProductFromCart({required String productId}) async {
-    List<String> cartList = sharedPreference!.getStringList(StringConstant.cartListSharedPreference)!;
+    List<String> cartList = sharedPreference!
+        .getStringList(StringConstant.cartListSharedPreference)!;
 
     String itemToRemove = cartList.firstWhere(
       (element) => element.contains(productId),
@@ -103,13 +104,15 @@ class CartController extends GetxController {
         profileController.updateUserData(map: {"cartlist": cartList});
         AppsFunction.flutterToast(msg: "Item remove Successfully");
 
-        sharedPreference!.setStringList(StringConstant.cartListSharedPreference, cartList);
+        sharedPreference!
+            .setStringList(StringConstant.cartListSharedPreference, cartList);
 
         CartFunctions.separateProductID();
         CartFunctions.seperateProductQuantiyList();
 
-        var controller = Get.put(CartProductCountController());
-        controller.removeCartItem();
+        // var controller = Get.put(CartProductCountController());
+        var controller = Get.find<ProductController>();
+        controller.decrementCartItem(); //
 
         --shareP.value;
 

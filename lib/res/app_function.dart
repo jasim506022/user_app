@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:user_app/res/app_colors.dart';
 import 'package:user_app/res/apps_text_style.dart';
+import 'package:user_app/res/utils.dart';
 
 import '../data/response/app_data_exception.dart';
 import '../widget/dialog_text_button_widget.dart';
@@ -38,6 +39,25 @@ class AppsFunction {
       AppsFunction.showNoInternetSnackbar();
     }
     return checkInternet;
+  }
+
+  static Container lineShimmer(Utils utils, double height, [double? width]) {
+    return Container(
+      height: height,
+      width: width ?? 1.sw,
+      decoration: BoxDecoration(
+          color: utils.widgetShimmerColor,
+          borderRadius: BorderRadius.circular(15.r)),
+    );
+  }
+
+  static Container circleShimmer(Utils utils, double height) {
+    return Container(
+      height: height,
+      width: height,
+      decoration: BoxDecoration(
+          color: utils.widgetShimmerColor, shape: BoxShape.circle),
+    );
   }
 
   static confirmationDialog({

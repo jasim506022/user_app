@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../res/app_function.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/constants.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/utils.dart';
@@ -27,9 +28,11 @@ class CategoryWidget extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.only(left: 10.w),
             child: InkWell(
-              onTap: () {
-                categoryController.setCategory(
-                    category: allCategoryList[index]);
+              onTap: () async {
+                if (!(await AppsFunction.verifyInternetStatus())) {
+                  categoryController.setCategory(
+                      category: allCategoryList[index]);
+                }
               },
               child: Obx(() {
                 bool isSelect =
@@ -43,16 +46,11 @@ class CategoryWidget extends StatelessWidget {
                           ? utils.categorySelectBackground
                           : utils.categoryUnselectBackground,
                       borderRadius: BorderRadius.circular(30.r)),
-                  child: Text(
-                    allCategoryList[index],
-                    style: GoogleFonts.poppins(
-                        color: isSelect
-                            ? AppColors.white
-                            : utils.categoryUnSelectTextColor,
-                        fontSize: 12.sp,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w700),
-                  ),
+                  child: Text(allCategoryList[index],
+                      style: AppsTextStyle.boldBodyTextStyle.copyWith(
+                          color: isSelect
+                              ? AppColors.white
+                              : utils.categoryUnSelectTextColor)),
                 );
               }),
             ),

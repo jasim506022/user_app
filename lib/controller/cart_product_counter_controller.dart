@@ -1,25 +1,24 @@
 import 'package:get/get.dart';
+import 'package:user_app/res/constant/string_constant.dart';
 import 'package:user_app/res/constants.dart';
 
-class CartProductCountController extends GetxController {
-  var cartListItemCounter = 0.obs;
+// class CartProductCountController extends GetxController {
+//   // var cartListItemCounter = 0.obs;
 
-  @override
-  void onInit() {
-    cartListItemCounter.value =
-        
-            
-            (sharedPreference!.getStringList("cartlist")!.length) - 1;
-    super.onInit();
-  }
+//   // void setProductListCount() {
+//   //   cartListItemCounter.value = (sharedPreference!
+//   //           .getStringList(StringConstant.cartListSharedPreference)!
+//   //           .length) -
+//   //       1;
+//   // }
 
-  int get getCounts => cartListItemCounter.value;
+//   // int get getCounts => cartListItemCounter.value;
 
-  addCartItem() {
-    ++cartListItemCounter;
-  }
+//   // addCartItem() {
+//   //   ++cartListItemCounter;
+//   // }
 
-  removeCartItem() {
-    --cartListItemCounter;
-  }
-}
+//   // removeCartItem() {
+//   //   --cartListItemCounter;
+//   // }
+// }

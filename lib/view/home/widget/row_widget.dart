@@ -20,7 +20,7 @@ class RowWidget extends StatelessWidget {
       children: [
         Text(
           text,
-          style: AppsTextStyle.largestText,
+          style: AppsTextStyle.titleTextStyle,
         ),
         const Spacer(),
         InkWell(

@@ -3,8 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../res/app_function.dart';
+import '../../res/apps_text_style.dart';
 import '../../res/routes/routes_name.dart';
 
 import '../../widget/product_list_widget.dart';
@@ -27,25 +28,22 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Column(
               children: [
-                // Header
                 Column(
                   children: [
-                    // user Profile
                     const UserProfileHeaderWidget(),
-
                     SizedBox(
-                      height: 12.h,
+                      height: 10.h,
                     ),
-
                     InkWell(
-                      onTap: () {
-                        Get.offAllNamed(RoutesName.mainPage, arguments: 2);
+                      onTap: () async {
+                        if (!(await AppsFunction.verifyInternetStatus())) {
+                          Get.offAllNamed(RoutesName.mainPage, arguments: 2);
+                        }
                       },
                       child: _buildSearchBar(context),
                     ),
                   ],
                 ),
-
                 Expanded(
                     child: SingleChildScrollView(
                   child: Column(
@@ -62,8 +60,11 @@ class HomePage extends StatelessWidget {
                       ),
                       RowWidget(
                         text: "Popular Product",
-                        function: () {
-                          Get.toNamed(RoutesName.productPage, arguments: true);
+                        function: () async {
+                          if (!(await AppsFunction.verifyInternetStatus())) {
+                            Get.toNamed(RoutesName.productPage,
+                                arguments: true);
+                          }
                         },
                       ),
                       SizedBox(height: 10.h),
@@ -73,8 +74,11 @@ class HomePage extends StatelessWidget {
                       ),
                       RowWidget(
                         text: "Product",
-                        function: () {
-                          Get.toNamed(RoutesName.productPage, arguments: false);
+                        function: () async {
+                          if (!(await AppsFunction.verifyInternetStatus())) {
+                            Get.toNamed(RoutesName.productPage,
+                                arguments: false);
+                          }
                         },
                       ),
                       const ProductListWidget(
@@ -92,7 +96,7 @@ class HomePage extends StatelessWidget {
   // Search
   Container _buildSearchBar(BuildContext context) {
     return Container(
-      height: 40.h,
+      height: 50.h,
       margin: EdgeInsets.symmetric(vertical: 15.h),
       width: Get.width,
       decoration: BoxDecoration(
@@ -104,10 +108,7 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               "Search...........",
-              style: GoogleFonts.roboto(
-                color: Theme.of(context).hintColor,
-                fontSize: 15.sp,
-              ),
+              style: AppsTextStyle.hintTextStyle,
             ),
             const Spacer(),
             Icon(
