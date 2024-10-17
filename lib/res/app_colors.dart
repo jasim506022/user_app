@@ -18,7 +18,7 @@ class AppColors {
   static Color white = Colors.white;
   static Color red = const Color(0xffed6767);
   static Color lightred = const Color.fromARGB(255, 251, 196, 192);
-  static Color yellow = const Color.fromARGB(255, 250, 228, 27);
+  static Color yellow = const Color.fromARGB(255, 157, 141, 0);
   static Color grey = Colors.grey;
 
   static Color cardImageBg = const Color(0xfff6f5f1);

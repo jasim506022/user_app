@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_function.dart';
-import 'package:user_app/controller/cart_product_counter_controller.dart';
+import 'package:user_app/res/constant/string_constant.dart';
+
 import 'package:user_app/res/constants.dart';
 
 import '../controller/product_controller.dart';
@@ -13,18 +14,21 @@ class CartFunctions {
     required int productCounter,
     required String seller,
   }) {
-    List<String> tempList = sharedPreference!.getStringList("cartlist")!;
+    List<String> tempList = sharedPreference!
+            .getStringList(StringConstant.cartListSharedPreference) ??
+        [];
     tempList.add("$productId:$seller:$productCounter");
 
-     var controller = Get.find<ProductController>();
+    var productController = Get.find<ProductController>();
     var profileController = Get.find<ProfileController>();
-    profileController.updateUserData(map: {"cartlist": tempList});
-    AppsFunction.flutterToast(msg: "Item Add Successfully");
-    sharedPreference!.setStringList("cartlist", tempList);
-    controller.incrementCartItem();
 
-    // separateProductID();
-    // separteProductQuantityUserCartList();
+    profileController.updateCartItem(map: {"cartlist": tempList});
+    AppsFunction.flutterToast(msg: "Item Add Successfully");
+
+    sharedPreference!
+        .setStringList(StringConstant.cartListSharedPreference, tempList);
+
+    productController.incrementCartItem();
   }
 
   static void clearCart() {
@@ -37,7 +41,7 @@ class CartFunctions {
         .doc(sharedPreference!.getString("uid")!)
 */
     var profileController = Get.find<ProfileController>();
-    profileController.updateUserData(map: {"cartlist": emptyCart});
+    profileController.updateCartItem(map: {"cartlist": emptyCart});
     AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
     // FirebaseDatabase.currentUserSnaphots()
     //     .update({"cartlist": emptyCart}).then((value) {

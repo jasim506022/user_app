@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/res/apps_text_style.dart';
-
-import '../../controller/category_controller.dart';
 import '../../res/app_function.dart';
-import '../../res/constants.dart';
 
 import '../../res/routes/routes_name.dart';
 import '../../widget/product_list_widget.dart';
+import 'widget/drop_down_category_widget.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -34,8 +31,8 @@ class ProductPage extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
           ),
-          const SizedBox(
-            width: 10,
+          SizedBox(
+            width: 10.h,
           ),
         ],
         //
@@ -55,52 +52,6 @@ class ProductPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class DropdownCategoryWidget extends StatelessWidget {
-  const DropdownCategoryWidget({
-    super.key,
-    this.isSearch = false,
-    this.onChanged,
-    this.category,
-  });
-  final String? category;
-  final bool? isSearch;
-  final void Function(String?)? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    var categoryController = Get.find<CategoryController>();
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        fillColor: Theme.of(context).cardColor,
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).primaryColor, width: 1),
-            borderRadius: BorderRadius.circular(15)),
-        focusedBorder: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Theme.of(context).primaryColor, width: 1),
-            borderRadius: BorderRadius.circular(15)),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-      ),
-      value: isSearch! ? category : categoryController.getCategory,
-      isExpanded: true,
-      style: AppsTextStyle.boldBodyTextStyle,
-      focusColor: Theme.of(context).primaryColor,
-      elevation: 16,
-      items: allCategoryList.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(value: value, child: Text(value));
-      }).toList(),
-      onChanged: isSearch!
-          ? onChanged
-          : (value) {
-              categoryController.setCategory(category: value!.toString());
-            },
     );
   }
 }

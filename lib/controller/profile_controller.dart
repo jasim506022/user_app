@@ -36,7 +36,21 @@ class ProfileController extends GetxController {
 
   ProfileController({required this.repository});
 
-  Future<void> updateUserData({Map<String, dynamic>? map}) async {
+  updateCartItem({required Map<String, dynamic> map}) {
+    try {
+      repository.updateUserData(map: map);
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: IconAsset.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: "Okay");
+      }
+    }
+  }
+
+  Future<void> updateUserData() async {
     if (phoneTEC.text.trim().isEmpty) {
       AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
       return;
@@ -61,7 +75,7 @@ class ProfileController extends GetxController {
       model.name = nameTEC.text.trim();
       model.imageurl = image.value;
 
-      repository.updateUserData(map: map ?? model.toMapProfileEdit());
+      repository.updateUserData(map: model.toMapProfileEdit());
       isChange.value = false;
       loadingController.setLoading(false);
       Get.offAllNamed(RoutesName.mainPage, arguments: 3);
@@ -109,7 +123,8 @@ class ProfileController extends GetxController {
   Future<void> signOut() async {
     await sharedPreference?.setString(StringConstant.imageSharedPreference, "");
     await sharedPreference?.setString(StringConstant.nameSharedPreference, "");
-    await sharedPreference?.setStringList(StringConstant.cartListSharedPreference, []);
+    await sharedPreference
+        ?.setStringList(StringConstant.cartListSharedPreference, []);
     repository.signOut();
     AppsFunction.flutterToast(msg: "Successfully Signout ");
     Get.offAllNamed(RoutesName.signPage);

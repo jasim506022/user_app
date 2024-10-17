@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+
 import '../../../res/app_function.dart';
 import '../../../res/app_colors.dart';
 import '../../../model/productsmodel.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
+import '../../../res/constant/string_constant.dart';
 import '../../../res/routes/routes_name.dart';
 import 'product_discount_widget.dart';
 
@@ -21,7 +23,7 @@ class SingleProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
 
-    bool isCart =
+    bool isInCart =
         CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
@@ -52,7 +54,7 @@ class SingleProductWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.only(
                       left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
-                  child: _buildProductDetails(productModel, isCart),
+                  child: _buildProductDetails(productModel, isInCart),
                 ),
               )
             ],
@@ -109,7 +111,7 @@ class SingleProductWidget extends StatelessWidget {
             color: isCart ? AppColors.red : AppColors.greenColor,
           ),
           child: Text(
-            "Add To Cart",
+            StringConstant.addToCart,
             style: AppsTextStyle.buttonTextStyle,
           ),
         ),

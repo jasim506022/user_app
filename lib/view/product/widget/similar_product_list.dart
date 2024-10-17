@@ -7,7 +7,7 @@ import '../../../controller/product_controller.dart';
 import '../../../model/productsmodel.dart';
 import '../../../res/appasset/image_asset.dart';
 import '../../../widget/single_empty_widget.dart';
-import 'loading_similar_widet.dart';
+import '../../../loading_widget/loading_similar_widet.dart';
 import 'similar_product_widget.dart';
 
 class SimilarProductList extends StatelessWidget {

@@ -223,15 +223,19 @@ class AppsFunction {
     return DateFormat("yyyy-MM-dd").format(date);
   }
 
+  static double calculateDiscountedPrice(double productprice, double discount) {
+    return productprice - (productprice * discount / 100);
+  }
+
 //Product Price
   static double productPrice(double productprice, double discount) {
-    return productprice - (productprice * discount / 100);
+    return calculateDiscountedPrice(productprice, discount);
   }
 
   //Product Price
   static double productPriceWithQuantity(
       double productprice, double discount, int quantity) {
-    return (productprice - (productprice * discount / 100)) * quantity;
+    return calculateDiscountedPrice(productprice, discount) * quantity;
   }
 
   static InputDecoration inputDecoration({

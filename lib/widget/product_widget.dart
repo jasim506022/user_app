@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/constant/string_constant.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
@@ -22,7 +23,7 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
 
-    bool isCart =
+    bool isInCart =
         CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
@@ -51,7 +52,7 @@ class ProductWidget extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: _buildProductDetails(productModel, isCart),
+                  child: _buildProductDetails(productModel, isInCart),
                 ),
               )
             ],
@@ -110,7 +111,7 @@ class ProductWidget extends StatelessWidget {
                 color: isCart ? AppColors.red : AppColors.greenColor,
               ),
               child: Text(
-                "Add To Cart",
+                StringConstant.addToCart,
                 style: AppsTextStyle.buttonTextStyle,
               ),
             )),

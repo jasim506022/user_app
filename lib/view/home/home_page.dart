@@ -4,8 +4,10 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+
 import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
+import '../../res/constant/string_constant.dart';
 import '../../res/routes/routes_name.dart';
 
 import '../../widget/product_list_widget.dart';
@@ -59,7 +61,7 @@ class HomePage extends StatelessWidget {
                         height: 15.h,
                       ),
                       RowWidget(
-                        text: "Popular Product",
+                        text: StringConstant.popularProduct,
                         function: () async {
                           if (!(await AppsFunction.verifyInternetStatus())) {
                             Get.toNamed(RoutesName.productPage,
@@ -73,7 +75,7 @@ class HomePage extends StatelessWidget {
                         height: 10.h,
                       ),
                       RowWidget(
-                        text: "Product",
+                        text: StringConstant.product,
                         function: () async {
                           if (!(await AppsFunction.verifyInternetStatus())) {
                             Get.toNamed(RoutesName.productPage,
@@ -107,7 +109,7 @@ class HomePage extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              "Search...........",
+              StringConstant.searchint,
               style: AppsTextStyle.hintTextStyle,
             ),
             const Spacer(),

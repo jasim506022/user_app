@@ -11,7 +11,7 @@ import '../res/cart_funtion.dart';
 import '../res/constant/string_constant.dart';
 import '../res/constants.dart';
 
-import 'cart_product_counter_controller.dart';
+
 import 'profile_controller.dart';
 
 class CartController extends GetxController {
@@ -101,7 +101,7 @@ class CartController extends GetxController {
       cartList.remove(itemToRemove);
 
       try {
-        profileController.updateUserData(map: {"cartlist": cartList});
+        profileController.updateCartItem(map: {"cartlist": cartList});
         AppsFunction.flutterToast(msg: "Item remove Successfully");
 
         sharedPreference!

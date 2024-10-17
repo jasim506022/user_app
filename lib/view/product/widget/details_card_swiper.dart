@@ -19,7 +19,8 @@ class DetailsSwiperWidget extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
-        height: 210.h,
+        height: 200.h,
+        width: .9.sw,
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
             return CachedNetworkImage(

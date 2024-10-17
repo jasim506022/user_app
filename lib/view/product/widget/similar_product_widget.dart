@@ -2,11 +2,13 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/app_colors.dart';
+
 
 import '../../../model/productsmodel.dart';
+import '../../../res/app_colors.dart';
+import '../../../res/app_function.dart';
+import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 
@@ -22,11 +24,13 @@ class SimilarProductWidget extends StatelessWidget {
     bool isCart =
         CartFunctions.separateProductID().contains(productModel.productId);
     return InkWell(
-      onTap: () {
-        Get.offAndToNamed(
-          RoutesName.productDestailsPage,
-          arguments: productModel,
-        );
+      onTap: () async {
+        if (!(await AppsFunction.verifyInternetStatus())) {
+          Get.offAndToNamed(
+            RoutesName.productDestailsPage,
+            arguments: productModel,
+          );
+        }
       },
       child: Container(
         height: 150.h,
@@ -48,17 +52,12 @@ class SimilarProductWidget extends StatelessWidget {
               height: 8.h,
             ),
             FittedBox(
-              child: Text(
-                productModel.productname!,
-                textAlign: TextAlign.justify,
-                style: GoogleFonts.poppins(
-                    color:
-                        isCart ? AppColors.red : Theme.of(context).primaryColor,
-                    fontSize: 13.sp,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
+                child: Text(productModel.productname!,
+                    textAlign: TextAlign.justify,
+                    style: AppsTextStyle.rattingText.copyWith(
+                        color: isCart
+                            ? AppColors.red
+                            : Theme.of(context).primaryColor))),
           ],
         ),
       ),

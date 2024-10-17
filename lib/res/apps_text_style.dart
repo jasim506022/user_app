@@ -24,7 +24,7 @@ class AppsTextStyle {
   static TextStyle get bodyTextStyle => GoogleFonts.poppins(
       color: theme.primaryColor,
       fontWeight: FontWeight.normal,
-      fontSize: 15.sp);
+      fontSize: 14.sp);
 
   static TextStyle get boldBodyTextStyle => GoogleFonts.poppins(
       color: theme.primaryColor, fontWeight: FontWeight.w700, fontSize: 15.sp);
@@ -35,8 +35,18 @@ class AppsTextStyle {
   static TextStyle get largeBoldText => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.bold);
 
-  static TextStyle get largestText => GoogleFonts.roboto(
+  static TextStyle get largeProductFontStyle => GoogleFonts.poppins(
+      color: AppColors.red, fontSize: 18.sp, fontWeight: FontWeight.w800);
+
+  static TextStyle get largestText => GoogleFonts.poppins(
       color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.bold);
+
+  static TextStyle get largestProductText => GoogleFonts.poppins(
+        letterSpacing: 1.2,
+        color: AppColors.red,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w900,
+      );
 
   static TextStyle get titleTextStyle => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.bold);
@@ -96,4 +106,10 @@ class AppsTextStyle {
 
   static TextStyle emptyTestStyle = GoogleFonts.roboto(
       color: AppColors.red, fontSize: 25.sp, fontWeight: FontWeight.bold);
+
+  static TextStyle get rattingText => GoogleFonts.poppins(
+        color: Theme.of(context).hintColor,
+        fontWeight: FontWeight.w600,
+        fontSize: 13.sp,
+      );
 }

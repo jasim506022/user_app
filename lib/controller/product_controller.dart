@@ -43,40 +43,41 @@ class ProductController extends GetxController {
     --cartItemCounter;
   }
 
-  var isCart = false.obs;
-  var counter = 1.obs;
+  var isInCart = false.obs;
+
+  var productItemQuantity = 1.obs;
 
   void resetCounter() {
-    counter = 1.obs;
+    productItemQuantity = 1.obs;
+  }
+
+  incrementOrDecrement({bool? isIncrement = true}) {
+    if (isIncrement!) {
+      productItemQuantity++;
+    } else {
+      if (productItemQuantity.value == 1) {
+        AppsFunction.flutterToast(msg: "The Quantity cannot be less then 1");
+      } else {
+        productItemQuantity--;
+      }
+    }
   }
 
   void checkIsCart({required String productId}) {
-    isCart = CartFunctions.separateProductID().contains(productId).obs;
+    isInCart = CartFunctions.separateProductID().contains(productId).obs;
   }
 
   void addItemToCart({
     required String productId,
     required String sellerId,
   }) {
-    if (!isCart.value) {
+    if (!isInCart.value) {
       CartFunctions.addItemToCartWithSeller(
         productId: productId,
-        productCounter: counter.value,
+        productCounter: productItemQuantity.value,
         seller: sellerId,
       );
-      isCart.value = true;
-    }
-  }
-
-  incrementOrDecrement({bool? isIncrement = true}) {
-    if (isIncrement!) {
-      counter++;
-    } else {
-      if (counter.value == 1) {
-        AppsFunction.flutterToast(msg: "The Quantity cannot be less then 1");
-      } else {
-        counter--;
-      }
+      isInCart.value = true;
     }
   }
 

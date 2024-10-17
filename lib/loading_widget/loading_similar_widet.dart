@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:user_app/res/app_function.dart';
 
-import '../../../res/utils.dart';
+import '../res/utils.dart';
 
 class LoadingSimilierWidget extends StatelessWidget {
   const LoadingSimilierWidget({
@@ -27,26 +28,16 @@ class LoadingSimilierWidget extends StatelessWidget {
             highlightColor: utils.highlightShimmerColor,
             child: Column(
               children: [
-                _buildShimmerTheme(utils, 70),
+                AppsFunction.lineShimmer(utils, 70.h),
                 SizedBox(
                   height: 8.h,
                 ),
-                _buildShimmerTheme(utils, 10),
+                AppsFunction.lineShimmer(utils, 10.h)
               ],
             ),
           ),
         );
       },
-    );
-  }
-
-  Container _buildShimmerTheme(Utils utils, double height) {
-    return Container(
-      height: height,
-      width: 80.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
-          color: utils.widgetShimmerColor),
     );
   }
 }
