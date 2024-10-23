@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
@@ -64,8 +65,8 @@ class MyApp extends StatelessWidget {
           titleTextStyle: GoogleFonts.roboto(
               color:
                   themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold),
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w700),
           centerTitle: true,
         ),
         // Scaffold Background Color
@@ -110,3 +111,8 @@ class MyApp extends StatelessWidget {
     ];
   }
 }
+
+
+/*
+
+*/

@@ -5,6 +5,7 @@ import 'package:user_app/controller/cart_controller.dart';
 import 'package:user_app/controller/order_controller.dart';
 import 'package:user_app/controller/product_controller.dart';
 import 'package:user_app/repository/bill_repository.dart';
+import 'package:user_app/repository/cart_repository.dart';
 import 'package:user_app/repository/order_repository.dart';
 
 import '../controller/forget_password_controller.dart';
@@ -23,7 +24,6 @@ import '../repository/select_image_repository.dart';
 import '../repository/sign_in_repository.dart';
 import '../repository/sign_up_repository.dart';
 import '../repository/splash_repository.dart';
-import '../controller/cart_product_counter_controller.dart';
 import '../controller/category_controller.dart';
 
 class InitialBinding extends Bindings {
@@ -58,6 +58,7 @@ class InitialBinding extends Bindings {
         SignUpController(repository: Get.find<SignUpRepository>()));
 
     Get.lazyPut<ProductReposity>(() => ProductReposity(), fenix: true);
+    Get.lazyPut<CartRepository>(() => CartRepository(), fenix: true);
     Get.lazyPut<AddressRepository>(() => AddressRepository(), fenix: true);
     Get.lazyPut<ProfileRepository>(() => ProfileRepository(), fenix: true);
 
@@ -76,7 +77,9 @@ class InitialBinding extends Bindings {
     //     fenix: true);
 
     Get.lazyPut<CategoryController>(() => CategoryController(), fenix: true);
-    Get.lazyPut<CartController>(() => CartController(), fenix: true);
+    Get.lazyPut<CartController>(
+        () => CartController(repository: Get.find<CartRepository>()),
+        fenix: true);
     Get.lazyPut<BillController>(
         () => BillController(repository: Get.find<BillRepository>()),
         fenix: true);

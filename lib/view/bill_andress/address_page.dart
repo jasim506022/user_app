@@ -94,7 +94,7 @@ class _AddressPageState extends State<AddressPage> {
     } else {
       AppsFunction.confirmationDialog(
         title: "Save Changed?",
-        content: 'do you want to save change?',
+        subTitle: 'do you want to save change?',
         yesFunction: () => Get.back(),
         noFunction: () {
           addressController.clearInputField();

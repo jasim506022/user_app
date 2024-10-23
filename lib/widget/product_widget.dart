@@ -1,4 +1,4 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,8 @@ import '../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
 
 import '../model/productsmodel.dart';
-import '../view/home/widget/product_discount_widget.dart';
+
+import '../view/home/widget/single_popular_widget.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -29,7 +30,8 @@ class ProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
+          Get.toNamed(RoutesName.productDestailsPage,
+              arguments: {"productModel": productModel, "isCart": false});
         }
       },
       child: Card(
@@ -48,7 +50,12 @@ class ProductWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildProductImage(productModel),
+              ProductImageWidget(
+                imageHeith: 90.h,
+                productModel: productModel,
+                height: 100.h,
+                width: 1.sw,
+              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -121,7 +128,7 @@ class ProductWidget extends StatelessWidget {
       ],
     );
   }
-
+/*
   Stack _buildProductImage(ProductModel productModel) {
     return Stack(
       children: [
@@ -146,4 +153,5 @@ class ProductWidget extends StatelessWidget {
       ],
     );
   }
+*/
 }

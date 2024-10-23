@@ -31,8 +31,8 @@ class AddressWidget extends StatelessWidget {
     return Obx(
       () => Container(
         alignment: Alignment.center,
-        height: 85.h,
-        width: MediaQuery.of(context).size.width,
+        height: 120.h,
+        width: 1.sw,
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 13.h),
         decoration: BoxDecoration(
             border: Border.all(

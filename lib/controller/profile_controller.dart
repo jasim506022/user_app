@@ -121,13 +121,22 @@ class ProfileController extends GetxController {
   }
 
   Future<void> signOut() async {
-    await sharedPreference?.setString(StringConstant.imageSharedPreference, "");
-    await sharedPreference?.setString(StringConstant.nameSharedPreference, "");
-    await sharedPreference
-        ?.setStringList(StringConstant.cartListSharedPreference, []);
-    repository.signOut();
-    AppsFunction.flutterToast(msg: "Successfully Signout ");
-    Get.offAllNamed(RoutesName.signPage);
+    try {
+
+     
+      await sharedPreference?.setString(
+          StringConstant.imageSharedPreference, "");
+      await sharedPreference?.setString(
+          StringConstant.nameSharedPreference, "");
+      await sharedPreference
+          ?.setStringList(StringConstant.cartListSharedPreference, []);
+
+      await repository.signOut();
+      AppsFunction.flutterToast(msg: "Successfully Signed Out");
+      Get.offAllNamed(RoutesName.signPage);
+    } catch (e) {
+      AppsFunction.handleException(e);
+    }
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {

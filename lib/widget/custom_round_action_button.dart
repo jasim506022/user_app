@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '../res/app_colors.dart';
+import '../res/apps_text_style.dart';
 
-class RoutesButtonWidget extends StatelessWidget {
-  const RoutesButtonWidget({
+class CustomRoundActionButton extends StatelessWidget {
+  const CustomRoundActionButton({
     super.key,
     required this.title,
     required this.onTap,
@@ -20,21 +21,17 @@ class RoutesButtonWidget extends StatelessWidget {
           backgroundColor:
               MaterialStateProperty.all<Color>(AppColors.greenColor),
           padding: MaterialStateProperty.all<EdgeInsets>(
-              EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.h)),
+              EdgeInsets.symmetric(horizontal: 40.w, vertical: 12.h)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
           ),
         ),
         onPressed: onTap,
         child: Text(
           title,
-          style: GoogleFonts.poppins(
-            color: AppColors.white,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w800,
-          ),
+          style: AppsTextStyle.buttonTextStyle,
         ));
   }
 }

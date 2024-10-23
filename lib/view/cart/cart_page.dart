@@ -1,65 +1,52 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/cart_controller.dart';
-import '../../res/appasset/image_asset.dart';
-import '../../res/apps_text_style.dart';
-import '../../res/cart_funtion.dart';
 import '../../res/app_colors.dart';
-import '../../model/productsmodel.dart';
-import '../../res/routes/routes_name.dart';
-import '../../res/utils.dart';
+import '../../res/appasset/image_asset.dart';
 
+import '../../res/apps_text_style.dart';
 import '../../widget/empty_widget.dart';
-import 'cart_widget.dart';
-import 'dot_line_printer.dart';
-import 'loading_card_widget.dart';
 
-class CartPage extends StatefulWidget {
+import 'widget/cart_summary_widget.dart';
+import 'widget/productg_list_by_seller_widget.dart';
+
+class CartPage extends StatelessWidget {
   const CartPage({super.key});
-  @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  var cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    print("Bangladesh");
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Theme.of(context).brightness));
+
+    var cartController = Get.find<CartController>();
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(title: const Text("Cart Item")),
       body: Obx(() {
-        cartController.setSzeo();
-        if (cartController.shareP.value == 1) {
-          return EmptyWidget(
-            image: ImagesAsset.error,
-            title: "No Cart Avaiable",
-          );
+        cartController.resetTotalAmount();
+
+        if (cartController.cartItemCount.value == 1 ||
+            cartController.cartItemCount.value == 0) {
+          return _buildEmptyCartView();
         } else {
           return Column(
             children: [
               SizedBox(
                 height: 0.6.sh,
-                child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                child: StreamBuilder(
                   stream: cartController.cartSellerSnapshot(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (!snapshot.hasData ||
                         snapshot.data!.docs.isEmpty) {
-                      return EmptyWidget(
-                        image: ImagesAsset.error,
-                        title: 'No User Available',
-                      );
+                      return _buildEmptyCartView();
                     } else if (snapshot.hasError) {
                       return EmptyWidget(
                         image: ImagesAsset.error,
@@ -78,7 +65,7 @@ class _CartPageState extends State<CartPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildSellerName(sellerName),
-                              _buildProductListBySeller(sellerId),
+                              ProductListBySellerWidget(sellerId: sellerId),
                             ],
                           );
                         },
@@ -89,7 +76,7 @@ class _CartPageState extends State<CartPage> {
                   },
                 ),
               ),
-              Expanded(child: _buildBottom(utils, context))
+              const Expanded(child: CartSummaryWidget())
             ],
           );
         }
@@ -97,57 +84,11 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Flexible _buildProductListBySeller(String sellerId) {
-    return Flexible(
-      child: StreamBuilder(
-        stream: cartController.cartproductSnapshot(sellerId: sellerId),
-        builder: (context, productSnashot) {
-          if (productSnashot.connectionState == ConnectionState.waiting) {
-            return ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: (context, itemIndex) {
-                  return const LoadingCardWidget();
-                });
-          } else if (productSnashot.hasData) {
-            return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: productSnashot.data!.docs.length,
-              itemBuilder: (context, itemIndex) {
-                ProductModel productModel = ProductModel.fromMap(
-                    productSnashot.data!.docs[itemIndex].data());
-
-                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                  cartController.setAmount(productModel, itemIndex);
-                });
-                int cartIndex = _getCartIndex(productModel.productId);
-
-                return CardWidget(
-                  productModel: productModel,
-                  itemQunter:
-                      CartFunctions.seperateProductQuantiyList()[cartIndex],
-                  index: itemIndex + 1,
-                );
-              },
-            );
-          }
-          return ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 3,
-              itemBuilder: (context, itemIndex) {
-                return const LoadingCardWidget();
-              });
-        },
-      ),
+  Widget _buildEmptyCartView() {
+    return EmptyWidget(
+      image: ImagesAsset.error,
+      title: "No Cart Available",
     );
-  }
-
-  int _getCartIndex(String? productId) {
-    final productIDs = CartFunctions.separateProductID();
-    return productIDs.indexOf(productId ?? '');
   }
 
   Padding _buildSellerName(sellerName) {
@@ -161,84 +102,6 @@ class _CartPageState extends State<CartPage> {
           style: AppsTextStyle.largestText.copyWith(color: AppColors.red),
         )
       ])),
-    );
-  }
-
-  Container _buildBottom(Utils utils, BuildContext context) {
-    return Container(
-      width: 1.sw,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: utils.bottomTotalBill,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(60.r),
-          topRight: Radius.circular(60.r),
-        ),
-      ),
-      child: Obx(() {
-        final totalAmount = cartController.totalAmount.value;
-        final subTotal = totalAmount + 50; // Fixed delivery amount
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(height: 14.h),
-            _buildAmountRow("Total Amount", totalAmount.toStringAsFixed(2)),
-            _buildAmountRow("Delivery Charge", "50.00"),
-            _buildAmountRow("Carry Bag Charge", "0.00"),
-            SizedBox(height: 8.h),
-            SizedBox(
-              width: 1.sw,
-              child: CustomPaint(
-                painter: DottedLinePainter(),
-              ),
-            ),
-            SizedBox(height: 8.h),
-            _buildAmountRow("Sub Total (BDT)", subTotal.toStringAsFixed(2),
-                isBold: true),
-            SizedBox(height: 20.h),
-            InkWell(
-              onTap: () {
-                Get.toNamed(RoutesName.billPage);
-              },
-              child: Container(
-                height: 40.h,
-                alignment: Alignment.center,
-                width: 1.sw,
-                decoration: BoxDecoration(
-                  color: AppColors.greenColor,
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                child: Text(
-                  "Continue",
-                  style: AppsTextStyle.mediumTextbold
-                      .copyWith(color: AppColors.white),
-                ),
-              ),
-            ),
-            SizedBox(height: 5.h),
-          ],
-        );
-      }),
-    );
-  }
-
-  Row _buildAmountRow(String label, String amount, {bool isBold = false}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label,
-            style: isBold
-                ? AppsTextStyle.mediumTextbold
-                    .copyWith(color: Theme.of(context).primaryColor)
-                : AppsTextStyle.mediumText600
-                    .copyWith(color: Theme.of(context).hintColor)),
-        Text(
-          amount,
-          style: AppsTextStyle.mediumTextbold
-              .copyWith(color: Theme.of(context).primaryColor),
-        ),
-      ],
     );
   }
 }

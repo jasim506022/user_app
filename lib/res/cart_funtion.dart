@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:get/get.dart';
 import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_function.dart';
@@ -67,6 +67,14 @@ class CartFunctions {
 
 // Separete Seller List From CartList
   static List<String> separteSellerListUserList() {
+    return [
+      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+        (item.toString().split(":")[1])
+    ];
+  }
+
+/*
+  static List<String> separteSellerListUserList() {
     List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
     List<String> sellerList = [];
     for (int i = 1; i < userCartList.length; i++) {
@@ -84,6 +92,8 @@ class CartFunctions {
     }
     return sellerList;
   }
+*/
+
 /*
   // Separete Seller List From CartList
   static Set<String> seperateSellerSet() {

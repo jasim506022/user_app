@@ -19,7 +19,7 @@ import '../../view/order/order_page.dart';
 import '../../view/product/product_details_page.dart';
 import '../../view/product/product_page.dart';
 import '../../view/profile/edit_profile_scrren.dart';
-import '../../view/profile/profile_screen.dart';
+import '../../view/profile/profile_page.dart';
 import '../../view/search/search_page.dart';
 import '../../view/splash/onboarding_screen.dart';
 import '../../view/splash/splash_screen.dart';

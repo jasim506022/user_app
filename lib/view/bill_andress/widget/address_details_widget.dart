@@ -75,7 +75,7 @@ class AddressDetailsWidget extends StatelessWidget {
                   onLongPress: () {
                     AppsFunction.confirmationDialog(
                       title: "Confirm Deletion?",
-                      content:
+                      subTitle:
                           'Are you sure you want to delete this item? This action cannot be undone.',
                       yesFunction: () {
                         addressController.deleteAddress(
@@ -116,8 +116,8 @@ class AddressDetailsWidget extends StatelessWidget {
     return Row(
       children: [
         Text("Delivery Address",
-            style:
-                AppsTextStyle.largeBoldText.copyWith(color: AppColors.greenColor)),
+            style: AppsTextStyle.largeBoldText
+                .copyWith(color: AppColors.greenColor)),
         const Spacer(),
         InkWell(
           onTap: () {

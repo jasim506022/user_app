@@ -8,6 +8,8 @@ import 'app_colors.dart';
 class AppsTextStyle {
   static BuildContext get context => Get.context!;
 
+  // Utils utils = Utils(context);
+
   static ThemeData get theme => Theme.of(context);
 
   static TextStyle get appLogoFonts => GoogleFonts.roboto(
@@ -15,11 +17,26 @@ class AppsTextStyle {
       fontSize: 22.sp,
       fontWeight: FontWeight.w900);
 
-  static TextStyle get onBoardTextStyle => GoogleFonts.inter(
-      fontSize: 30.sp, fontWeight: FontWeight.w900, color: AppColors.black);
+  // App Bar TextStyle
+  static TextStyle get titleTextStyle => GoogleFonts.poppins(
+      color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.w700);
+// Sub Title TextStyle
+  static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 14.sp,
+        color: theme.hintColor,
+      );
 
+  // Button TextStyle
   static TextStyle get buttonTextStyle => GoogleFonts.poppins(
       color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 15.sp);
+
+// Large Text Bold
+  static TextStyle get largeBoldText => GoogleFonts.roboto(
+      color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.w800);
+
+  static TextStyle get onBoardTextStyle => GoogleFonts.inter(
+      fontSize: 30.sp, fontWeight: FontWeight.w900, color: AppColors.black);
 
   static TextStyle get bodyTextStyle => GoogleFonts.poppins(
       color: theme.primaryColor,
@@ -31,9 +48,6 @@ class AppsTextStyle {
 
   static TextStyle get largeText => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.w700);
-
-  static TextStyle get largeBoldText => GoogleFonts.roboto(
-      color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.bold);
 
   static TextStyle get largeProductFontStyle => GoogleFonts.poppins(
       color: AppColors.red, fontSize: 18.sp, fontWeight: FontWeight.w800);
@@ -48,8 +62,8 @@ class AppsTextStyle {
         fontWeight: FontWeight.w900,
       );
 
-  static TextStyle get titleTextStyle => GoogleFonts.roboto(
-      color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.bold);
+  // static TextStyle get titleTextStyle => GoogleFonts.roboto(
+  //     color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.bold);
 
   static TextStyle get largeTitleTextStyle => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 22.sp, fontWeight: FontWeight.w900);
@@ -60,11 +74,11 @@ class AppsTextStyle {
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
-        fontSize: 14.sp,
-        color: theme.primaryColor,
-        fontWeight: FontWeight.normal,
-      );
+  // static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
+  //       fontSize: 14.sp,
+  //       color: theme.primaryColor,
+  //       fontWeight: FontWeight.normal,
+  //     );
 
   static TextStyle get textFieldInputTextStyle => GoogleFonts.poppins(
         fontSize: 15.sp,
@@ -76,6 +90,12 @@ class AppsTextStyle {
         fontSize: 14.sp,
         color: AppColors.grey,
         fontWeight: FontWeight.normal,
+      );
+
+  static TextStyle get hintBoldTextStyle => GoogleFonts.poppins(
+        fontSize: 14.sp,
+        color: AppColors.black.withOpacity(.7),
+        fontWeight: FontWeight.w600,
       );
 
   static TextStyle get forgetPasswordTextStyle => GoogleFonts.poppins(
@@ -92,6 +112,9 @@ class AppsTextStyle {
 
   static TextStyle get mediumText600 => GoogleFonts.roboto(
       color: AppColors.red, fontSize: 14.sp, fontWeight: FontWeight.w600);
+
+  static TextStyle get rowTextbold => GoogleFonts.roboto(
+      color: theme.primaryColor, fontSize: 14.sp, fontWeight: FontWeight.bold);
 
   static TextStyle get mediumTextbold => GoogleFonts.roboto(
       color: AppColors.red, fontSize: 14.sp, fontWeight: FontWeight.bold);

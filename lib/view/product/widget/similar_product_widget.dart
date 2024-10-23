@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../../model/productsmodel.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
@@ -14,9 +13,9 @@ import '../../../res/routes/routes_name.dart';
 
 class SimilarProductWidget extends StatelessWidget {
   const SimilarProductWidget({
-    super.key,
+    super.key, required this.isCartBack,
   });
-
+  final bool isCartBack;
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
@@ -28,7 +27,7 @@ class SimilarProductWidget extends StatelessWidget {
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.offAndToNamed(
             RoutesName.productDestailsPage,
-            arguments: productModel,
+            arguments: {"productModel": productModel, "isCart": isCartBack},
           );
         }
       },

@@ -30,7 +30,10 @@ class BillPage extends StatelessWidget {
               icon: const Icon(
                 Icons.arrow_back,
               )),
-          title: const Text("Pay Bill"),
+          title: Text(
+            "Pay Bill",
+            
+          ),
         ),
         body: Obx(
           () => billController.isLoading.value

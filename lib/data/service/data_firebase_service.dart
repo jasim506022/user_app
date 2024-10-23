@@ -162,8 +162,6 @@ class DataFirebaseService implements BaseFirebaseService {
         .collection("seller")
         .where("uid", whereIn: CartFunctions.separteSellerListUserList())
         .snapshots();
-
-    //
   }
 
   @override

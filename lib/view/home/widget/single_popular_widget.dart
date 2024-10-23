@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../../res/app_function.dart';
 import '../../../res/app_colors.dart';
 import '../../../model/productsmodel.dart';
@@ -29,7 +28,8 @@ class SingleProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage, arguments: productModel);
+          Get.toNamed(RoutesName.productDestailsPage,
+              arguments: {"productModel": productModel, "isCart": false});
         }
       },
       child: Padding(
@@ -119,12 +119,36 @@ class SingleProductWidget extends StatelessWidget {
     );
   }
 
-  Stack _buildProductImage(ProductModel productModel) {
+  Widget _buildProductImage(ProductModel productModel) {
+    return ProductImageWidget(
+      productModel: productModel,
+      height: 110.h,
+      width: 110.h,
+      imageHeith: 110.h,
+    );
+  }
+}
+
+class ProductImageWidget extends StatelessWidget {
+  const ProductImageWidget({
+    super.key,
+    required this.productModel,
+    required this.height,
+    required this.width,
+    required this.imageHeith,
+  });
+  final ProductModel productModel;
+  final double height;
+  final double width;
+  final double imageHeith;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          height: 110.h,
-          width: 110.h,
+          height: height,
+          width: width,
           alignment: Alignment.center,
           margin: EdgeInsets.all(10.r),
           padding: EdgeInsets.all(20.r),
@@ -134,7 +158,7 @@ class SingleProductWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.r),
             child: FancyShimmerImage(
-              height: 120.h,
+              height: imageHeith,
               boxFit: BoxFit.contain,
               imageUrl: productModel.productimage![0],
             ),

@@ -24,7 +24,8 @@ class BillController extends GetxController {
   var isSucess = false.obs;
 
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-  var totalAmountController = Get.put(CartController());
+  
+  var totalAmountController = Get.find<CartController>();
   AddressController addressController = Get.find();
 
   BillController({required this.repository});

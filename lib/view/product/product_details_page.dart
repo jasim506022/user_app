@@ -26,8 +26,10 @@ class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var productController = Get.find<ProductController>();
-    ProductModel productModel = Get.arguments;
+    var arguments = Get.arguments;
 
+    ProductModel productModel = arguments["productModel"];
+    bool isCart = arguments["isCart"];
     _setStatusBarStle(context);
 
     productController.resetCounter();
@@ -36,7 +38,11 @@ class ProductDetailsPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {
-        if (!didPop) Get.offAndToNamed(RoutesName.mainPage);
+        if (!didPop) {
+          isCart
+              ? Get.toNamed(RoutesName.cartPage)
+              : Get.offAndToNamed(RoutesName.mainPage);
+        }
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -50,7 +56,9 @@ class ProductDetailsPage extends StatelessWidget {
                 height: 20.h,
               ),
               DetailsPageImageSlideWithCartBridgeWidget(
-                  productModel: productModel),
+                productModel: productModel,
+                isCart: isCart,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
@@ -66,7 +74,10 @@ class ProductDetailsPage extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SimilarProductList(productModel: productModel),
+                    SimilarProductList(
+                      productModel: productModel,
+                      isCart: isCart,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),

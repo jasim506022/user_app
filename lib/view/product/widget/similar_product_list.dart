@@ -13,10 +13,11 @@ import 'similar_product_widget.dart';
 class SimilarProductList extends StatelessWidget {
   const SimilarProductList({
     super.key,
-    required this.productModel,
+    required this.productModel, required this.isCart,
   });
 
   final ProductModel productModel;
+  final bool isCart;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class SimilarProductList extends StatelessWidget {
                       ProductModel.fromMap(snapshot.data!.docs[index].data());
                   return ChangeNotifierProvider.value(
                     value: productModel,
-                    child: const SimilarProductWidget(),
+                    child:  SimilarProductWidget(isCartBack: isCart,),
                   );
                 });
           }

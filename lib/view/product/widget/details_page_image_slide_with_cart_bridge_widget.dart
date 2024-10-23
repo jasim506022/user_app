@@ -15,9 +15,11 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   const DetailsPageImageSlideWithCartBridgeWidget({
     super.key,
     required this.productModel,
+    required this.isCart,
   });
 
   final ProductModel productModel;
+  final bool isCart;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,9 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.back();
+                          isCart
+                              ? Get.toNamed(RoutesName.cartPage)
+                              : Get.back();
                         },
                         child: _buildCircularButton(
                           Icon(
