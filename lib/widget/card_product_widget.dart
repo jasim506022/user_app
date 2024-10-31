@@ -1,17 +1,16 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../model/productsmodel.dart';
 import '../res/app_colors.dart';
 import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
-
+import 'product_image_widget.dart';
 
 class CartProductWidget extends StatelessWidget {
   const CartProductWidget({super.key, required this.quantity});
+
   final int quantity;
 
   @override
@@ -26,7 +25,12 @@ class CartProductWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildProductImage(productModel),
+          ProductImageWidget(
+            height: 100.h,
+            width: 120.w,
+            imageHeith: 110.h,
+            productModel: productModel,
+          ),
           Expanded(
             child: _buildProductDetails(productModel, context),
           )
@@ -35,7 +39,8 @@ class CartProductWidget extends StatelessWidget {
     );
   }
 
-  Padding _buildProductDetails(ProductModel model, BuildContext context) {
+  Padding _buildProductDetails(
+      ProductModel productModel, BuildContext context) {
     return Padding(
       padding:
           EdgeInsets.only(left: 20.w, right: 12.w, top: 15.h, bottom: 15.h),
@@ -45,8 +50,8 @@ class CartProductWidget extends StatelessWidget {
         children: [
           FittedBox(
             child: Text(
-              model.productname!,
-              style: AppsTextStyle.largestText.copyWith(fontSize: 16.sp),
+              productModel.productname!,
+              style: AppsTextStyle.largeBoldText,
             ),
           ),
           SizedBox(
@@ -54,8 +59,8 @@ class CartProductWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Text(model.productunit!.toString(),
-                  style: AppsTextStyle.mediumTextbold.copyWith(
+              Text(productModel.productunit!.toString(),
+                  style: AppsTextStyle.mediumBoldText.copyWith(
                     color: Theme.of(context).hintColor,
                   )),
             ],
@@ -69,71 +74,23 @@ class CartProductWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("$quantity * ",
-                      style: AppsTextStyle.mediumText600
+                      style: AppsTextStyle.mediumNormalText
                           .copyWith(color: AppColors.greenColor)),
                   Text(
-                      "${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble())}",
-                      style: AppsTextStyle.mediumText600.copyWith(
-                          letterSpacing: 1.2, color: AppColors.greenColor)),
+                      "${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+                      style: AppsTextStyle.mediumNormalText
+                          .copyWith(color: AppColors.greenColor)),
                 ],
               ),
               const Spacer(),
               Text(
-                  "= ৳. ${AppsFunction.productPrice(model.productprice!, model.discount!.toDouble()) * quantity}",
-                  style: AppsTextStyle.mediumTextbold.copyWith(
-                    color: AppColors.greenColor,
-                    fontSize: 16.sp,
-                    letterSpacing: 1.2,
-                  )),
+                  "= ৳. ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), quantity)}",
+                  style: AppsTextStyle.largeBoldText
+                      .copyWith(color: AppColors.greenColor)),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  Stack _buildProductImage(ProductModel model) {
-    return Stack(
-      children: [
-        Container(
-          height: 100.h,
-          width: 120.w, //140
-          alignment: Alignment.center,
-          margin: EdgeInsets.all(10.r),
-          padding: EdgeInsets.all(20.r),
-          decoration: BoxDecoration(
-              color: AppColors.cardImageBg,
-              borderRadius: BorderRadius.circular(5.r)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: FancyShimmerImage(
-              height: 110.h,
-              boxFit: BoxFit.contain,
-              imageUrl: model.productimage![0],
-            ),
-          ),
-        ),
-        Positioned(
-          left: 10.w,
-          top: 10.h,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 5.w),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.red, width: .5),
-              borderRadius: BorderRadius.circular(15.r),
-              color: AppColors.lightred.withOpacity(.2),
-            ),
-            child: Text(
-              "${model.discount}% Off",
-              style: GoogleFonts.poppins(
-                color: AppColors.red,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -21,7 +21,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  var profileController = Get.find<ProfileController>();
+  final profileController = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ListView(
               children: [
                 Divider(
-                  height: 10,
+                  height: 10.h,
                   color: Theme.of(context).hintColor,
                   thickness: 2,
                 ),
@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (item['argument'] is int) {
                 Get.offAndToNamed(item['route'], arguments: item['argument']);
               } else {
-                Get.toNamed(item['route'], arguments: item['argument']);
+                Get.toNamed(item['route']);
               }
             }
           },

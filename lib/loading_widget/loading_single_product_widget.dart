@@ -14,7 +14,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       child: Container(

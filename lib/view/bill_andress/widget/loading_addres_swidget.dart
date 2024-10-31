@@ -10,7 +10,7 @@ class LoadingAddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return Container(
       alignment: Alignment.center,
       height: 78.h,

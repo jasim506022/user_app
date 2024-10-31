@@ -57,4 +57,3 @@ class OrderProductSection extends StatelessWidget {
     );
   }
 }
-

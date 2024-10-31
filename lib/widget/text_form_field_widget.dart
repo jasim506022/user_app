@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/apps_text_style.dart';
 
-import '../res/utils.dart';
-
 // ignore: must_be_immutable
 class TextFormFieldWidget extends StatefulWidget {
   TextFormFieldWidget(
@@ -43,7 +41,6 @@ class TextFormFieldWidget extends StatefulWidget {
 class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Get.height * .012),
       child: TextFormField(
@@ -56,13 +53,11 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           obscureText: widget.obscureText!,
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
-          style: AppsTextStyle.textFieldInputTextStyle.copyWith(
-              color: widget.enabled!
-                  ? Theme.of(context).primaryColor
-                  : utils.profileTextColor),
+          style: AppsTextStyle.textFieldInputTextStyle(widget.enabled!),
           decoration: widget.isUdateDecoration!
               ? widget.decoration
               : AppsFunction.textFormFielddecoration(
+                  isEnable: widget.enabled!,
                   hintText: widget.hintText!,
                   isShowPassword: widget.isShowPassword!,
                   obscureText: widget.obscureText!,

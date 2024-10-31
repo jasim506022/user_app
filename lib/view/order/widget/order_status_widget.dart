@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 import '../../../res/app_colors.dart';
 import '../../../res/apps_text_style.dart';
+import 'delivery_card_widget.dart';
 
 class OrderStatusWidget extends StatelessWidget {
   const OrderStatusWidget({
@@ -15,9 +15,7 @@ class OrderStatusWidget extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15.r),
-      color: Theme.of(context).cardColor,
+    return DelivaryCardWidget(
       child: Column(
         children: [
           Image.asset(image, height: 200.h, width: 1.sw),

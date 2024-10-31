@@ -22,6 +22,7 @@ class ProfileRepository {
     }
   }
 
+
   Future<DocumentSnapshot<Map<String, dynamic>>>
       getUserInformationSnapshot() async {
     try {
@@ -31,4 +32,6 @@ class ProfileRepository {
       rethrow;
     }
   }
+
+
 }

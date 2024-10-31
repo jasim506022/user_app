@@ -17,7 +17,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var categoryController = Get.find<CategoryController>();
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return SizedBox(
       height: 40.h,
       width: 1.sw,

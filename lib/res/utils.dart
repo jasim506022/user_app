@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/app_colors.dart';
 
 import '../service/provider/theme_provider.dart';
 
 class Utils {
-  BuildContext context;
-  Utils(this.context);
+  static BuildContext get context => Get.context!;
+
+  static ThemeData get theme => Theme.of(context);
 
   bool get getTheme => Provider.of<ThemeProvider>(context).getDarkTheme;
+  Color get textFeildColor => getTheme
+      ? AppColors.white.withOpacity(.9)
+      : AppColors.black.withOpacity(.1);
+
   Color get getColor => getTheme ? Colors.white : Colors.black;
 
   Color get baseShimmerColor =>
@@ -28,7 +34,7 @@ class Utils {
 
   Color? get green50 => getTheme ? AppColors.cardDarkColor : Colors.green[50];
 
-  Color? get profileTextColor => getTheme ? Colors.white54 : Colors.black54;
+  Color? get profileTextColor => getTheme ? Colors.black87 : Colors.black54;
 
   Color? get bottomTotalBill =>
       getTheme ? AppColors.cardDarkColor : AppColors.greenColor.withOpacity(.1);

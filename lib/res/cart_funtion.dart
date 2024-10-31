@@ -156,34 +156,3 @@ class CartFunctions {
   }
 }
 
-/*
- // List<int> productQuanityList = [];
-    // for (int i = 1; i < userCartList.length; i++) {
-    //   String item = userCartList[i].toString();
-    //   List<String> splitCartList = item.split(":").toList();
-    //   int quatityProduct = int.parse(splitCartList[2].toString());
-    //   productQuanityList.add(quatityProduct);
-    // }
-    // return productQuanityList;
-    */
-
-/*
-  static separateOrderSellerCartList(productIds) {
-    List<String> userCartList = List<String>.from(productIds);
-    List<String> itemSellerDetails = [];
-    for (int i = 1; i < userCartList.length; i++) {
-      String item = userCartList[i].toString();
-      var lastChaterPositionOfItembeforeColon = item.lastIndexOf(":");
-      String getItemId = item.substring(0, lastChaterPositionOfItembeforeColon);
-      var colonAndAfterCharaList = getItemId.split(":").toList();
-      String sellerItemId = colonAndAfterCharaList[1].toString();
-      // var getStringSeller = getItemId.lastIndexOf(":");
-      // String sellerItemId = item.substring(0, getStringSeller);
-      itemSellerDetails.add(sellerItemId);
-    }
-    if (kDebugMode) {
-      print(itemSellerDetails);
-    }
-    return itemSellerDetails;
-  }
-  */

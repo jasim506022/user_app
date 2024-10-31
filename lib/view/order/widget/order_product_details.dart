@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/routes/routes_name.dart';
+import 'package:user_app/view/order/widget/delivery_card_widget.dart';
 import 'package:user_app/view/order/widget/order_item_widget.dart';
 
 import '../../../model/order_model.dart';
@@ -18,9 +18,7 @@ class OrderProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderModel = Provider.of<OrderModel>(context, listen: false);
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-      color: Theme.of(context).cardColor,
+    return DelivaryCardWidget(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -29,8 +27,7 @@ class OrderProductDetails extends StatelessWidget {
             children: [
               Text(
                 "Order ${orderModel.orderId}",
-                style: AppsTextStyle.largeText
-                    .copyWith(color: Theme.of(context).primaryColor),
+                style: AppsTextStyle.largeText,
               ),
               InkWell(
                 onTap: () {
@@ -39,11 +36,8 @@ class OrderProductDetails extends StatelessWidget {
                 },
                 child: Text(
                   "Order Details >",
-                  style: GoogleFonts.roboto(
-                      fontSize: 13,
-                      color: AppColors.red,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold),
+                  style: AppsTextStyle.mediumBoldText
+                      .copyWith(color: AppColors.red),
                 ),
               ),
             ],

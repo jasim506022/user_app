@@ -46,8 +46,10 @@ class OrderStatusListWidget extends StatelessWidget {
               return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
+                  
                   final orderModel =
                       OrderModel.fromMap(snapshot.data!.docs[index].data());
+
                   return ChangeNotifierProvider.value(
                     value: orderModel,
                     child: const OrderItemWidget(isCardDesign: true),

@@ -24,7 +24,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ProductController>();
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return SizedBox(
       height: 320.h,
       width: 1.sw,

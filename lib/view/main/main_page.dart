@@ -7,7 +7,7 @@ import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
 import '../cart/cart_page.dart';
 import '../home/home_page.dart';
-import '../profile/profile_page.dart';
+import '../profile/profile_screen.dart';
 import '../search/search_page.dart';
 
 class MainPage extends StatefulWidget {

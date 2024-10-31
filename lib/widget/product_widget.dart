@@ -14,6 +14,7 @@ import '../../res/app_colors.dart';
 import '../model/productsmodel.dart';
 
 import '../view/home/widget/single_popular_widget.dart';
+import 'product_image_widget.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({

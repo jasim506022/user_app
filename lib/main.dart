@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:user_app/res/apps_text_style.dart';
+
 
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
@@ -54,6 +54,9 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
+        dialogBackgroundColor: themeProvder.getDarkTheme
+            ? AppColors.backgroundDarkColor
+            : AppColors.backgroundLightColor,
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
               color: themeProvder.getDarkTheme

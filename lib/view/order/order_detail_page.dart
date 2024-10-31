@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import 'package:user_app/model/order_model.dart';
 
-
 import '../../res/app_colors.dart';
 
 import '../../res/apps_text_style.dart';
@@ -36,9 +35,15 @@ class OrderSummaryPage extends StatelessWidget {
                 style: AppsTextStyle.largeBoldText
                     .copyWith(color: AppColors.red, fontSize: 20),
               ),
+              SizedBox(
+                height: 10.h,
+              ),
               OrderReceiverDetailsWidget(orderModel: orderModel),
               OrderProductSection(
                 orderModel: orderModel,
+              ),
+              SizedBox(
+                height: 10.h,
               ),
               OrderDetailsWidget(orderModel: orderModel),
               SizedBox(

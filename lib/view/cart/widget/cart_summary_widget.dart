@@ -14,7 +14,7 @@ class CartSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     var cartController = Get.find<CartController>();
     return Container(
       width: 1.sw,

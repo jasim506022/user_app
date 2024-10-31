@@ -10,6 +10,7 @@ import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
+import '../../../widget/product_image_widget.dart';
 import '../../home/widget/single_popular_widget.dart';
 
 class CardWidget extends StatelessWidget {

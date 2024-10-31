@@ -92,7 +92,7 @@ class ProductDetailsPage extends StatelessWidget {
   }
 
   void _setStatusBarStle(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

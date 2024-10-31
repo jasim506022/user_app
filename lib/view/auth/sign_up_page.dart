@@ -157,7 +157,7 @@ class _SignUpPageState extends State<SignUpPage> {
           IntlPhoneField(
             textInputAction: TextInputAction.done,
             controller: signUpController.phontET,
-            style: AppsTextStyle.textFieldInputTextStyle,
+            style: AppsTextStyle.textFieldInputTextStyle(false),
             decoration: AppsFunction.textFormFielddecoration(
                 hintText: "Phone Number", function: () {}),
             languageCode: "en",

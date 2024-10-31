@@ -10,7 +10,7 @@ class LoadingsUserProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return SizedBox(
       height: 50.h,
       width: 1.sw,

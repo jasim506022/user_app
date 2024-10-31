@@ -12,7 +12,7 @@ class LoadingProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return Card(
       color: Theme.of(context).cardColor,
       elevation: 2,

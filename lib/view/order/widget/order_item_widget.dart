@@ -22,14 +22,16 @@ class OrderItemWidget extends StatelessWidget {
     this.sellerId,
   });
   final String? sellerId;
-  final bool? isCardDesign;
+  final bool isCardDesign;
 
   @override
   Widget build(BuildContext context) {
     var orderController = Get.find<OrderController>();
     final orderModel = Provider.of<OrderModel>(context, listen: false);
+
     List<int> separateQuantities =
         CartFunctions.separateOrderItemQuantities(orderModel.productIds);
+
     List<String> listProductID =
         CartFunctions.separteOrderProductIdList(orderModel.productIds);
 
@@ -53,11 +55,11 @@ class OrderItemWidget extends StatelessWidget {
         } else {
           return InkWell(
             onTap: () {
-              if (isCardDesign!) {
+              if (isCardDesign) {
                 Get.toNamed(RoutesName.deliveryScreen, arguments: orderModel);
               }
             },
-            child: isCardDesign!
+            child: isCardDesign
                 ? _buildCardDesign(context, snapshot, separateQuantities)
                 : _buildListView(snapshot, separateQuantities),
           );

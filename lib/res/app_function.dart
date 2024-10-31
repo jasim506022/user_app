@@ -185,13 +185,13 @@ class AppsFunction {
         fontSize: 16.0);
   }
 
-  static void errorDialog(
-      {required String icon,
-      required String title,
-      String? content,
-      String? buttonText,
-      bool? barrierDismissible,
-      bool? checkInternet}) {
+  static void errorDialog({
+    required String icon,
+    required String title,
+    String? content,
+    String? buttonText,
+    bool? barrierDismissible,
+  }) {
     Get.defaultDialog(
         barrierDismissible: barrierDismissible ?? true,
         contentPadding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
@@ -275,9 +275,11 @@ class AppsFunction {
       {bool isShowPassword = false,
       required String hintText,
       bool obscureText = false,
+      bool isEnable = true,
       required Function function}) {
+    Utils utils = Utils();
     return InputDecoration(
-        fillColor: AppColors.searchLightColor,
+        fillColor: isEnable ? AppColors.searchLightColor : utils.textFeildColor,
         filled: true,
         hintText: hintText,
         border: OutlineInputBorder(
@@ -332,3 +334,4 @@ class SimpleButtonWidget extends StatelessWidget {
                 fontSize: 14)));
   }
 }
+

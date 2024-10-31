@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-
 import '../../bindings/on_boarding_binding.dart';
 import '../../bindings/splash_binding.dart';
 import '../../view/auth/forget_password_page.dart';
@@ -18,8 +17,8 @@ import '../../view/order/order_detail_page.dart';
 import '../../view/order/order_page.dart';
 import '../../view/product/product_details_page.dart';
 import '../../view/product/product_page.dart';
-import '../../view/profile/edit_profile_scrren.dart';
-import '../../view/profile/profile_page.dart';
+import '../../view/profile/edit_profile_page.dart';
+import '../../view/profile/profile_screen.dart';
 import '../../view/search/search_page.dart';
 import '../../view/splash/onboarding_screen.dart';
 import '../../view/splash/splash_screen.dart';
@@ -32,13 +31,13 @@ class AppRoutes {
             page: () => const SplashScreen(),
             binding: SplashBinding()),
         GetPage(
-            name: RoutesName.signPage,
-            page: () => const SignInPage(),
-            ),
+          name: RoutesName.signPage,
+          page: () => const SignInPage(),
+        ),
         GetPage(
-            name: RoutesName.signupPage,
-            page: () => const SignUpPage(),
-           ),
+          name: RoutesName.signupPage,
+          page: () => const SignUpPage(),
+        ),
         GetPage(name: RoutesName.mainPage, page: () => const MainPage()),
         GetPage(
             name: RoutesName.onBaordingPage,
@@ -75,11 +74,11 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.editProfileScreen,
-          page: () => const EditProfileScreen(),
+          page: () => const EditProfilePage(),
         ),
         GetPage(
           name: RoutesName.deliveryScreen,
-          page: () => const OrderDeliveryScreen(),
+          page: () => const OrderDeliveryPage(),
         ),
         GetPage(
           name: RoutesName.orderDetailsPage,
@@ -87,11 +86,11 @@ class AppRoutes {
         ),
         GetPage(
           name: RoutesName.orderPage,
-          page: () => const OrderPage(),
+          page: () => const OrderScreen(),
         ),
         GetPage(
           name: RoutesName.historyPage,
-          page: () => const HistoryPage(),
+          page: () => const HistoryScreen(),
         )
       ];
 }

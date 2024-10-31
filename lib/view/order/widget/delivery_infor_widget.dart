@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:user_app/res/app_colors.dart';
 
 import '../../../model/order_model.dart';
-import '../../../res/apps_text_style.dart';
+import 'delivery_card_widget.dart';
+import 'delivery_rich_text_widget.dart';
 import 'order_receiver_details_widget.dart';
 
 class DeliveryInfoWidget extends StatelessWidget {
@@ -18,33 +19,21 @@ class DeliveryInfoWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 1.sw,
-          padding: EdgeInsets.symmetric(vertical: 15.w),
-          decoration: BoxDecoration(color: Theme.of(context).cardColor),
-          child: Text("Delivery Partner: ${orderModel.deliveryPartner}",
-              style: AppsTextStyle.mediumText600
-                  .copyWith(color: Theme.of(context).primaryColor)),
+        DelivaryCardWidget(
+          child: DeliveryRichTextWidget(
+            title: "Delivery Partner:",
+            subTitle: orderModel.deliveryPartner,
+          ),
         ),
         SizedBox(
           height: 10.h,
         ),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Tracking Number : ",
-                style: AppsTextStyle.mediumText600.copyWith(
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              TextSpan(
-                text: orderModel.trackingNumber,
-                style: AppsTextStyle.mediumText600.copyWith(),
-              ),
-            ],
-          ),
-        ),
+        Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: DeliveryRichTextWidget(
+                title: "Tracking Number :",
+                color: AppColors.red,
+                subTitle: orderModel.trackingNumber)),
         SizedBox(
           height: 15.h,
         ),

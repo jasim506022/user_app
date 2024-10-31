@@ -7,8 +7,6 @@ import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/apps_text_style.dart';
 
-
-
 class DeliveryEstimationCard extends StatelessWidget {
   const DeliveryEstimationCard({
     super.key,
@@ -22,25 +20,24 @@ class DeliveryEstimationCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppColors.deepGreen,
           borderRadius: BorderRadius.circular(15.r)),
-      height: 0.25.sh,
+      height: 0.27.sh,
       width: 1.sw,
       padding: EdgeInsets.symmetric(
-        horizontal: 30.w,
+        horizontal: 20.w,
         vertical: 30.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("On The way From Dhaka!", //28
-              style: AppsTextStyle.largestText
-                  .copyWith(color: AppColors.white, fontSize: 28.sp)),
+              style: AppsTextStyle.largeBoldText
+                  .copyWith(color: AppColors.white, fontSize: 24)),
           SizedBox(
-            height: 20.h,
+            height: 10.h,
           ),
           Text("Estimated Delivery Date is",
               style: AppsTextStyle.largeText.copyWith(
                 color: AppColors.white,
-                fontSize: 17.sp,
               )),
           SizedBox(
             height: 20.h,

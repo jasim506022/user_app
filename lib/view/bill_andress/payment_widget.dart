@@ -22,7 +22,7 @@ class PaymentWidgetMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
 
     return Padding(
         padding: EdgeInsets.only(left: 15.w),

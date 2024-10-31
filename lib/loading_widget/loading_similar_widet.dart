@@ -12,7 +12,7 @@ class LoadingSimilierWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return ListView.builder(
       itemCount: 5,
       scrollDirection: Axis.horizontal,

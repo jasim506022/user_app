@@ -27,7 +27,7 @@ class AddressWidget extends StatelessWidget {
     var addressController = Get.put(AddressController(
       Get.find(),
     ));
-    Utils utils = Utils(context);
+    Utils utils = Utils();
     return Obx(
       () => Container(
         alignment: Alignment.center,

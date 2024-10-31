@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../res/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:user_app/res/apps_text_style.dart';
 
 class LoadingWidget extends StatelessWidget {
   const LoadingWidget({super.key, required this.message});
@@ -9,7 +8,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor:AppColors. white,
+      backgroundColor: Theme.of(context).dialogBackgroundColor,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -20,12 +19,13 @@ class LoadingWidget extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(Colors.pinkAccent),
             ),
           ),
+          SizedBox(
+            height: 15.h,
+          ),
           Text(
             "$message \n Pleasing Waiting........",
-            style: GoogleFonts.poppins(
-              color:AppColors. black,
-              fontSize: 20,
-            ),
+            style: AppsTextStyle.titleTextStyle,
+            textAlign: TextAlign.center,
           )
         ],
       ),

@@ -5,6 +5,7 @@ import '../model/app_exception.dart';
 import '../repository/order_repository.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
+import '../widget/error_dialog_widget.dart';
 
 class OrderController extends GetxController {
   OrderRepository orderRepository;
@@ -17,11 +18,14 @@ class OrderController extends GetxController {
       return orderRepository.orderSnapshots(orderStatus: orderStatus);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
+        Get.dialog(
+          ErrorDialogWidget(
             icon: IconAsset.warningIcon,
             title: e.title!,
             content: e.message,
-            buttonText: "Okay");
+            buttonText: "Okay",
+          ),
+        );
       }
       rethrow;
     }
@@ -34,11 +38,14 @@ class OrderController extends GetxController {
           listProductID: listProductID);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
+        Get.dialog(
+          ErrorDialogWidget(
             icon: IconAsset.warningIcon,
             title: e.title!,
             content: e.message,
-            buttonText: "Okay");
+            buttonText: "Okay",
+          ),
+        );
       }
       rethrow;
     }

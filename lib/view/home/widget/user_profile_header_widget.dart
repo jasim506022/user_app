@@ -35,7 +35,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
         (name?.isEmpty ?? true) &&
         (cartList?.isEmpty ?? true)) {
       return FutureBuilder(
-        future: profileController.getUserData(),
+        future: profileController.getUserInformation(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingsUserProfileHeader();

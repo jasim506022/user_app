@@ -9,6 +9,7 @@ import 'package:user_app/data/service/base_firebase_service.dart';
 import 'package:user_app/model/address_model.dart';
 import 'package:user_app/model/productsmodel.dart';
 import 'package:http/http.dart' as http;
+import 'package:user_app/res/constant/string_constant.dart';
 
 import '../../model/profilemodel.dart';
 import '../../res/cart_funtion.dart';
@@ -78,8 +79,13 @@ class DataFirebaseService implements BaseFirebaseService {
   @override
   Future<String> uploadUserImgeUrl({required File file}) async {
     String fileName = "ju_grocery_${DateTime.now().millisecondsSinceEpoch}";
-    Reference storageRef =
-        firebaseStorage.ref().child("UserImage").child(fileName);
+    Reference storageRef = firebaseStorage
+        .ref()
+        .child("UserImage")
+        .child(
+            sharedPreference!.getString(StringConstant.nameSharedPreference)!)
+        .child(firebaseAuth.currentUser!.uid)
+        .child(fileName);
     UploadTask uploadTask = storageRef.putFile(file);
     TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
     return taskSnapshot.ref.getDownloadURL();
@@ -314,4 +320,4 @@ class DataFirebaseService implements BaseFirebaseService {
   }
 }
 
-//{"cartlist": tempList}
+

@@ -1,3 +1,4 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -67,15 +68,17 @@ class ProifleHeaderWidget extends StatelessWidget {
 
   Container _buildProfileImage() {
     return Container(
-      height: .15.sh,
-      width: .15.sh,
-      decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: AppColors.red, width: 3.w)),
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(
-            sharedPreference!.getString(StringConstant.imageSharedPreference)!),
-      ),
-    );
+        height: .15.sh,
+        width: .15.sh,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.red, width: 3.w)),
+        child: ClipOval(
+          child: FancyShimmerImage(
+            imageUrl: sharedPreference!
+                .getString(StringConstant.imageSharedPreference)!,
+            errorWidget: const Icon(Icons.error),
+          ),
+        ));
   }
 }
