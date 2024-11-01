@@ -12,6 +12,7 @@ import '../controller/forget_password_controller.dart';
 import '../controller/loading_controller.dart';
 
 import '../controller/profile_controller.dart';
+import '../controller/search_controller.dart';
 import '../controller/select_image_controller.dart';
 import '../controller/sign_in_controller.dart';
 import '../controller/sign_up_controller.dart';
@@ -86,5 +87,7 @@ class InitialBinding extends Bindings {
     Get.lazyPut<OrderController>(
         () => OrderController(Get.find<OrderRepository>()),
         fenix: true);
+
+    Get.lazyPut<SearchControllers>(() => SearchControllers());
   }
 }

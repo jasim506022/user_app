@@ -1,50 +1,37 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:user_app/widget/text_form_field_widget.dart';
 
-import '../../controller/search_controller.dart';
-import '../../res/app_colors.dart';
-import '../../res/app_function.dart';
+import '../../../controller/search_controller.dart';
+import '../../../res/app_colors.dart';
 
-import '../../res/apps_text_style.dart';
-import '../product/product_page.dart';
-import '../product/widget/drop_down_category_widget.dart';
+import '../../../res/apps_text_style.dart';
+import '../../../widget/custom_round_action_button.dart';
+import '../../product/widget/drop_down_category_widget.dart';
 
 class FilterDialogWidget extends StatelessWidget {
   const FilterDialogWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var searchController = Get.put(SearchControllers());
+    var searchController = Get.find<SearchControllers>();
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
-      backgroundColor: Colors.white,
-      elevation: 8, // You can adjust thi
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: Theme.of(context).cardColor,
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       content: _contentData(searchController, context),
-    );
-  }
-
-  ElevatedButton _buildDialogButton(String title, void Function()? onPressed) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.greenColor,
-          padding: const EdgeInsets.all(5)),
-      onPressed: onPressed,
-      child: Text(title,
-          style: GoogleFonts.roboto(
-              color: AppColors.white,
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w500)),
     );
   }
 
   _contentData(SearchControllers searchController, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(15.r)),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +42,7 @@ class FilterDialogWidget extends StatelessWidget {
               "Filter Search",
               textAlign: TextAlign.center,
               style: AppsTextStyle.largeBoldText
-                  .copyWith(color: AppColors.deepGreen, fontSize: 16.sp),
+                  .copyWith(color: AppColors.deepGreen),
             ),
           ),
           SizedBox(
@@ -74,7 +61,7 @@ class FilterDialogWidget extends StatelessWidget {
           ),
           DropdownCategoryWidget(
             isSearch: true,
-            category: searchController.selectSearchCategory.value,
+            category: searchController.selectedCategory.value,
             onChanged: (category) {
               searchController.setCategory(category!);
             },
@@ -95,7 +82,7 @@ class FilterDialogWidget extends StatelessWidget {
       children: [
         TextButton(
             onPressed: () {
-              searchController.setFilter(false);
+              searchController.isFilterEnabled.value = false;
               searchController
                 ..setCategory("All")
                 ..maxPriceTEC.text = "10000.0"
@@ -108,22 +95,21 @@ class FilterDialogWidget extends StatelessWidget {
             )),
         Row(
           children: [
-            _buildDialogButton(
-              'Close',
-              () {
-                Get.back();
-              },
+            CustomRoundActionButton(
+              horizontal: 10.w,
+              title: 'Close',
+              onTap: () => Get.back(),
             ),
             SizedBox(
               width: 10.w,
             ),
-            _buildDialogButton(
-              'Save',
-              () {
+            CustomRoundActionButton(
+              title: 'Save',
+              horizontal: 10.w,
+              onTap: () {
                 FocusScope.of(context).unfocus();
                 searchController.searchTextTEC.text = "";
-                searchController.filterListAddProduct();
-
+                searchController.applyPriceFilter();
                 Get.back();
               },
             )
@@ -143,28 +129,21 @@ class FilterDialogWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            _buildPriceTextField(
-                controller: searchController.minPriceTEC, hintText: "Minium"),
+            Expanded(
+                child: TextFormFieldWidget(
+                    hintText: "Minium",
+                    controller: searchController.minPriceTEC)),
             SizedBox(
               width: 15.w,
             ),
-            _buildPriceTextField(
-                controller: searchController.maxPriceTEC, hintText: "Maximum"),
+            Expanded(
+              child: TextFormFieldWidget(
+                  controller: searchController.maxPriceTEC,
+                  hintText: "Maximum"),
+            ),
           ],
         ),
       ],
     );
-  }
-
-  Expanded _buildPriceTextField(
-      {required TextEditingController controller, required String hintText}) {
-    return Expanded(
-        child: TextFormFieldWidget(
-      controller: controller,
-      isUdateDecoration: true,
-      decoration: AppsFunction.inputDecoration(
-        hint: hintText,
-      ),
-    ));
   }
 }

@@ -20,7 +20,8 @@ class TextFormFieldWidget extends StatefulWidget {
       this.onChanged,
       this.validator,
       this.isUdateDecoration = false,
-      this.decoration});
+      this.decoration,
+      this.style});
   final String? hintText;
   final TextEditingController controller;
   final bool? autofocus;
@@ -34,6 +35,7 @@ class TextFormFieldWidget extends StatefulWidget {
   final Function(String)? onChanged;
   final bool? isUdateDecoration;
   final InputDecoration? decoration;
+  final TextStyle? style;
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
 }
@@ -53,7 +55,8 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           obscureText: widget.obscureText!,
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
-          style: AppsTextStyle.textFieldInputTextStyle(widget.enabled!),
+          style: widget.style ??
+              AppsTextStyle.textFieldInputTextStyle(widget.enabled!),
           decoration: widget.isUdateDecoration!
               ? widget.decoration
               : AppsFunction.textFormFielddecoration(

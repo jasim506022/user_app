@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:user_app/res/app_function.dart';
-import 'package:user_app/widget/text_form_field_widget.dart';
 
 import '../../controller/search_controller.dart';
-import '../../res/app_colors.dart';
 import '../../model/productsmodel.dart';
-import '../../res/appasset/image_asset.dart';
-import '../../widget/empty_widget.dart';
+
 import '../../loading_widget/loading_list_product_widget.dart';
-import '../../widget/product_widget.dart';
-import 'filter_dialog_widget.dart';
+
+import 'widget/search_bar_widget.dart';
+import 'widget/search_product_grid_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -23,7 +18,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  var searchController = Get.put(SearchControllers());
+  var searchController = Get.find<SearchControllers>();
+  @override
+  void initState() {
+    searchController.searchTextTEC.text = "";
+    searchController.setCategory("All");
+    searchController.minPriceTEC.text = "0.00";
+    searchController.maxPriceTEC.text = "10000.00";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Column(
             children: [
-              _buildSearchBar(),
+              const SearchBarWidget(),
               _buildProductGrid(),
             ],
           ),
@@ -59,79 +62,13 @@ class _SearchPageState extends State<SearchPage> {
                   .map((e) => ProductModel.fromMap(e.data()))
                   .toList();
 
-              return _buildProductGridContent();
+              return SearchProductGridWidget(
+                  searchController: searchController);
             }
 
             return const LoadingListProductWidget();
           },
         ),
-      ),
-    );
-  }
-
-  Obx _buildProductGridContent() {
-    return Obx(() {
-      final productList = searchController.isFilter.value &&
-              searchController.searchTextTEC.text.isEmpty
-          ? searchController.filterProductList
-          : searchController.isSearch.value &&
-                  searchController.searchTextTEC.text.isNotEmpty
-              ? searchController.searchProductList
-              : searchController.allProductList;
-
-      if (productList.isEmpty) {
-        return EmptyWidget(
-          image: ImagesAsset.error,
-          title: 'No Data Available',
-        );
-      }
-
-      return GridView.builder(
-        itemCount: productList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: .78,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8),
-        itemBuilder: (context, index) {
-          return ChangeNotifierProvider.value(
-            value: productList[index],
-            child: const ProductWidget(),
-          );
-        },
-      );
-    });
-  }
-
-  SizedBox _buildSearchBar() {
-    return SizedBox(
-      height: 0.1.sh,
-      width: 1.sw,
-      child: Row(
-        children: [
-          Flexible(
-              flex: 4,
-              child: TextFormFieldWidget(
-                isUdateDecoration: true,
-                decoration: AppsFunction.inputDecoration(
-                  hint: "Search Product Here",
-                ),
-                controller: searchController.searchTextTEC,
-                autofocus: false,
-                onChanged: (text) {
-                  searchController.updateProductList(text);
-                },
-              )),
-          IconButton(
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-                Get.dialog(const FilterDialogWidget());
-              },
-              icon: Icon(
-                FontAwesomeIcons.sliders,
-                color: AppColors.greenColor,
-              ))
-        ],
       ),
     );
   }

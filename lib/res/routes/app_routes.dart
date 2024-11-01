@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../bindings/on_boarding_binding.dart';
+import '../../bindings/search_binding.dart';
 import '../../bindings/splash_binding.dart';
 import '../../view/auth/forget_password_page.dart';
 import '../../view/auth/sign_in_page.dart';
@@ -47,7 +48,10 @@ class AppRoutes {
             name: RoutesName.forgetPassword,
             page: () => const ForgetPasswordPage()),
         GetPage(name: RoutesName.cartPage, page: () => const CartPage()),
-        GetPage(name: RoutesName.searchPage, page: () => const SearchPage()),
+        GetPage(
+            name: RoutesName.searchPage,
+            page: () => const SearchPage(),
+            binding: SearchBinding()),
         GetPage(
           name: RoutesName.productPage,
           page: () => const ProductPage(),
