@@ -19,10 +19,10 @@ class AddCartItemFloatWidget extends StatelessWidget {
     var productController = Get.find<ProductController>();
     return Obx(
       () => FloatingActionButton.extended(
-        backgroundColor: productController.isInCart.value
+        backgroundColor: productController.isProductInCart.value
             ? AppColors.red
             : AppColors.greenColor,
-        onPressed: productController.isInCart.value
+        onPressed: productController.isProductInCart.value
             ? () => AppsFunction.flutterToast(msg: "Item is already in cart")
             : () async {
                 if (!(await AppsFunction.verifyInternetStatus())) {
@@ -37,7 +37,7 @@ class AddCartItemFloatWidget extends StatelessWidget {
           color: AppColors.white,
         ),
         label: Text(
-          productController.isInCart.value
+          productController.isProductInCart.value
               ? StringConstant.itemAlreadyInCart
               : StringConstant.addToCart,
           style: AppsTextStyle.buttonTextStyle,

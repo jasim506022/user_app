@@ -26,7 +26,7 @@ class ProductDiscountWidget extends StatelessWidget {
         ),
         child: Text(
           "$discount% Off",
-          style: AppsTextStyle.smallText.copyWith(
+          style: AppsTextStyle.smallBoldText.copyWith(
             color: AppColors.red,
           ),
         ),

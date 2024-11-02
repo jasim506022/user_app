@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:get/get.dart';
 import 'package:user_app/controller/product_controller.dart';
 
@@ -16,33 +16,33 @@ import 'profile_controller.dart';
 
 class CartController extends GetxController {
   CartRepository repository;
+
   var profileController = Get.find<ProfileController>();
 
   CartController({required this.repository});
-  var cartItemCount = 0.obs;
-  // var shareP = 0.obs;
+  var cartItemCounter = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-
-    // if (sharedPreference!
-    //         .getStringList(StringConstant.cartListSharedPreference)!
-    //         .length >
-    //     1) {
-    //   shareP.value = sharedPreference!
-    //       .getStringList(StringConstant.cartListSharedPreference)!
-    //       .length;
-    // }
-    _initializeCartItemCount();
+    initializeCartItemCount();
   }
 
-  void _initializeCartItemCount() {
+  void initializeCartItemCount() {
     final cartList = sharedPreference
         ?.getStringList(StringConstant.cartListSharedPreference);
     if (cartList != null && cartList.isNotEmpty) {
-      cartItemCount.value = cartList.length;
+      cartItemCounter.value = cartList.length - 1;
     }
+  }
+
+  int get itemCount => cartItemCounter.value;
+  incrementCartItem() {
+    ++cartItemCounter;
+  }
+
+  decrementCartItem() {
+    --cartItemCounter;
   }
 
   var totalAmount = 0.0.obs;
@@ -74,15 +74,13 @@ class CartController extends GetxController {
             content: e.message,
             buttonText: "Okay");
 
-        if (cartItemCount.value == 1) {
+        if (cartItemCounter.value == 1) {
           Get.back();
         }
       }
       rethrow;
     }
   }
-
-  //
 
   Stream<QuerySnapshot<Map<String, dynamic>>> cartproductSnapshot(
       {required String sellerId}) {
@@ -103,7 +101,7 @@ class CartController extends GetxController {
   }
 
   void removeProductFromCart({required String productId}) async {
-    print(cartItemCount.value);
+    print(cartItemCounter.value);
     List<String> cartList = sharedPreference!
         .getStringList(StringConstant.cartListSharedPreference)!;
 
@@ -116,7 +114,7 @@ class CartController extends GetxController {
       cartList.remove(itemToRemove);
 
       try {
-        profileController.updateCartItem(map: {"cartlist": cartList});
+        profileController.updateUserCartData(map: {"cartlist": cartList});
         AppsFunction.flutterToast(msg: "Item remove Successfully");
 
         sharedPreference!
@@ -126,16 +124,17 @@ class CartController extends GetxController {
         CartFunctions.seperateProductQuantiyList();
 
         // var controller = Get.put(CartProductCountController());
-        var controller = Get.find<ProductController>();
-        controller.decrementCartItem(); //
 
-        --cartItemCount.value;
-        if (cartItemCount.value != 0) {
+        // var controller = Get.find<ProductController>();
+        // controller.decrementCartItem();
+
+        --cartItemCounter.value;
+        if (cartItemCounter.value != 0) {
           print("Bangladesh");
           cartSellerSnapshot();
         }
       } catch (e) {
-        print(cartItemCount.value);
+        print(cartItemCounter.value);
         AppsFunction.flutterToast(msg: e.toString());
       }
     } else {

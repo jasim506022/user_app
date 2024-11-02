@@ -1,35 +1,38 @@
-
 import 'package:get/get.dart';
-import 'package:user_app/controller/profile_controller.dart';
-import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/constant/string_constant.dart';
 
 import 'package:user_app/res/constants.dart';
 
-import '../controller/product_controller.dart';
+import '../controller/cart_controller.dart';
+import '../controller/profile_controller.dart';
+import 'app_function.dart';
+import 'constant/string_constant.dart';
 
 class CartFunctions {
-  static void addItemToCartWithSeller({
+
+
+  static void addItemToCart({
     required String productId,
-    required int productCounter,
-    required String seller,
+    required int quantity,
+    required String sellerId,
   }) {
-    List<String> tempList = sharedPreference!
+    List<String> cartItems = sharedPreference!
             .getStringList(StringConstant.cartListSharedPreference) ??
         [];
-    tempList.add("$productId:$seller:$productCounter");
+    String itemEntry = "$productId:$sellerId:$quantity";
 
-    var productController = Get.find<ProductController>();
-    var profileController = Get.find<ProfileController>();
+    cartItems.add(itemEntry);
 
-    profileController.updateCartItem(map: {"cartlist": tempList});
+    Get.find<ProfileController>()
+        .updateUserCartData(map: {"cartlist": cartItems});
     AppsFunction.flutterToast(msg: "Item Add Successfully");
 
     sharedPreference!
-        .setStringList(StringConstant.cartListSharedPreference, tempList);
+        .setStringList(StringConstant.cartListSharedPreference, cartItems);
 
-    productController.incrementCartItem();
+    Get.find<CartController>().incrementCartItem();
   }
+
+
 
   static void clearCart() {
     sharedPreference!.setStringList("cartlist", ["initial"]);
@@ -41,7 +44,7 @@ class CartFunctions {
         .doc(sharedPreference!.getString("uid")!)
 */
     var profileController = Get.find<ProfileController>();
-    profileController.updateCartItem(map: {"cartlist": emptyCart});
+    profileController.updateUserCartData(map: {"cartlist": emptyCart});
     AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
     // FirebaseDatabase.currentUserSnaphots()
     //     .update({"cartlist": emptyCart}).then((value) {
@@ -63,6 +66,19 @@ class CartFunctions {
       for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
         int.parse(item.toString().split(":")[2])
     ];
+  }
+
+  //[2,3,4]
+  // Separet Product Quantity List From CartList
+  static int productQuantiyList(String prodductId) {
+    List<String> list =
+        sharedPreference!.getStringList("cartlist")!.skip(1).toList();
+
+    String? matchingItem = list.firstWhere(
+      (element) => element.contains(prodductId),
+    );
+
+    return int.parse(matchingItem.split(":")[2]);
   }
 
 // Separete Seller List From CartList
@@ -155,4 +171,3 @@ class CartFunctions {
     ];
   }
 }
-

@@ -31,8 +31,8 @@ class CartPage extends StatelessWidget {
       body: Obx(() {
         cartController.resetTotalAmount();
 
-        if (cartController.cartItemCount.value == 1 ||
-            cartController.cartItemCount.value == 0) {
+        if (cartController.cartItemCounter.value == 1 ||
+            cartController.cartItemCounter.value == 0) {
           return _buildEmptyCartView();
         } else {
           return Column(

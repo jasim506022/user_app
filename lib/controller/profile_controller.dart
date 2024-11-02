@@ -38,9 +38,9 @@ class ProfileController extends GetxController {
 
   ProfileController({required this.repository});
 
-  updateCartItem({required Map<String, dynamic> map}) {
+  Future<void> updateUserCartData({required Map<String, dynamic> map}) async {
     try {
-      repository.updateUserData(map: map);
+      await repository.updateUserData(map: map);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -117,7 +117,6 @@ class ProfileController extends GetxController {
     );
   }
 
-
   void addChangeListener() {
     final controllers = [
       nameTEC,
@@ -150,11 +149,9 @@ class ProfileController extends GetxController {
     }
   }
 
-
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserInformation() async {
     return await repository.getUserInformationSnapshot();
   }
-
 
   Future<void> getUserInformationSnapshot() async {
     try {
@@ -180,7 +177,6 @@ class ProfileController extends GetxController {
     }
   }
 
-
   Future<void> _saveProfileToSharedPreferences(ProfileModel profile) async {
     final prefsTasks = [
       sharedPreference!
@@ -198,7 +194,6 @@ class ProfileController extends GetxController {
     ];
     await Future.wait(prefsTasks);
   }
-
 
   void _updateTextControllers() {
     nameTEC.text = profileModel.value.name ?? '';

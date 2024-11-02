@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:user_app/view/product/product_page.dart';
 import '../../controller/network_controller.dart';
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
@@ -25,7 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   late List<Widget> widgetOptions = [
     const HomePage(),
-    const CartPage(),
+    const ProductPage(),
     const SearchPage(),
     const ProfileScreen(),
   ];
@@ -64,9 +65,9 @@ class _MainPageState extends State<MainPage> {
                 activeIcon: Icons.home,
                 title: "Home"),
             _buildBottomBarItem(
-                icon: Icons.favorite_border_outlined,
-                activeIcon: Icons.favorite_border,
-                title: "Likes"),
+                icon: Icons.list_outlined,
+                activeIcon: Icons.list,
+                title: "Products"),
             _buildBottomBarItem(
                 icon: Icons.search_outlined,
                 activeIcon: Icons.search,

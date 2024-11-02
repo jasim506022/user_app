@@ -13,7 +13,8 @@ import '../../../res/routes/routes_name.dart';
 
 class SimilarProductWidget extends StatelessWidget {
   const SimilarProductWidget({
-    super.key, required this.isCartBack,
+    super.key,
+    required this.isCartBack,
   });
   final bool isCartBack;
   @override

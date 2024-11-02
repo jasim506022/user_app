@@ -3,27 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/utils.dart';
 
-import '../../../controller/product_controller.dart';
+import '../../../controller/cart_controller.dart';
+
 import '../../../model/productsmodel.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/cart_badge.dart';
-import 'details_card_swiper.dart';
+import 'details_image_swiper_widget.dart';
 
 class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   const DetailsPageImageSlideWithCartBridgeWidget({
     super.key,
     required this.productModel,
-    required this.isCart,
+    this.backCart = false,
   });
 
   final ProductModel productModel;
-  final bool isCart;
+  final bool backCart;
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<ProductController>();
     Utils utils = Utils();
     return SizedBox(
       height: 320.h,
@@ -82,7 +82,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          isCart
+                          backCart
                               ? Get.toNamed(RoutesName.cartPage)
                               : Get.back();
                         },
@@ -104,14 +104,14 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                             Obx(
                               () => CartBadge(
                                 color: AppColors.white,
-                                itemCount: controller.itemCount,
+                                itemCount: Get.find<CartController>().itemCount,
                                 icon: Icons.shopping_cart,
                               ),
                             ),
                           ))
                     ],
                   ),
-                  DetailsSwiperWidget(productModel: productModel),
+                  DetailsImageSwiperWidget(productModel: productModel),
                   SizedBox(
                     height: 15.h,
                   ),

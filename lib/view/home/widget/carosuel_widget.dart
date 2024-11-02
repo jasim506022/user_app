@@ -41,7 +41,7 @@ class CarouselWidget extends StatelessWidget {
             children: [
               TextSpan(
                 text: "Cold Process",
-                style: AppsTextStyle.bodyTextStyle.copyWith(
+                style: AppsTextStyle.mediumNormalText.copyWith(
                   letterSpacing: .9,
                 ),
               ),

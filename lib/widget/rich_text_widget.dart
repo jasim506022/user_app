@@ -22,7 +22,7 @@ class RichTextWidget extends StatelessWidget {
         text: TextSpan(children: [
       TextSpan(
         text: simpleText,
-        style: AppsTextStyle.bodyTextStyle,
+        style: AppsTextStyle.mediumBoldText,
       ),
       TextSpan(
           recognizer: TapGestureRecognizer()

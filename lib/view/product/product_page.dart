@@ -12,7 +12,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPopular = Get.arguments;
+    bool? isPopular = (Get.arguments is bool) ? Get.arguments as bool : false;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -23,7 +24,7 @@ class ProductPage extends StatelessWidget {
           IconButton(
             onPressed: () async {
               if (!(await AppsFunction.verifyInternetStatus())) {
-                Get.toNamed(RoutesName.mainPage, arguments: 2);
+                Get.offAllNamed(RoutesName.mainPage, arguments: 2);
               }
             },
             icon: Icon(

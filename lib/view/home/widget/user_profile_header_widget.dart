@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/controller/cart_controller.dart';
 
 import '../../../controller/product_controller.dart';
 import '../../../controller/profile_controller.dart';
@@ -23,7 +24,8 @@ class UserProfileHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController profileController = Get.find();
-    var productController = Get.find<ProductController>();
+    // var productController = Get.find<ProductController>();
+    var cartController = Get.find<CartController>();
     String? imageUrl =
         sharedPreference?.getString(StringConstant.imageSharedPreference);
     String? name =
@@ -43,7 +45,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
             var data = snapshot.data!.data();
             if (data != null) {
               var profileModel = ProfileModel.fromMap(data);
-              productController.updateCartItemCount();
+              cartController.initializeCartItemCount();
               return _buildUserProfileHeader(
                   image: profileModel.imageurl!, name: profileModel.name!);
             }
@@ -107,11 +109,11 @@ class UserProfileHeaderWidget extends StatelessWidget {
               Get.toNamed(RoutesName.cartPage);
             }
           }, child: Obx(() {
-            var productController = Get.find<ProductController>();
+            var cartController = Get.find<CartController>();
 
             return CartBadge(
                 color: AppColors.greenColor,
-                itemCount: productController.itemCount,
+                itemCount: cartController.itemCount,
                 icon: Icons.shopping_bag);
           })),
           SizedBox(

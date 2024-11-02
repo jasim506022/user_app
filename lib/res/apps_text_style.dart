@@ -20,6 +20,7 @@ class AppsTextStyle {
   // App Bar TextStyle
   static TextStyle get titleTextStyle => GoogleFonts.poppins(
       color: theme.primaryColor, fontSize: 18.sp, fontWeight: FontWeight.w700);
+
 // Sub Title TextStyle
   static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
         fontWeight: FontWeight.w600,
@@ -42,6 +43,10 @@ class AppsTextStyle {
   static TextStyle get largeBoldText => GoogleFonts.poppins(
       color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.w800);
 
+  // Large Text Bold
+  static TextStyle get largeBoldRedText => GoogleFonts.poppins(
+      color: AppColors.red, fontSize: 18.sp, fontWeight: FontWeight.w800);
+
 // text Field Input Text
   static TextStyle textFieldInputTextStyle([bool isEnable = false]) =>
       GoogleFonts.poppins(
@@ -49,14 +54,14 @@ class AppsTextStyle {
         color: isEnable ? AppColors.black : AppColors.black.withOpacity(.8),
         fontWeight: isEnable ? FontWeight.w600 : FontWeight.w800,
       );
-// OnBoarding 
+// OnBoarding
   static TextStyle get onBoardTextStyle => GoogleFonts.inter(
       fontSize: 30.sp, fontWeight: FontWeight.w900, color: AppColors.black);
 
-  static TextStyle get bodyTextStyle => GoogleFonts.poppins(
-      color: theme.primaryColor,
-      fontWeight: FontWeight.normal,
-      fontSize: 14.sp);
+  // static TextStyle get bodyTextStyle => GoogleFonts.poppins(
+  //     color: theme.primaryColor,
+  //     fontWeight: FontWeight.normal,
+  //     fontSize: 14.sp);
 
   static TextStyle get boldBodyTextStyle => GoogleFonts.poppins(
       color: theme.primaryColor, fontWeight: FontWeight.w700, fontSize: 15.sp);
@@ -64,8 +69,8 @@ class AppsTextStyle {
   static TextStyle get largeText => GoogleFonts.roboto(
       color: theme.primaryColor, fontSize: 16.sp, fontWeight: FontWeight.w700);
 
-  static TextStyle get largeProductFontStyle => GoogleFonts.poppins(
-      color: AppColors.red, fontSize: 18.sp, fontWeight: FontWeight.w800);
+  // static TextStyle get largeProductFontStyle => GoogleFonts.poppins(
+  //     color: AppColors.red, fontSize: 18.sp, fontWeight: FontWeight.w800);
 
 // Larget Text
   static TextStyle get largestText => GoogleFonts.poppins(
@@ -129,7 +134,8 @@ class AppsTextStyle {
   static TextStyle get mediumTextbold => GoogleFonts.roboto(
       color: AppColors.red, fontSize: 14.sp, fontWeight: FontWeight.bold);
 
-  static TextStyle get smallText => GoogleFonts.roboto(
+// Small Bold Text
+  static TextStyle get smallBoldText => GoogleFonts.poppins(
       color: theme.primaryColor, fontSize: 12.sp, fontWeight: FontWeight.w700);
 
   static TextStyle get smallestText => GoogleFonts.roboto(

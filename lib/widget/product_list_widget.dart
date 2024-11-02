@@ -16,15 +16,14 @@ class ProductListWidget extends StatelessWidget {
     this.isScroll = true,
   });
 
-  final bool? isPopular;
-  final bool? isScroll;
+  final bool isPopular;
+  final bool isScroll;
 
   @override
   Widget build(BuildContext context) {
     var productController = Get.find<ProductController>();
-
     return Obx(() => StreamBuilder(
-          stream: isPopular!
+          stream: isPopular
               ? productController.popularProductSnapshot()
               : productController.productSnapshots(),
           builder: (context, snapshot) {
@@ -44,7 +43,7 @@ class ProductListWidget extends StatelessWidget {
             if (snapshot.hasData) {
               return GridView.builder(
                 shrinkWrap: true,
-                physics: isScroll!
+                physics: isScroll
                     ? const AlwaysScrollableScrollPhysics()
                     : const NeverScrollableScrollPhysics(),
                 itemCount: snapshot.data!.docs.length,

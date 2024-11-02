@@ -119,31 +119,29 @@ class DataFirebaseService implements BaseFirebaseService {
 
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
-          {required String category}) =>
-      category == "All"
-          ? firebaseFirestore
-              .collection("products")
-              .where("productrating", isGreaterThan: 3.5)
-              .snapshots()
-          : firebaseFirestore
-              .collection("products")
-              .where("productcategory", isEqualTo: category)
-              .where("productrating", isGreaterThan: 3.5)
-              .snapshots();
+      {required String category}) {
+    var collectionRef = firebaseFirestore.collection("products");
+    var query = collectionRef.where("productrating", isGreaterThan: 3.5);
+
+    if (category != "All") {
+      query = query.where("productcategory", isEqualTo: category);
+    }
+
+    return query.snapshots();
+  }
 
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-          {required String category}) =>
-      category == "All"
-          ? firebaseFirestore
-              .collection("products")
-              .orderBy("publishDate", descending: true)
-              .snapshots()
-          : firebaseFirestore
-              .collection("products")
-              .where("productcategory", isEqualTo: category)
-              .orderBy("publishDate", descending: true)
-              .snapshots();
+      {required String category}) {
+    var collectionRef = firebaseFirestore.collection("products");
+    var query = collectionRef.orderBy("publishDate", descending: true);
+
+    if (category != "All") {
+      query = query.where("productcategory", isEqualTo: category);
+    }
+
+    return query.snapshots();
+  }
 
   @override
   Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
@@ -319,5 +317,3 @@ class DataFirebaseService implements BaseFirebaseService {
     firebaseAuth.signOut();
   }
 }
-
-

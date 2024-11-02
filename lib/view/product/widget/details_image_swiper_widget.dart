@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../res/app_colors.dart';
 import '../../../model/productsmodel.dart';
 
-class DetailsSwiperWidget extends StatelessWidget {
-  const DetailsSwiperWidget({
+class DetailsImageSwiperWidget extends StatelessWidget {
+  const DetailsImageSwiperWidget({
     super.key,
     required this.productModel,
   });

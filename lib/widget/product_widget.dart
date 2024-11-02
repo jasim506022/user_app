@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ import '../../res/app_colors.dart';
 
 import '../model/productsmodel.dart';
 
-import '../view/home/widget/single_popular_widget.dart';
 import 'product_image_widget.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -32,7 +30,7 @@ class ProductWidget extends StatelessWidget {
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.toNamed(RoutesName.productDestailsPage,
-              arguments: {"productModel": productModel, "isCart": false});
+              arguments: {"productModel": productModel, "isCartBack": false});
         }
       },
       child: Card(

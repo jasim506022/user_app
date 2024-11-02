@@ -9,8 +9,7 @@ import '../repository/product_reposity.dart';
 import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/cart_funtion.dart';
-import '../res/constant/string_constant.dart';
-import '../res/constants.dart';
+
 import 'category_controller.dart';
 
 class ProductController extends GetxController {
@@ -19,40 +18,16 @@ class ProductController extends GetxController {
   final ProductReposity repository;
   ProductController({required this.repository});
 
-  @override
-  void onInit() {
-    updateCartItemCount();
-    super.onInit();
-  }
-
-  // Cart Item Counter
-  var cartItemCounter = 0.obs;
-  void updateCartItemCount() {
-    cartItemCounter.value = (sharedPreference!
-            .getStringList(StringConstant.cartListSharedPreference)!
-            .length) -
-        1;
-  }
-
-  int get itemCount => cartItemCounter.value;
-  incrementCartItem() {
-    ++cartItemCounter;
-  }
-
-  decrementCartItem() {
-    --cartItemCounter;
-  }
-
-  var isInCart = false.obs;
+  var isProductInCart = false.obs;
 
   var productItemQuantity = 1.obs;
 
-  void resetCounter() {
+  void resetQuantity() {
     productItemQuantity = 1.obs;
   }
 
-  incrementOrDecrement({bool? isIncrement = true}) {
-    if (isIncrement!) {
+  void updateQuantity({bool isIncrement = true}) {
+    if (isIncrement) {
       productItemQuantity++;
     } else {
       if (productItemQuantity.value == 1) {
@@ -63,22 +38,21 @@ class ProductController extends GetxController {
     }
   }
 
-  void checkIsCart({required String productId}) {
-    isInCart = CartFunctions.separateProductID().contains(productId).obs;
+  void verifyProductInCart({required String productId}) {
+    isProductInCart.value = CartFunctions.separateProductID().contains(productId);
   }
 
   void addItemToCart({
     required String productId,
     required String sellerId,
   }) {
-    if (!isInCart.value) {
-      CartFunctions.addItemToCartWithSeller(
-        productId: productId,
-        productCounter: productItemQuantity.value,
-        seller: sellerId,
-      );
-      isInCart.value = true;
-    }
+    CartFunctions.addItemToCart(
+      productId: productId,
+      quantity: productItemQuantity.value,
+      sellerId: sellerId,
+    );
+
+    isProductInCart.value = true;
   }
 
 // Popular Products Snapshot

@@ -12,7 +12,6 @@ import '../../../res/cart_funtion.dart';
 import '../../../res/constant/string_constant.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/product_image_widget.dart';
-import 'product_discount_widget.dart';
 
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({
@@ -30,7 +29,7 @@ class SingleProductWidget extends StatelessWidget {
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.toNamed(RoutesName.productDestailsPage,
-              arguments: {"productModel": productModel, "isCart": false});
+              arguments: {"productModel": productModel, "isCartBack": false});
         }
       },
       child: Padding(
@@ -97,7 +96,7 @@ class SingleProductWidget extends StatelessWidget {
             ),
             TextSpan(
               text: "(${productModel.productunit!})",
-              style: AppsTextStyle.smallText,
+              style: AppsTextStyle.smallBoldText,
             ),
           ]),
         ),
@@ -129,4 +128,3 @@ class SingleProductWidget extends StatelessWidget {
     );
   }
 }
-
