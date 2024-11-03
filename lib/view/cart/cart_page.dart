@@ -13,26 +13,34 @@ import '../../widget/empty_widget.dart';
 import 'widget/cart_summary_widget.dart';
 import 'widget/productg_list_by_seller_widget.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    print("Bangladesh");
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  var cartController = Get.find<CartController>();
+  @override
+  void didChangeDependencies() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Theme.of(context).brightness));
+    super.didChangeDependencies();
+  }
 
-    var cartController = Get.find<CartController>();
+  @override
+  Widget build(BuildContext context) {
+    
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(title: const Text("Cart Item")),
+      appBar: AppBar(title: const Text("Cart")),
       body: Obx(() {
         cartController.resetTotalAmount();
 
-        if (cartController.cartItemCounter.value == 1 ||
-            cartController.cartItemCounter.value == 0) {
+        if (cartController.cartItemCounter.value == 0) {
           return _buildEmptyCartView();
         } else {
           return Column(

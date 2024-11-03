@@ -11,7 +11,6 @@ import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/product_image_widget.dart';
-import '../../home/widget/single_popular_widget.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({
@@ -29,7 +28,7 @@ class CardWidget extends StatelessWidget {
     var cartController = Get.find<CartController>();
     return InkWell(
       onTap: () => Get.toNamed(RoutesName.productDestailsPage,
-          arguments: {"productModel": productModel, "isCart": true}),
+          arguments: {"productModel": productModel, "isCartBack": true}),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
@@ -96,10 +95,12 @@ class CardWidget extends StatelessWidget {
                 Flexible(
                   flex: 1,
                   child: InkWell(
-                    onTap: () {
-                      cartController.removeProductFromCart(
+                    onTap: () async {
+                      if (!(await AppsFunction.verifyInternetStatus())) {
+                        cartController.removeProductFromCart(
                         productId: productModel.productId!,
                       );
+                      }
                       cartController.removeValue(total);
                     },
                     child: Container(

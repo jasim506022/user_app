@@ -38,11 +38,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   void initState() {
     var arguments = Get.arguments;
     productModel = arguments["productModel"];
-    productController.verifyProductInCart(productId: productModel.productId!);
+    
 
     isBackCart = arguments["isCartBack"] ?? false;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      productController.verifyProductInCart(productId: productModel.productId!);
       if (!productController.isProductInCart.value) {
         productController.resetQuantity();
       } else {
@@ -51,7 +52,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       }
       productController.verifyProductInCart(productId: productModel.productId!);
     });
-    productController.verifyProductInCart(productId: productModel.productId!);
+    // productController.verifyProductInCart(productId: productModel.productId!);
     super.initState();
   }
 
@@ -74,7 +75,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       onPopInvoked: (bool didPop) async {
         if (!didPop) {
           isBackCart!
-              ? Get.toNamed(RoutesName.cartPage)
+              ? Get.back()
+              // Get.offNamed(RoutesName.cartPage)
               : Get.offAndToNamed(RoutesName.mainPage);
         }
       },

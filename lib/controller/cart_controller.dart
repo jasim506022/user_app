@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:get/get.dart';
-import 'package:user_app/controller/product_controller.dart';
 
 import '../model/app_exception.dart';
 import '../model/productsmodel.dart';
@@ -101,7 +100,7 @@ class CartController extends GetxController {
   }
 
   void removeProductFromCart({required String productId}) async {
-    print(cartItemCounter.value);
+    // print(cartItemCounter.value);
     List<String> cartList = sharedPreference!
         .getStringList(StringConstant.cartListSharedPreference)!;
 
@@ -125,16 +124,13 @@ class CartController extends GetxController {
 
         // var controller = Get.put(CartProductCountController());
 
-        // var controller = Get.find<ProductController>();
-        // controller.decrementCartItem();
-
-        --cartItemCounter.value;
+        --cartItemCounter;
         if (cartItemCounter.value != 0) {
-          print("Bangladesh");
+          
           cartSellerSnapshot();
         }
       } catch (e) {
-        print(cartItemCounter.value);
+        
         AppsFunction.flutterToast(msg: e.toString());
       }
     } else {

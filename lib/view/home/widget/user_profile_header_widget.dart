@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/controller/cart_controller.dart';
 
-import '../../../controller/product_controller.dart';
+
+import '../../../controller/cart_controller.dart';
 import '../../../controller/profile_controller.dart';
 import '../../../model/profilemodel.dart';
 import '../../../res/app_colors.dart';
@@ -24,12 +24,12 @@ class UserProfileHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController profileController = Get.find();
-    // var productController = Get.find<ProductController>();
     var cartController = Get.find<CartController>();
     String? imageUrl =
         sharedPreference?.getString(StringConstant.imageSharedPreference);
     String? name =
         sharedPreference?.getString(StringConstant.nameSharedPreference);
+        
     List<String>? cartList = sharedPreference
         ?.getStringList(StringConstant.cartListSharedPreference);
 
@@ -109,11 +109,9 @@ class UserProfileHeaderWidget extends StatelessWidget {
               Get.toNamed(RoutesName.cartPage);
             }
           }, child: Obx(() {
-            var cartController = Get.find<CartController>();
-
             return CartBadge(
                 color: AppColors.greenColor,
-                itemCount: cartController.itemCount,
+                itemCount: Get.find<CartController>().itemCount,
                 icon: Icons.shopping_bag);
           })),
           SizedBox(

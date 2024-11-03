@@ -23,6 +23,10 @@ const List<String> allCategoryList = <String>[
   "Candy & Chocolate"
 ];
 
+const List<String> list = <String>['Home', 'Office', 'Other'];
+
+
+
 const List<String> unitList = <String>[
   'Per Kg',
   'Per Dozen',
@@ -41,7 +45,7 @@ String image =
 String publishKey =
     'pk_test_51NxWNQAVUbXW3f6RWMGhMJhUO0udDaNswK3RRuIo817qEyN28xcXHMTPHIOnj27ah0giitHaEsgqvHOxbcoNbAWC00Z6GYb1Rv';
 
-const List<String> list = <String>['Home', 'Office', 'Other'];
+
 
 
 // late Size mq;

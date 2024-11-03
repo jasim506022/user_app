@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../../controller/cart_controller.dart';
 import '../../../loading_widget/loading_list_product_card_widget.dart';
 import '../../../model/productsmodel.dart';
-import '../../../res/cart_funtion.dart';
 import '../../../widget/dot_line_printer.dart';
 
 import 'cart_widget.dart';

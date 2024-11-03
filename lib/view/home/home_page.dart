@@ -4,7 +4,6 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/constant/string_constant.dart';
@@ -17,12 +16,25 @@ import 'widget/popular_product_list_widget.dart';
 import 'widget/row_widget.dart';
 import 'widget/user_profile_header_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void didChangeDependencies() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+        statusBarIconBrightness: Brightness.dark));
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _setStatusBarStyle(context);
     return Material(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SafeArea(
@@ -38,9 +50,7 @@ class HomePage extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (!(await AppsFunction.verifyInternetStatus())) {
-                          Get.offAllNamed(RoutesName.mainPage, arguments: 2);
-                        }
+                        Get.offAllNamed(RoutesName.mainPage, arguments: 2);
                       },
                       child: _buildSearchBar(context),
                     ),
@@ -124,12 +134,5 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _setStatusBarStyle(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
-        statusBarIconBrightness: Brightness.dark));
   }
 }

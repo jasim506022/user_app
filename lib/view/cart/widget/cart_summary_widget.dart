@@ -30,7 +30,7 @@ class CartSummaryWidget extends StatelessWidget {
         // print()
         final totalAmount = cartController.totalAmount.value;
         final subTotal = totalAmount + 50; // Fixed delivery amount
-        print(totalAmount);
+   
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -15,7 +15,6 @@ import 'package:user_app/res/apps_text_style.dart';
 import 'package:user_app/res/utils.dart';
 
 import '../data/response/app_data_exception.dart';
-import '../widget/outlined_text_button_widget.dart';
 import '../widget/round_button_widget.dart';
 import '../widget/show_alert_dialog_widget.dart';
 
@@ -61,19 +60,19 @@ class AppsFunction {
     );
   }
 
-  static confirmationDialog({
-    required VoidCallback yesFunction,
-    required String title,
-    required String subTitle,
-    VoidCallback? noFunction,
-  }) {
-    return Get.dialog(CustomAlertDialogWidget(
-        icon: Icons.question_mark_rounded,
-        title: title,
-        subTitle: subTitle,
-        yesOnPress: noFunction!,
-        noOnPress: noFunction));
-  }
+  // static confirmationDialog({
+  //   required VoidCallback yesFunction,
+  //   required String title,
+  //   required String subTitle,
+  //   VoidCallback? noFunction,
+  // }) {
+  //   return Get.dialog(CustomAlertDialogWidget(
+  //       icon: Icons.question_mark_rounded,
+  //       title: title,
+  //       subTitle: subTitle,
+  //       yesOnPress: yesFunction,
+  //       noOnPress: noFunction!));
+  // }
 
 /*
   static confirmationDialog({
@@ -334,4 +333,3 @@ class SimpleButtonWidget extends StatelessWidget {
                 fontSize: 14)));
   }
 }
-

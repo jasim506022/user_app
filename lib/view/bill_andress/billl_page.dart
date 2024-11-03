@@ -16,7 +16,7 @@ class BillPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BillController billController = Get.find();
+    var billController = Get.find<BillController>();
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
@@ -30,9 +30,8 @@ class BillPage extends StatelessWidget {
               icon: const Icon(
                 Icons.arrow_back,
               )),
-          title: Text(
+          title: const Text(
             "Pay Bill",
-            
           ),
         ),
         body: Obx(

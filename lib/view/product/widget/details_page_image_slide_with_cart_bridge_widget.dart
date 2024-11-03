@@ -82,9 +82,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          backCart
-                              ? Get.toNamed(RoutesName.cartPage)
-                              : Get.back();
+                          Get.back();
                         },
                         child: _buildCircularButton(
                           Icon(
@@ -134,7 +132,6 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   }
 }
 
-
 /*
 
 
@@ -176,9 +173,7 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
 
 */
 
-
-
-          /*
+/*
           Positioned(
             left: -300,
             right: -300,
@@ -213,4 +208,3 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
             ),
           ),
           */
-        

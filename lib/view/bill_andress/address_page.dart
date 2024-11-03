@@ -19,9 +19,9 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
-  AddressController addressController = Get.find();
+  var addressController = Get.find<AddressController>();
 
-  late final bool isAddressUpdateMode;
+  late final bool isUpdate;
   late final AddressModel? addressModel;
 
   @override
@@ -34,43 +34,47 @@ class _AddressPageState extends State<AddressPage> {
   void _initializeAddressDetails() {
     final arguments = Get.arguments as Map<String, dynamic>?;
     if (arguments != null) {
-      isAddressUpdateMode = arguments["isUpdate"] ?? false;
+      isUpdate = arguments["isUpdate"] ?? false;
       addressModel = arguments["addressModel"];
-      if (isAddressUpdateMode && addressModel != null) {
+      if (isUpdate && addressModel != null) {
         addressController.updateFiled(addressModel!);
       }
     } else {
-      isAddressUpdateMode = false;
+      isUpdate = false;
     }
   }
 
-  var key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
-        _handleBackNavigaion(didPop);
+      onPopInvoked: (didPop) {
+        addressController.handleBackNavigaion(didPop);
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
-            isAddressUpdateMode ? "Update Address " : "Add Address ",
+            isUpdate ? "Update Address " : "Add Address ",
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
             backgroundColor: AppColors.greenColor,
-            onPressed: () {
-              if (!key.currentState!.validate()) return;
-              addressController.saveAddress(isAddressUpdateMode);
+            onPressed: () async {
+              if (!_formKey.currentState!.validate()) return;
+              if (!(await AppsFunction.verifyInternetStatus())) {
+                addressController.saveAddress(isUpdate);
+              }
             },
-            icon: const Icon(Icons.update),
-            label: Text(
-              isAddressUpdateMode ? "Update" : "Save",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
-            )),
+            icon: Icon(
+              isUpdate ? Icons.update : Icons.save,
+              color: AppColors.white,
+            ),
+            label: Text(isUpdate ? "Update" : "Save",
+                style: AppsTextStyle.largeBoldText
+                    .copyWith(color: AppColors.white))),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: ListView(
@@ -86,85 +90,13 @@ class _AddressPageState extends State<AddressPage> {
     );
   }
 
-  void _handleBackNavigaion(bool didPop) {
-    if (didPop) return;
-
-    if (addressController.isChange.value == false) {
-      Get.back();
-    } else {
-      AppsFunction.confirmationDialog(
-        title: "Save Changed?",
-        subTitle: 'do you want to save change?',
-        yesFunction: () => Get.back(),
-        noFunction: () {
-          addressController.clearInputField();
-          addressController.isChange.value = false;
-          Get.back();
-          Get.back();
-        },
-      );
-    }
-  }
-
   Form _buildAddressForm() {
     return Form(
       onChanged: () {},
-      key: key,
+      key: _formKey,
       child: Column(
         children: [
-          TextFormFieldWidget(
-            onChanged: (p0) {
-              addressController.addChangeListener();
-            },
-            validator: (value) => _validateName(value),
-            controller: addressController.nameTEC,
-            hintText: 'Name',
-            textInputType: TextInputType.text,
-          ),
-          TextFormFieldWidget(
-            validator: (value) => _validatePhoneNumber(value),
-            controller: addressController.phoneTEC,
-            hintText: 'Phone',
-            textInputType: TextInputType.text,
-          ),
-          TextFormFieldWidget(
-            onChanged: (p0) {
-              addressController.addChangeListener();
-            },
-            validator: (value) =>
-                _validateNotEmpty(value, "flat/house number."),
-            controller: addressController.flatHouseNumberTEC,
-            hintText: 'Flat/House Number',
-            textInputType: TextInputType.text,
-          ),
-          TextFormFieldWidget(
-            onChanged: (p0) {
-              addressController.addChangeListener();
-            },
-            validator: (value) =>
-                _validateNotEmpty(value, "Street number Or Name"),
-            controller: addressController.streetnameornumberTEC,
-            hintText: 'Street Number or name',
-            textInputType: TextInputType.text,
-          ),
-          TextFormFieldWidget(
-            onChanged: (p0) {
-              addressController.addChangeListener();
-            },
-            validator: (value) => _validateNotEmpty(value, "Village Name"),
-            controller: addressController.villageTEC,
-            hintText: 'Village Name',
-            textInputType: TextInputType.text,
-          ),
-          TextFormFieldWidget(
-            onChanged: (p0) {
-              addressController.addChangeListener();
-            },
-            validator: (value) => _validateNotEmpty(value, "City Name"),
-            controller: addressController.cityTEC,
-            hintText: 'City Name',
-            textInputType: TextInputType.text,
-          ),
+          ..._buildTextFields(),
           Row(
             children: [
               Flexible(
@@ -185,6 +117,35 @@ class _AddressPageState extends State<AddressPage> {
           ),
         ],
       ),
+    );
+  }
+
+  List<Widget> _buildTextFields() {
+    return [
+      _buildTextField(addressController.nameTEC, 'Name', _validateName),
+      _buildTextField(
+          addressController.phoneTEC, 'Phone', _validatePhoneNumber),
+      _buildTextField(addressController.flatHouseNumberTEC, 'Flat/House Number',
+          (value) => _validateNotEmpty(value, "flat/house number")),
+      _buildTextField(
+          addressController.streetnameornumberTEC,
+          'Street Number or Name',
+          (value) => _validateNotEmpty(value, "Street number or name")),
+      _buildTextField(addressController.villageTEC, 'Village Name',
+          (value) => _validateNotEmpty(value, "Village Name")),
+      _buildTextField(addressController.cityTEC, 'City Name',
+          (value) => _validateNotEmpty(value, "City Name")),
+    ];
+  }
+
+  TextFormFieldWidget _buildTextField(TextEditingController controller,
+      String hintText, String? Function(String?)? validator) {
+    return TextFormFieldWidget(
+      onChanged: (p0) => addressController.addChangeListener(),
+      validator: validator,
+      controller: controller,
+      hintText: hintText,
+      textInputType: TextInputType.text,
     );
   }
 
@@ -210,7 +171,6 @@ class _AddressPageState extends State<AddressPage> {
       () => DropdownButton<String>(
         value: addressController.currentDropdownAddress.value,
         elevation: 16,
-        style: AppsTextStyle.mediumText600.copyWith(color: AppColors.black),
         underline: Container(
           height: 2,
           color: AppColors.greenColor,
@@ -224,7 +184,7 @@ class _AddressPageState extends State<AddressPage> {
             value: value,
             child: Text(
               value,
-              style: AppsTextStyle.smallestText.copyWith(fontSize: 14.sp),
+              style: AppsTextStyle.mediumBoldText.copyWith(fontSize: 14.sp),
             ),
           );
         }).toList(),

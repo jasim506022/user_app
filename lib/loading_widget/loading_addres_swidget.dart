@@ -3,6 +3,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:user_app/res/utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../res/app_function.dart';
+
 class LoadingAddressWidget extends StatelessWidget {
   const LoadingAddressWidget({
     super.key,
@@ -32,36 +34,26 @@ class LoadingAddressWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 20.h,
-                        width: 30.w,
-                        color: utils.widgetShimmerColor,
-                      ),
+                      AppsFunction.lineShimmer(utils, 20.h, 30.w),
                       SizedBox(
                         width: 20.w,
                       ),
-                      Container(
-                        height: 20.h,
-                        width: 45.w,
-                        color: utils.widgetShimmerColor,
-                      ),
+                      AppsFunction.lineShimmer(utils, 20.h, 45.w),
                     ],
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    height: 10.h,
-                    width: 1.sw,
-                    color: utils.widgetShimmerColor,
+                  AppsFunction.lineShimmer(
+                    utils,
+                    10.h,
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Container(
-                    height: 10.h,
-                    width: 1.sw,
-                    color: utils.widgetShimmerColor,
+                  AppsFunction.lineShimmer(
+                    utils,
+                    10.h,
                   ),
                 ],
               ),

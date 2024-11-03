@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/widget/loading_widget.dart';
 
 import '../model/address_model.dart';
 import '../model/app_exception.dart';
@@ -9,17 +10,28 @@ import '../res/app_function.dart';
 import '../res/appasset/icon_asset.dart';
 import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
+import '../widget/show_alert_dialog_widget.dart';
 
 class AddressController extends GetxController {
-  final AddressRepository _addressRepository;
+  final AddressRepository repository;
 
-  TextEditingController nameTEC = TextEditingController();
-  TextEditingController phoneTEC = TextEditingController();
-  TextEditingController flatHouseNumberTEC = TextEditingController();
-  TextEditingController streetnameornumberTEC = TextEditingController();
-  TextEditingController villageTEC = TextEditingController();
-  TextEditingController cityTEC = TextEditingController();
-  TextEditingController countryTEC = TextEditingController();
+  final TextEditingController nameTEC = TextEditingController();
+  final TextEditingController phoneTEC = TextEditingController();
+  final TextEditingController flatHouseNumberTEC = TextEditingController();
+  final TextEditingController streetnameornumberTEC = TextEditingController();
+  final TextEditingController villageTEC = TextEditingController();
+  final TextEditingController cityTEC = TextEditingController();
+  final TextEditingController countryTEC = TextEditingController();
+
+  var currentDropdownAddress = list.first.obs;
+  var completeAddress = "".obs;
+  var addressid = "".obs;
+  var currentAddressIndex = 0.obs;
+  var length = 0.obs;
+  var id = "".obs;
+  var isChange = false.obs;
+
+  AddressController(this.repository);
 
   void clearInputField() {
     nameTEC.clear();
@@ -32,40 +44,43 @@ class AddressController extends GetxController {
     currentDropdownAddress.value = list[0];
   }
 
-  AddressController(this._addressRepository);
+  void handleBackNavigaion(bool didPop) {
+    if (didPop) return;
 
-  var currentDropdownAddress = list[0].obs;
-
-  var completeAddress = "".obs;
-
-  var addressid = "".obs;
-  var currentAddressIndex = 0.obs;
-
-  var length = 0.obs;
+    if (isChange.value == false) {
+      Get.back();
+    } else {
+      Get.dialog(CustomAlertDialogWidget(
+        icon: Icons.question_mark_rounded,
+        title: "Save Changed?",
+        subTitle: 'do you want to save change?',
+        yesOnPress: () => Get.back(),
+        noOnPress: () {
+          clearInputField();
+          isChange.value = false;
+          Get.close(2);
+        },
+      ));
+    }
+  }
 
   setIndex(int index) {
     currentAddressIndex.value = index;
   }
 
-  setLength(int index) {
-    length.value = index;
-  }
+ 
 
   setAddressId(String address) {
     addressid.value = address;
   }
 
-  var id = "".obs;
-
-  var isChange = false.obs;
-
-  setDropdownAddress(String location) {
+  void setDropdownAddress(String location) {
     currentDropdownAddress.value = location;
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
     try {
-      return _addressRepository.addressSnapshot();
+      return repository.addressSnapshot();
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -80,7 +95,8 @@ class AddressController extends GetxController {
 
   void deleteAddress({required String addressId}) {
     try {
-      _addressRepository.deleteAddress(addressId: addressId);
+      repository.deleteAddress(addressId: addressId);
+      Get.back();
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
@@ -112,25 +128,22 @@ class AddressController extends GetxController {
 
   // Save Address
   Future<void> saveAddress(bool isUpdate) async {
-    if (!await _checkInternetConnection()) return;
-
     try {
-      if (!isUpdate) {
-        id.value = DateTime.now().millisecondsSinceEpoch.toString();
-      }
-
-      _buildCompleteAddress();
-      AddressModel addressModel = _buildAddressModel();
-      await _addressRepository.uploadOrUpdateAddress(
+      LoadingWidget(
+        message: isUpdate ? "Update Address" : "Upload a New Address",
+      );
+      AddressModel addressModel = _buildAddressModel(isUpdate);
+      await repository.uploadOrUpdateAddress(
           addressModel: addressModel, isUpdate: isUpdate);
       clearInputField();
-      isChange.value = false;
       Get.offNamed(RoutesName.billPage);
+      Get.back();
       AppsFunction.flutterToast(
           msg: isUpdate
               ? "Sucessfully Update"
               : "Successfully Upload a New Address");
     } catch (e) {
+      Get.back();
       if (e is AppException) {
         AppsFunction.errorDialog(
             icon: IconAsset.warningIcon,
@@ -138,6 +151,8 @@ class AddressController extends GetxController {
             content: e.message,
             buttonText: "Okay");
       }
+    } finally {
+      isChange.value = false;
     }
   }
 
@@ -154,20 +169,10 @@ class AddressController extends GetxController {
     completeAddress.value = addressModel.completeaddress!;
   }
 
-  Future<bool> _checkInternetConnection() async {
-    if (await AppsFunction.internetChecking()) {
-      AppsFunction.errorDialog(
-        icon: IconAsset.warningIcon,
-        title: "No Internet Connection",
-        content: "Please check your internet settings and try again.",
-        buttonText: "Okay",
-      );
-      return false;
+  AddressModel _buildAddressModel(bool isUpdate) {
+    if (!isUpdate) {
+      id.value = DateTime.now().millisecondsSinceEpoch.toString();
     }
-    return true;
-  }
-
-  void _buildCompleteAddress() {
     completeAddress.value = [
       flatHouseNumberTEC.text.trim(),
       streetnameornumberTEC.text.trim(),
@@ -175,9 +180,6 @@ class AddressController extends GetxController {
       cityTEC.text.trim(),
       countryTEC.text.trim()
     ].join(", ");
-  }
-
-  AddressModel _buildAddressModel() {
     return AddressModel(
         addressId: id.value,
         city: cityTEC.text.trim(),
