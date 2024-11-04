@@ -24,22 +24,18 @@ class BillController extends GetxController {
   var isSucess = false.obs;
 
   String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-  
+
   var totalAmountController = Get.find<CartController>();
   AddressController addressController = Get.find();
 
   BillController({required this.repository});
 
-  /// Sets the loading state
   void setLoading(bool isLoading) => this.isLoading.value = isLoading;
 
-  /// Sets the current selected payment method
   void setCurrentPaymentIndex(int index) => currentPyamentIndex.value = index;
 
-  /// Sets the payment method (e.g., Card or Bkash)
   void setCurrentPayment(String card) => this.card.value = card;
 
-  /// Creates and processes the payment
   Future<void> createPayment(String amount, String currency) async {
     try {
       if (!await _checkInternetConnection()) return;

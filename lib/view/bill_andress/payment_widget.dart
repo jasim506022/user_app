@@ -5,7 +5,6 @@ import 'package:user_app/controller/bill_controller.dart';
 
 import '../../res/app_colors.dart';
 
-
 import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import '../../res/utils.dart';
@@ -28,7 +27,7 @@ class PaymentWidgetMethod extends StatelessWidget {
         padding: EdgeInsets.only(left: 15.w),
         child: Obx(
           () => Container(
-            height: 80.h,
+            height: 100.h,
             width: 130.w,
             decoration: BoxDecoration(
                 border: Border.all(
@@ -43,7 +42,7 @@ class PaymentWidgetMethod extends StatelessWidget {
               children: [
                 Image.asset(
                   paymentList[index].icon!,
-                  height: 40.h,
+                  height: 70.h,
                   width: 60.w,
                 ),
                 Text(paymentList[index].title!,

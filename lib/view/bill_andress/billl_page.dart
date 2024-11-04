@@ -7,7 +7,8 @@ import '../../res/app_colors.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import 'widget/address_details_widget.dart';
-import 'payment_widget.dart';
+
+import 'widget/payment_list.dart';
 
 class BillPage extends StatelessWidget {
   const BillPage({
@@ -22,10 +23,7 @@ class BillPage extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                if (billController.isLoading.value) {
-                } else {
-                  Get.back();
-                }
+                if (billController.isLoading.value) Get.back();
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -49,7 +47,7 @@ class BillPage extends StatelessWidget {
                         SizedBox(
                           height: 10.h,
                         ),
-                        _buildPaymentMethodSection(billController),
+                        const PaymentList(),
                         SizedBox(
                           height: 15.h,
                         ),
@@ -73,7 +71,7 @@ class BillPage extends StatelessWidget {
             : await billController.createPayment(amount.toString(), 'USD');
       },
       child: Container(
-        height: 40.h,
+        height: 50.h,
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -84,44 +82,8 @@ class BillPage extends StatelessWidget {
                 ? "Payment By Card"
                 : "Payment By Bkask",
             style:
-                AppsTextStyle.mediumTextbold.copyWith(color: AppColors.white)),
+                AppsTextStyle.mediumBoldText.copyWith(color: AppColors.white)),
       ),
-    );
-  }
-
-  _buildPaymentMethodSection(BillController billController) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Payment Method",
-          style: AppsTextStyle.largestText,
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        SizedBox(
-            height: 100.h,
-            width: 1.sw,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: paymentList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    billController.currentPyamentIndex.value = index;
-                    index == 0
-                        ? billController.card.value = Payment.card.name
-                        : billController.card.value = Payment.bkash.name;
-                  },
-                  child: PaymentWidgetMethod(
-                    index: index,
-                    controller: billController,
-                  ),
-                );
-              },
-            )),
-      ],
     );
   }
 }

@@ -22,7 +22,6 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
   var profileController = Get.find<ProfileController>();
   @override
   void initState() {
-    // globalMethod.getUserInformation();
     profileController.getUserInformationSnapshot();
     super.initState();
   }
@@ -35,7 +34,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         children: [
           Text(
             "Your order is confirmed",
-            style: AppsTextStyle.largestText.copyWith(fontSize: 24.sp),
+            style: AppsTextStyle.titleTextStyle.copyWith(fontSize: 24.sp),
           ),
           SizedBox(
             height: 15.h,
