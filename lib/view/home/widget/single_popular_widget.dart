@@ -8,7 +8,6 @@ import '../../../model/products_model.dart';
 import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
-import '../../../res/constant/string_constant.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/product_image_widget.dart';
 
@@ -110,7 +109,7 @@ class SingleProductWidget extends StatelessWidget {
             color: isCart ? AppColors.red : AppColors.accentGreen,
           ),
           child: Text(
-            StringConstant.addToCart,
+            AppString.addToCart,
             style: AppsTextStyle.buttonTextStyle,
           ),
         ),

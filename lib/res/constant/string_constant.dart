@@ -6,8 +6,6 @@ class StringConstant {
   static const String product = "Product";
 
   // static const String searchint = "Search...........";
-  static const String addToCart = "Add To Cart";
-  static const String itemAlreadyInCart = "Item Already in Cart";
 
   static const String onBoardingSharedPre = "onBoarding";
 

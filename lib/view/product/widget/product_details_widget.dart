@@ -8,7 +8,6 @@ import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/cart_funtion.dart';
 import '../../../res/constant/string_constant.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
@@ -18,7 +17,6 @@ class ProductDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _initializeProductData();
     var productController = Get.find<ProductController>();
 
     return Column(
@@ -40,41 +38,6 @@ class ProductDetailsWidget extends StatelessWidget {
     );
   }
 
-/*
-  void _initializeProductData() {
-    var productController = Get.find<ProductController>();
-
-    if (!productController.isProductInCart.value) {
-      productController.resetQuantity();
-    } else {
-      try {
-        Future.microtask(() {
-          productController.productItemQuantity.value =
-              CartFunctions.productQuantiyList(productModel.productId!);
-        });
-      } catch (e) {
-        productController.productItemQuantity.value =
-            0; // Default value in case of error
-        print("Error fetching product quantity: $e");
-      }
-    }
-  }
-*/
-
-  // void _initializeProductData() {
-  //   // productController.verifyProductInCart(productId: productModel.productId!);
-  //   var productController = Get.find<ProductController>();
-  //   if (!productController.isProductInCart.value) {
-  //     productController.resetQuantity();
-  //   } else {
-  //     Future.microtask(() {
-  //       productController.productItemQuantity.value =
-  //           CartFunctions.productQuantiyList(productModel.productId!);
-  //     });
-  //   }
-  //   // productController.verifyProductInCart(productId: productModel.productId!);
-  // }
-
   Row _buildQuantityAndRatingRow(
       ProductController productController, BuildContext context) {
     return Row(
@@ -86,21 +49,17 @@ class ProductDetailsWidget extends StatelessWidget {
                   .copyWith(color: AppColors.accentGreen)),
         ),
         AppsFunction.horizontalSpace(20),
-
         Row(
           children: [
             _buildIncreandDecrementButton(() {
               productController.updateQuantity();
             }, Icons.add),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Obx(() => Text(
                   productController.productItemQuantity.value.toString(),
                   style: AppsTextStyle.largestText)),
             ),
-
-            //Increament Button
             _buildIncreandDecrementButton(
               () {
                 productController.updateQuantity(isIncrement: false);
@@ -109,9 +68,7 @@ class ProductDetailsWidget extends StatelessWidget {
             ),
           ],
         ),
-
         const Spacer(),
-        // Rattting Product
         Row(
           children: [
             Icon(Icons.star, color: AppColors.brightYellow),

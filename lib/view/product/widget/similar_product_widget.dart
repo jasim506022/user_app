@@ -2,7 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
@@ -15,12 +15,12 @@ class SimilarProductWidget extends StatelessWidget {
   const SimilarProductWidget({
     super.key,
     required this.isCartBack,
+    required this.productModel,
   });
   final bool isCartBack;
+  final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
-
     bool isCart =
         CartFunctions.separateProductID().contains(productModel.productId);
     return InkWell(
@@ -28,7 +28,10 @@ class SimilarProductWidget extends StatelessWidget {
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.offAndToNamed(
             RoutesName.productDestailsPage,
-            arguments: {"productModel": productModel, "isCart": isCartBack},
+            arguments: {
+              AppString.productModel: productModel,
+              AppString.isCartBack: isCartBack
+            },
           );
         }
       },
@@ -48,9 +51,7 @@ class SimilarProductWidget extends StatelessWidget {
                 imageUrl: productModel.productimage![0],
               ),
             ),
-            SizedBox(
-              height: 8.h,
-            ),
+            AppsFunction.verticleSpace(10),
             FittedBox(
                 child: Text(productModel.productname!,
                     textAlign: TextAlign.justify,

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/app_string.dart';
-import 'package:user_app/res/cart_funtion.dart';
 
 import '../../controller/product_controller.dart';
 
+import '../../res/app_function.dart';
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
+import '../../res/cart_funtion.dart';
 import '../../res/constant/string_constant.dart';
 import '../../res/routes/routes_name.dart';
 
@@ -43,10 +43,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
     isBackCart = arguments[AppString.isCartBack] ?? false;
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      productController.verifyProductInCart(productId: productModel.productId!);
-      // _initializeProductData();
-    });
     _initializeProductData();
 
     super.initState();
@@ -64,22 +60,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   void _initializeProductData() {
-    // productController.verifyProductInCart(productId: productModel.productId!);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productController.verifyProductInCart(productId: productModel.productId!);
 
-    if (!productController.isProductInCart.value) {
-      productController.resetQuantity();
-    } else {
-      Future.microtask(() {
+      if (productController.isProductInCart.value == false) {
+        productController.resetQuantity();
+      } else {
         productController.productItemQuantity.value =
             CartFunctions.productQuantiyList(productModel.productId!);
-      });
-    }
-    // productController.verifyProductInCart(productId: productModel.productId!);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // _initializeProductData();
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {

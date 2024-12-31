@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/res/app_string.dart';
 import '../../res/app_function.dart';
 
+import '../../res/app_string.dart';
 import '../../res/routes/routes_name.dart';
 import '../../widget/product_list_widget.dart';
 import 'widget/drop_down_category_widget.dart';
@@ -23,10 +23,8 @@ class ProductPage extends StatelessWidget {
             : AppString.popularProduct),
         actions: [
           IconButton(
-            onPressed: () async {
-              if (!(await AppsFunction.verifyInternetStatus())) {
-                Get.offAllNamed(RoutesName.mainPage, arguments: 2);
-              }
+            onPressed: () {
+              Get.offAllNamed(RoutesName.mainPage, arguments: 2);
             },
             icon: const Icon(
               Icons.search,

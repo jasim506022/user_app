@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/product_controller.dart';
 import '../../../model/products_model.dart';
@@ -25,10 +25,9 @@ class SimilarProductList extends StatelessWidget {
     var productController = Get.find<ProductController>();
     return SizedBox(
       height: 150.h,
-      width: Get.width,
+      width: 1.sw,
       child: StreamBuilder(
-        stream:
-            productController.fetchSimilarProducts(productModel: productModel),
+        stream: productController.fetchSimilarProducts(productModel),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingSimilierWidget();
@@ -36,11 +35,10 @@ class SimilarProductList extends StatelessWidget {
               snapshot.data!.docs.isEmpty ||
               snapshot.hasError) {
             return SingleEmptyWidget(
-              image: ImagesAsset.errorSingle,
-              title: snapshot.hasError
-                  ? 'Error Occure: ${snapshot.error}'
-                  : 'No Data Available',
-            );
+                image: ImagesAsset.errorSingle,
+                title: snapshot.hasError
+                    ? '${AppString.errorOccure} ${snapshot.error}'
+                    : AppString.noDataAvailable);
           }
           if (snapshot.hasData) {
             return ListView.builder(
@@ -51,11 +49,9 @@ class SimilarProductList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   ProductModel productModel =
                       ProductModel.fromMap(snapshot.data!.docs[index].data());
-                  return ChangeNotifierProvider.value(
-                    value: productModel,
-                    child: SimilarProductWidget(
-                      isCartBack: isCart,
-                    ),
+                  return SimilarProductWidget(
+                    isCartBack: isCart,
+                    productModel: productModel,
                   );
                 });
           }

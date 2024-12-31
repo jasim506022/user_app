@@ -11,8 +11,6 @@ import '../../res/app_colors.dart';
 import '../../res/app_constant.dart';
 import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
-import '../../res/constant/string_constant.dart';
-import '../../res/constants.dart';
 import '../../res/utils.dart';
 import '../../widget/select_photo_profile_widget.dart';
 import '../../widget/text_form_field_widget.dart';

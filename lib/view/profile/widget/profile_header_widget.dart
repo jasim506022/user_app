@@ -8,8 +8,7 @@ import '../../../res/app_constant.dart';
 import '../../../res/app_function.dart';
 import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constant/string_constant.dart';
-import '../../../res/constants.dart';
+
 import '../../../res/routes/routes_name.dart';
 
 import '../../../widget/custom_round_action_button.dart';
@@ -49,9 +48,14 @@ class ProifleHeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(AppConstant.sharedPreference!.getString(AppString.nameSharedPreference)!,
-            maxLines: 1, style: AppsTextStyle.titleTextStyle),
-        Text(AppConstant.sharedPreference!.getString(AppString.emailSharedPreference)!,
+        Text(
+            AppConstant.sharedPreference!
+                .getString(AppString.nameSharedPreference)!,
+            maxLines: 1,
+            style: AppsTextStyle.titleTextStyle),
+        Text(
+            AppConstant.sharedPreference!
+                .getString(AppString.emailSharedPreference)!,
             style: AppsTextStyle.subTitleTextStyle),
         SizedBox(
           height: 8.h,
@@ -77,8 +81,8 @@ class ProifleHeaderWidget extends StatelessWidget {
             border: Border.all(color: AppColors.red, width: 3.w)),
         child: ClipOval(
           child: FancyShimmerImage(
-            imageUrl:
-               AppConstant. sharedPreference!.getString(AppString.imageSharedPreference)!,
+            imageUrl: AppConstant.sharedPreference!
+                .getString(AppString.imageSharedPreference)!,
             errorWidget: const Icon(Icons.error),
           ),
         ));

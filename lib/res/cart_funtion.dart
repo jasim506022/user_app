@@ -81,11 +81,28 @@ class CartFunctions {
 
     String? matchingItem = list.firstWhere(
       (element) => element.contains(prodductId),
+      // orElse: () => null, // Provide a fallback if no match is found
+    );
+
+    // Parse the quantity from the matching item
+    return int.parse(matchingItem.split(":")[2]);
+  }
+
+/*
+  static int productQuantiyList(String prodductId) {
+    List<String> list = AppConstant.sharedPreference!
+        .getStringList("cartlist")!
+        .skip(1)
+        .toList();
+
+    String? matchingItem = list.firstWhere(
+      (element) => element.contains(prodductId),
     );
 
     return int.parse(matchingItem.split(":")[2]);
   }
 
+*/
 /*
   static int productQuantiyList(String prodductId) {
     List<String>? cartList = sharedPreference!.getStringList("cartlist");

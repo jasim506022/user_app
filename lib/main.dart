@@ -95,7 +95,22 @@ class MyApp extends StatelessWidget {
         primaryColorLight: AppColors.black,
         brightness:
             themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
-
+        dropdownMenuTheme: DropdownMenuThemeData(
+            inputDecorationTheme: InputDecorationTheme(
+          contentPadding:
+              EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
+          filled: true,
+          fillColor: themeProvder.getDarkTheme
+              ? AppColors.darkCardBackground
+              : AppColors.white,
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  color: themeProvder.getDarkTheme
+                      ? AppColors.white
+                      : AppColors.black,
+                  width: 1),
+              borderRadius: BorderRadius.circular(15.r)),
+        )),
         // Hint Color
         hintColor: themeProvder.getDarkTheme
             ? AppColors.darkHintText

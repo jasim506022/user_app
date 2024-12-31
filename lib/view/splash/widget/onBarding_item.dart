@@ -6,11 +6,9 @@ import 'package:user_app/res/app_function.dart';
 
 import '../../../controller/onboarding_controller.dart';
 import '../../../model/onboard_model.dart';
-import '../../../res/app_asset/app_icons.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../widget/error_dialog_widget.dart';
 import 'indicate_widget.dart';
 
 class OnBoardingItem extends StatelessWidget {

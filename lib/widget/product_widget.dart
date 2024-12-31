@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/app_string.dart';
-import 'package:user_app/res/constant/string_constant.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
@@ -115,7 +114,7 @@ class ProductWidget extends StatelessWidget {
                 color: isCart ? AppColors.red : AppColors.accentGreen,
               ),
               child: Text(
-                StringConstant.addToCart,
+                AppString.addToCart,
                 style: AppsTextStyle.buttonTextStyle,
               ),
             )),

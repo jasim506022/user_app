@@ -88,4 +88,11 @@ class AppString {
   static const String noInternet = 'No Internet';
   static const String noInternetMessage =
       'Please check your internet settings and try again.';
+
+  static const String addToCart = "Add To Cart";
+  static const String itemAlreadyInCart = "Item Already in Cart";
+  static const String theQuantityCannotBeLessThen1 =
+      "The Quantity cannot be less then 1";
+
+  static const String someThingWentWrong = "Something went wrong";
 }

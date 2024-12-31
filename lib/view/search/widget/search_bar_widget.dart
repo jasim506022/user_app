@@ -20,7 +20,7 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var searchController = Get.find<SearchControllers>();
-    Utils utils = Utils();
+
     return SizedBox(
       height: 0.1.sh,
       width: 1.sw,

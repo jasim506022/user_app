@@ -22,8 +22,6 @@ class DropdownCategoryWidget extends StatelessWidget {
     var categoryController = Get.find<CategoryController>();
     return DropdownButtonFormField(
       decoration: InputDecoration(
-        fillColor: Theme.of(context).cardColor,
-        filled: true,
         enabledBorder: OutlineInputBorder(
             borderSide:
                 BorderSide(color: Theme.of(context).primaryColor, width: 1),
@@ -39,6 +37,8 @@ class DropdownCategoryWidget extends StatelessWidget {
       style: AppsTextStyle.boldBodyTextStyle,
       focusColor: Theme.of(context).primaryColor,
       elevation: 16,
+
+      /// Builds the dropdown menu items from the category list.
       items: allCategoryList.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
