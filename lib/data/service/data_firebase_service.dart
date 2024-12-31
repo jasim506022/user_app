@@ -122,27 +122,6 @@ class DataFirebaseService implements BaseFirebaseService {
   }
 
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
-    return firebaseFirestore
-        .collection("seller")
-        .where("uid", whereIn: CartFunctions.separteSellerListUserList())
-        .snapshots();
-  }
-
-  @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
-      {required String sellerId}) {
-    return firebaseFirestore
-        .collection("products")
-        .where("sellerId", isEqualTo: sellerId)
-        .where("productId", whereIn: CartFunctions.separateProductID())
-        .orderBy("publishDate", descending: true)
-        .snapshots();
-
-    //
-  }
-
-  @override
   Future<void> uploadOrUpdateAddress(
       {required AddressModel addressModel, required bool isUpdate}) async {
     if (isUpdate) {

@@ -1,24 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:user_app/data/service/cart_service_data.dart';
 
-import '../data/service/data_firebase_service.dart';
 import '../res/app_function.dart';
 
 class CartRepository {
-  final _dataFirebaseService = DataFirebaseService();
+  final _artServiceData = CartServiceData();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSellersForCart() {
     try {
-      return _dataFirebaseService.cartSellerSnapshot();
+      return _artServiceData.fetchSellersForCart();
     } catch (e) {
       AppsFunction.handleException(e);
       rethrow;
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchProductsInCartBySeller(
       {required String sellerId}) {
     try {
-      return _dataFirebaseService.cartProductSnapshot(sellerId: sellerId);
+      return _artServiceData.fetchProductsInCartBySeller(sellerId: sellerId);
     } catch (e) {
       AppsFunction.handleException(e);
       rethrow;

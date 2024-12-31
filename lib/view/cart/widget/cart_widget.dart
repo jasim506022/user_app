@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/cart_controller.dart';
 import '../../../res/app_colors.dart';
@@ -24,19 +24,20 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int quantity = CartFunctions.seperateProductQuantiyList()[index];
     var cartController = Get.find<CartController>();
+    int quantity = CartFunctions.seperateProductQuantiyList()[index];
+
     return InkWell(
-      onTap: () => Get.toNamed(RoutesName.productDestailsPage,
-          arguments: {"productModel": productModel, "isCartBack": true}),
+      onTap: () => Get.toNamed(RoutesName.productDestailsPage, arguments: {
+        AppString.productModel: productModel,
+        AppString.isCartBack: true
+      }),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
         child: Column(
           children: [
             _buildProductCard(context, cartController, quantity),
-            SizedBox(
-              height: 4.h,
-            ),
+            AppsFunction.verticleSpace(10)
           ],
         ),
       ),
@@ -117,33 +118,22 @@ class CardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              children: [
-                Text(productModel.productunit!.toString(),
-                    style: AppsTextStyle.boldBodyTextStyle
-                        .copyWith(color: AppColors.lightHintText)),
-              ],
-            ),
+            Text(productModel.productunit!.toString(),
+                style: AppsTextStyle.boldBodyTextStyle
+                    .copyWith(color: AppColors.lightHintText)),
             Row(
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "${1 * quantity} * ",
-                      style: GoogleFonts.poppins(
-                          color: AppColors.accentGreen,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(price.toStringAsFixed(2),
+                    Text("$quantity * ${price.toStringAsFixed(2)}",
                         style: AppsTextStyle.rattingText
                             .copyWith(color: AppColors.accentGreen)),
                   ],
                 ),
                 const Spacer(),
                 Text(
-                  "= ৳. ${total.toStringAsFixed(2)}",
+                  "= ${AppString.currencyIcon}. ${total.toStringAsFixed(2)}",
                   style: AppsTextStyle.boldBodyTextStyle
                       .copyWith(color: AppColors.accentGreen),
                 ),

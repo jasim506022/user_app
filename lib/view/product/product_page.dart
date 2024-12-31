@@ -13,7 +13,8 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductListType productListType = Get.arguments as ProductListType;
+    ProductListType? productListType = Get.arguments;
+    productListType ??= ProductListType.regular;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

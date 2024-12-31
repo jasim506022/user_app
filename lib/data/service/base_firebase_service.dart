@@ -32,11 +32,6 @@ abstract class BaseFirebaseService {
 
   Future<void> forgetPasswordSnapshot({required String email});
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot();
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartProductSnapshot(
-      {required String sellerId});
-
   Future<void> uploadOrUpdateAddress(
       {required AddressModel addressModel, required bool isUpdate});
 

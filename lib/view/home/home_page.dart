@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
     return Container(
       height: 50.h,
       margin: EdgeInsets.symmetric(vertical: 15.h),
-      width: Get.width,
+      width: 1.sw,
       decoration: BoxDecoration(
           color: Theme.of(context).canvasColor,
           borderRadius: BorderRadius.circular(15.r)),
@@ -111,8 +111,9 @@ class HomePage extends StatelessWidget {
               style: AppsTextStyle.hintTextStyle,
             ),
             const Spacer(),
-            const Icon(
+            Icon(
               IconlyLight.search,
+              color: Theme.of(context).primaryColor,
             ),
             AppsFunction.horizontalSpace(10)
           ],

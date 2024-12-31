@@ -32,11 +32,10 @@ class LoadingProductCardWidget extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppsFunction.lineShimmer(15),
-                      AppsFunction.lineShimmer(15),
-                      AppsFunction.lineShimmer(15),
-                    ],
+                    children: List.generate(
+                      3,
+                      (index) => AppsFunction.lineShimmer(15),
+                    ),
                   ),
                 )
               ],

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:get/get.dart';
-import 'package:user_app/res/app_string.dart';
 
 import '../model/app_exception.dart';
 import '../model/products_model.dart';
@@ -9,6 +8,7 @@ import '../repository/cart_repository.dart';
 import '../res/app_asset/app_icons.dart';
 import '../res/app_constant.dart';
 import '../res/app_function.dart';
+import '../res/app_string.dart';
 import '../res/cart_funtion.dart';
 
 import 'profile_controller.dart';
@@ -19,7 +19,10 @@ class CartController extends GetxController {
   var profileController = Get.find<ProfileController>();
 
   CartController({required this.repository});
+
+  // Observable variables
   var cartItemCounter = 0.obs;
+  var totalAmount = 0.0.obs;
 
   @override
   void onInit() {
@@ -36,22 +39,32 @@ class CartController extends GetxController {
   }
 
   int get itemCount => cartItemCounter.value;
-  incrementCartItem() {
-    ++cartItemCounter;
+
+  void incrementCartItem() {
+    cartItemCounter.value++;
   }
 
-  decrementCartItem() {
-    --cartItemCounter;
+  void decrementCartItem() {
+    if (cartItemCounter.value > 0) {
+      cartItemCounter.value--;
+    }
   }
-
-  var totalAmount = 0.0.obs;
 
   void updateTotalAmount(ProductModel productModel, int itemIndex) {
+    /*
+
     totalAmount.value += ((AppsFunction.productPrice(
           productModel.productprice!,
           productModel.discount!.toDouble(),
         ) *
         CartFunctions.seperateProductQuantiyList()[itemIndex]));
+*/
+    final productPrice = AppsFunction.productPrice(
+      productModel.productprice!,
+      productModel.discount!.toDouble(),
+    );
+    final quantity = CartFunctions.seperateProductQuantiyList()[itemIndex];
+    totalAmount.value += productPrice * quantity;
   }
 
   void removeValue(double productPrice) {
@@ -62,16 +75,12 @@ class CartController extends GetxController {
     totalAmount = 0.0.obs;
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartSellerSnapshot() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSellersForCart() {
     try {
-      return repository.cartSellerSnapshot();
+      return repository.fetchSellersForCart();
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+        _handleError(e);
 
         if (cartItemCounter.value == 1) {
           Get.back();
@@ -81,17 +90,13 @@ class CartController extends GetxController {
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> cartproductSnapshot(
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchProductsInCartBySeller(
       {required String sellerId}) {
     try {
-      return repository.cartProductSnapshot(sellerId: sellerId);
+      return repository.fetchProductsInCartBySeller(sellerId: sellerId);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+        _handleError(e);
       }
       rethrow;
     }
@@ -99,7 +104,16 @@ class CartController extends GetxController {
     //
   }
 
-  void removeProductFromCart({required String productId}) async {
+  void _handleError(AppException e) {
+    AppsFunction.errorDialog(
+      icon: AppIcons.warningIcon,
+      title: e.title ?? AppString.errorOccure,
+      content: e.message ?? AppString.someThingWentWrong,
+      buttonText: AppString.okay,
+    );
+  }
+
+  Future<void> removeProductFromCart({required String productId}) async {
     // print(cartItemCounter.value);
     List<String> cartList = AppConstant.sharedPreference!
         .getStringList(AppString.cartListSharedPreference)!;
@@ -113,8 +127,10 @@ class CartController extends GetxController {
       cartList.remove(itemToRemove);
 
       try {
-        profileController.updateUserCartData(map: {"cartlist": cartList});
-        AppsFunction.flutterToast(msg: "Item remove Successfully");
+        profileController.updateUserCartData(
+            map: {AppString.cartListSharedPreference: cartList});
+
+        AppsFunction.flutterToast(msg: AppString.itemRemoveSuccessfully);
 
         AppConstant.sharedPreference!
             .setStringList(AppString.cartListSharedPreference, cartList);
@@ -122,17 +138,15 @@ class CartController extends GetxController {
         CartFunctions.separateProductID();
         CartFunctions.seperateProductQuantiyList();
 
-        // var controller = Get.put(CartProductCountController());
-
         --cartItemCounter;
         if (cartItemCounter.value != 0) {
-          cartSellerSnapshot();
+          fetchSellersForCart();
         }
       } catch (e) {
         AppsFunction.flutterToast(msg: e.toString());
       }
     } else {
-      AppsFunction.flutterToast(msg: "Item not found in cart");
+      AppsFunction.flutterToast(msg: AppString.itemNotFoundInCart);
     }
   }
 }

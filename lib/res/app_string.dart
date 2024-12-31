@@ -29,6 +29,9 @@ class AppString {
   static const productCategory = "productcategory";
   static const publishDate = "publishDate";
   static const productId = "productId";
+  static const firebaseSellerCollection = "seller";
+  static const firebaseuid = "uid";
+  static const firebaseProductColltion = "products";
 
   // toName argumane
   static const productModel = "productModel";
@@ -95,4 +98,17 @@ class AppString {
       "The Quantity cannot be less then 1";
 
   static const String someThingWentWrong = "Something went wrong";
+  static const String itemAddSuccessfully = "Item Add Successfully";
+  static const String noCartAvailabe = "No Cart Available";
+  static const String sellerName = "Seller Name";
+  static const String cart = "Cart";
+  static const String continueText = "Continue";
+  static const String subTotal = "Sub Total (BDT)";
+  static const String totalAmount = "Total Amount";
+  static const String delliveryCharge = "Delivery Charge";
+  static const String priceDelliveryCharge = "50.00";
+  static const String carryBagCharge = "Carry Bag Charge";
+  static const String priceCarryBagCharge = "0.00";
+  static const String itemRemoveSuccessfully = "Item remove Successfully";
+  static const String itemNotFoundInCart = "Item not found in cart";
 }

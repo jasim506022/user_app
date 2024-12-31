@@ -21,11 +21,11 @@ class ProductListBySellerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
     return StreamBuilder(
-      stream: cartController.cartproductSnapshot(sellerId: sellerId),
-      builder: (context, productSnashot) {
-        if (productSnashot.connectionState == ConnectionState.waiting) {
+      stream: cartController.fetchProductsInCartBySeller(sellerId: sellerId),
+      builder: (context, snashot) {
+        if (snashot.connectionState == ConnectionState.waiting) {
           return const LoadingListProudctCardWidget();
-        } else if (productSnashot.hasData) {
+        } else if (snashot.hasData) {
           return ListView.separated(
             separatorBuilder: (context, index) => SizedBox(
               width: 1.sw,
@@ -35,17 +35,19 @@ class ProductListBySellerWidget extends StatelessWidget {
             ),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: productSnashot.data!.docs.length,
-            itemBuilder: (context, itemIndex) {
-              ProductModel productModel = ProductModel.fromMap(
-                  productSnashot.data!.docs[itemIndex].data());
+            itemCount: snashot.data!.docs.length,
+            itemBuilder: (context, index) {
+              ProductModel productModel =
+                  ProductModel.fromMap(snashot.data!.docs[index].data());
+              // Update the total amount after the widget is rendered
+
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                cartController.updateTotalAmount(productModel, itemIndex);
+                cartController.updateTotalAmount(productModel, index);
               });
 
               return CardWidget(
                 productModel: productModel,
-                index: itemIndex,
+                index: index,
               );
             },
           );

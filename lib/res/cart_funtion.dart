@@ -20,15 +20,13 @@ class CartFunctions {
 
     cartItems.add(itemEntry);
 
-    Get.find<ProfileController>()
-        .updateUserCartData(map: {"cartlist": cartItems});
-    AppsFunction.flutterToast(msg: "Item Add Successfully");
+    Get.find<ProfileController>().updateUserCartData(
+        map: {AppString.cartListSharedPreference: cartItems});
+
+    AppsFunction.flutterToast(msg: AppString.itemAddSuccessfully);
 
     AppConstant.sharedPreference!
         .setStringList(AppString.cartListSharedPreference, cartItems);
-
-    print(cartItems);
-    print("Bangladesh");
 
     Get.find<CartController>().incrementCartItem();
   }
@@ -64,8 +62,9 @@ class CartFunctions {
 // Separet Product Quantity List From CartList
   static List<int> seperateProductQuantiyList() {
     return [
-      for (var item
-          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item in AppConstant.sharedPreference!
+          .getStringList(AppString.cartListSharedPreference)!
+          .skip(1))
         int.parse(item.toString().split(":")[2])
     ];
   }
@@ -128,8 +127,9 @@ class CartFunctions {
 // Separete Seller List From CartList
   static List<String> separteSellerListUserList() {
     return [
-      for (var item
-          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item in AppConstant.sharedPreference!
+          .getStringList(AppString.cartListSharedPreference)!
+          .skip(1))
         (item.toString().split(":")[1])
     ];
   }
