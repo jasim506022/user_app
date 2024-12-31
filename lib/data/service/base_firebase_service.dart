@@ -5,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_app/model/address_model.dart';
 
-import '../../model/productsmodel.dart';
-import '../../model/profilemodel.dart';
+import '../../model/profile_model.dart';
 
 abstract class BaseFirebaseService {
   FirebaseAuth get firebaseAuth;
@@ -30,15 +29,6 @@ abstract class BaseFirebaseService {
       {required ProfileModel profileModel, required String firebaseDocument});
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserInformationSnapshot();
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
-      {required String category});
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-      {required String category});
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
-      {required ProductModel productModel});
 
   Future<void> forgetPasswordSnapshot({required String email});
 

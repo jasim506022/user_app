@@ -5,7 +5,7 @@ import 'package:user_app/res/app_function.dart';
 
 import '../data/response/app_data_exception.dart';
 import '../data/service/data_firebase_service.dart';
-import '../model/profilemodel.dart';
+import '../model/profile_model.dart';
 
 class SignUpRepository {
   final _dataFirebaseService = DataFirebaseService();

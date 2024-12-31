@@ -1,16 +1,8 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'paymentmodel.dart';
 
-
-
-SharedPreferences? sharedPreference;
 int? isviewed;
-
-
-
-
 
 const List<String> allCategoryList = <String>[
   "All",
@@ -24,8 +16,6 @@ const List<String> allCategoryList = <String>[
 ];
 
 const List<String> list = <String>['Home', 'Office', 'Other'];
-
-
 
 const List<String> unitList = <String>[
   'Per Kg',
@@ -44,9 +34,6 @@ String image =
 
 String publishKey =
     'pk_test_51NxWNQAVUbXW3f6RWMGhMJhUO0udDaNswK3RRuIo817qEyN28xcXHMTPHIOnj27ah0giitHaEsgqvHOxbcoNbAWC00Z6GYb1Rv';
-
-
-
 
 // late Size mq;
 

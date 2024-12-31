@@ -7,12 +7,12 @@ class RowWidget extends StatelessWidget {
   const RowWidget({
     super.key,
     required this.text,
-    required this.function,
+    required this.onTap,
   });
 
   final String text;
 
-  final VoidCallback function;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,10 @@ class RowWidget extends StatelessWidget {
         ),
         const Spacer(),
         InkWell(
-          onTap: function,
+          onTap: onTap,
           child: Icon(
             Icons.arrow_forward_ios,
-            color: AppColors.greenColor,
+            color: AppColors.accentGreen,
           ),
         )
       ],

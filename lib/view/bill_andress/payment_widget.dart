@@ -21,8 +21,6 @@ class PaymentWidgetMethod extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
-
     return Padding(
         padding: EdgeInsets.only(left: 15.w),
         child: Obx(
@@ -32,10 +30,10 @@ class PaymentWidgetMethod extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(
                     color: controller.currentPyamentIndex.value == index
-                        ? AppColors.greenColor
+                        ? AppColors.accentGreen
                         : Theme.of(context).cardColor,
                     width: 2),
-                color: utils.green50,
+                color: Utils.green50,
                 borderRadius: BorderRadius.circular(15.r)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -1,23 +1,21 @@
 import 'package:get/get.dart';
 
-import 'package:user_app/res/constants.dart';
-
 import '../controller/cart_controller.dart';
 import '../controller/profile_controller.dart';
+import 'app_constant.dart';
 import 'app_function.dart';
-import 'constant/string_constant.dart';
+import 'app_string.dart';
 
 class CartFunctions {
-
-
   static void addItemToCart({
     required String productId,
     required int quantity,
     required String sellerId,
   }) {
-    List<String> cartItems = sharedPreference!
-            .getStringList(StringConstant.cartListSharedPreference) ??
+    List<String> cartItems = AppConstant.sharedPreference!
+            .getStringList(AppString.cartListSharedPreference) ??
         [];
+
     String itemEntry = "$productId:$sellerId:$quantity";
 
     cartItems.add(itemEntry);
@@ -26,17 +24,19 @@ class CartFunctions {
         .updateUserCartData(map: {"cartlist": cartItems});
     AppsFunction.flutterToast(msg: "Item Add Successfully");
 
-    sharedPreference!
-        .setStringList(StringConstant.cartListSharedPreference, cartItems);
+    AppConstant.sharedPreference!
+        .setStringList(AppString.cartListSharedPreference, cartItems);
+
+    print(cartItems);
+    print("Bangladesh");
 
     Get.find<CartController>().incrementCartItem();
   }
 
-
-
   static void clearCart() {
-    sharedPreference!.setStringList("cartlist", ["initial"]);
-    List<String> emptyCart = sharedPreference!.getStringList("cartlist")!;
+    AppConstant.sharedPreference!.setStringList("cartlist", ["initial"]);
+    List<String> emptyCart =
+        AppConstant.sharedPreference!.getStringList("cartlist")!;
 
     /*
     FirebaseFirestore.instance
@@ -55,7 +55,8 @@ class CartFunctions {
 // Separet Product Id From CartList
   static List<String> separateProductID() {
     return [
-      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item
+          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
         item.toString().split(":")[0]
     ];
   }
@@ -63,16 +64,20 @@ class CartFunctions {
 // Separet Product Quantity List From CartList
   static List<int> seperateProductQuantiyList() {
     return [
-      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item
+          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
         int.parse(item.toString().split(":")[2])
     ];
   }
 
   //[2,3,4]
   // Separet Product Quantity List From CartList
+
   static int productQuantiyList(String prodductId) {
-    List<String> list =
-        sharedPreference!.getStringList("cartlist")!.skip(1).toList();
+    List<String> list = AppConstant.sharedPreference!
+        .getStringList("cartlist")!
+        .skip(1)
+        .toList();
 
     String? matchingItem = list.firstWhere(
       (element) => element.contains(prodductId),
@@ -81,10 +86,33 @@ class CartFunctions {
     return int.parse(matchingItem.split(":")[2]);
   }
 
+/*
+  static int productQuantiyList(String prodductId) {
+    List<String>? cartList = sharedPreference!.getStringList("cartlist");
+
+    if (cartList == null || cartList.isEmpty) {
+      return 0; // Default quantity if cart list is empty or null
+    }
+
+    List<String> list = cartList.skip(1).toList();
+
+    String? matchingItem = list.firstWhere(
+      (element) => element.contains(prodductId),
+      orElse: () => "",
+    );
+
+    if (matchingItem.isEmpty) {
+      return 0; // Default quantity if no match is found
+    }
+
+    return int.parse(matchingItem.split(":")[2]);
+  }
+*/
 // Separete Seller List From CartList
   static List<String> separteSellerListUserList() {
     return [
-      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item
+          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
         (item.toString().split(":")[1])
     ];
   }
@@ -134,7 +162,7 @@ class CartFunctions {
 */
 
   static Set<String> seperateSellerSet() {
-    return sharedPreference!
+    return AppConstant.sharedPreference!
         .getStringList("cartlist")!
         .skip(1)
         .map((seller) => "${seller.split(":")[1]}:false")
@@ -143,7 +171,8 @@ class CartFunctions {
 
   static List<int> seperfateProductQuantiyList() {
     return [
-      for (var item in sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item
+          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
         int.parse(item.toString().split(":")[2])
     ];
   }

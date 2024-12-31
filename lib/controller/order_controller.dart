@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../model/app_exception.dart';
 import '../repository/order_repository.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../widget/error_dialog_widget.dart';
 
 class OrderController extends GetxController {
@@ -20,7 +20,7 @@ class OrderController extends GetxController {
       if (e is AppException) {
         Get.dialog(
           ErrorDialogWidget(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay",
@@ -40,7 +40,7 @@ class OrderController extends GetxController {
       if (e is AppException) {
         Get.dialog(
           ErrorDialogWidget(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay",
@@ -59,7 +59,7 @@ class OrderController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -75,7 +75,7 @@ class OrderController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -91,7 +91,7 @@ class OrderController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");

@@ -6,7 +6,7 @@ import 'package:user_app/model/app_exception.dart';
 import 'package:user_app/repository/select_image_repository.dart';
 
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 
 class SelectImageController extends GetxController {
   final SelectImageRepository repository;
@@ -21,7 +21,7 @@ class SelectImageController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");

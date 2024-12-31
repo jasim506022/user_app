@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../res/appasset/image_asset.dart';
+import '../res/app_asset/image_asset.dart';
 
 
 class CarouselModel {

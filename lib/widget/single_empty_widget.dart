@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:user_app/res/app_function.dart';
 
 import '../res/apps_text_style.dart';
-
 
 class SingleEmptyWidget extends StatelessWidget {
   const SingleEmptyWidget({
@@ -26,9 +26,7 @@ class SingleEmptyWidget extends StatelessWidget {
             height: 160.h,
             width: 160.w,
           ),
-           SizedBox(
-            width: 10.w,
-          ),
+          AppsFunction.horizontalSpace(10),
           Expanded(
             child: Text(title, style: AppsTextStyle.emptyTestStyle),
           )

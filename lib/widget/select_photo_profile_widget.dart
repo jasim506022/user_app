@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:user_app/res/app_function.dart';
 
 import '../../res/app_colors.dart';
 import '../controller/select_image_controller.dart';
+import '../res/app_string.dart';
 import '../res/apps_text_style.dart';
 
 class SelectPhotoProfile extends StatelessWidget {
@@ -31,13 +33,11 @@ class SelectPhotoProfile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(2.r)),
             ),
           ),
-          SizedBox(height: 10.h),
+          AppsFunction.verticleSpace(10),
           Align(
               alignment: Alignment.center,
               child: Text("Select Photo", style: AppsTextStyle.titleTextStyle)),
-          SizedBox(
-            height: 10.h,
-          ),
+          AppsFunction.verticleSpace(10),
           _selectPhotoOption()
         ],
       ),
@@ -48,15 +48,13 @@ class SelectPhotoProfile extends StatelessWidget {
     SelectImageController signUpController = Get.find();
     return Row(
       children: [
-        _buildTakePhotoOption("Camera", Icons.camera_alt, () {
+        _buildTakePhotoOption(AppString.camera, Icons.camera_alt, () {
           Get.back();
 
           signUpController.selectImage(imageSource: ImageSource.camera);
         }),
-        SizedBox(
-          width: Get.width * .066,
-        ),
-        _buildTakePhotoOption("Gallery", Icons.photo_album, () {
+        AppsFunction.horizontalSpace(20),
+        _buildTakePhotoOption(AppString.gallery, Icons.photo_album, () {
           Get.back();
 
           signUpController.selectImage(imageSource: ImageSource.gallery);
@@ -78,19 +76,17 @@ class SelectPhotoProfile extends StatelessWidget {
               padding: EdgeInsets.all(10.r),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.greenColor)),
+                  border: Border.all(color: AppColors.accentGreen)),
               child: Icon(
                 icon,
-                color: AppColors.greenColor,
+                color: AppColors.accentGreen,
               ),
             ),
-            SizedBox(
-              height: 5.w,
-            ),
+            AppsFunction.verticleSpace(5),
             Text(
               title,
               style: AppsTextStyle.boldBodyTextStyle
-                  .copyWith(color: AppColors.greenColor),
+                  .copyWith(color: AppColors.accentGreen),
             ),
           ],
         ),

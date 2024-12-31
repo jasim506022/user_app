@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../controller/profile_controller.dart';
 
 import '../../res/app_colors.dart';
+import '../../res/app_constant.dart';
 import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/constant/string_constant.dart';
@@ -48,7 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Scaffold(
             appBar: AppBar(
               title: Text(
-                isEdit ? "Edit Profile" : "About",
+                isEdit ? "Edit Profile" : AppString.about,
               ),
               actions: [
                 isEdit
@@ -89,8 +91,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ClipOval(
               child: FancyShimmerImage(
                 imageUrl: profileController.profileModel.value.imageurl ??
-                    sharedPreference!
-                        .getString(StringConstant.imageSharedPreference)!,
+                    AppConstant.sharedPreference!
+                        .getString(AppString.imageSharedPreference)!,
               ),
             ),
           );
@@ -106,8 +108,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ? ClipOval(
                   child: FancyShimmerImage(
                   imageUrl: profileController.profileModel.value.imageurl ??
-                      sharedPreference!
-                          .getString(StringConstant.imageSharedPreference)!,
+                      AppConstant.sharedPreference!
+                          .getString(AppString.imageSharedPreference)!,
                 ))
               : CircleAvatar(backgroundImage: FileImage(image)));
         }),
@@ -211,4 +213,3 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ));
   }
 }
-

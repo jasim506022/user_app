@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import '../../../res/app_function.dart';
 import '../../../res/app_colors.dart';
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
+import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/constant/string_constant.dart';
@@ -15,27 +15,28 @@ import '../../../widget/product_image_widget.dart';
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({
     super.key,
+    required this.productModel,
   });
-
+  final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
-
     bool isInCart =
         CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage,
-              arguments: {"productModel": productModel, "isCartBack": false});
+          Get.toNamed(RoutesName.productDestailsPage, arguments: {
+            AppString.productModel: productModel,
+            AppString.isCartBack: false
+          });
         }
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         child: Container(
-          height: 120.h,
-          width: .8.sw,
+          height: 130.h,
+          width: .83.sw,
           decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -48,7 +49,12 @@ class SingleProductWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildProductImage(productModel),
+              ProductImageWidget(
+                productModel: productModel,
+                height: 110.h,
+                width: 110.h,
+                imageHeith: 110.h,
+              ),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -75,18 +81,14 @@ class SingleProductWidget extends StatelessWidget {
               style: AppsTextStyle.boldBodyTextStyle
                   .copyWith(color: AppColors.red),
             ),
-            SizedBox(
-              width: 15.w,
-            ),
+            AppsFunction.horizontalSpace(15),
             Text(
-              "${(productModel.productprice!)}",
+              productModel.productprice!.toString(),
               style: AppsTextStyle.mediumText400lineThrough,
             ),
           ],
         ),
-        SizedBox(
-          height: 5.h,
-        ),
+        AppsFunction.verticleSpace(5),
         RichText(
           text: TextSpan(children: [
             TextSpan(
@@ -94,20 +96,18 @@ class SingleProductWidget extends StatelessWidget {
               style: AppsTextStyle.boldBodyTextStyle,
             ),
             TextSpan(
-              text: "(${productModel.productunit!})",
+              text: productModel.productunit!,
               style: AppsTextStyle.smallBoldText,
             ),
           ]),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        AppsFunction.verticleSpace(5),
         Container(
           alignment: Alignment.center,
           height: 35.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.r),
-            color: isCart ? AppColors.red : AppColors.greenColor,
+            color: isCart ? AppColors.red : AppColors.accentGreen,
           ),
           child: Text(
             StringConstant.addToCart,
@@ -115,15 +115,6 @@ class SingleProductWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildProductImage(ProductModel productModel) {
-    return ProductImageWidget(
-      productModel: productModel,
-      height: 110.h,
-      width: 110.h,
-      imageHeith: 110.h,
     );
   }
 }

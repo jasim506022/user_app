@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:user_app/res/apps_text_style.dart';
@@ -30,7 +28,7 @@ class RoundButtonWidget extends StatelessWidget {
           width: width.w,
           margin: EdgeInsets.symmetric(horizontal: 0.2.sw),
           decoration: BoxDecoration(
-              color: buttonColors ?? AppColors.greenColor,
+              color: buttonColors ?? AppColors.accentGreen,
               borderRadius: BorderRadius.circular(50.r)),
           child: Center(
             child: Text(
@@ -41,4 +39,3 @@ class RoundButtonWidget extends StatelessWidget {
     );
   }
 }
-

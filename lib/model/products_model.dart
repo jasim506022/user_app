@@ -9,7 +9,7 @@ class ProductModel with ChangeNotifier {
   String? productname;
   double? productprice;
   double? productrating;
-  int? discount;
+  num? discount;
   String? sellerId;
   String? productunit;
   Timestamp? publishDate;

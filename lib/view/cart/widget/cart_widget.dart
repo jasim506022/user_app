@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../controller/cart_controller.dart';
 import '../../../res/app_colors.dart';
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
@@ -98,8 +98,8 @@ class CardWidget extends StatelessWidget {
                     onTap: () async {
                       if (!(await AppsFunction.verifyInternetStatus())) {
                         cartController.removeProductFromCart(
-                        productId: productModel.productId!,
-                      );
+                          productId: productModel.productId!,
+                        );
                       }
                       cartController.removeValue(total);
                     },
@@ -121,7 +121,7 @@ class CardWidget extends StatelessWidget {
               children: [
                 Text(productModel.productunit!.toString(),
                     style: AppsTextStyle.boldBodyTextStyle
-                        .copyWith(color: AppColors.hintLightColor)),
+                        .copyWith(color: AppColors.lightHintText)),
               ],
             ),
             Row(
@@ -132,20 +132,20 @@ class CardWidget extends StatelessWidget {
                     Text(
                       "${1 * quantity} * ",
                       style: GoogleFonts.poppins(
-                          color: AppColors.greenColor,
+                          color: AppColors.accentGreen,
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(price.toStringAsFixed(2),
                         style: AppsTextStyle.rattingText
-                            .copyWith(color: AppColors.greenColor)),
+                            .copyWith(color: AppColors.accentGreen)),
                   ],
                 ),
                 const Spacer(),
                 Text(
                   "= ৳. ${total.toStringAsFixed(2)}",
                   style: AppsTextStyle.boldBodyTextStyle
-                      .copyWith(color: AppColors.greenColor),
+                      .copyWith(color: AppColors.accentGreen),
                 ),
               ],
             ),

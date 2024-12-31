@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';

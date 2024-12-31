@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../model/app_exception.dart';
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 import '../repository/cart_repository.dart';
+import '../res/app_asset/app_icons.dart';
+import '../res/app_constant.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
 import '../res/cart_funtion.dart';
-import '../res/constant/string_constant.dart';
-import '../res/constants.dart';
 
 import 'profile_controller.dart';
 
@@ -28,8 +28,8 @@ class CartController extends GetxController {
   }
 
   void initializeCartItemCount() {
-    final cartList = sharedPreference
-        ?.getStringList(StringConstant.cartListSharedPreference);
+    final cartList = AppConstant.sharedPreference
+        ?.getStringList(AppString.cartListSharedPreference);
     if (cartList != null && cartList.isNotEmpty) {
       cartItemCounter.value = cartList.length - 1;
     }
@@ -68,7 +68,7 @@ class CartController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -88,7 +88,7 @@ class CartController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -101,8 +101,8 @@ class CartController extends GetxController {
 
   void removeProductFromCart({required String productId}) async {
     // print(cartItemCounter.value);
-    List<String> cartList = sharedPreference!
-        .getStringList(StringConstant.cartListSharedPreference)!;
+    List<String> cartList = AppConstant.sharedPreference!
+        .getStringList(AppString.cartListSharedPreference)!;
 
     String itemToRemove = cartList.firstWhere(
       (element) => element.contains(productId),
@@ -116,8 +116,8 @@ class CartController extends GetxController {
         profileController.updateUserCartData(map: {"cartlist": cartList});
         AppsFunction.flutterToast(msg: "Item remove Successfully");
 
-        sharedPreference!
-            .setStringList(StringConstant.cartListSharedPreference, cartList);
+        AppConstant.sharedPreference!
+            .setStringList(AppString.cartListSharedPreference, cartList);
 
         CartFunctions.separateProductID();
         CartFunctions.seperateProductQuantiyList();
@@ -126,11 +126,9 @@ class CartController extends GetxController {
 
         --cartItemCounter;
         if (cartItemCounter.value != 0) {
-          
           cartSellerSnapshot();
         }
       } catch (e) {
-        
         AppsFunction.flutterToast(msg: e.toString());
       }
     } else {

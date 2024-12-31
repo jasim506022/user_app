@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../model/app_exception.dart';
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import 'product_controller.dart';
 
 class SearchControllers extends GetxController {
@@ -68,11 +68,11 @@ class SearchControllers extends GetxController {
   Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots() {
     try {
       return productController.repository
-          .productSnapshots(category: selectedCategory.value);
+          .fetchCategoryProducts(category: selectedCategory.value);
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");

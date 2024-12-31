@@ -28,7 +28,7 @@ class AddressWidget extends StatelessWidget {
     var addressController = Get.put(AddressController(
       Get.find(),
     ));
-    Utils utils = Utils();
+
     return Obx(() => Padding(
           padding: EdgeInsets.only(top: 12.h),
           child: InkWell(
@@ -57,10 +57,10 @@ class AddressWidget extends StatelessWidget {
                   border: Border.all(
                       color:
                           addressController.currentAddressIndex.value == index
-                              ? AppColors.greenColor
+                              ? AppColors.accentGreen
                               : Theme.of(context).cardColor,
                       width: 2),
-                  color: utils.green50,
+                  color: Utils.green50,
                   borderRadius: BorderRadius.circular(25.r)),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,7 +76,7 @@ class AddressWidget extends StatelessWidget {
                                 ? Icon(
                                     Icons.home,
                                     size: 30,
-                                    color: AppColors.greenColor,
+                                    color: AppColors.accentGreen,
                                   )
                                 : const Icon(
                                     Icons.home_outlined,
@@ -110,7 +110,7 @@ class AddressWidget extends StatelessWidget {
                       }
                     },
                     child: Icon(Typicons.edit,
-                        size: 40, color: AppColors.greenColor),
+                        size: 40, color: AppColors.accentGreen),
                   )
                 ],
               ),

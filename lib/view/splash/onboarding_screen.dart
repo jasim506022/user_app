@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../controller/onboarding_controller.dart';
 
@@ -31,7 +32,7 @@ class OnboardingScreen extends StatelessWidget {
                   onBoardingController.completeOnboarding();
                 },
                 child: Text(
-                  "Skip",
+                  AppString.skip,
                   style: AppsTextStyle.largeText.copyWith(),
                 ))
           ],

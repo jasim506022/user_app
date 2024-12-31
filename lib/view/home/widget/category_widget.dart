@@ -17,7 +17,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var categoryController = Get.find<CategoryController>();
-    Utils utils = Utils();
+
     return SizedBox(
       height: 40.h,
       width: 1.sw,
@@ -25,37 +25,45 @@ class CategoryWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: allCategoryList.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(left: 10.w),
-            child: InkWell(
-              onTap: () async {
-                if (!(await AppsFunction.verifyInternetStatus())) {
-                  categoryController.setCategory(
-                      category: allCategoryList[index]);
-                }
-              },
-              child: Obx(() {
-                bool isSelect =
-                    categoryController.getCategory == allCategoryList[index];
-                return Container(
-                  alignment: Alignment.center,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  decoration: BoxDecoration(
-                      color: isSelect
-                          ? utils.categorySelectBackground
-                          : utils.categoryUnselectBackground,
-                      borderRadius: BorderRadius.circular(30.r)),
-                  child: Text(allCategoryList[index],
-                      style: AppsTextStyle.boldBodyTextStyle.copyWith(
-                          color: isSelect
-                              ? AppColors.white
-                              : utils.categoryUnSelectTextColor)),
-                );
-              }),
-            ),
-          );
+          final category = allCategoryList[index];
+          return _buildCategoryItem(categoryController, category);
         },
+      ),
+    );
+  }
+
+  /// Builds an individual category item.
+
+  Padding _buildCategoryItem(
+      CategoryController categoryController, String category) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10.w),
+      child: InkWell(
+        onTap: () async {
+          if (!(await AppsFunction.verifyInternetStatus())) {
+            categoryController.setCategory(category: category);
+          }
+        },
+        child: Obx(() {
+          bool isSelected = categoryController.getCategory == category;
+
+          /// Builds the styled container for a category item.
+
+          return Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            decoration: BoxDecoration(
+                color: isSelected
+                    ? Utils.categorySelectBackground
+                    : Utils.categoryUnselectBackground,
+                borderRadius: BorderRadius.circular(30.r)),
+            child: Text(category,
+                style: AppsTextStyle.boldBodyTextStyle.copyWith(
+                    color: isSelected
+                        ? AppColors.white
+                        : Utils.categoryUnSelectTextColor)),
+          );
+        }),
       ),
     );
   }

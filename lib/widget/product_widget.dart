@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/constant/string_constant.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import '../res/app_function.dart';
@@ -10,30 +10,34 @@ import '../res/cart_funtion.dart';
 
 import '../../res/app_colors.dart';
 
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 
 import 'product_image_widget.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
     super.key,
+    required this.productModel,
   });
+
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
-
     bool isInCart =
         CartFunctions.separateProductID().contains(productModel.productId);
 
     return InkWell(
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage,
-              arguments: {"productModel": productModel, "isCartBack": false});
+          Get.toNamed(RoutesName.productDestailsPage, arguments: {
+            AppString.productModel: productModel,
+            AppString.isCartBack: false
+          });
         }
       },
       child: Card(
+        color: Theme.of(context).cardColor,
         child: Container(
           height: 1.sh,
           width: 1.sw,
@@ -42,7 +46,7 @@ class ProductWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.white,
+                  color: Theme.of(context).primaryColor,
                   spreadRadius: .08,
                 )
               ]),
@@ -76,31 +80,25 @@ class ProductWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+              "${AppString.currencyIcon} ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
               style: AppsTextStyle.boldBodyTextStyle
                   .copyWith(color: AppColors.red),
             ),
-            SizedBox(
-              width: 15.w,
-            ),
+            AppsFunction.horizontalSpace(15),
             Text(
-              "${(productModel.productprice!)}",
+              productModel.productprice!.toString(),
               style: AppsTextStyle.mediumText400lineThrough,
             ),
           ],
         ),
-        SizedBox(
-          height: 2.h,
-        ),
+        AppsFunction.verticleSpace(2),
         FittedBox(
           child: Text(
             productModel.productname!,
             style: AppsTextStyle.boldBodyTextStyle,
           ),
         ),
-        SizedBox(
-          height: 5.h,
-        ),
+        AppsFunction.verticleSpace(5),
         InkWell(
             onTap: () async {
               if (!(await AppsFunction.verifyInternetStatus())) {
@@ -114,43 +112,15 @@ class ProductWidget extends StatelessWidget {
               width: 1.sw,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15.r),
-                color: isCart ? AppColors.red : AppColors.greenColor,
+                color: isCart ? AppColors.red : AppColors.accentGreen,
               ),
               child: Text(
                 StringConstant.addToCart,
                 style: AppsTextStyle.buttonTextStyle,
               ),
             )),
-        SizedBox(
-          height: 7.h,
-        ),
+        AppsFunction.verticleSpace(7)
       ],
     );
   }
-/*
-  Stack _buildProductImage(ProductModel productModel) {
-    return Stack(
-      children: [
-        Container(
-          height: 100.h,
-          alignment: Alignment.center,
-          margin: EdgeInsets.all(10.r),
-          padding: EdgeInsets.all(20.r),
-          decoration: BoxDecoration(
-              color: AppColors.cardImageBg,
-              borderRadius: BorderRadius.circular(5.r)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: FancyShimmerImage(
-              height: 90.h,
-              boxFit: BoxFit.contain,
-              imageUrl: productModel.productimage![0],
-            ),
-          ),
-        ),
-        ProductDiscountWidget(discount: productModel.discount!)
-      ],
-    );
-  }
-*/
 }

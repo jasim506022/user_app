@@ -26,7 +26,7 @@ class OrderDetailsWidget extends StatelessWidget {
         children: [
           Text("Order #${orderModel.orderId}",
               style: AppsTextStyle.largeBoldText.copyWith(
-                color: AppColors.greenColor,
+                color: AppColors.accentGreen,
               )),
           SizedBox(
             height: 7.w,

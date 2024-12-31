@@ -12,7 +12,6 @@ class LoadingSimilierWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return ListView.builder(
       itemCount: 5,
       scrollDirection: Axis.horizontal,
@@ -24,15 +23,13 @@ class LoadingSimilierWidget extends StatelessWidget {
           margin: EdgeInsets.only(left: 15.w),
           color: Theme.of(context).cardColor,
           child: Shimmer.fromColors(
-            baseColor: utils.baseShimmerColor,
-            highlightColor: utils.highlightShimmerColor,
+            baseColor: Utils.baseShimmerColor,
+            highlightColor: Utils.highlightShimmerColor,
             child: Column(
               children: [
-                AppsFunction.lineShimmer(utils, 70.h),
-                SizedBox(
-                  height: 8.h,
-                ),
-                AppsFunction.lineShimmer(utils, 10.h)
+                AppsFunction.lineShimmer(70),
+                AppsFunction.verticleSpace(8),
+                AppsFunction.lineShimmer(10)
               ],
             ),
           ),

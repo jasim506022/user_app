@@ -26,7 +26,7 @@ class OrderStatusWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 15.h),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.r),
-              color: AppColors.deepGreen,
+              color: AppColors.deepGreenAccent,
             ),
             child: Text(
               title,

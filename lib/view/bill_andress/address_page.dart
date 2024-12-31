@@ -61,7 +61,7 @@ class _AddressPageState extends State<AddressPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-            backgroundColor: AppColors.greenColor,
+            backgroundColor: AppColors.accentGreen,
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
               if (!(await AppsFunction.verifyInternetStatus())) {
@@ -173,7 +173,7 @@ class _AddressPageState extends State<AddressPage> {
         elevation: 16,
         underline: Container(
           height: 2,
-          color: AppColors.greenColor,
+          color: AppColors.accentGreen,
         ),
         onChanged: (String? value) {
           addressController.setDropdownAddress(value!);

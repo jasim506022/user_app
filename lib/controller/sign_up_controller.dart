@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../model/profilemodel.dart';
+import '../model/profile_model.dart';
 import '../repository/sign_up_repository.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/routes/routes_name.dart';
 import 'loading_controller.dart';
 import 'select_image_controller.dart';
@@ -67,13 +67,13 @@ class SignUpController extends GetxController {
       selectImageController.selectPhoto.value = null;
     } on FirebaseAuthException catch (e) {
       AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
+          icon: AppIcons.warningIcon,
           title: "Exception",
           content: e.message,
           buttonText: "Okay");
     } catch (e) {
       AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
+          icon: AppIcons.warningIcon,
           title: "Exception",
           content: e.toString(),
           buttonText: "Okay");
@@ -90,7 +90,7 @@ class SignUpController extends GetxController {
     }
     if (selectImageController.selectPhoto.value == null) {
       _showErrorDialog("No Image Selected", "Please select a profile image.",
-          IconAsset.noImage);
+          AppIcons.noImage);
       return false;
     }
     return true;
@@ -98,7 +98,7 @@ class SignUpController extends GetxController {
 
   void _showErrorDialog(String title, String content, [String? icon]) {
     AppsFunction.errorDialog(
-        icon: icon ?? IconAsset.warningIcon,
+        icon: icon ?? AppIcons.warningIcon,
         title: title,
         content: content,
         buttonText: "Okay");

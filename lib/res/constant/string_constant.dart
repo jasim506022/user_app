@@ -1,20 +1,11 @@
 class StringConstant {
-  static const String imageSharedPreference = "imageurl";
-  static const String nameSharedPreference = "name";
-  static const String emailSharedPreference = "email";
-  static const String phoneSharedPreference = "phone";
-  static const String cartListSharedPreference = "cartlist";
-  static const String uidSharedPreference = "uid";
-
   static const String similarProducts = "Similar Products";
   static const String alreadyAdded = "Already Added";
   static const String rattings = "Rattings";
 
-  static const String popularProduct = "Popular Product";
-
   static const String product = "Product";
 
-  static const String searchint = "Search...........";
+  // static const String searchint = "Search...........";
   static const String addToCart = "Add To Cart";
   static const String itemAlreadyInCart = "Item Already in Cart";
 

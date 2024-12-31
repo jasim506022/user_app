@@ -17,7 +17,6 @@ class CaptureImageProfileWidget extends StatelessWidget {
     SignUpController signUpController = Get.find();
     return InkWell(
       onTap: () async {
-        
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.bottomSheet(
               backgroundColor: AppColors.white, const SelectPhotoProfile());
@@ -33,7 +32,7 @@ class CaptureImageProfileWidget extends StatelessWidget {
           return CircleAvatar(
             radius: 0.2.sw,
             backgroundImage: imageFile == null ? null : FileImage(imageFile),
-            backgroundColor: AppColors.backgroundLightColor,
+            backgroundColor: AppColors.lightBackground,
             foregroundColor: AppColors.black,
             child: imageFile == null
                 ? Icon(

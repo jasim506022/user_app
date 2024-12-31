@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 
 import '../../controller/splash_controller.dart';
 
-import '../../res/appasset/icon_asset.dart';
-import '../../res/appasset/image_asset.dart';
+import '../../res/app_asset/app_icons.dart';
+import '../../res/app_function.dart';
+import '../../res/app_string.dart';
+import '../../res/app_asset/image_asset.dart';
 import '../../res/apps_text_style.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -30,14 +32,12 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                IconAsset.appIcon,
+                AppIcons.appIcon,
                 height: 0.15.sh,
                 width: 0.15.sh,
               ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Text("Grocery Apps", style: AppsTextStyle.appLogoFonts),
+              AppsFunction.verticleSpace(10),
+              Text(AppString.groceryApps, style: AppsTextStyle.appLogoFonts),
             ],
           ),
         ),

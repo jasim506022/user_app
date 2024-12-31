@@ -5,12 +5,140 @@ import 'package:user_app/res/utils.dart';
 
 import '../../../controller/cart_controller.dart';
 
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/cart_badge.dart';
 import 'details_image_swiper_widget.dart';
+
+class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
+  const DetailsPageImageSlideWithCartBridgeWidget({
+    super.key,
+    required this.productModel,
+    this.backCart = false,
+  });
+
+  final ProductModel productModel;
+  final bool backCart;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 320.h,
+      width: 1.sw,
+      child: Stack(
+        children: [
+          ..._buildBackgroundCircles(),
+          Positioned(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppsFunction.verticleSpace(10),
+                  _buildTopBar(),
+                  DetailsImageSwiperWidget(productModel: productModel),
+                  AppsFunction.verticleSpace(10),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // This method builds the background circles
+  List<Widget> _buildBackgroundCircles() {
+    List<Map<String, dynamic>> circleConfig = [
+      {
+        'left': -300.00.w,
+        'right': -300.00.w,
+        'top': -350.00.h,
+        'size': 650.00.h,
+        'color': Utils.green100
+      },
+      {
+        'left': -80.00.w,
+        'right': -80.00.w,
+        'top': -360.00.h,
+        'size': 650.00.h,
+        'color': Utils.green200
+      },
+      {
+        'left': 0.00,
+        'right': 0.00,
+        'top': -150.00.w,
+        'size': 300.00.h,
+        'color': Utils.green300
+      },
+    ];
+
+    return circleConfig.map((circle) {
+      return Positioned(
+        left: circle['left'],
+        right: circle['right'],
+        top: circle['top'],
+        child: Container(
+          height: circle['size'],
+          width: circle['size'],
+          decoration: BoxDecoration(
+            color: circle['color'],
+            shape: BoxShape.circle,
+          ),
+        ),
+      );
+    }).toList();
+  }
+
+  // This method builds the top bar with back and cart buttons
+  Widget _buildTopBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: () => Get.back(),
+          child: _buildCircularButton(
+            Icon(Icons.arrow_back_ios, color: AppColors.white, size: 25),
+          ),
+        ),
+        InkWell(
+          onTap: () async {
+            if (!(await AppsFunction.verifyInternetStatus())) {
+              Get.toNamed(RoutesName.cartPage);
+            }
+          },
+          child: _buildCircularButton(
+            Obx(
+              () => CartBadge(
+                color: AppColors.white,
+                itemCount: Get.find<CartController>().itemCount,
+                icon: Icons.shopping_cart,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Helper method to build a circular button
+  Container _buildCircularButton(Widget widget) {
+    return Container(
+      height: 50.h,
+      width: 50.h,
+      decoration: BoxDecoration(
+        color: AppColors.accentGreen,
+        shape: BoxShape.circle,
+      ),
+      child: widget,
+    );
+  }
+}
+
+
+/*
 
 class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
   const DetailsPageImageSlideWithCartBridgeWidget({
@@ -74,9 +202,8 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  AppsFunction.verticleSpace(10),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,10 +236,9 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
                           ))
                     ],
                   ),
+                 
                   DetailsImageSwiperWidget(productModel: productModel),
-                  SizedBox(
-                    height: 15.h,
-                  ),
+                  AppsFunction.verticleSpace(10)
                 ],
               ),
             ),
@@ -127,10 +253,16 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
         height: 50.h,
         width: 50.h,
         decoration:
-            BoxDecoration(color: AppColors.greenColor, shape: BoxShape.circle),
+            BoxDecoration(color: AppColors.accentGreen, shape: BoxShape.circle),
         child: widget);
   }
 }
+
+
+*/
+
+
+
 
 /*
 

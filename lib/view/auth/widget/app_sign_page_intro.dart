@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../res/appasset/image_asset.dart';
+import '../../../res/app_asset/image_asset.dart';
 import '../../../res/apps_text_style.dart';
 
 class AppSignInPageIntro extends StatelessWidget {

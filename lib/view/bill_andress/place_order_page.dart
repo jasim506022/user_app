@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/profile_controller.dart';
-import 'package:user_app/res/appasset/image_asset.dart';
+import 'package:user_app/res/app_asset/image_asset.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../res/app_colors.dart';
@@ -52,7 +52,7 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
           ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.greenColor,
+                  backgroundColor: AppColors.accentGreen,
                   padding:
                       EdgeInsets.symmetric(vertical: 12.h, horizontal: 25.w)),
               onPressed: () {

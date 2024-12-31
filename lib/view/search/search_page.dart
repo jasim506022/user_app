@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../controller/search_controller.dart';
-import '../../model/productsmodel.dart';
+import '../../model/products_model.dart';
 
 import '../../loading_widget/loading_list_product_widget.dart';
 
@@ -23,8 +24,8 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     searchController.searchTextTEC.text = "";
     searchController.setCategory("All");
-    searchController.minPriceTEC.text = "0.00";
-    searchController.maxPriceTEC.text = "10000.00";
+    searchController.minPriceTEC.text = AppString.searchMinPrice;
+    searchController.maxPriceTEC.text = AppString.searchMaxPrice;
     super.initState();
   }
 
@@ -35,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Search Products",
+            AppString.searchProduct,
           ),
         ),
         body: Padding(

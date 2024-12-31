@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
@@ -26,14 +27,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text(AppString.profile),
         actions: [
           IconButton(
               onPressed: () {},
               icon: Icon(
                 Icons.settings_outlined,
                 size: 25.h,
-                color: Theme.of(context).primaryColor,
               ))
         ],
       ),
@@ -64,28 +64,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final List<Map<String, dynamic>> menuItems = [
       {
         "icon": Icons.info_outline,
-        "title": 'About',
+        "title": AppString.about,
         "route": RoutesName.editProfileScreen
       },
       {
         "icon": Icons.home_outlined,
-        "title": 'Home',
+        "title": AppString.home,
         "route": RoutesName.mainPage,
         "argument": 0
       },
       {
         "icon": Icons.reorder,
-        "title": 'My Orders',
+        "title": AppString.myOrder,
         "route": RoutesName.orderPage
       },
       {
         "icon": Icons.access_time,
-        "title": 'History',
+        "title": AppString.history,
         "route": RoutesName.historyPage
       },
       {
         "icon": Icons.search,
-        "title": 'Search',
+        "title": AppString.search,
         "route": RoutesName.mainPage,
         "argument": 2
       },
@@ -123,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             size: 25.h,
           ),
           title: Text(
-            themeProvider.getDarkTheme ? "Dark" : "Light",
+            themeProvider.getDarkTheme ? AppString.dark : AppString.light,
             style: AppsTextStyle.largeBoldText,
           ),
           activeColor: AppColors.white,
@@ -139,14 +139,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildSignOutTile() {
     return CustomListTile(
       icon: Icons.exit_to_app,
-      title: 'Sign Out',
+      title: AppString.signOut,
       iconColor: AppColors.red,
       onTap: () async {
         if (!(await AppsFunction.verifyInternetStatus())) {
           Get.dialog(CustomAlertDialogWidget(
             icon: Icons.delete,
-            title: "Sign Out",
-            subTitle: 'Do you want to sign out?',
+            title: AppString.signOut,
+            subTitle: AppString.doYouWantSignount,
             yesOnPress: () async => await profileController.signOut(),
           ));
         }

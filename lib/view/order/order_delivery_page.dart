@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/model/order_model.dart';
-import 'package:user_app/res/appasset/image_asset.dart';
+import 'package:user_app/res/app_asset/image_asset.dart';
 
 import 'widget/delivery_estimateion_card.dart';
 import 'widget/delivery_infor_widget.dart';

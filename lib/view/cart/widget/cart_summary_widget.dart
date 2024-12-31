@@ -14,13 +14,12 @@ class CartSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     var cartController = Get.find<CartController>();
     return Container(
       width: 1.sw,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: utils.bottomTotalBill,
+        color: Utils.bottomTotalBill,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(60.r),
           topRight: Radius.circular(60.r),
@@ -30,7 +29,7 @@ class CartSummaryWidget extends StatelessWidget {
         // print()
         final totalAmount = cartController.totalAmount.value;
         final subTotal = totalAmount + 50; // Fixed delivery amount
-   
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -58,7 +57,7 @@ class CartSummaryWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 width: 1.sw,
                 decoration: BoxDecoration(
-                  color: AppColors.greenColor,
+                  color: AppColors.accentGreen,
                   borderRadius: BorderRadius.circular(15.r),
                 ),
                 child: Text(

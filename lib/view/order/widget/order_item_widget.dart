@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
-import '../../../res/appasset/image_asset.dart';
+import '../../../res/app_asset/image_asset.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/card_product_widget.dart';

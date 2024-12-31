@@ -38,7 +38,7 @@ class AddressDetailsWidget extends StatelessWidget {
       children: [
         Text("Delivery Address",
             style: AppsTextStyle.largeBoldText
-                .copyWith(color: AppColors.greenColor)),
+                .copyWith(color: AppColors.accentGreen)),
         const Spacer(),
         InkWell(
           onTap: () async {
@@ -55,7 +55,7 @@ class AddressDetailsWidget extends StatelessWidget {
           },
           child: Text("+Add",
               style: AppsTextStyle.largeBoldText
-                  .copyWith(color: AppColors.greenColor)),
+                  .copyWith(color: AppColors.accentGreen)),
         )
       ],
     );

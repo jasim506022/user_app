@@ -12,8 +12,6 @@ class LoadingProductCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
-
     return Column(
       children: [
         Container(
@@ -23,23 +21,21 @@ class LoadingProductCardWidget extends StatelessWidget {
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20.r)),
           child: Shimmer.fromColors(
-            baseColor: utils.baseShimmerColor,
-            highlightColor: utils.highlightShimmerColor,
+            baseColor: Utils.baseShimmerColor,
+            highlightColor: Utils.highlightShimmerColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppsFunction.lineShimmer(utils, 110.h, 130.w),
-                SizedBox(
-                  width: 10.w,
-                ),
+                AppsFunction.lineShimmer(110, 130),
+                AppsFunction.horizontalSpace(10),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppsFunction.lineShimmer(utils, 15.h),
-                      AppsFunction.lineShimmer(utils, 15.h),
-                      AppsFunction.lineShimmer(utils, 15.h),
+                      AppsFunction.lineShimmer(15),
+                      AppsFunction.lineShimmer(15),
+                      AppsFunction.lineShimmer(15),
                     ],
                   ),
                 )

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:user_app/view/product/product_page.dart';
+
 import '../../controller/network_controller.dart';
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
+import '../../res/app_string.dart';
 import '../home/home_page.dart';
+import '../product/product_page.dart';
 import '../profile/profile_screen.dart';
 import '../search/search_page.dart';
 
@@ -20,7 +22,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ProfileController profileController = Get.find();
+  final profileController = Get.find<ProfileController>();
   int currentIndex = 0;
 
   late List<Widget> widgetOptions = [
@@ -33,8 +35,15 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+
     profileController.getUserInformationSnapshot();
     _initializeIndex();
+  }
+
+  @override
+  void didChangeDependencies() {
+    _setStatusBarStle();
+    super.didChangeDependencies();
   }
 
   void _initializeIndex() {
@@ -49,32 +58,31 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     DependencyInjection.init();
-    _setStatusBarStle();
+
     return Scaffold(
         bottomNavigationBar: SalomonBottomBar(
           backgroundColor: Theme.of(context).cardColor,
           currentIndex: currentIndex,
           onTap: (i) => setState(() {
             currentIndex = i;
-            // indexValue = null;
           }),
           items: [
             _buildBottomBarItem(
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home,
-                title: "Home"),
+                title: AppString.home),
             _buildBottomBarItem(
                 icon: Icons.list_outlined,
                 activeIcon: Icons.list,
-                title: "Products"),
+                title: AppString.products),
             _buildBottomBarItem(
                 icon: Icons.search_outlined,
                 activeIcon: Icons.search,
-                title: "Search"),
+                title: AppString.search),
             _buildBottomBarItem(
                 activeIcon: Icons.person,
                 icon: Icons.person_outline,
-                title: "Profile"),
+                title: AppString.profile),
           ],
         ),
         body: widgetOptions[currentIndex]);
@@ -83,7 +91,6 @@ class _MainPageState extends State<MainPage> {
   void _setStatusBarStle() {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: Theme.of(context).scaffoldBackgroundColor,
-        statusBarBrightness: Brightness.light,
         statusBarIconBrightness: Theme.of(context).brightness));
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
@@ -96,11 +103,11 @@ class _MainPageState extends State<MainPage> {
     return SalomonBottomBarItem(
         activeIcon: Icon(
           activeIcon,
-          color: AppColors.greenColor,
+          color: AppColors.accentGreen,
         ),
         icon: Icon(icon),
-        unselectedColor: Theme.of(context).indicatorColor,
+        unselectedColor: Theme.of(context).unselectedWidgetColor,
         title: Text(title),
-        selectedColor: AppColors.greenColor);
+        selectedColor: AppColors.accentGreen);
   }
 }

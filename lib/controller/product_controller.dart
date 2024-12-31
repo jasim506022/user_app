@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../model/app_exception.dart';
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 
 import '../repository/product_reposity.dart';
 
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/cart_funtion.dart';
 
 import 'category_controller.dart';
@@ -26,6 +27,56 @@ class ProductController extends GetxController {
     productItemQuantity = 1.obs;
   }
 
+// Popular Products Snapshot
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchPopularProducts() {
+    try {
+      return repository.fetchPopularProducts(
+          category: categoryController.getCategory);
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: AppIcons.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: "Okay");
+      }
+      rethrow;
+    }
+  }
+
+// Product Snapshot
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchCategoryProducts() {
+    try {
+      return repository.fetchCategoryProducts(
+          category: categoryController.getCategory);
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: AppIcons.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: AppString.okay);
+      }
+      rethrow;
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSimilarProducts(
+      {required ProductModel productModel}) {
+    try {
+      return repository.fetchSimilarProducts(productModel: productModel);
+    } catch (e) {
+      if (e is AppException) {
+        AppsFunction.errorDialog(
+            icon: AppIcons.warningIcon,
+            title: e.title!,
+            content: e.message,
+            buttonText: AppString.okay);
+      }
+      rethrow;
+    }
+  }
+
   void updateQuantity({bool isIncrement = true}) {
     if (isIncrement) {
       productItemQuantity++;
@@ -39,7 +90,8 @@ class ProductController extends GetxController {
   }
 
   void verifyProductInCart({required String productId}) {
-    isProductInCart.value = CartFunctions.separateProductID().contains(productId);
+    isProductInCart.value =
+        CartFunctions.separateProductID().contains(productId);
   }
 
   void addItemToCart({
@@ -53,55 +105,5 @@ class ProductController extends GetxController {
     );
 
     isProductInCart.value = true;
-  }
-
-// Popular Products Snapshot
-  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot() {
-    try {
-      return repository.popularProductSnapshot(
-          category: categoryController.getCategory);
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-      rethrow;
-    }
-  }
-
-// Product Snapshot
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots() {
-    try {
-      return repository.productSnapshots(
-          category: categoryController.getCategory);
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-      rethrow;
-    }
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
-      {required ProductModel productModel}) {
-    try {
-      return repository.similarProductSnapshot(productModel: productModel);
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-      rethrow;
-    }
   }
 }

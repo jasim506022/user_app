@@ -1,53 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../res/app_function.dart';
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
-import '../../res/constant/string_constant.dart';
 import '../../res/routes/routes_name.dart';
 
 import '../../widget/product_list_widget.dart';
 import 'widget/carousel_silder_widget.dart';
 import 'widget/category_widget.dart';
+import 'widget/network_utili.dart';
 import 'widget/popular_product_list_widget.dart';
 import 'widget/row_widget.dart';
 import 'widget/user_profile_header_widget.dart';
 
-class HomePage extends StatefulWidget {
+/// The main home page of the app, displaying a user profile,
+/// carousel slider, categories, and lists of popular and all products.
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  @override
-  void didChangeDependencies() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
-        statusBarIconBrightness: Brightness.dark));
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: SafeArea(
-        child: Padding(
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Column(
               children: [
                 Column(
                   children: [
+                    // Displays the user's profile information.
                     const UserProfileHeaderWidget(),
-                    SizedBox(
-                      height: 10.h,
-                    ),
+                    AppsFunction.verticleSpace(10),
                     InkWell(
                       onTap: () async {
                         Get.offAllNamed(RoutesName.mainPage, arguments: 2);
@@ -60,36 +47,37 @@ class _HomePageState extends State<HomePage> {
                     child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      /// Builds the main body content with a carousel, categories, and product lists.
                       SizedBox(
                         height: .25.sh,
                         width: 1.sw,
                         child: const CarouselSilderWidget(),
                       ),
-                      SizedBox(height: 10.h),
-                      const CategoryWidget(),
-                      SizedBox(
-                        height: 15.h,
-                      ),
+                      AppsFunction.verticleSpace(10),
+                      const CategoryWidget(), // Displays the categories of products.
+                      AppsFunction.verticleSpace(15),
+                      // Popular Products Section
+
                       RowWidget(
-                        text: StringConstant.popularProduct,
-                        function: () async {
-                          if (!(await AppsFunction.verifyInternetStatus())) {
+                        text: AppString.popularProduct,
+                        onTap: () async {
+                          if (!(await NetworkUtili.verifyInternetStatus())) {
                             Get.toNamed(RoutesName.productPage,
-                                arguments: true);
+                                arguments: ProductListType.popular);
                           }
                         },
                       ),
-                      SizedBox(height: 10.h),
+                      AppsFunction.verticleSpace(10),
                       const PopularProductListWidget(),
-                      SizedBox(
-                        height: 10.h,
-                      ),
+                      AppsFunction.verticleSpace(10),
+
+                      // All Products Section
                       RowWidget(
-                        text: StringConstant.product,
-                        function: () async {
-                          if (!(await AppsFunction.verifyInternetStatus())) {
+                        text: AppString.products,
+                        onTap: () async {
+                          if (!(await NetworkUtili.verifyInternetStatus())) {
                             Get.toNamed(RoutesName.productPage,
-                                arguments: false);
+                                arguments: ProductListType.regular);
                           }
                         },
                       ),
@@ -105,7 +93,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Search
+  /// Builds the search bar widget.
   Container _buildSearchBar(BuildContext context) {
     return Container(
       height: 50.h,
@@ -119,17 +107,14 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           children: [
             Text(
-              StringConstant.searchint,
+              AppString.searchHint,
               style: AppsTextStyle.hintTextStyle,
             ),
             const Spacer(),
-            Icon(
+            const Icon(
               IconlyLight.search,
-              color: Theme.of(context).primaryColor,
             ),
-            SizedBox(
-              width: 10.w,
-            ),
+            AppsFunction.horizontalSpace(10)
           ],
         ),
       ),

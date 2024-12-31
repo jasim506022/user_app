@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 import '../res/app_colors.dart';
 import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
@@ -54,9 +55,7 @@ class CartProductWidget extends StatelessWidget {
               style: AppsTextStyle.largeBoldText,
             ),
           ),
-          SizedBox(
-            height: 5.h,
-          ),
+          AppsFunction.verticleSpace(5),
           Row(
             children: [
               Text(productModel.productunit!.toString(),
@@ -65,9 +64,7 @@ class CartProductWidget extends StatelessWidget {
                   )),
             ],
           ),
-          SizedBox(
-            height: 5.h,
-          ),
+          AppsFunction.verticleSpace(5),
           Row(
             children: [
               Row(
@@ -75,18 +72,18 @@ class CartProductWidget extends StatelessWidget {
                 children: [
                   Text("$quantity * ",
                       style: AppsTextStyle.mediumNormalText
-                          .copyWith(color: AppColors.greenColor)),
+                          .copyWith(color: AppColors.accentGreen)),
                   Text(
                       "${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
                       style: AppsTextStyle.mediumNormalText
-                          .copyWith(color: AppColors.greenColor)),
+                          .copyWith(color: AppColors.accentGreen)),
                 ],
               ),
               const Spacer(),
               Text(
-                  "= ৳. ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), quantity)}",
+                  "= ${AppString.currencyIcon} ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), quantity)}",
                   style: AppsTextStyle.largeBoldText
-                      .copyWith(color: AppColors.greenColor)),
+                      .copyWith(color: AppColors.accentGreen)),
             ],
           ),
         ],

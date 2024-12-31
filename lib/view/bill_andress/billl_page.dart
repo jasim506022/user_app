@@ -75,7 +75,7 @@ class BillPage extends StatelessWidget {
         alignment: Alignment.center,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            color: AppColors.greenColor,
+            color: AppColors.accentGreen,
             borderRadius: BorderRadius.circular(15.r)),
         child: Text(
             billController.card.value == Payment.card.name

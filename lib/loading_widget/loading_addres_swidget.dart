@@ -12,7 +12,6 @@ class LoadingAddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return Container(
       alignment: Alignment.center,
       height: 78.h,
@@ -20,10 +19,10 @@ class LoadingAddressWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10.w),
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
       decoration: BoxDecoration(
-          color: utils.green50, borderRadius: BorderRadius.circular(25.r)),
+          color: Utils.green50, borderRadius: BorderRadius.circular(25.r)),
       child: Shimmer.fromColors(
-        baseColor: utils.baseShimmerColor,
-        highlightColor: utils.highlightShimmerColor,
+        baseColor: Utils.baseShimmerColor,
+        highlightColor: Utils.highlightShimmerColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -34,27 +33,15 @@ class LoadingAddressWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      AppsFunction.lineShimmer(utils, 20.h, 30.w),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      AppsFunction.lineShimmer(utils, 20.h, 45.w),
+                      AppsFunction.lineShimmer(20, 30),
+                      AppsFunction.horizontalSpace(20),
+                      AppsFunction.lineShimmer(20, 45),
                     ],
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  AppsFunction.lineShimmer(
-                    utils,
-                    10.h,
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  AppsFunction.lineShimmer(
-                    utils,
-                    10.h,
-                  ),
+                  AppsFunction.verticleSpace(10),
+                  AppsFunction.lineShimmer(10),
+                  AppsFunction.verticleSpace(10),
+                  AppsFunction.lineShimmer(10),
                 ],
               ),
             ),

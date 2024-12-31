@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../res/app_colors.dart';
+import '../../../res/app_constant.dart';
 import '../../../res/app_function.dart';
+import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/constant/string_constant.dart';
 import '../../../res/constants.dart';
@@ -47,9 +49,9 @@ class ProifleHeaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(sharedPreference!.getString(StringConstant.nameSharedPreference)!,
+        Text(AppConstant.sharedPreference!.getString(AppString.nameSharedPreference)!,
             maxLines: 1, style: AppsTextStyle.titleTextStyle),
-        Text(sharedPreference!.getString(StringConstant.emailSharedPreference)!,
+        Text(AppConstant.sharedPreference!.getString(AppString.emailSharedPreference)!,
             style: AppsTextStyle.subTitleTextStyle),
         SizedBox(
           height: 8.h,
@@ -75,8 +77,8 @@ class ProifleHeaderWidget extends StatelessWidget {
             border: Border.all(color: AppColors.red, width: 3.w)),
         child: ClipOval(
           child: FancyShimmerImage(
-            imageUrl: sharedPreference!
-                .getString(StringConstant.imageSharedPreference)!,
+            imageUrl:
+               AppConstant. sharedPreference!.getString(AppString.imageSharedPreference)!,
             errorWidget: const Icon(Icons.error),
           ),
         ));

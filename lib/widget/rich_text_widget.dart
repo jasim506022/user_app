@@ -37,7 +37,7 @@ class RichTextWidget extends StatelessWidget {
           text: colorText,
           style: AppsTextStyle.buttonTextStyle.copyWith(
               decoration: TextDecoration.underline,
-              color: AppColors.greenColor))
+              color: AppColors.accentGreen))
     ]));
   }
 }

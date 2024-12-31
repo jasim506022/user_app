@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../res/app_colors.dart';
-import '../../../model/productsmodel.dart';
+import '../../../model/products_model.dart';
 
 class DetailsImageSwiperWidget extends StatelessWidget {
   const DetailsImageSwiperWidget({

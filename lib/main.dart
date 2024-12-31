@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
@@ -8,9 +9,9 @@ import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
+import 'res/app_constant.dart';
 import 'res/constant/string_constant.dart';
 import 'res/routes/app_routes.dart';
 import 'res/routes/routes_name.dart';
@@ -22,8 +23,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  sharedPreference = await SharedPreferences.getInstance();
-  isviewed = sharedPreference!.getInt(StringConstant.onBoardingSharedPre);
+  AppConstant.sharedPreference = await SharedPreferences.getInstance();
+  isviewed =
+      AppConstant.sharedPreference!.getInt(StringConstant.onBoardingSharedPre);
   runApp(const MyApp());
 }
 
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarColor: Theme.of(context).scaffoldBackgroundColor,
+        statusBarIconBrightness: Theme.of(context).brightness));
     return ScreenUtilInit(
       designSize: const Size(450, 851), //582
       builder: (_, child) {
@@ -55,16 +61,16 @@ class MyApp extends StatelessWidget {
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
         dialogBackgroundColor: themeProvder.getDarkTheme
-            ? AppColors.backgroundDarkColor
-            : AppColors.backgroundLightColor,
+            ? AppColors.darkBackground
+            : AppColors.lightBackground,
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
               color: themeProvder.getDarkTheme
                   ? AppColors.white
                   : AppColors.black),
           backgroundColor: themeProvder.getDarkTheme
-              ? AppColors.backgroundDarkColor
-              : AppColors.backgroundLightColor,
+              ? AppColors.darkBackground
+              : AppColors.lightBackground,
           titleTextStyle: GoogleFonts.roboto(
               color:
                   themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
@@ -72,34 +78,28 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w700),
           centerTitle: true,
         ),
-        // Scaffold Background Color
         scaffoldBackgroundColor: themeProvder.getDarkTheme
-            ? AppColors.backgroundDarkColor
-            : AppColors.backgroundLightColor,
-        //Card Color
+            ? AppColors.darkBackground
+            : AppColors.lightBackground,
         cardColor: themeProvder.getDarkTheme
-            ? AppColors.cardDarkColor
+            ? AppColors.darkCardBackground
             : AppColors.white,
-        //CanvasColor
         canvasColor: themeProvder.getDarkTheme
-            ? AppColors.cardDarkColor
+            ? AppColors.darkCardBackground
             : AppColors.searchLightColor,
-        // Indicator Color
-        indicatorColor: themeProvder.getDarkTheme
-            ? AppColors.indicatorColorDarkColor
-            : AppColors.indicatorColorightColor,
-        primaryColorDark: AppColors.white,
+        indicatorColor:
+            themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
+        unselectedWidgetColor: themeProvder.getDarkTheme
+            ? AppColors.darkUnselect
+            : AppColors.lightUnselect,
         primaryColorLight: AppColors.black,
+        brightness:
+            themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
 
         // Hint Color
         hintColor: themeProvder.getDarkTheme
-            ? AppColors.hintDarkColor
-            : AppColors.hintLightColor,
-        //brightness
-        // brightness:
-        //     themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
-        // Primary
-
+            ? AppColors.darkHintText
+            : AppColors.lightHintText,
         primaryColor:
             themeProvder.getDarkTheme ? AppColors.white : AppColors.black);
   }
@@ -114,8 +114,3 @@ class MyApp extends StatelessWidget {
     ];
   }
 }
-
-
-/*
-
-*/

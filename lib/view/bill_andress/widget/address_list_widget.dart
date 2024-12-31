@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +5,7 @@ import '../../../controller/address_controller.dart';
 import '../../../loading_widget/loading_addres_swidget.dart';
 import '../../../model/address_model.dart';
 
-import '../../../res/appasset/image_asset.dart';
+import '../../../res/app_asset/image_asset.dart';
 import '../../../widget/single_empty_widget.dart';
 import 'address_widget.dart';
 
@@ -47,7 +46,6 @@ class AddressListWidget extends StatelessWidget {
               return AddressWidget(
                 addressModel: addressModel,
                 index: index,
-              
               );
             },
           );

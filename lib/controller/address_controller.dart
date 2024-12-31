@@ -7,7 +7,7 @@ import '../model/address_model.dart';
 import '../model/app_exception.dart';
 import '../repository/address_repository.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
 import '../widget/show_alert_dialog_widget.dart';
@@ -68,8 +68,6 @@ class AddressController extends GetxController {
     currentAddressIndex.value = index;
   }
 
- 
-
   setAddressId(String address) {
     addressid.value = address;
   }
@@ -84,7 +82,7 @@ class AddressController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -100,7 +98,7 @@ class AddressController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -146,7 +144,7 @@ class AddressController extends GetxController {
       Get.back();
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");

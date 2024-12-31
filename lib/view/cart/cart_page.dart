@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../controller/cart_controller.dart';
 import '../../res/app_colors.dart';
-import '../../res/appasset/image_asset.dart';
+import '../../res/app_asset/image_asset.dart';
 
 import '../../res/apps_text_style.dart';
 import '../../widget/empty_widget.dart';
@@ -32,8 +33,6 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(title: const Text("Cart")),
@@ -58,7 +57,7 @@ class _CartPageState extends State<CartPage> {
                     } else if (snapshot.hasError) {
                       return EmptyWidget(
                         image: ImagesAsset.error,
-                        title: 'Error Occure: ${snapshot.error}',
+                        title: '${AppString.errorOccure} ${snapshot.error}',
                       );
                     }
                     if (snapshot.hasData) {
@@ -67,7 +66,8 @@ class _CartPageState extends State<CartPage> {
                         itemBuilder: (context, index) {
                           var sellerName = snapshot.data!.docs[index]["name"];
                           var sellerId = snapshot.data!.docs[index]["uid"];
-
+                          print(sellerName);
+                          print(sellerId);
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,

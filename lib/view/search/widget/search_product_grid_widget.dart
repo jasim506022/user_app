@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/search_controller.dart';
-import '../../../model/productsmodel.dart';
-import '../../../res/appasset/image_asset.dart';
+import '../../../model/products_model.dart';
+import '../../../res/app_asset/image_asset.dart';
 import '../../../widget/empty_widget.dart';
 import '../../../widget/product_widget.dart';
 
@@ -24,7 +25,7 @@ class SearchProductGridWidget extends StatelessWidget {
       if (productList.isEmpty) {
         return EmptyWidget(
           image: ImagesAsset.error,
-          title: 'No Data Available',
+          title: AppString.noDataAvailable,
         );
       }
 
@@ -38,7 +39,9 @@ class SearchProductGridWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return ChangeNotifierProvider.value(
             value: productList[index],
-            child: const ProductWidget(),
+            child: ProductWidget(
+              productModel: productList[index],
+            ),
           );
         },
       );

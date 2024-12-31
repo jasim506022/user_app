@@ -1,36 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:user_app/data/service/product_service_data.dart';
 
-import '../data/service/data_firebase_service.dart';
-import '../model/productsmodel.dart';
+import '../model/products_model.dart';
 import '../res/app_function.dart';
 
 class ProductReposity {
-  final _dataFirebaseService = DataFirebaseService();
+  final productServiceBase = ProductServiceData();
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchPopularProducts(
       {required String category}) {
     try {
-      return _dataFirebaseService.popularProductSnapshot(category: category);
+      return productServiceBase.fetchPopularProducts(category: category);
     } catch (e) {
       AppsFunction.handleException(e);
       rethrow;
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchCategoryProducts(
       {required String category}) {
     try {
-      return _dataFirebaseService.productSnapshots(category: category);
+      return productServiceBase.fetchCategoryProducts(category: category);
     } catch (e) {
       AppsFunction.handleException(e);
       rethrow;
     }
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchSimilarProducts(
       {required ProductModel productModel}) {
     try {
-      return _dataFirebaseService.similarProductSnapshot(
+      return productServiceBase.fetchSimilarProducts(
           productModel: productModel);
     } catch (e) {
       AppsFunction.handleException(e);

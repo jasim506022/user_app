@@ -15,7 +15,6 @@ class AboutDataItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -28,7 +27,7 @@ class AboutDataItem extends StatelessWidget {
           width: 1.sw,
           padding: EdgeInsets.all(15.r),
           decoration: BoxDecoration(
-            color: utils.textFeildColor,
+            color: Utils.textFeildColor,
             borderRadius: BorderRadius.circular(15.r),
           ),
           child: Text(

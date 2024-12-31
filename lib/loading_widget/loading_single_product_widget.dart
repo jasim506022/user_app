@@ -6,7 +6,6 @@ import '../res/app_colors.dart';
 import '../res/app_function.dart';
 import '../res/utils.dart';
 
-
 class LoadingSingleProductWidget extends StatelessWidget {
   const LoadingSingleProductWidget({
     super.key,
@@ -14,7 +13,6 @@ class LoadingSingleProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       child: Container(
@@ -30,25 +28,23 @@ class LoadingSingleProductWidget extends StatelessWidget {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20.r)),
         child: Shimmer.fromColors(
-          baseColor: utils.baseShimmerColor,
-          highlightColor: utils.highlightShimmerColor,
+          baseColor: Utils.baseShimmerColor,
+          highlightColor: Utils.highlightShimmerColor,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AppsFunction.lineShimmer(utils, 130.h, 130.h),
+              AppsFunction.lineShimmer(130, 130),
               Expanded(
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppsFunction.lineShimmer(utils, 20.h),
-                      AppsFunction.lineShimmer(utils, 20.h),
-                      AppsFunction.lineShimmer(utils, 20.h),
-                    ],
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        3,
+                        (index) => AppsFunction.lineShimmer(20.h),
+                      )),
                 ),
               )
             ],

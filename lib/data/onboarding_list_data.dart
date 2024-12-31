@@ -1,5 +1,5 @@
-import '../res/appasset/image_asset.dart';
-import '../model/onboardmodel.dart';
+import '../res/app_asset/image_asset.dart';
+import '../model/onboard_model.dart';
 
 class OnBoardingListData {
   static List<OnboardModel> onboarddataList() => [

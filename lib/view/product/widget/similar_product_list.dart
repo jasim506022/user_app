@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/product_controller.dart';
-import '../../../model/productsmodel.dart';
-import '../../../res/appasset/image_asset.dart';
+import '../../../model/products_model.dart';
+import '../../../res/app_asset/image_asset.dart';
 import '../../../widget/single_empty_widget.dart';
 import '../../../loading_widget/loading_similar_widet.dart';
 import 'similar_product_widget.dart';
@@ -13,7 +13,8 @@ import 'similar_product_widget.dart';
 class SimilarProductList extends StatelessWidget {
   const SimilarProductList({
     super.key,
-    required this.productModel, required this.isCart,
+    required this.productModel,
+    required this.isCart,
   });
 
   final ProductModel productModel;
@@ -26,8 +27,8 @@ class SimilarProductList extends StatelessWidget {
       height: 150.h,
       width: Get.width,
       child: StreamBuilder(
-        stream: productController.similarProductSnapshot(
-            productModel: productModel),
+        stream:
+            productController.fetchSimilarProducts(productModel: productModel),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoadingSimilierWidget();
@@ -52,7 +53,9 @@ class SimilarProductList extends StatelessWidget {
                       ProductModel.fromMap(snapshot.data!.docs[index].data());
                   return ChangeNotifierProvider.value(
                     value: productModel,
-                    child:  SimilarProductWidget(isCartBack: isCart,),
+                    child: SimilarProductWidget(
+                      isCartBack: isCart,
+                    ),
                   );
                 });
           }

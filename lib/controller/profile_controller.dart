@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/widget/loading_widget.dart';
 
 import '../model/app_exception.dart';
-import '../model/profilemodel.dart';
+import '../model/profile_model.dart';
 import '../repository/profile_repository.dart';
 import '../repository/sign_up_repository.dart';
+import '../res/app_constant.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
-import '../res/constant/string_constant.dart';
-import '../res/constants.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/routes/routes_name.dart';
 import '../widget/error_dialog_widget.dart';
 import '../widget/show_alert_dialog_widget.dart';
@@ -44,7 +44,7 @@ class ProfileController extends GetxController {
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -98,7 +98,7 @@ class ProfileController extends GetxController {
       if (e is AppException) {
         Get.dialog(
           ErrorDialogWidget(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay",
@@ -134,12 +134,12 @@ class ProfileController extends GetxController {
   // Sign Out
   Future<void> signOut() async {
     try {
-      await sharedPreference?.setString(
-          StringConstant.imageSharedPreference, "");
-      await sharedPreference?.setString(
-          StringConstant.nameSharedPreference, "");
-      await sharedPreference
-          ?.setStringList(StringConstant.cartListSharedPreference, []);
+      await AppConstant.sharedPreference
+          ?.setString(AppString.imageSharedPreference, "");
+      await AppConstant.sharedPreference
+          ?.setString(AppString.nameSharedPreference, "");
+      await AppConstant.sharedPreference
+          ?.setStringList(AppString.cartListSharedPreference, []);
 
       await repository.signOut();
       AppsFunction.flutterToast(msg: "Successfully Signed Out");
@@ -158,18 +158,19 @@ class ProfileController extends GetxController {
       var snapshot = await repository.getUserInformationSnapshot();
       if (snapshot.exists && snapshot.data() != null) {
         profileModel.value = ProfileModel.fromMap(snapshot.data()!);
-        if (profileModel.value.status == "approved") {
+        if (profileModel.value.status == AppString.approved) {
           _saveProfileToSharedPreferences(profileModel.value);
 
           _updateTextControllers();
         } else {
-          AppsFunction.flutterToast(msg: "User Doesn't Exist");
+          AppsFunction.flutterToast(
+              msg: "User is Disable Please Contract with Admin");
         }
       }
     } catch (e) {
       if (e is AppException) {
         AppsFunction.errorDialog(
-            icon: IconAsset.warningIcon,
+            icon: AppIcons.warningIcon,
             title: e.title!,
             content: e.message,
             buttonText: "Okay");
@@ -179,17 +180,18 @@ class ProfileController extends GetxController {
 
   Future<void> _saveProfileToSharedPreferences(ProfileModel profile) async {
     final prefsTasks = [
-      sharedPreference!
-          .setString(StringConstant.uidSharedPreference, profile.uid!),
-      sharedPreference!
-          .setString(StringConstant.emailSharedPreference, profile.email!),
-      sharedPreference!
-          .setString(StringConstant.nameSharedPreference, profile.name!),
-      sharedPreference!
-          .setString(StringConstant.imageSharedPreference, profile.imageurl!),
-      sharedPreference!
-          .setString(StringConstant.phoneSharedPreference, profile.phone!),
-      sharedPreference!.setStringList(StringConstant.cartListSharedPreference,
+      AppConstant.sharedPreference!
+          .setString(AppString.uidSharedPreference, profile.uid!),
+      AppConstant.sharedPreference!
+          .setString(AppString.emailSharedPreference, profile.email!),
+      AppConstant.sharedPreference!
+          .setString(AppString.nameSharedPreference, profile.name!),
+      AppConstant.sharedPreference!
+          .setString(AppString.imageSharedPreference, profile.imageurl!),
+      AppConstant.sharedPreference!
+          .setString(AppString.phoneSharedPreference, profile.phone!),
+      AppConstant.sharedPreference!.setStringList(
+          AppString.cartListSharedPreference,
           profile.cartlist!.map((e) => e.toString()).toList())
     ];
     await Future.wait(prefsTasks);

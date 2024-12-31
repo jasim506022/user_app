@@ -18,7 +18,7 @@ class DeliveryEstimationCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.deepGreen,
+          color: AppColors.deepGreenAccent,
           borderRadius: BorderRadius.circular(15.r)),
       height: 0.27.sh,
       width: 1.sw,

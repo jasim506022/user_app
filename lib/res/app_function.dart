@@ -19,6 +19,9 @@ import '../widget/round_button_widget.dart';
 import '../widget/show_alert_dialog_widget.dart';
 
 class AppsFunction {
+  static SizedBox verticleSpace(double height) => SizedBox(height: height);
+  static SizedBox horizontalSpace(double width) => SizedBox(width: width);
+
   static Future<bool?> showBackDialog() {
     return Get.dialog<bool>(CustomAlertDialogWidget(
       icon: Icons.question_mark_rounded,
@@ -41,22 +44,24 @@ class AppsFunction {
     return checkInternet;
   }
 
-  static Container lineShimmer(Utils utils, double height, [double? width]) {
+  /// Creates a rectangular shimmer effect with optional [width].
+  static Container lineShimmer(double height, [double? width]) {
     return Container(
-      height: height,
-      width: width ?? 1.sw,
+      height: height.h,
+      width: width?.w ?? 1.sw,
       decoration: BoxDecoration(
-          color: utils.widgetShimmerColor,
+          color: Utils.widgetShimmerColor,
           borderRadius: BorderRadius.circular(15.r)),
     );
   }
 
-  static Container circleShimmer(Utils utils, double height) {
+  /// Creates a circular shimmer effect based on [height].
+  static Container circleShimmer(double height) {
     return Container(
-      height: height,
-      width: height,
+      height: height.h,
+      width: height.h,
       decoration: BoxDecoration(
-          color: utils.widgetShimmerColor, shape: BoxShape.circle),
+          color: Utils.widgetShimmerColor, shape: BoxShape.circle),
     );
   }
 
@@ -208,7 +213,7 @@ class AppsFunction {
             Text(
               title,
               style: AppsTextStyle.titleTextStyle
-                  .copyWith(color: AppColors.deepGreen),
+                  .copyWith(color: AppColors.deepGreenAccent),
             ),
             SizedBox(
               height: 15.h,
@@ -276,9 +281,8 @@ class AppsFunction {
       bool obscureText = false,
       bool isEnable = true,
       required Function function}) {
-    Utils utils = Utils();
     return InputDecoration(
-        fillColor: isEnable ? AppColors.searchLightColor : utils.textFeildColor,
+        fillColor: isEnable ? AppColors.searchLightColor : Utils.textFeildColor,
         filled: true,
         hintText: hintText,
         border: OutlineInputBorder(
@@ -297,7 +301,7 @@ class AppsFunction {
                 },
                 icon: Icon(
                   Icons.password,
-                  color: obscureText ? AppColors.hintLightColor : AppColors.red,
+                  color: obscureText ? AppColors.lightHintText : AppColors.red,
                 ))
             : null,
         contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),

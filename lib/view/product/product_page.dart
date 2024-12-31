@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 import '../../res/app_function.dart';
 
 import '../../res/routes/routes_name.dart';
@@ -12,14 +13,14 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool? isPopular = (Get.arguments is bool) ? Get.arguments as bool : false;
+    ProductListType productListType = Get.arguments as ProductListType;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: Text(
-          isPopular ? "Popular Product" : "Products",
-        ),
+        title: Text(productListType == ProductListType.regular
+            ? AppString.products
+            : AppString.popularProduct),
         actions: [
           IconButton(
             onPressed: () async {
@@ -27,14 +28,11 @@ class ProductPage extends StatelessWidget {
                 Get.offAllNamed(RoutesName.mainPage, arguments: 2);
               }
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
-              color: Theme.of(context).primaryColor,
             ),
           ),
-          SizedBox(
-            width: 10.h,
-          ),
+          AppsFunction.horizontalSpace(10)
         ],
         //
       ),
@@ -42,14 +40,12 @@ class ProductPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),
         child: Column(
           children: [
-            const DropdownCategoryWidget(),
-            SizedBox(
-              height: 15.h,
-            ),
+            if (productListType == ProductListType.regular) ...[
+              const DropdownCategoryWidget(),
+              AppsFunction.verticleSpace(15)
+            ],
             Expanded(
-                child: ProductListWidget(
-              isPopular: isPopular,
-            )),
+                child: ProductListWidget(productListType: productListType)),
           ],
         ),
       ),

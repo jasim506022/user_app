@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +14,7 @@ class AppsTextStyle {
   static ThemeData get theme => Theme.of(context);
 
   static TextStyle get appLogoFonts => GoogleFonts.roboto(
-      color: AppColors.greenColor,
+      color: AppColors.accentGreen,
       fontSize: 22.sp,
       fontWeight: FontWeight.w900);
 
@@ -115,7 +116,7 @@ class AppsTextStyle {
 
   static TextStyle get forgetPasswordTextStyle => GoogleFonts.poppins(
         fontSize: 14.sp,
-        color: AppColors.hintLightColor,
+        color: AppColors.lightHintText,
         fontWeight: FontWeight.w700,
       );
 

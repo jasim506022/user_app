@@ -6,8 +6,9 @@ import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../controller/network_controller.dart';
 import '../../controller/sign_in_controller.dart';
+import '../../res/app_asset/app_icons.dart';
 import '../../res/app_function.dart';
-import '../../res/appasset/icon_asset.dart';
+
 import '../../res/app_colors.dart';
 import '../../res/apps_text_style.dart';
 import '../../widget/rich_text_widget.dart';
@@ -124,8 +125,8 @@ class _SignInPageState extends State<SignInPage> {
               function: () async {
                 AppsFunction.verifyInternetStatus();
               },
-              color: AppColors.facebookColor,
-              image: IconAsset.facebookIcon,
+              color: AppColors.facebookBlue,
+              image: AppIcons.facebookIcon,
               title: "Facebook"),
         ),
         SizedBox(
@@ -139,7 +140,7 @@ class _SignInPageState extends State<SignInPage> {
                 }
               },
               color: AppColors.red,
-              image: IconAsset.gmailIcon,
+              image: AppIcons.gmailIcon,
               title: "Gmail"),
         ),
       ],

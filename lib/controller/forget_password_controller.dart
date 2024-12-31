@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import '../model/app_exception.dart';
 import '../repository/forget_password_repository.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/routes/routes_name.dart';
 import 'loading_controller.dart';
 
@@ -29,7 +29,7 @@ class ForgetPasswordController extends GetxController {
 
     if (checkInternet) {
       AppsFunction.errorDialog(
-          icon: IconAsset.warningIcon,
+          icon: AppIcons.warningIcon,
           title: "No Internet Connection",
           content: "Please check your internet settings and try again.",
           buttonText: "Okay");
@@ -41,7 +41,7 @@ class ForgetPasswordController extends GetxController {
       } catch (e) {
         if (e is AppException) {
           AppsFunction.errorDialog(
-              icon: IconAsset.warningIcon,
+              icon: AppIcons.warningIcon,
               title: e.title!,
               content: e.message,
               buttonText: "Okay");

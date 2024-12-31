@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/apps_text_style.dart';
 
 import '../res/app_colors.dart';
@@ -29,9 +31,7 @@ class CustomAlertDialogWidget extends StatelessWidget {
       title: Row(
         children: [
           Text(title, style: AppsTextStyle.titleTextStyle),
-          SizedBox(
-            width: 10.w,
-          ),
+          AppsFunction.horizontalSpace(10),
           Container(
               padding: EdgeInsets.all(3.r),
               decoration:
@@ -49,12 +49,12 @@ class CustomAlertDialogWidget extends StatelessWidget {
       actions: [
         OutlinedTextButtonWidget(
           color: AppColors.red,
-          title: "Yes",
+          title: AppString.yes,
           onPressed: yesOnPress,
         ),
         OutlinedTextButtonWidget(
-            color: AppColors.greenColor,
-            title: "No",
+            color: AppColors.accentGreen,
+            title: AppString.no,
             onPressed: noOnPress ??
                 () {
                   Get.back();

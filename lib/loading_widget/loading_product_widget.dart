@@ -12,7 +12,6 @@ class LoadingProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return Card(
       color: Theme.of(context).cardColor,
       elevation: 2,
@@ -22,14 +21,14 @@ class LoadingProductWidget extends StatelessWidget {
         height: 1.sh,
         width: 1.sw,
         child: Shimmer.fromColors(
-          baseColor: utils.baseShimmerColor,
-          highlightColor: utils.highlightShimmerColor,
+          baseColor: Utils.baseShimmerColor,
+          highlightColor: Utils.highlightShimmerColor,
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppsFunction.lineShimmer(utils, 135.h),
+                  child: AppsFunction.lineShimmer(135),
                 ),
                 Padding(
                   padding: EdgeInsets.all(10.0.r),
@@ -37,15 +36,11 @@ class LoadingProductWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      AppsFunction.lineShimmer(utils, 15.h),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      AppsFunction.lineShimmer(utils, 15.h),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      AppsFunction.lineShimmer(utils, 15.h),
+                      AppsFunction.lineShimmer(15),
+                      AppsFunction.verticleSpace(8),
+                      AppsFunction.lineShimmer(15),
+                      AppsFunction.verticleSpace(8),
+                      AppsFunction.lineShimmer(15),
                     ],
                   ),
                 )

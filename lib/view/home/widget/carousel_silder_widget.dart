@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../model/carsolemodel.dart';
+import '../../../model/carsole_model.dart';
 import 'carosuel_widget.dart';
 
 class CarouselSilderWidget extends StatelessWidget {

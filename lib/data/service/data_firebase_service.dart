@@ -7,13 +7,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:user_app/data/service/base_firebase_service.dart';
 import 'package:user_app/model/address_model.dart';
-import 'package:user_app/model/productsmodel.dart';
 import 'package:http/http.dart' as http;
-import 'package:user_app/res/constant/string_constant.dart';
 
-import '../../model/profilemodel.dart';
+import '../../model/profile_model.dart';
+import '../../res/app_constant.dart';
+import '../../res/app_string.dart';
 import '../../res/cart_funtion.dart';
-import '../../res/constants.dart';
 
 class DataFirebaseService implements BaseFirebaseService {
   @override
@@ -82,8 +81,8 @@ class DataFirebaseService implements BaseFirebaseService {
     Reference storageRef = firebaseStorage
         .ref()
         .child("UserImage")
-        .child(
-            sharedPreference!.getString(StringConstant.nameSharedPreference)!)
+        .child(AppConstant.sharedPreference!
+            .getString(AppString.nameSharedPreference)!)
         .child(firebaseAuth.currentUser!.uid)
         .child(fileName);
     UploadTask uploadTask = storageRef.putFile(file);
@@ -118,44 +117,6 @@ class DataFirebaseService implements BaseFirebaseService {
   }
 
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> popularProductSnapshot(
-      {required String category}) {
-    var collectionRef = firebaseFirestore.collection("products");
-    var query = collectionRef.where("productrating", isGreaterThan: 3.5);
-
-    if (category != "All") {
-      query = query.where("productcategory", isEqualTo: category);
-    }
-
-    return query.snapshots();
-  }
-
-  @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> productSnapshots(
-      {required String category}) {
-    var collectionRef = firebaseFirestore.collection("products");
-    var query = collectionRef.orderBy("publishDate", descending: true);
-
-    if (category != "All") {
-      query = query.where("productcategory", isEqualTo: category);
-    }
-
-    return query.snapshots();
-  }
-
-  @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> similarProductSnapshot(
-      {required ProductModel productModel}) {
-    return firebaseFirestore
-        .collection("products")
-        .where("productId", isNotEqualTo: productModel.productId)
-        .where("productcategory", isEqualTo: productModel.productcategory)
-        .snapshots();
-
-    //
-  }
-
-  @override
   Future<void> forgetPasswordSnapshot({required String email}) async {
     firebaseAuth.sendPasswordResetEmail(email: email);
   }
@@ -187,14 +148,14 @@ class DataFirebaseService implements BaseFirebaseService {
     if (isUpdate) {
       firebaseFirestore
           .collection("users")
-          .doc(sharedPreference!.getString("uid")!)
+          .doc(AppConstant.sharedPreference!.getString("uid")!)
           .collection("useraddress")
           .doc(addressModel.addressId)
           .update(addressModel.toMap());
     } else {
       firebaseFirestore
           .collection("users")
-          .doc(sharedPreference!.getString("uid")!)
+          .doc(AppConstant.sharedPreference!.getString("uid")!)
           .collection("useraddress")
           .doc(addressModel.addressId)
           .set(addressModel.toMap());
@@ -205,7 +166,7 @@ class DataFirebaseService implements BaseFirebaseService {
   Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
     return firebaseFirestore
         .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
+        .doc(AppConstant.sharedPreference!.getString("uid")!)
         .collection("useraddress")
         .snapshots();
   }
@@ -214,7 +175,7 @@ class DataFirebaseService implements BaseFirebaseService {
   Future<void> deleteAddress({required String addressId}) async {
     await firebaseFirestore
         .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
+        .doc(AppConstant.sharedPreference!.getString("uid")!)
         .collection("useraddress")
         .doc(addressId)
         .delete();
@@ -224,7 +185,7 @@ class DataFirebaseService implements BaseFirebaseService {
   Future<void> saveOrderDetails(
       {required Map<String, dynamic> orderMetailsMap,
       required String orderId}) async {
-    String userId = sharedPreference!.getString("uid")!;
+    String userId = AppConstant.sharedPreference!.getString("uid")!;
     final userPath = "users/$userId/orders";
     const sellerPth = "orders"; // What is different between final and const;
     final firestore = FirebaseFirestore.instance;
@@ -256,7 +217,7 @@ class DataFirebaseService implements BaseFirebaseService {
       {required String orderStatus}) {
     return firebaseFirestore
         .collection("users")
-        .doc(sharedPreference!.getString("uid"))
+        .doc(AppConstant.sharedPreference!.getString("uid"))
         .collection("orders")
         .where("status", isEqualTo: orderStatus)
         .snapshots();
@@ -278,7 +239,7 @@ class DataFirebaseService implements BaseFirebaseService {
       {required String addressId}) {
     return firebaseFirestore
         .collection("users")
-        .doc(sharedPreference!.getString("uid"))
+        .doc(AppConstant.sharedPreference!.getString("uid"))
         .collection("useraddress")
         .doc(addressId)
         .snapshots();
@@ -288,7 +249,7 @@ class DataFirebaseService implements BaseFirebaseService {
   Future<void> updateUserData({required Map<String, dynamic> map}) async {
     firebaseFirestore
         .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
+        .doc(AppConstant.sharedPreference!.getString("uid")!)
         .update(map);
   }
 

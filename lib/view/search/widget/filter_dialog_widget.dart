@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 
 import 'package:user_app/widget/text_form_field_widget.dart';
 
@@ -39,26 +41,20 @@ class FilterDialogWidget extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              "Filter Search",
+              AppString.filterSearch,
               textAlign: TextAlign.center,
               style: AppsTextStyle.largeBoldText
-                  .copyWith(color: AppColors.deepGreen),
+                  .copyWith(color: AppColors.deepGreenAccent),
             ),
           ),
-          SizedBox(
-            height: 10.h,
-          ),
+          AppsFunction.verticleSpace(10),
           _productPriceSearch(searchController),
-          const SizedBox(
-            height: 10,
-          ),
+          AppsFunction.verticleSpace(10),
           Text(
-            'Product Category',
+            AppString.pCategory,
             style: AppsTextStyle.largeText.copyWith(fontSize: 15),
           ),
-          SizedBox(
-            height: 10.h,
-          ),
+          AppsFunction.verticleSpace(10),
           DropdownCategoryWidget(
             isSearch: true,
             category: searchController.selectedCategory.value,
@@ -66,9 +62,7 @@ class FilterDialogWidget extends StatelessWidget {
               searchController.setCategory(category!);
             },
           ),
-          SizedBox(
-            height: 10.h,
-          ),
+          AppsFunction.verticleSpace(10),
           _dialogButtonWidget(searchController, context)
         ],
       ),
@@ -85,26 +79,24 @@ class FilterDialogWidget extends StatelessWidget {
               searchController.isFilterEnabled.value = false;
               searchController
                 ..setCategory("All")
-                ..maxPriceTEC.text = "10000.0"
-                ..minPriceTEC.text = "0.0";
+                ..maxPriceTEC.text = AppString.searchMaxPrice
+                ..minPriceTEC.text = AppString.searchMinPrice;
               Get.back();
             },
             child: Text(
-              "Reset",
+              AppString.reset,
               style: AppsTextStyle.largeBoldText.copyWith(color: AppColors.red),
             )),
         Row(
           children: [
             CustomRoundActionButton(
               horizontal: 10.w,
-              title: 'Close',
+              title: AppString.close,
               onTap: () => Get.back(),
             ),
-            SizedBox(
-              width: 10.w,
-            ),
+            AppsFunction.horizontalSpace(10),
             CustomRoundActionButton(
-              title: 'Save',
+              title: AppString.save,
               horizontal: 10.w,
               onTap: () {
                 FocusScope.of(context).unfocus();
@@ -124,22 +116,20 @@ class FilterDialogWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Product Price',
+          AppString.productPrice,
           style: AppsTextStyle.largeText.copyWith(fontSize: 15),
         ),
         Row(
           children: [
             Expanded(
                 child: TextFormFieldWidget(
-                    hintText: "Minium",
+                    hintText: AppString.minimumHintText,
                     controller: searchController.minPriceTEC)),
-            SizedBox(
-              width: 15.w,
-            ),
+            AppsFunction.horizontalSpace(15),
             Expanded(
               child: TextFormFieldWidget(
                   controller: searchController.maxPriceTEC,
-                  hintText: "Maximum"),
+                  hintText: AppString.maxiMumHintText),
             ),
           ],
         ),

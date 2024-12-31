@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../repository/bill_repository.dart';
+import '../res/app_constant.dart';
 import '../res/app_function.dart';
-import '../res/appasset/icon_asset.dart';
+import '../res/app_asset/app_icons.dart';
 import '../res/cart_funtion.dart';
 import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
@@ -95,7 +97,7 @@ class BillController extends GetxController {
   Future<bool> _checkInternetConnection() async {
     if (await AppsFunction.internetChecking()) {
       AppsFunction.errorDialog(
-        icon: IconAsset.warningIcon,
+        icon: AppIcons.warningIcon,
         title: "No Internet Connection",
         content: "Please check your internet settings and try again.",
         buttonText: "Okay",
@@ -109,8 +111,10 @@ class BillController extends GetxController {
     return {
       "addressId": addressController.addressid.value, //
       "totalamount": amount, //
-      "orderBy": sharedPreference!.getString("uid"), //
-      "productIds": sharedPreference!.getStringList("cartlist"), //
+      "orderBy": AppConstant.sharedPreference!
+          .getString(AppString.uidSharedPreference), //
+      "productIds": AppConstant.sharedPreference!
+          .getStringList(AppString.cartListSharedPreference), //
       "paymentDetails": payment, //
       "orderId": orderId, //
       "seller": CartFunctions.seperateSellerSet(), //

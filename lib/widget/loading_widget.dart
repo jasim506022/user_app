@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/apps_text_style.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -19,11 +20,9 @@ class LoadingWidget extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(Colors.pinkAccent),
             ),
           ),
-          SizedBox(
-            height: 15.h,
-          ),
+          AppsFunction.verticleSpace(20),
           Text(
-            "$message \n Pleasing Waiting........",
+            "$message \n ${AppString.pleaseWait}",
             style: AppsTextStyle.titleTextStyle,
             textAlign: TextAlign.center,
           )
