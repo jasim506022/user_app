@@ -9,10 +9,10 @@ import 'package:user_app/data/service/base_firebase_service.dart';
 import 'package:user_app/model/address_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../../model/order_model.dart';
 import '../../model/profile_model.dart';
 import '../../res/app_constant.dart';
 import '../../res/app_string.dart';
-import '../../res/cart_funtion.dart';
 
 class DataFirebaseService implements BaseFirebaseService {
   @override
@@ -160,6 +160,7 @@ class DataFirebaseService implements BaseFirebaseService {
         .delete();
   }
 
+/*
   @override
   Future<void> saveOrderDetails(
       {required Map<String, dynamic> orderMetailsMap,
@@ -176,6 +177,32 @@ class DataFirebaseService implements BaseFirebaseService {
     await Future.wait([userUpload, sellerUpload]);
   }
 
+*/
+
+  @override
+  Future<void> uploadOrderSnapshots({
+    required OrderModel orderModel,
+    // required String orderId
+  }) async {
+    String userId =
+        AppConstant.sharedPreference!.getString(AppString.uidSharedPreference)!;
+    final userPath =
+        "${AppString.firebaseUserCollection}/$userId/${AppString.firebaseOrderCollection}";
+    const sellerPth = AppString
+        .firebaseOrderCollection; // What is different between final and const;
+    final firestore = FirebaseFirestore.instance;
+    final userUpload = firestore
+        .collection(userPath)
+        .doc(orderModel.orderId)
+        .set(orderModel.toMap());
+    final sellerUpload = firestore
+        .collection(sellerPth)
+        .doc(orderModel.orderId)
+        .set(orderModel.toMap());
+
+    await Future.wait([userUpload, sellerUpload]);
+  }
+
   @override
   Future<Map<String, dynamic>> postRequest(
       {required String endpoint,
@@ -183,7 +210,9 @@ class DataFirebaseService implements BaseFirebaseService {
       required String baseUrl,
       required Map<String, String> headers}) async {
     final Uri url = Uri.parse(baseUrl);
+
     final response = await http.post(url, headers: headers, body: body);
+
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:user_app/controller/profile_controller.dart';
 import 'package:user_app/res/app_asset/image_asset.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../res/app_colors.dart';
@@ -33,23 +34,16 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Your order is confirmed",
+            AppString.yourOrderIsConfirm,
             style: AppsTextStyle.titleTextStyle.copyWith(fontSize: 24.sp),
           ),
-          SizedBox(
-            height: 15.h,
-          ),
+          AppsFunction.verticleSpace(15),
           Text(
-            "Thank you for shopping with JU Grocery",
-            style: GoogleFonts.roboto(
-                color: Theme.of(context).primaryColor,
-                fontSize: 22.sp,
-                fontWeight: FontWeight.normal),
+            AppString.thankyouforshopping,
+            style: AppsTextStyle.largeBoldText,
           ),
           Image.asset(ImagesAsset.confirmOrder),
-          SizedBox(
-            height: 4.h,
-          ),
+          AppsFunction.verticleSpace(5),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.accentGreen,
@@ -58,11 +52,8 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
               onPressed: () {
                 Get.offAllNamed(RoutesName.mainPage, arguments: 0);
               },
-              child: Text(
-                "Home Page",
-                style: AppsTextStyle.largestText
-                    .copyWith(color: AppColors.white, fontSize: 20.sp),
-              ))
+              child: Text(AppString.homePage,
+                  style: AppsTextStyle.buttonTextStyle))
         ],
       ),
     );

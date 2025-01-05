@@ -29,7 +29,7 @@ class LoadingAddressWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
                     children: [
@@ -38,9 +38,7 @@ class LoadingAddressWidget extends StatelessWidget {
                       AppsFunction.lineShimmer(20, 45),
                     ],
                   ),
-                  AppsFunction.verticleSpace(10),
                   AppsFunction.lineShimmer(10),
-                  AppsFunction.verticleSpace(10),
                   AppsFunction.lineShimmer(10),
                 ],
               ),

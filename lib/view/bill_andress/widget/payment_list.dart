@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/bill_controller.dart';
+import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/constants.dart';
 import '../payment_widget.dart';
@@ -19,12 +21,10 @@ class PaymentList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Payment Method",
+          AppString.paymentMethod,
           style: AppsTextStyle.titleTextStyle,
         ),
-        SizedBox(
-          height: 10.h,
-        ),
+        AppsFunction.verticleSpace(10),
         SizedBox(
             height: 120.h,
             width: 1.sw,

@@ -1,10 +1,18 @@
+import 'package:user_app/data/service/card_api_service.dart';
 import 'package:user_app/data/service/data_firebase_service.dart';
+import 'package:user_app/model/order_model.dart';
 import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/constant/string_constant.dart';
 
 class BillRepository {
   final _dataFirebaseService = DataFirebaseService();
+  final _apiService = CardApiService();
 
+  Future<Map<String, dynamic>> createPaymentIntent(
+      String amount, String currency) async {
+    return _apiService.createPaymentIntent(amount, currency);
+  }
+
+/*
   Future<Map<String, dynamic>> createPaymentIntent(
       String amount, String currency) async {
     try {
@@ -29,20 +37,15 @@ class BillRepository {
       rethrow;
     }
   }
-
-  Future<void> saveOrderDetails(
-      {required Map<String, dynamic> orderMetailsMap,
-      required String orderId}) async {
+*/
+  Future<void> uploadOrderSnapshots({required OrderModel orderModel}) async {
     try {
-      await _dataFirebaseService.saveOrderDetails(
-          orderMetailsMap: orderMetailsMap, orderId: orderId);
+      await _dataFirebaseService.uploadOrderSnapshots(
+        orderModel: orderModel,
+      );
     } catch (e) {
-      AppsFunction.flutterToast(msg: e.toString());
+      AppsFunction.handleException(e);
+      rethrow;
     }
-  }
-
-  String calculateAmount(String amount) {
-    final int parsedAmount = int.parse(amount) * 100;
-    return parsedAmount.toString();
   }
 }

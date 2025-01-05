@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_function.dart';
 
 import '../../controller/bill_controller.dart';
 import '../../res/app_colors.dart';
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/constants.dart';
 import 'widget/address_details_widget.dart';
@@ -19,18 +21,15 @@ class BillPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var billController = Get.find<BillController>();
     return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                if (billController.isLoading.value) Get.back();
+                if (!billController.isLoading.value) Get.back();
               },
               icon: const Icon(
                 Icons.arrow_back,
               )),
-          title: const Text(
-            "Pay Bill",
-          ),
+          title: const Text(AppString.payBill),
         ),
         body: Obx(
           () => billController.isLoading.value
@@ -44,13 +43,9 @@ class BillPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const AddressDetailsWidget(),
-                        SizedBox(
-                          height: 10.h,
-                        ),
+                        AppsFunction.verticleSpace(10),
                         const PaymentList(),
-                        SizedBox(
-                          height: 15.h,
-                        ),
+                        AppsFunction.verticleSpace(15),
                         _buildPaymentActionButtion(billController, context),
                       ],
                     ),
@@ -63,24 +58,25 @@ class BillPage extends StatelessWidget {
       BillController billController, BuildContext context) {
     return InkWell(
       onTap: () async {
-        int amount =
-            billController.totalAmountController.totalAmount.value.toInt();
-
-        billController.card.value == Payment.bkash.name
-            ? Container()
-            : await billController.createPayment(amount.toString(), 'USD');
+        if (billController.addressController.addressid.value.isNotEmpty) {
+          billController.card.value == Payment.bkash.name
+              ? Container()
+              : await billController.createPayment('USD');
+        } else {
+          AppsFunction.flutterToast(msg: "Please Add a address");
+        }
       },
       child: Container(
         height: 50.h,
         alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
+        width: 1.sw,
         decoration: BoxDecoration(
             color: AppColors.accentGreen,
             borderRadius: BorderRadius.circular(15.r)),
         child: Text(
             billController.card.value == Payment.card.name
-                ? "Payment By Card"
-                : "Payment By Bkask",
+                ? AppString.paymentCard
+                : AppString.paymentBkash,
             style:
                 AppsTextStyle.mediumBoldText.copyWith(color: AppColors.white)),
       ),

@@ -65,6 +65,10 @@ class AppsFunction {
     );
   }
 
+  static String calculateAmount(String amount) {
+    final int parsedAmount = int.parse(amount) * 100;
+    return parsedAmount.toString();
+  }
   // static confirmationDialog({
   //   required VoidCallback yesFunction,
   //   required String title,
@@ -307,6 +311,11 @@ class AppsFunction {
         contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
         hintStyle: AppsTextStyle.hintTextStyle);
   }
+
+  static String estimateDeliveryDate = DateTime.now()
+      .add(const Duration(days: 15))
+      .millisecondsSinceEpoch
+      .toString();
 }
 
 class SimpleButtonWidget extends StatelessWidget {

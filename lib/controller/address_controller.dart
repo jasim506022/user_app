@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/widget/loading_widget.dart';
 
 import '../model/address_model.dart';
@@ -33,6 +34,35 @@ class AddressController extends GetxController {
 
   AddressController(this.repository);
 
+  @override
+  void onInit() {
+    super.onInit();
+    addChangeListener();
+  }
+
+  @override
+  void onClose() {
+    // nameTEC.dispose();
+    // phoneTEC.dispose();
+    // flatHouseNumberTEC.dispose();
+    // streetnameornumberTEC.dispose();
+    // villageTEC.dispose();
+    // cityTEC.dispose();
+    // countryTEC.dispose();
+    for (var controller in [
+      nameTEC,
+      phoneTEC,
+      flatHouseNumberTEC,
+      streetnameornumberTEC,
+      villageTEC,
+      cityTEC,
+      countryTEC
+    ]) {
+      controller.dispose();
+    }
+    super.onClose();
+  }
+
   void clearInputField() {
     nameTEC.clear();
     phoneTEC.clear();
@@ -42,68 +72,6 @@ class AddressController extends GetxController {
     cityTEC.clear();
     countryTEC.clear();
     currentDropdownAddress.value = list[0];
-  }
-
-  void handleBackNavigaion(bool didPop) {
-    if (didPop) return;
-
-    if (isChange.value == false) {
-      Get.back();
-    } else {
-      Get.dialog(CustomAlertDialogWidget(
-        icon: Icons.question_mark_rounded,
-        title: "Save Changed?",
-        subTitle: 'do you want to save change?',
-        yesOnPress: () => Get.back(),
-        noOnPress: () {
-          clearInputField();
-          isChange.value = false;
-          Get.close(2);
-        },
-      ));
-    }
-  }
-
-  setIndex(int index) {
-    currentAddressIndex.value = index;
-  }
-
-  setAddressId(String address) {
-    addressid.value = address;
-  }
-
-  void setDropdownAddress(String location) {
-    currentDropdownAddress.value = location;
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
-    try {
-      return repository.addressSnapshot();
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-      rethrow;
-    }
-  }
-
-  void deleteAddress({required String addressId}) {
-    try {
-      repository.deleteAddress(addressId: addressId);
-      Get.back();
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-    }
   }
 
   void addChangeListener() {
@@ -124,37 +92,98 @@ class AddressController extends GetxController {
     }
   }
 
+  void handleBackNavigaion(bool didPop) {
+    if (didPop) return;
+
+    if (!isChange.value) {
+      Get.back();
+      return;
+    }
+
+    Get.dialog(CustomAlertDialogWidget(
+      icon: Icons.question_mark_rounded,
+      title: AppString.saveChaned,
+      subTitle: AppString.doYouWantSave,
+      yesOnPress: () => Get.back(),
+      noOnPress: () {
+        clearInputField();
+        isChange.value = false;
+        Get.close(2);
+      },
+    ));
+  }
+
+  void setIndex(int index) {
+    currentAddressIndex.value = index;
+  }
+
+  void setAddressId(String address) {
+    addressid.value = address;
+  }
+
+  void setDropdownAddress(String location) {
+    currentDropdownAddress.value = location;
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot() {
+    try {
+      return repository.addressSnapshot();
+    } catch (e) {
+      handleException(e);
+      rethrow;
+    }
+  }
+
+  Future<void> deleteAddress() async {
+    final confirmed = await Get.dialog<bool>(
+      CustomAlertDialogWidget(
+        icon: Icons.question_mark_rounded,
+        title: AppString.confirmDeletion,
+        subTitle: AppString.deleteMessage,
+        yesOnPress: () => Get.back(result: true),
+        noOnPress: () => Get.back(result: false),
+      ),
+    );
+
+    if (confirmed == true) {
+      try {
+        await repository.deleteAddress(addressId: addressid.value);
+        addressid.value = "";
+        AppsFunction.flutterToast(msg: AppString.succwssulyDelete);
+      } catch (e) {
+        handleException(e);
+      }
+    }
+  }
+
   // Save Address
   Future<void> saveAddress(bool isUpdate) async {
     try {
       LoadingWidget(
-        message: isUpdate ? "Update Address" : "Upload a New Address",
+        message:
+            isUpdate ? AppString.updateAddress : AppString.uploadNewAddress,
       );
+
       AddressModel addressModel = _buildAddressModel(isUpdate);
       await repository.uploadOrUpdateAddress(
           addressModel: addressModel, isUpdate: isUpdate);
       clearInputField();
-      Get.offNamed(RoutesName.billPage);
       Get.back();
+      Get.offNamed(RoutesName.billPage);
+
       AppsFunction.flutterToast(
           msg: isUpdate
-              ? "Sucessfully Update"
-              : "Successfully Upload a New Address");
+              ? AppString.successfullyUpdate
+              : AppString.succesffulyUploadNewAddress);
     } catch (e) {
       Get.back();
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
+      handleException(e);
     } finally {
       isChange.value = false;
     }
   }
 
-  void updateFiled(AddressModel addressModel) {
+  void updateFields(AddressModel addressModel) {
     id.value = addressModel.addressId!;
     nameTEC.text = addressModel.name!;
     phoneTEC.text = addressModel.phone!;
@@ -191,15 +220,14 @@ class AddressController extends GetxController {
         village: villageTEC.text.trim());
   }
 
-  @override
-  void onClose() {
-    nameTEC.dispose();
-    phoneTEC.dispose();
-    flatHouseNumberTEC.dispose();
-    streetnameornumberTEC.dispose();
-    villageTEC.dispose();
-    cityTEC.dispose();
-    countryTEC.dispose();
-    super.onClose();
+  void handleException(Object e) {
+    if (e is AppException) {
+      AppsFunction.errorDialog(
+        icon: AppIcons.warningIcon,
+        title: e.title!,
+        content: e.message,
+        buttonText: AppString.okay,
+      );
+    }
   }
 }

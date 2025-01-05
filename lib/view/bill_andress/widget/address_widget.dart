@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:user_app/res/app_string.dart';
+import 'package:user_app/view/home/widget/network_utili.dart';
 
 import '../../../controller/address_controller.dart';
 import '../../../model/address_model.dart';
@@ -11,7 +13,6 @@ import '../../../res/apps_text_style.dart';
 import '../../../res/routes/routes_name.dart';
 
 import '../../../res/utils.dart';
-import '../../../widget/show_alert_dialog_widget.dart';
 
 class AddressWidget extends StatelessWidget {
   const AddressWidget({
@@ -25,23 +26,14 @@ class AddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var addressController = Get.put(AddressController(
-      Get.find(),
-    ));
+    var addressController = Get.find<AddressController>();
 
     return Obx(() => Padding(
           padding: EdgeInsets.only(top: 12.h),
           child: InkWell(
             onLongPress: () async {
-              if (!(await AppsFunction.verifyInternetStatus())) {
-                Get.dialog(CustomAlertDialogWidget(
-                  icon: Icons.question_mark_rounded,
-                  title: "Confirm Deletion?",
-                  subTitle:
-                      'Are you sure you want to delete this item? This action cannot be undone.',
-                  yesOnPress: () => addressController.deleteAddress(
-                      addressId: addressModel.addressId!),
-                ));
+              if (!(await NetworkUtili.verifyInternetStatus())) {
+                addressController.deleteAddress();
               }
             },
             onTap: () {
@@ -50,7 +42,6 @@ class AddressWidget extends StatelessWidget {
             },
             child: Container(
               alignment: Alignment.center,
-              height: 110.h,
               width: 1.sw,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 13.h),
               decoration: BoxDecoration(
@@ -67,31 +58,25 @@ class AddressWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           children: [
-                            addressController.currentAddressIndex.value == index
-                                ? Icon(
-                                    Icons.home,
-                                    size: 30,
-                                    color: AppColors.accentGreen,
-                                  )
-                                : const Icon(
-                                    Icons.home_outlined,
-                                    size: 30,
-                                  ),
-                            SizedBox(
-                              width: 5.w,
+                            Icon(
+                              addressController.currentAddressIndex.value ==
+                                      index
+                                  ? Icons.home
+                                  : Icons.home_outlined,
+                              size: 30,
+                              color: AppColors.accentGreen,
                             ),
+                            AppsFunction.horizontalSpace(5),
                             Text(addressModel.deliveryplace!,
                                 style: AppsTextStyle.largestText),
                           ],
                         ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
+                        AppsFunction.verticleSpace(8),
                         Text(addressModel.completeaddress!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -102,10 +87,10 @@ class AddressWidget extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      if (!(await AppsFunction.verifyInternetStatus())) {
+                      if (!(await NetworkUtili.verifyInternetStatus())) {
                         Get.toNamed(RoutesName.addressPage, arguments: {
-                          "isUpdate": true,
-                          "addressModel": addressModel
+                          AppString.isUpdate: true,
+                          AppString.addressModel: addressModel
                         });
                       }
                     },

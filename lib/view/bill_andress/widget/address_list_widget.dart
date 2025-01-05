@@ -6,6 +6,7 @@ import '../../../loading_widget/loading_addres_swidget.dart';
 import '../../../model/address_model.dart';
 
 import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_string.dart';
 import '../../../widget/single_empty_widget.dart';
 import 'address_widget.dart';
 
@@ -15,6 +16,7 @@ class AddressListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var addressController = Get.find<AddressController>();
+    print(addressController.addressid.value);
     return StreamBuilder(
       stream: addressController.addressSnapshot(),
       builder: (context, snapshot) {
@@ -28,21 +30,29 @@ class AddressListWidget extends StatelessWidget {
           return SingleEmptyWidget(
             image: ImagesAsset.errorSingle,
             title: snapshot.hasError
-                ? 'Error Occure: ${snapshot.error}'
-                : 'No Address Available',
+                ? '${AppString.errorOccure} ${snapshot.error}'
+                : AppString.noAddressAvaiblabe,
           );
         }
 
         if (snapshot.hasData) {
-          addressController.length.value = snapshot.data!.docs.length;
+          final addressList = snapshot.data!.docs;
+          addressController.length.value = addressList.length;
+
+          // Set initial addressId if not already set
+          if (addressController.addressid.value.isEmpty &&
+              addressList.isNotEmpty) {
+            final firstAddressModel =
+                AddressModel.fromMap(addressList.first.data());
+            addressController.setAddressId(firstAddressModel.addressId!);
+          }
+
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               AddressModel addressModel =
                   AddressModel.fromMap(snapshot.data!.docs[index].data());
-              if (addressController.addressid.value == "") {
-                addressController.setAddressId(addressModel.addressId!);
-              }
+
               return AddressWidget(
                 addressModel: addressModel,
                 index: index,

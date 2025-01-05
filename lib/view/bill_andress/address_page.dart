@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import '../../controller/address_controller.dart';
 import '../../model/address_model.dart';
 import '../../res/app_function.dart';
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
-import '../../res/constants.dart';
 import '../../res/app_colors.dart';
 
+import '../../res/valudation.dart';
 import '../../widget/text_form_field_widget.dart';
+import '../home/widget/network_utili.dart';
+import 'widget/address_type.dart';
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
@@ -34,10 +37,10 @@ class _AddressPageState extends State<AddressPage> {
   void _initializeAddressDetails() {
     final arguments = Get.arguments as Map<String, dynamic>?;
     if (arguments != null) {
-      isUpdate = arguments["isUpdate"] ?? false;
-      addressModel = arguments["addressModel"];
+      isUpdate = arguments[AppString.isUpdate] ?? false;
+      addressModel = arguments[AppString.addressModel];
       if (isUpdate && addressModel != null) {
-        addressController.updateFiled(addressModel!);
+        addressController.updateFields(addressModel!);
       }
     } else {
       isUpdate = false;
@@ -57,14 +60,14 @@ class _AddressPageState extends State<AddressPage> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
-            isUpdate ? "Update Address " : "Add Address ",
+            isUpdate ? AppString.updateAddress : AppString.addAddress,
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
             backgroundColor: AppColors.accentGreen,
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
-              if (!(await AppsFunction.verifyInternetStatus())) {
+              if (!(await NetworkUtili.verifyInternetStatus())) {
                 addressController.saveAddress(isUpdate);
               }
             },
@@ -72,17 +75,15 @@ class _AddressPageState extends State<AddressPage> {
               isUpdate ? Icons.update : Icons.save,
               color: AppColors.white,
             ),
-            label: Text(isUpdate ? "Update" : "Save",
-                style: AppsTextStyle.largeBoldText
+            label: Text(isUpdate ? AppString.update : AppString.save,
+                style: AppsTextStyle.mediumBoldText
                     .copyWith(color: AppColors.white))),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: ListView(
             children: [
               _buildAddressForm(),
-              SizedBox(
-                height: 350.h,
-              )
+              AppsFunction.verticleSpace(350),
             ],
           ),
         ),
@@ -102,17 +103,19 @@ class _AddressPageState extends State<AddressPage> {
               Flexible(
                 flex: 5,
                 child: TextFormFieldWidget(
-                  onChanged: (value) =>
-                      _validateNotEmpty(value, "Country Name"),
+                  onChanged: (value) => addressController.addChangeListener(),
                   controller: addressController.countryTEC,
-                  hintText: 'Country Name',
+                  hintText: AppString.countryName,
                   textInputType: TextInputType.text,
+                  validator: (value) =>
+                      Validators.validateNotEmpty(value, AppString.countryName),
                 ),
               ),
-              SizedBox(
-                width: 20.w,
-              ),
-              Flexible(flex: 2, child: _buildDropdown())
+              AppsFunction.horizontalSpace(20),
+              const Flexible(
+                flex: 2,
+                child: AddressType(),
+              )
             ],
           ),
         ],
@@ -122,26 +125,39 @@ class _AddressPageState extends State<AddressPage> {
 
   List<Widget> _buildTextFields() {
     return [
-      _buildTextField(addressController.nameTEC, 'Name', _validateName),
+      _buildTextField(addressController.nameTEC, AppString.nameHintText,
+          Validators.validateName),
+      _buildTextField(addressController.phoneTEC, AppString.phoneHintText,
+          Validators.validatePhoneNumber),
       _buildTextField(
-          addressController.phoneTEC, 'Phone', _validatePhoneNumber),
-      _buildTextField(addressController.flatHouseNumberTEC, 'Flat/House Number',
-          (value) => _validateNotEmpty(value, "flat/house number")),
+        addressController.flatHouseNumberTEC,
+        AppString.flatHintText,
+        (value) => Validators.validateNotEmpty(value, AppString.flatHintText),
+      ),
       _buildTextField(
-          addressController.streetnameornumberTEC,
-          'Street Number or Name',
-          (value) => _validateNotEmpty(value, "Street number or name")),
-      _buildTextField(addressController.villageTEC, 'Village Name',
-          (value) => _validateNotEmpty(value, "Village Name")),
-      _buildTextField(addressController.cityTEC, 'City Name',
-          (value) => _validateNotEmpty(value, "City Name")),
+        addressController.streetnameornumberTEC,
+        AppString.streetHintText,
+        (value) => Validators.validateNotEmpty(value, AppString.streetHintText),
+      ),
+      _buildTextField(
+        addressController.villageTEC,
+        AppString.villageHintText,
+        (value) =>
+            Validators.validateNotEmpty(value, AppString.villageHintText),
+      ),
+      _buildTextField(
+        addressController.cityTEC,
+        AppString.cityNameHintText,
+        (value) =>
+            Validators.validateNotEmpty(value, AppString.cityNameHintText),
+      ),
     ];
   }
 
   TextFormFieldWidget _buildTextField(TextEditingController controller,
       String hintText, String? Function(String?)? validator) {
     return TextFormFieldWidget(
-      onChanged: (p0) => addressController.addChangeListener(),
+      onChanged: (value) => addressController.addChangeListener(),
       validator: validator,
       controller: controller,
       hintText: hintText,
@@ -149,46 +165,20 @@ class _AddressPageState extends State<AddressPage> {
     );
   }
 
-  String? _validateName(String? value) {
-    if (value == null || value.isEmpty) return "Please enter your name";
-    if (value.length <= 2) return "Name must be longer than 2 characters";
-    return null;
-  }
+  // String? _validateName(String? value) {
+  //   if (value == null || value.isEmpty) return "Please enter your name";
+  //   if (value.length <= 2) return "Name must be longer than 2 characters";
+  //   return null;
+  // }
 
-  String? _validatePhoneNumber(String? value) {
-    if (value == null || value.isEmpty) return "Please enter your phone number";
-    if (value.length != 11) return "Phone number must be exactly 11 digits";
-    return null;
-  }
+  // String? _validatePhoneNumber(String? value) {
+  //   if (value == null || value.isEmpty) return "Please enter your phone number";
+  //   if (value.length != 11) return "Phone number must be exactly 11 digits";
+  //   return null;
+  // }
 
-  String? _validateNotEmpty(String? value, String fieldName) {
-    if (value == null || value.isEmpty) return "Please enter your $fieldName.";
-    return null;
-  }
-
-  Widget _buildDropdown() {
-    return Obx(
-      () => DropdownButton<String>(
-        value: addressController.currentDropdownAddress.value,
-        elevation: 16,
-        underline: Container(
-          height: 2,
-          color: AppColors.accentGreen,
-        ),
-        onChanged: (String? value) {
-          addressController.setDropdownAddress(value!);
-          addressController.addChangeListener();
-        },
-        items: list.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(
-              value,
-              style: AppsTextStyle.mediumBoldText.copyWith(fontSize: 14.sp),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
+  // String? _validateNotEmpty(String? value, String fieldName) {
+  //   if (value == null || value.isEmpty) return "Please enter your $fieldName.";
+  //   return null;
+  // }
 }

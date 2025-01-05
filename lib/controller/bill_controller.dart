@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:user_app/model/order_model.dart';
 import 'package:user_app/res/app_string.dart';
+import 'package:user_app/view/home/widget/network_utili.dart';
 
 import '../repository/bill_repository.dart';
 import '../res/app_constant.dart';
 import '../res/app_function.dart';
-import '../res/app_asset/app_icons.dart';
 import '../res/cart_funtion.dart';
 import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
@@ -16,7 +16,6 @@ import 'cart_controller.dart';
 
 class BillController extends GetxController {
   final BillRepository repository;
-
   //Observable variable for reactive UI Update
 
   var isLoading = false.obs;
@@ -25,26 +24,25 @@ class BillController extends GetxController {
   var card = Payment.card.name.obs;
   var isSucess = false.obs;
 
-  String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-
-  var totalAmountController = Get.find<CartController>();
-  AddressController addressController = Get.find();
+  final CartController cartController = Get.find();
+  final AddressController addressController = Get.find();
 
   BillController({required this.repository});
 
   void setLoading(bool isLoading) => this.isLoading.value = isLoading;
-
   void setCurrentPaymentIndex(int index) => currentPyamentIndex.value = index;
-
   void setCurrentPayment(String card) => this.card.value = card;
 
-  Future<void> createPayment(String amount, String currency) async {
-    try {
-      if (!await _checkInternetConnection()) return;
-      setLoading(true);
+  Future<void> createPayment(String currency) async {
+    if (await NetworkUtili.verifyInternetStatus()) {
+      return;
+    }
 
+    try {
+      setLoading(true);
+      var amount = cartController.totalAmount.value.toInt();
       paymentIntentData =
-          await repository.createPaymentIntent(amount, currency);
+          await repository.createPaymentIntent(amount.toString(), currency);
 
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(
@@ -52,60 +50,47 @@ class BillController extends GetxController {
               style: ThemeMode.dark,
               merchantDisplayName: 'ANNIE'));
 
-      await displayPaymentSheet(amount);
+      await displayPaymentSheet();
     } catch (e) {
       AppsFunction.flutterToast(msg: e.toString());
-      setLoading(false);
     } finally {
       setLoading(false);
     }
   }
 
-  Future<void> displayPaymentSheet(String amount) async {
+  Future<void> displayPaymentSheet() async {
     setLoading(true);
     try {
       await Stripe.instance.presentPaymentSheet();
-      paymentIntentData = {};
+      // paymentIntentData = {};
+      paymentIntentData.clear();
       isSucess.value = true;
       if (isSucess.value) {
-        _processSuccessfullPayment(double.parse(amount));
+        _processSuccessfullPayment();
       } else {
-        AppsFunction.flutterToast(msg: "Payment Cencle");
-
-        setLoading(false);
+        AppsFunction.flutterToast(msg: AppString.paymentCencle);
       }
     } on StripeException catch (e) {
       AppsFunction.flutterToast(msg: e.toString());
-      setLoading(false);
     } catch (e) {
       AppsFunction.flutterToast(msg: e.toString());
+    } finally {
       setLoading(false);
     }
   }
 
-  void _processSuccessfullPayment(double amount) {
-    repository.saveOrderDetails(
-        orderMetailsMap: orderMetailsMap("Payment By Carrd", amount),
-        orderId: orderId);
+  void _processSuccessfullPayment() {
+    OrderModel orderModel = _buildorderModel();
+    repository.uploadOrderSnapshots(
+      orderModel: orderModel,
+    );
     CartFunctions.clearCart();
-    Fluttertoast.showToast(
-        msg: "Congratulations, Order has been placed Successfully");
-    Get.snackbar('Successfully', 'Successfully Done');
+    AppsFunction.flutterToast(msg: AppString.congratulationOrder);
+
     Get.offAllNamed(RoutesName.placeOrderScreen);
   }
 
-  Future<bool> _checkInternetConnection() async {
-    if (await AppsFunction.internetChecking()) {
-      AppsFunction.errorDialog(
-        icon: AppIcons.warningIcon,
-        title: "No Internet Connection",
-        content: "Please check your internet settings and try again.",
-        buttonText: "Okay",
-      );
-      return false;
-    }
-    return true;
-  }
+/*
 
   Map<String, dynamic> orderMetailsMap(String payment, double amount) {
     return {
@@ -127,8 +112,26 @@ class BillController extends GetxController {
     };
   }
 
-  String estimateDeliveryDate = DateTime.now()
-      .add(const Duration(days: 15))
-      .millisecondsSinceEpoch
-      .toString();
+*/
+
+  OrderModel _buildorderModel() {
+    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+    var amount = cartController.totalAmount.value.toInt();
+    return OrderModel(
+        addressId: addressController.addressid.value,
+        totalAmount: amount,
+        orderBy: AppConstant.sharedPreference!
+            .getString(AppString.uidSharedPreference)!,
+        productIds: AppConstant.sharedPreference!
+            .getStringList(AppString.cartListSharedPreference)!,
+        paymentDetails: "Payment By Carrd",
+        orderId: orderId,
+        seller: CartFunctions.seperateSellerSet().toList(),
+        orderTime: orderId,
+        isSuccess: true,
+        status: "normal",
+        deliveryDate: AppsFunction.estimateDeliveryDate,
+        deliveryPartner: "BD-DEX",
+        trackingNumber: "bddex$orderId");
+  }
 }

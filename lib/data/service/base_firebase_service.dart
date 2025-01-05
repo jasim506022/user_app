@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:user_app/model/address_model.dart';
 
+import '../../model/order_model.dart';
 import '../../model/profile_model.dart';
 
 abstract class BaseFirebaseService {
@@ -38,8 +39,12 @@ abstract class BaseFirebaseService {
   Stream<QuerySnapshot<Map<String, dynamic>>> addressSnapshot();
   Future<void> deleteAddress({required String addressId});
 
-  Future<void> saveOrderDetails(
-      {required Map<String, dynamic> orderMetailsMap, required String orderId});
+  Future<void> uploadOrderSnapshots({required OrderModel orderModel
+      // Map<String, dynamic> orderMetailsMap
+      // ,
+      // required String orderId
+
+      });
 
   Future<Map<String, dynamic>> postRequest(
       {required String endpoint,

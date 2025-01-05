@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
+import 'package:user_app/view/home/widget/network_utili.dart';
 
 import '../../../controller/address_controller.dart';
 
@@ -22,9 +24,7 @@ class AddressDetailsWidget extends StatelessWidget {
     return Column(
       children: [
         _buildHeader(),
-        SizedBox(
-          height: 10.h,
-        ),
+        AppsFunction.verticleSpace(10),
         SizedBox(
           height: 250.h,
           child: const AddressListWidget(),
@@ -36,24 +36,23 @@ class AddressDetailsWidget extends StatelessWidget {
   Row _buildHeader() {
     return Row(
       children: [
-        Text("Delivery Address",
+        Text(AppString.delivaryAddress,
             style: AppsTextStyle.largeBoldText
                 .copyWith(color: AppColors.accentGreen)),
         const Spacer(),
         InkWell(
           onTap: () async {
             if (Get.find<AddressController>().length.value >= maxAddresses) {
-              AppsFunction.flutterToast(
-                  msg: "No Addressed because you Already 4 Address Added");
+              AppsFunction.flutterToast(msg: AppString.alreadyFourAddressAdded);
             } else {
-              if (!(await AppsFunction.verifyInternetStatus())) {
+              if (!await NetworkUtili.verifyInternetStatus()) {
                 Get.toNamed(
                   RoutesName.addressPage,
                 );
               }
             }
           },
-          child: Text("+Add",
+          child: Text("+${AppString.add}",
               style: AppsTextStyle.largeBoldText
                   .copyWith(color: AppColors.accentGreen)),
         )

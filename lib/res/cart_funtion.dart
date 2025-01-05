@@ -32,9 +32,10 @@ class CartFunctions {
   }
 
   static void clearCart() {
-    AppConstant.sharedPreference!.setStringList("cartlist", ["initial"]);
-    List<String> emptyCart =
-        AppConstant.sharedPreference!.getStringList("cartlist")!;
+    AppConstant.sharedPreference!
+        .setStringList(AppString.cartListSharedPreference, ["initial"]);
+    List<String> emptyCart = AppConstant.sharedPreference!
+        .getStringList(AppString.cartListSharedPreference)!;
 
     /*
     FirebaseFirestore.instance
@@ -43,7 +44,7 @@ class CartFunctions {
 */
     var profileController = Get.find<ProfileController>();
     profileController.updateUserCartData(map: {"cartlist": emptyCart});
-    AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
+    AppsFunction.flutterToast(msg: AppString.removieAllCartSuccessfully);
     // FirebaseDatabase.currentUserSnaphots()
     //     .update({"cartlist": emptyCart}).then((value) {
     //   AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
@@ -53,8 +54,9 @@ class CartFunctions {
 // Separet Product Id From CartList
   static List<String> separateProductID() {
     return [
-      for (var item
-          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
+      for (var item in AppConstant.sharedPreference!
+          .getStringList(AppString.cartListSharedPreference)!
+          .skip(1))
         item.toString().split(":")[0]
     ];
   }
@@ -74,7 +76,7 @@ class CartFunctions {
 
   static int productQuantiyList(String prodductId) {
     List<String> list = AppConstant.sharedPreference!
-        .getStringList("cartlist")!
+        .getStringList(AppString.cartListSharedPreference)!
         .skip(1)
         .toList();
 
