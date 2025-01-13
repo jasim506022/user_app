@@ -28,16 +28,12 @@ class OrderDetailsWidget extends StatelessWidget {
               style: AppsTextStyle.largeBoldText.copyWith(
                 color: AppColors.accentGreen,
               )),
-          SizedBox(
-            height: 7.w,
-          ),
+          AppsFunction.verticleSpace(7),
           Text(
               "Placed On ${AppsFunction.formatDeliveryDate(datetime: orderModel.orderId)}",
               style: AppsTextStyle.mediumText600
                   .copyWith(color: Theme.of(context).hintColor)),
-          SizedBox(
-            height: 25.h,
-          ),
+          AppsFunction.verticleSpace(25),
           Align(
             alignment: Alignment.center,
             child: CustomRoundActionButton(

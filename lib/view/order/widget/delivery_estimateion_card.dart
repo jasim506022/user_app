@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
@@ -29,19 +30,15 @@ class DeliveryEstimationCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("On The way From Dhaka!", //28
+          Text(AppString.onTheWayFromDahaka, //28
               style: AppsTextStyle.largeBoldText
-                  .copyWith(color: AppColors.white, fontSize: 24)),
-          SizedBox(
-            height: 10.h,
-          ),
-          Text("Estimated Delivery Date is",
+                  .copyWith(color: AppColors.white, fontSize: 28.sp)),
+          AppsFunction.verticleSpace(10),
+          Text(AppString.estimatedDeliveryDate,
               style: AppsTextStyle.largeText.copyWith(
                 color: AppColors.white,
               )),
-          SizedBox(
-            height: 20.h,
-          ),
+          AppsFunction.verticleSpace(20),
           Text(
             AppsFunction.formatDeliveryDate(datetime: orderModel.deliveryDate),
             style: AppsTextStyle.largestText

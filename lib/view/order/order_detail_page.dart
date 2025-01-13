@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:user_app/model/order_model.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../res/app_colors.dart';
 
+import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
 import 'widget/order_details_widget.dart';
 import 'widget/order_product_section.dart';
@@ -21,7 +23,7 @@ class OrderSummaryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Order Details",
+          AppString.orderDetails,
         ),
       ),
       body: Padding(
@@ -31,24 +33,18 @@ class OrderSummaryPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Ship & Bill To",
+                AppString.shipAndBill,
                 style: AppsTextStyle.largeBoldText
                     .copyWith(color: AppColors.red, fontSize: 20),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              AppsFunction.verticleSpace(10),
               OrderReceiverDetailsWidget(orderModel: orderModel),
               OrderProductSection(
                 orderModel: orderModel,
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              AppsFunction.verticleSpace(10),
               OrderDetailsWidget(orderModel: orderModel),
-              SizedBox(
-                height: 100.h,
-              )
+              AppsFunction.verticleSpace(100),
             ],
           ),
         ),

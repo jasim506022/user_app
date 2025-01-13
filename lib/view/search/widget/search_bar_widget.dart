@@ -8,7 +8,6 @@ import '../../../controller/search_controller.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/utils.dart';
 import '../../../widget/text_form_field_widget.dart';
 import 'filter_dialog_widget.dart';
 
@@ -19,8 +18,7 @@ class SearchBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var searchController = Get.find<SearchControllers>();
-
+    var searchController = Get.find<ProductSearchController>();
     return SizedBox(
       height: 0.1.sh,
       width: 1.sw,
@@ -29,11 +27,11 @@ class SearchBarWidget extends StatelessWidget {
           Flexible(
               flex: 4,
               child: TextFormFieldWidget(
-                style: AppsTextStyle.mediumNormalText
-                    .copyWith(color: Utils.getColor),
+                style: AppsTextStyle.mediumNormalText,
                 isUdateDecoration: true,
                 decoration: AppsFunction.inputDecoration(
-                    hint: AppString.searchProductHere),
+                  hint: AppString.searchProductHere,
+                ),
                 controller: searchController.searchTextTEC,
                 onChanged: (text) {
                   searchController.updateProductList(text);

@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/search_controller.dart';
@@ -12,15 +11,13 @@ import '../../../widget/product_widget.dart';
 class SearchProductGridWidget extends StatelessWidget {
   const SearchProductGridWidget({
     super.key,
-    required this.searchController,
   });
-
-  final SearchControllers searchController;
 
   @override
   Widget build(BuildContext context) {
+    var searchController = Get.find<ProductSearchController>();
     return Obx(() {
-      final productList = _getProductList();
+      final productList = _getProductList(searchController);
 
       if (productList.isEmpty) {
         return EmptyWidget(
@@ -37,18 +34,20 @@ class SearchProductGridWidget extends StatelessWidget {
             crossAxisSpacing: 8,
             mainAxisSpacing: 8),
         itemBuilder: (context, index) {
-          return ChangeNotifierProvider.value(
-            value: productList[index],
-            child: ProductWidget(
-              productModel: productList[index],
-            ),
+          return ProductWidget(
+            productModel: productList[index],
           );
+
+          // ChangeNotifierProvider.value(
+          //   value: productList[index],
+          //   child: const ProductWidget(),
+          // );
         },
       );
     });
   }
 
-  List<ProductModel> _getProductList() {
+  List<ProductModel> _getProductList(ProductSearchController searchController) {
     if (searchController.isFilterEnabled.value &&
         searchController.searchTextTEC.text.isEmpty) {
       return searchController.filterProductList;

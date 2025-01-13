@@ -88,6 +88,6 @@ class InitialBinding extends Bindings {
         () => OrderController(Get.find<OrderRepository>()),
         fenix: true);
 
-    Get.lazyPut<SearchControllers>(() => SearchControllers());
+    Get.lazyPut<ProductSearchController>(() => ProductSearchController());
   }
 }

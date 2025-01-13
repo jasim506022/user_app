@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,9 @@ class AddressListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var addressController = Get.find<AddressController>();
-    print(addressController.addressid.value);
+    if (kDebugMode) {
+      print(addressController.addressid.value);
+    }
     return StreamBuilder(
       stream: addressController.addressSnapshot(),
       builder: (context, snapshot) {

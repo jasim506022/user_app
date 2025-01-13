@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/model/order_model.dart';
 import 'package:user_app/res/app_asset/image_asset.dart';
+import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/app_string.dart';
 
 import 'widget/delivery_estimateion_card.dart';
 import 'widget/delivery_infor_widget.dart';
@@ -21,7 +23,7 @@ class OrderDeliveryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Order Delivery ",
+          AppString.orderDelivery,
         ),
       ),
       body: Padding(
@@ -34,16 +36,12 @@ class OrderDeliveryPage extends StatelessWidget {
                   value: orderModel,
                   child: const DeliveryEstimationCard(),
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                AppsFunction.verticleSpace(15),
                 ChangeNotifierProvider.value(
                   value: orderModel,
                   child: const DeliveryInfoWidget(),
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                AppsFunction.verticleSpace(15),
                 if (orderModel.status == "normal")
                   OrderStatusWidget(
                     image: ImagesAsset.readyForDelivery,
@@ -59,9 +57,7 @@ class OrderDeliveryPage extends StatelessWidget {
                     image: ImagesAsset.confirmOrder,
                     title: "Order is Successfully Done",
                   ),
-                SizedBox(
-                  height: 10.h,
-                ),
+                AppsFunction.verticleSpace(10),
                 ChangeNotifierProvider.value(
                   value: orderModel,
                   child: const OrderProductDetails(),

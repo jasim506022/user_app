@@ -71,6 +71,7 @@ class AppString {
 
   static const pCategory = "Product Category";
   static const filterSearch = "Filter Search";
+  static const shipAndBill = "Ship & Bill To";
 
   // signout
   static const doYouWantSignount = 'Do you want to sign out?';
@@ -130,6 +131,7 @@ class AppString {
 
   // address
   static const String nameHintText = 'Enter your Name';
+  static const String editProfile = "Edit Profile";
   static const String phoneHintText = 'Enter Phone';
   static const String flatHintText = 'Flat/House Number';
   static const String streetHintText = 'Street Number or Name';
@@ -154,6 +156,7 @@ class AppString {
   static String validPhoneNumber = 'Please Give Valid Phone number';
   static String sendingMail = "Sending a mail. Please Check ur Email";
   static String name = "Name";
+  static String all = "All";
   static String removieAllCartSuccessfully = "Remove All Cart Successfully";
   static String phone = "Phone";
   static String paymentMethod = "Payment Method";
@@ -176,6 +179,7 @@ class AppString {
   static const String doYouWantSave = 'do you want to save change?';
   static const String successfullyUpdate = "Sucessfully Update";
   static const String yourOrderIsConfirm = "Your order is confirmed";
+  static const String orderPage = "Order Page";
   static const String thankyouforshopping =
       "Thank you for shopping with JU Grocery";
 
@@ -186,6 +190,25 @@ class AppString {
       "Phone number must be exactly 11 digits";
   static const String nameMustbeLongerThenTow =
       "Name must be longer than 2 characters";
+
+  static const String email = "Email";
+  static const String saveChanged = "Save Changed?";
+  static const String address = "Address";
+  static const String hintAddress = "Enter Your Address";
+  static const String userIsDisable =
+      "User is Disable Please Contract with Admin";
+  static const String successfullySignedOut = "Successfully Signed Out";
+  static const String pleaseGiveYourPhoenNumber =
+      "Please Give your Phone Numer";
+  static const String profileUdate = "Profile Update";
+  static const String orderDetails = "Order Details";
+  static const String onTheWayFromDahaka = "On The way From Dhaka!";
+  static const String estimatedDeliveryDate = "Estimated Delivery Date is";
+  static const String orderDelivery = "Order Delivery ";
+  static const String deliveryPartner = "Delivery Partner";
+  static const String trackingNumber = "Tracking Number";
+  static const String receiver = "Receiver";
+  static const String order = "Order";
 
   // Dynamic message generator
   static String pleaseEnterField(String fieldName) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:user_app/res/app_string.dart';
 
 import '../model/products_model.dart';
 import '../res/app_colors.dart';
 import '../res/app_function.dart';
+import '../res/app_string.dart';
 import '../res/apps_text_style.dart';
 import 'product_image_widget.dart';
 

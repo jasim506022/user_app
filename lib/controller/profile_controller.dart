@@ -38,49 +38,43 @@ class ProfileController extends GetxController {
 
   ProfileController({required this.repository});
 
-  Future<void> updateUserCartData({required Map<String, dynamic> map}) async {
-    try {
-      await repository.updateUserData(map: map);
-    } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
-    }
-  }
-
   Future<void> handleBackNavigaion(bool didPop) async {
     if (didPop) return;
 
-    if (isChange.value == false) {
+    if (!isChange.value) {
       Get.back();
       return;
     }
     Get.dialog(CustomAlertDialogWidget(
         icon: Icons.question_mark_rounded,
-        title: "Save Changed?",
-        subTitle: 'do you want to save change?',
+        title: AppString.saveChanged,
+        subTitle: AppString.doYouWantSave,
         noOnPress: () {
-          isChange.value = false;
+          isChange(false);
           Get.close(2);
         },
         yesOnPress: () => Get.back()));
   }
 
+  Future<void> updateUserCartData({required Map<String, dynamic> map}) async {
+    try {
+      await repository.updateUserData(map: map);
+    } catch (e) {
+      _handleError(e);
+    }
+  }
+
 // Understand This Code
   Future<void> updateUserData() async {
     if (phoneTEC.text.trim().isEmpty) {
-      AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
+      AppsFunction.flutterToast(msg: AppString.pleaseGiveYourPhoenNumber);
       return;
     }
 
     try {
       Get.dialog(
           barrierDismissible: false,
-          const LoadingWidget(message: "Profile Update"));
+          const LoadingWidget(message: AppString.profileUdate));
 
       if (selectImageController.selectPhoto.value != null) {
         image.value = await signUpRepository.uploadUserImgeUrl(
@@ -89,22 +83,13 @@ class ProfileController extends GetxController {
 
       final updatedProfile = _buildUpdatedProfileModel();
       repository.updateUserData(map: updatedProfile.toMapProfileEdit());
-
-      isChange.value = false;
+      isChange(false);
       Get.back();
       Get.offAllNamed(RoutesName.mainPage, arguments: 3);
-      AppsFunction.flutterToast(msg: "Succesfully Update");
+      AppsFunction.flutterToast(msg: AppString.successfullyUpdate);
     } catch (e) {
-      if (e is AppException) {
-        Get.dialog(
-          ErrorDialogWidget(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay",
-          ),
-        );
-      }
+      Get.back();
+      _handleError(e);
     }
   }
 
@@ -142,7 +127,7 @@ class ProfileController extends GetxController {
           ?.setStringList(AppString.cartListSharedPreference, []);
 
       await repository.signOut();
-      AppsFunction.flutterToast(msg: "Successfully Signed Out");
+      AppsFunction.flutterToast(msg: AppString.successfullySignedOut);
       Get.offAllNamed(RoutesName.signPage);
     } catch (e) {
       AppsFunction.handleException(e);
@@ -163,18 +148,11 @@ class ProfileController extends GetxController {
 
           _updateTextControllers();
         } else {
-          AppsFunction.flutterToast(
-              msg: "User is Disable Please Contract with Admin");
+          AppsFunction.flutterToast(msg: AppString.userIsDisable);
         }
       }
     } catch (e) {
-      if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
-      }
+      _handleError(e);
     }
   }
 
@@ -203,5 +181,18 @@ class ProfileController extends GetxController {
     phoneTEC.text = profileModel.value.phone ?? '';
     emailTEC.text = profileModel.value.email ?? '';
     image.value = profileModel.value.imageurl ?? '';
+  }
+
+  void _handleError(dynamic error) {
+    if (error is AppException) {
+      Get.dialog(
+        ErrorDialogWidget(
+          icon: AppIcons.warningIcon,
+          title: error.title!,
+          content: error.message,
+          buttonText: AppString.okay,
+        ),
+      );
+    }
   }
 }

@@ -20,10 +20,10 @@ class CustomRoundActionButton extends StatelessWidget {
     return ElevatedButton(
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all<Color>(AppColors.accentGreen),
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(
-              horizontal: horizontal ?? 40.w, vertical: 12.h)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              WidgetStateProperty.all<Color>(AppColors.accentGreen),
+          padding: WidgetStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(
+              horizontal: horizontal?.w ?? 40.w, vertical: 12.h)),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.r),
             ),

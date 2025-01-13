@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../model/app_exception.dart';
 import '../repository/order_repository.dart';
-import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
 import '../widget/error_dialog_widget.dart';
 
@@ -12,25 +12,21 @@ class OrderController extends GetxController {
 
   OrderController(this.orderRepository);
 
+  /// Okay
   Stream<QuerySnapshot<Map<String, dynamic>>> orderSnapshots(
       {required String orderStatus}) {
     try {
       return orderRepository.orderSnapshots(orderStatus: orderStatus);
     } catch (e) {
       if (e is AppException) {
-        Get.dialog(
-          ErrorDialogWidget(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay",
-          ),
-        );
+        _handleError(e);
       }
+
       rethrow;
     }
   }
 
+  /// Okay
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
       {required List<String> listProductID}) async {
     try {
@@ -38,14 +34,7 @@ class OrderController extends GetxController {
           listProductID: listProductID);
     } catch (e) {
       if (e is AppException) {
-        Get.dialog(
-          ErrorDialogWidget(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay",
-          ),
-        );
+        _handleError(e);
       }
       rethrow;
     }
@@ -58,11 +47,7 @@ class OrderController extends GetxController {
           productList: productList, sellerId: sellerId);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+        _handleError(e);
       }
       rethrow;
     }
@@ -74,11 +59,7 @@ class OrderController extends GetxController {
       return orderRepository.orderAddressSnapsot(addressId: addressId);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+        _handleError(e);
       }
       rethrow;
     }
@@ -90,13 +71,21 @@ class OrderController extends GetxController {
       return orderRepository.sellerOrderSnapshot(sellerList: sellerList);
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
-            icon: AppIcons.warningIcon,
-            title: e.title!,
-            content: e.message,
-            buttonText: "Okay");
+        _handleError(e);
       }
+
       rethrow;
     }
+  }
+
+  void _handleError(AppException e) {
+    Get.dialog(
+      ErrorDialogWidget(
+        icon: AppIcons.warningIcon,
+        title: e.title!,
+        content: e.message,
+        buttonText: AppString.okay,
+      ),
+    );
   }
 }

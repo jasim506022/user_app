@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:user_app/res/app_colors.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../model/order_model.dart';
+import '../../../res/app_function.dart';
 import 'delivery_card_widget.dart';
 import 'delivery_rich_text_widget.dart';
 import 'order_receiver_details_widget.dart';
@@ -21,22 +23,18 @@ class DeliveryInfoWidget extends StatelessWidget {
       children: [
         DelivaryCardWidget(
           child: DeliveryRichTextWidget(
-            title: "Delivery Partner:",
+            title: "${AppString.deliveryPartner}:",
             subTitle: orderModel.deliveryPartner,
           ),
         ),
-        SizedBox(
-          height: 10.h,
-        ),
+        AppsFunction.verticleSpace(10),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: DeliveryRichTextWidget(
-                title: "Tracking Number :",
+                title: "${AppString.trackingNumber} :",
                 color: AppColors.red,
                 subTitle: orderModel.trackingNumber)),
-        SizedBox(
-          height: 15.h,
-        ),
+        AppsFunction.verticleSpace(15),
         OrderReceiverDetailsWidget(orderModel: orderModel),
       ],
     );

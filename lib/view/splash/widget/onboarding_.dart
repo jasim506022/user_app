@@ -19,7 +19,7 @@ class OnBoardingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var onBoardingController = Get.find<OnBoardingController>();
+    Get.find<OnBoardingController>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

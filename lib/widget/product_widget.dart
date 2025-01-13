@@ -91,11 +91,9 @@ class ProductWidget extends StatelessWidget {
           ],
         ),
         AppsFunction.verticleSpace(2),
-        FittedBox(
-          child: Text(
-            productModel.productname!,
-            style: AppsTextStyle.boldBodyTextStyle,
-          ),
+        Text(
+          productModel.productname ?? "Bangladesh",
+          style: AppsTextStyle.boldBodyTextStyle,
         ),
         AppsFunction.verticleSpace(5),
         InkWell(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
@@ -39,8 +40,8 @@ class OrderStatusListWidget extends StatelessWidget {
               return EmptyWidget(
                 image: ImagesAsset.error,
                 title: snapshot.hasError
-                    ? 'Error Occurred: ${snapshot.error}'
-                    : 'No Data Available',
+                    ? '${AppString.errorOccure}: ${snapshot.error}'
+                    : AppString.noDataAvailable,
               );
             } else if (snapshot.hasData) {
               return ListView.builder(

@@ -10,7 +10,7 @@ import '../../data/onboarding_list_data.dart';
 import '../../res/app_colors.dart';
 
 import '../../res/apps_text_style.dart';
-import 'widget/onbarding_item.dart';
+import 'widget/onboarding_.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});

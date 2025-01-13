@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../res/app_colors.dart';
+import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 import 'delivery_card_widget.dart';
 
@@ -19,9 +20,7 @@ class OrderStatusWidget extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(image, height: 200.h, width: 1.sw),
-          SizedBox(
-            height: 15.h,
-          ),
+          AppsFunction.verticleSpace(15),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 15.h),
             decoration: BoxDecoration(

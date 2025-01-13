@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/constants.dart';
+import '../../controller/category_controller.dart';
 import '../../res/app_function.dart';
 
 import '../../res/app_string.dart';
@@ -15,7 +17,7 @@ class ProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductListType? productListType = Get.arguments;
     productListType ??= ProductListType.regular;
-
+    var categoryController = Get.find<CategoryController>();
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -40,7 +42,13 @@ class ProductPage extends StatelessWidget {
         child: Column(
           children: [
             if (productListType == ProductListType.regular) ...[
-              const DropdownCategoryWidget(),
+              DropdownCategoryWidget(
+                value: categoryController.getCategory,
+                list: allCategoryList,
+                onChanged: (p0) {
+                  categoryController.setCategory(category: p0!);
+                },
+              ),
               AppsFunction.verticleSpace(15)
             ],
             Expanded(

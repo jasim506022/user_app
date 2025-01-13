@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:user_app/res/app_function.dart';
 
 import '../../../res/apps_text_style.dart';
 
@@ -24,10 +24,7 @@ class DeliveryRichTextWidget extends StatelessWidget {
             text: title,
             style: AppsTextStyle.mediumBoldText,
           ),
-          WidgetSpan(
-              child: SizedBox(
-            width: 10.w,
-          )),
+          WidgetSpan(child: AppsFunction.horizontalSpace(10)),
           TextSpan(
               text: subTitle,
               style: AppsTextStyle.mediumNormalText.copyWith(

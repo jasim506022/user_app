@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/view/order/widget/delivery_card_widget.dart';
 import 'package:user_app/view/order/widget/order_item_widget.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 
 class OrderProductDetails extends StatelessWidget {
@@ -26,7 +28,7 @@ class OrderProductDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Order ${orderModel.orderId}",
+                "${AppString.order} ${orderModel.orderId}",
                 style: AppsTextStyle.largeText,
               ),
               InkWell(
@@ -35,16 +37,14 @@ class OrderProductDetails extends StatelessWidget {
                       arguments: orderModel);
                 },
                 child: Text(
-                  "Order Details >",
+                  "${AppString.orderDetails} >",
                   style: AppsTextStyle.mediumBoldText
                       .copyWith(color: AppColors.red),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 15.h,
-          ),
+          AppsFunction.verticleSpace(25),
           Flexible(
             child: ChangeNotifierProvider.value(
               value: orderModel,

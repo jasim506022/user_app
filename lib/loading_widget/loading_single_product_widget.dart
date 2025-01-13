@@ -16,7 +16,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       child: Container(
-        height: 160.h, //160
+        height: 160.h,
         width: .9.sw,
         decoration: BoxDecoration(
             boxShadow: [

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
 import '../../../model/products_model.dart';
-import '../../../res/app_colors.dart';
 import '../../../res/app_asset/image_asset.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
@@ -49,8 +49,8 @@ class OrderItemWidget extends StatelessWidget {
           return EmptyWidget(
             image: ImagesAsset.error,
             title: snapshot.hasError
-                ? 'Error Occurred: ${snapshot.error}'
-                : 'No Data Available',
+                ? '${AppString.errorOccure}: ${snapshot.error}'
+                : AppString.noDataAvailable,
           );
         } else {
           return InkWell(
@@ -72,10 +72,9 @@ class OrderItemWidget extends StatelessWidget {
       BuildContext context, AsyncSnapshot snapshot, List<int> quantities) {
     return Card(
       color: Theme.of(context).cardColor,
-      elevation: 3,
+      elevation: 1,
       margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 7.h),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.r)),
-      shadowColor: AppColors.black,
       child: Container(
         padding: EdgeInsets.all(5.r),
         margin: EdgeInsets.all(5.r),
