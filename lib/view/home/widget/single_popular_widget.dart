@@ -10,6 +10,7 @@ import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/product_image_widget.dart';
+import '../../../res/network_utili.dart';
 
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({
@@ -20,12 +21,12 @@ class SingleProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isInCart =
-        CartFunctions.separateProductID().contains(productModel.productId);
+        CartManager.getProductIds().contains(productModel.productId);
 
     return InkWell(
       onTap: () async {
-        if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage, arguments: {
+        if (!(await NetworkUtili.verifyInternetStatus())) {
+          Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
             AppString.productModel: productModel,
             AppString.isCartBack: false
           });
@@ -76,23 +77,22 @@ class SingleProductWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              "৳. ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-              style: AppsTextStyle.boldBodyTextStyle
-                  .copyWith(color: AppColors.red),
+              "৳. ${AppsFunction.calculateDiscountedPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+              style: AppsTextStyle.bodyTextStyle.copyWith(color: AppColors.red),
             ),
-            AppsFunction.horizontalSpace(15),
+            AppsFunction.horizontalSpacing(15),
             Text(
               productModel.productprice!.toString(),
               style: AppsTextStyle.mediumText400lineThrough,
             ),
           ],
         ),
-        AppsFunction.verticleSpace(5),
+        AppsFunction.verticalSpacing(5),
         RichText(
           text: TextSpan(children: [
             TextSpan(
               text: productModel.productname!,
-              style: AppsTextStyle.boldBodyTextStyle,
+              style: AppsTextStyle.bodyTextStyle,
             ),
             TextSpan(
               text: productModel.productunit!,
@@ -100,7 +100,7 @@ class SingleProductWidget extends StatelessWidget {
             ),
           ]),
         ),
-        AppsFunction.verticleSpace(5),
+        AppsFunction.verticalSpacing(5),
         Container(
           alignment: Alignment.center,
           height: 35.h,

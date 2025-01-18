@@ -32,11 +32,11 @@ class OnBoardingItem extends StatelessWidget {
         Text(
           onboardModel.title,
           textAlign: TextAlign.center,
-          style: AppsTextStyle.onBoardTextStyle,
+          style: AppsTextStyle.onboardingTitleStyle,
         ),
         Text(onboardModel.description,
             textAlign: TextAlign.center,
-            style: AppsTextStyle.onBoardTextStyle
+            style: AppsTextStyle.onboardingTitleStyle
                 .copyWith(fontSize: 16, fontWeight: FontWeight.w600)),
         InkWell(
           onTap: () {
@@ -64,7 +64,7 @@ class OnBoardingItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: AppColors.white),
                 ),
-                AppsFunction.horizontalSpace(18),
+                AppsFunction.horizontalSpacing(18),
                 Icon(
                   Icons.arrow_forward_sharp,
                   color: AppColors.white,

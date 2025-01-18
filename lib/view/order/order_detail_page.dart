@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:user_app/model/order_model.dart';
@@ -37,14 +36,14 @@ class OrderSummaryPage extends StatelessWidget {
                 style: AppsTextStyle.largeBoldText
                     .copyWith(color: AppColors.red, fontSize: 20),
               ),
-              AppsFunction.verticleSpace(10),
+              AppsFunction.verticalSpacing(10),
               OrderReceiverDetailsWidget(orderModel: orderModel),
               OrderProductSection(
                 orderModel: orderModel,
               ),
-              AppsFunction.verticleSpace(10),
+              AppsFunction.verticalSpacing(10),
               OrderDetailsWidget(orderModel: orderModel),
-              AppsFunction.verticleSpace(100),
+              AppsFunction.verticalSpacing(100),
             ],
           ),
         ),

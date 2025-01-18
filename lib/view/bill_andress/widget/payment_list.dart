@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/bill_controller.dart';
+import '../../../res/app_constant.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constants.dart';
 import '../payment_widget.dart';
 
 class PaymentList extends StatelessWidget {
@@ -24,13 +24,13 @@ class PaymentList extends StatelessWidget {
           AppString.paymentMethod,
           style: AppsTextStyle.titleTextStyle,
         ),
-        AppsFunction.verticleSpace(10),
+        AppsFunction.verticalSpacing(10),
         SizedBox(
             height: 120.h,
             width: 1.sw,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: paymentList.length,
+              itemCount: AppConstant.paymentTypes.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {

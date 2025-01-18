@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import '../../../controller/address_controller.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/app_constant.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constants.dart';
 
 class AddressType extends StatelessWidget {
   const AddressType({
@@ -27,7 +27,8 @@ class AddressType extends StatelessWidget {
           addressController.setDropdownAddress(value!);
           addressController.addChangeListener();
         },
-        items: list.map<DropdownMenuItem<String>>((String value) {
+        items: AppConstant.addressTypes
+            .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(

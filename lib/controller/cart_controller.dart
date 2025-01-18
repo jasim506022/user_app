@@ -11,6 +11,7 @@ import '../res/app_function.dart';
 import '../res/app_string.dart';
 import '../res/cart_funtion.dart';
 
+import '../widget/error_dialog_widget.dart';
 import 'profile_controller.dart';
 
 class CartController extends GetxController {
@@ -59,11 +60,11 @@ class CartController extends GetxController {
         ) *
         CartFunctions.seperateProductQuantiyList()[itemIndex]));
 */
-    final productPrice = AppsFunction.productPrice(
+    final productPrice = AppsFunction.calculateDiscountedPrice(
       productModel.productprice!,
       productModel.discount!.toDouble(),
     );
-    final quantity = CartFunctions.seperateProductQuantiyList()[itemIndex];
+    final quantity = CartManager.getProductQuantities()[itemIndex];
     totalAmount.value += productPrice * quantity;
   }
 
@@ -105,12 +106,21 @@ class CartController extends GetxController {
   }
 
   void _handleError(AppException e) {
-    AppsFunction.errorDialog(
-      icon: AppIcons.warningIcon,
-      title: e.title ?? AppString.errorOccure,
-      content: e.message ?? AppString.someThingWentWrong,
-      buttonText: AppString.okay,
+    Get.dialog(
+      ErrorDialogWidget(
+        icon: AppIcons.warningIcon,
+        title: "e.title!",
+        content: e.message,
+        buttonText: AppString.okay,
+      ),
     );
+
+    // AppsFunction.errorDialog(
+    //   icon: AppIcons.warningIcon,
+    //   title: e.title ?? AppString.errorOccure,
+    //   content: e.message ?? AppString.someThingWentWrong,
+    //   buttonText: AppString.okay,
+    // );
   }
 
   Future<void> removeProductFromCart({required String productId}) async {
@@ -130,23 +140,23 @@ class CartController extends GetxController {
         profileController.updateUserCartData(
             map: {AppString.cartListSharedPreference: cartList});
 
-        AppsFunction.flutterToast(msg: AppString.itemRemoveSuccessfully);
+        AppsFunction.showToast(msg: AppString.itemRemoveSuccessfully);
 
         AppConstant.sharedPreference!
             .setStringList(AppString.cartListSharedPreference, cartList);
 
-        CartFunctions.separateProductID();
-        CartFunctions.seperateProductQuantiyList();
+        CartManager.getProductIds();
+        CartManager.getProductQuantities();
 
         --cartItemCounter;
         if (cartItemCounter.value != 0) {
           fetchSellersForCart();
         }
       } catch (e) {
-        AppsFunction.flutterToast(msg: e.toString());
+        AppsFunction.showToast(msg: e.toString());
       }
     } else {
-      AppsFunction.flutterToast(msg: AppString.itemNotFoundInCart);
+      AppsFunction.showToast(msg: AppString.itemNotFoundInCart);
     }
   }
 }

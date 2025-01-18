@@ -5,7 +5,7 @@ import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../widget/empty_widget.dart';
 import '../../../loading_widget/loading_list_single_product_widget.dart';
 import 'order_item_widget.dart';
@@ -38,7 +38,7 @@ class OrderStatusListWidget extends StatelessWidget {
                 snapshot.data!.docs.isEmpty ||
                 snapshot.hasError) {
               return EmptyWidget(
-                image: ImagesAsset.error,
+                image: AppImages.error,
                 title: snapshot.hasError
                     ? '${AppString.errorOccure}: ${snapshot.error}'
                     : AppString.noDataAvailable,

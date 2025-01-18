@@ -11,7 +11,7 @@ import '../../res/app_colors.dart';
 
 import '../../res/valudation.dart';
 import '../../widget/text_form_field_widget.dart';
-import '../home/widget/network_utili.dart';
+import '../../res/network_utili.dart';
 import 'widget/address_type.dart';
 
 class AddressPage extends StatefulWidget {
@@ -83,7 +83,7 @@ class _AddressPageState extends State<AddressPage> {
           child: ListView(
             children: [
               _buildAddressForm(),
-              AppsFunction.verticleSpace(350),
+              AppsFunction.verticalSpacing(350),
             ],
           ),
         ),
@@ -111,7 +111,7 @@ class _AddressPageState extends State<AddressPage> {
                       Validators.validateNotEmpty(value, AppString.countryName),
                 ),
               ),
-              AppsFunction.horizontalSpace(20),
+              AppsFunction.horizontalSpacing(20),
               const Flexible(
                 flex: 2,
                 child: AddressType(),

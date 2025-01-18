@@ -9,7 +9,7 @@ import '../../res/app_colors.dart';
 import '../../res/app_string.dart';
 import '../home/home_page.dart';
 import '../product/product_page.dart';
-import '../profile/profile_screen.dart';
+import '../profile/profile_page.dart';
 import '../search/search_page.dart';
 
 class MainPage extends StatefulWidget {

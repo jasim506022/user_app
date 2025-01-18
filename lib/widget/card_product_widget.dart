@@ -55,7 +55,7 @@ class CartProductWidget extends StatelessWidget {
               style: AppsTextStyle.largeBoldText,
             ),
           ),
-          AppsFunction.verticleSpace(5),
+          AppsFunction.verticalSpacing(5),
           Row(
             children: [
               Text(productModel.productunit!.toString(),
@@ -64,7 +64,7 @@ class CartProductWidget extends StatelessWidget {
                   )),
             ],
           ),
-          AppsFunction.verticleSpace(5),
+          AppsFunction.verticalSpacing(5),
           Row(
             children: [
               Row(
@@ -74,14 +74,14 @@ class CartProductWidget extends StatelessWidget {
                       style: AppsTextStyle.mediumNormalText
                           .copyWith(color: AppColors.accentGreen)),
                   Text(
-                      "${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+                      "${AppsFunction.calculateDiscountedPrice(productModel.productprice!, productModel.discount!.toDouble())}",
                       style: AppsTextStyle.mediumNormalText
                           .copyWith(color: AppColors.accentGreen)),
                 ],
               ),
               const Spacer(),
               Text(
-                  "= ${AppString.currencyIcon} ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), quantity)}",
+                  "= ${AppString.currencyIcon} ${AppsFunction.calculateTotalPrice(productModel.productprice!, productModel.discount!.toDouble(), quantity)}",
                   style: AppsTextStyle.largeBoldText
                       .copyWith(color: AppColors.accentGreen)),
             ],

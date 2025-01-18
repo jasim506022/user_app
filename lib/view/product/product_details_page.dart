@@ -9,7 +9,6 @@ import '../../res/app_function.dart';
 import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/cart_funtion.dart';
-import '../../res/constant/string_constant.dart';
 import '../../res/routes/routes_name.dart';
 
 import '../../res/utils.dart';
@@ -67,7 +66,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         productController.resetQuantity();
       } else {
         productController.productItemQuantity.value =
-            CartFunctions.productQuantiyList(productModel.productId!);
+            CartManager.getProductQuantity(productModel.productId!);
       }
     });
   }
@@ -78,7 +77,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       canPop: false,
       onPopInvoked: (bool didPop) async {
         if (!didPop) {
-          isBackCart! ? Get.back() : Get.offAndToNamed(RoutesName.mainPage);
+          isBackCart! ? Get.back() : Get.offAndToNamed(AppRoutesName.mainPage);
         }
       },
       child: Scaffold(
@@ -89,7 +88,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              AppsFunction.verticleSpace(20),
+              AppsFunction.verticalSpacing(20),
               DetailsPageImageSlideWithCartBridgeWidget(
                 productModel: productModel,
                 backCart: isBackCart!,
@@ -104,16 +103,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       productModel: productModel,
                     ),
                     Text(
-                      StringConstant.similarProducts,
+                      AppString.similarProducts,
                       style:
                           AppsTextStyle.largeBoldText.copyWith(fontSize: 18.sp),
                     ),
-                    AppsFunction.verticleSpace(10),
+                    AppsFunction.verticalSpacing(10),
                     SimilarProductList(
                       productModel: productModel,
                       isCart: productController.isProductInCart.value,
                     ),
-                    AppsFunction.verticleSpace(20),
+                    AppsFunction.verticalSpacing(20),
                   ],
                 ),
               )

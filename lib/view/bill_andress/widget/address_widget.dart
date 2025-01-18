@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:user_app/res/app_string.dart';
-import 'package:user_app/view/home/widget/network_utili.dart';
+import 'package:user_app/res/network_utili.dart';
 
 import '../../../controller/address_controller.dart';
 import '../../../model/address_model.dart';
@@ -71,12 +71,12 @@ class AddressWidget extends StatelessWidget {
                               size: 30,
                               color: AppColors.accentGreen,
                             ),
-                            AppsFunction.horizontalSpace(5),
+                            AppsFunction.horizontalSpacing(5),
                             Text(addressModel.deliveryplace!,
                                 style: AppsTextStyle.largestText),
                           ],
                         ),
-                        AppsFunction.verticleSpace(8),
+                        AppsFunction.verticalSpacing(8),
                         Text(addressModel.completeaddress!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -88,7 +88,7 @@ class AddressWidget extends StatelessWidget {
                   InkWell(
                     onTap: () async {
                       if (!(await NetworkUtili.verifyInternetStatus())) {
-                        Get.toNamed(RoutesName.addressPage, arguments: {
+                        Get.toNamed(AppRoutesName.addressPage, arguments: {
                           AppString.isUpdate: true,
                           AppString.addressModel: addressModel
                         });

@@ -13,6 +13,7 @@ import '../../res/app_colors.dart';
 import '../../res/apps_text_style.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
+import '../../res/network_utili.dart';
 import 'widget/app_sign_page_intro.dart';
 import 'widget/custom_button_widget.dart';
 import 'widget/icon_with_button_widget.dart';
@@ -48,18 +49,19 @@ class _SignInPageState extends State<SignInPage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (bool didPop) async {
-        if (didPop) {
-          return;
-        }
-        final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
-        if (shouldPop) {
-          SystemNavigator.pop();
-        }
+        signInController.handleBackNavigaion(didPop);
+        // if (didPop) {
+        //   return;
+        // }
+        // final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
+        // if (shouldPop) {
+        //   SystemNavigator.pop();
+        // }
       },
       child: GestureDetector(
         onTap: () async {
           FocusScope.of(context).unfocus();
-          AppsFunction.verifyInternetStatus();
+          NetworkUtili.verifyInternetStatus();
         },
         child: Scaffold(
           body: SingleChildScrollView(
@@ -99,8 +101,8 @@ class _SignInPageState extends State<SignInPage> {
                   RichTextWidget(
                     colorText: "Create Account",
                     function: () async {
-                      if (!(await AppsFunction.verifyInternetStatus())) {
-                        Get.toNamed(RoutesName.signupPage);
+                      if (!(await NetworkUtili.verifyInternetStatus())) {
+                        Get.toNamed(AppRoutesName.signUpPage);
                       }
                     },
                     simpleText: "Don't Have An Account? ",
@@ -123,7 +125,7 @@ class _SignInPageState extends State<SignInPage> {
         Expanded(
           child: IconWithButtonWidget(
               function: () async {
-                AppsFunction.verifyInternetStatus();
+                NetworkUtili.verifyInternetStatus();
               },
               color: AppColors.facebookBlue,
               image: AppIcons.facebookIcon,
@@ -135,7 +137,7 @@ class _SignInPageState extends State<SignInPage> {
         Expanded(
           child: IconWithButtonWidget(
               function: () async {
-                if (!(await AppsFunction.verifyInternetStatus())) {
+                if (!(await NetworkUtili.verifyInternetStatus())) {
                   await signInController.signWithGoogle();
                 }
               },
@@ -189,8 +191,8 @@ class _SignInPageState extends State<SignInPage> {
         alignment: Alignment.topRight,
         child: TextButton(
           onPressed: () async {
-            if (!(await AppsFunction.verifyInternetStatus())) {
-              Get.toNamed(RoutesName.forgetPassword);
+            if (!(await NetworkUtili.verifyInternetStatus())) {
+              Get.toNamed(AppRoutesName.forgetPasswordPage);
               signInController.cleanTextField();
             }
           },

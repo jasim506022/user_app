@@ -8,6 +8,7 @@ import '../../res/app_function.dart';
 import '../../../res/app_colors.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
+import '../../res/network_utili.dart';
 import 'widget/app_sign_page_intro.dart';
 import 'widget/custom_button_widget.dart';
 
@@ -28,7 +29,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
-        AppsFunction.verifyInternetStatus();
+        NetworkUtili.verifyInternetStatus();
       },
       child: Material(
         color: AppColors.white,
@@ -77,7 +78,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 RichTextWidget(
                     colorText: "Sign In",
                     function: () async {
-                      if (!(await AppsFunction.verifyInternetStatus())) {
+                      if (!(await NetworkUtili.verifyInternetStatus())) {
                         Get.back();
                       }
                     },

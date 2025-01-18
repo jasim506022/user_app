@@ -1,22 +1,36 @@
-class RoutesName {
-  static const String initailRoutes = '/';
-  static const String mainPage = '/mainpage';
-  static const String signPage = '/signpage';
-  static const String onBaordingPage = '/onBardingPpage';
-  static const String signupPage = '/signupPage';
-  static const String forgetPassword = '/forgetPassword';
-  static const String productPage = '/productPage';
-  static const String completeOrderPage = '/completeOrderPage';
-  static const String orderPage = '/orderPage';
-  static const String cartPage = '/cartPage';
-  static const String searchPage = '/searchPage';
-  static const String productDestailsPage = '/productDestailsPage';
-  static const String addressPage = '/addressPage';
-  static const String billPage = '/billPage';
-  static const String placeOrderScreen = '/placeOrderPage';
-  static const String profileScreen = '/profileScreen';
-  static const String editProfileScreen = '/editProfileScreen';
-  static const String deliveryScreen = '/deliveryScreen';
-  static const String orderDetailsPage = '/orderDetailsPage';
-  static const String historyPage = '/historyPage';
+class AppRoutesName {
+  // Splash and Onboarding Routes
+  static const String splashScreen = '/';
+  static const String onbordingScreen = '/onboarding'; //Onboarding Process
+
+  // Authentication Routes
+  static const String signInPage = '/signIn'; //// User Sign-In
+  static const String signUpPage = '/signUp'; // User Registration
+  static const String forgetPasswordPage =
+      '/forgetPassword'; // Password Recovery
+
+  // Main App Routes
+  static const String mainPage = '/main'; // Main App Page
+
+  // Product and Search Routes
+  static const String productListPage = '/products'; // Product Listing
+  static const String productDetailsPage = '/productDetails';
+  static const String searchPage = '/search';
+
+  // Cart and Order Routes
+  static const String cartPage = '/cart'; // User Shopping Cart
+  static const String orderSummaryPage = '/orderSummary'; // Order Summary
+  static const String orderDetailsPage = '/orderDetails'; // // Order Details
+  static const String deliveryScreen = '/delivery'; //  Delivery Information
+  static const String orderHistoryPage = '/orderHistory'; // Order History
+
+  // Address and Billing Routes
+  static const String addressPage = '/address'; // Billing/Shipping Address
+  static const String billPage = '/billPage'; // Billing Details
+  static const String orderConfirmationPage =
+      '/orderConfirmation'; // after order confirmation
+
+  // Profile Management Routes
+  static const String userProfilePage = '/profile'; // User Profile
+  static const String editProfilePage = '/editProfile'; // Edit User Profile
 }

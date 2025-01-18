@@ -6,7 +6,9 @@ import '../model/profile_model.dart';
 import '../repository/sign_up_repository.dart';
 import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
+import '../res/app_string.dart';
 import '../res/routes/routes_name.dart';
+import '../widget/error_dialog_widget.dart';
 import 'loading_controller.dart';
 import 'select_image_controller.dart';
 
@@ -27,17 +29,17 @@ class SignUpController extends GetxController {
 
   Future<void> createNewUserButton() async {
     if (phontET.text.trim().isEmpty) {
-      AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
+      AppsFunction.showToast(msg: "Please Give your Phone Numer");
       return;
     }
     if (!_validateInput()) return;
 
-    bool hasInternet = await AppsFunction.internetChecking();
-    if (hasInternet) {
-      _showErrorDialog("No Internet Connection",
-          "Please check your internet settings and try again.");
-      return;
-    }
+    // bool hasInternet = await AppsFunction.internetChecking();
+    // if (hasInternet) {
+    //   _showErrorDialog("No Internet Connection",
+    //       "Please check your internet settings and try again.");
+    //   return;
+    // }
 
     try {
       loadingController.setLoading(true);
@@ -62,21 +64,37 @@ class SignUpController extends GetxController {
       repository.uploadNewUserCreatingDocument(
           profileModel: profileModel, firebaseDocument: user.user!.uid);
       clearField();
-      Get.offNamed(RoutesName.mainPage);
-      AppsFunction.flutterToast(msg: "Sign up Successfully");
+      Get.offNamed(AppRoutesName.mainPage);
+      AppsFunction.showToast(msg: "Sign up Successfully");
       selectImageController.selectPhoto.value = null;
     } on FirebaseAuthException catch (e) {
-      AppsFunction.errorDialog(
+      // AppsFunction.errorDialog(
+      //     icon: AppIcons.warningIcon,
+      //     title: "Exception",
+      //     content: e.message,
+      //     buttonText: "Okay");
+      Get.dialog(
+        ErrorDialogWidget(
           icon: AppIcons.warningIcon,
-          title: "Exception",
+          title: "e.title!",
           content: e.message,
-          buttonText: "Okay");
+          buttonText: AppString.okay,
+        ),
+      );
     } catch (e) {
-      AppsFunction.errorDialog(
+      Get.dialog(
+        const ErrorDialogWidget(
           icon: AppIcons.warningIcon,
-          title: "Exception",
-          content: e.toString(),
-          buttonText: "Okay");
+          title: "e.title!",
+          content: "e.message",
+          buttonText: AppString.okay,
+        ),
+      );
+      // AppsFunction.errorDialog(
+      //     icon: AppIcons.warningIcon,
+      //     title: "Exception",
+      //     content: e.toString(),
+      //     buttonText: "Okay");
     } finally {
       loadingController.setLoading(false);
     }
@@ -90,18 +108,27 @@ class SignUpController extends GetxController {
     }
     if (selectImageController.selectPhoto.value == null) {
       _showErrorDialog("No Image Selected", "Please select a profile image.",
-          AppIcons.noImage);
+          AppIcons.noImageIcon);
       return false;
     }
     return true;
   }
 
   void _showErrorDialog(String title, String content, [String? icon]) {
-    AppsFunction.errorDialog(
-        icon: icon ?? AppIcons.warningIcon,
-        title: title,
-        content: content,
-        buttonText: "Okay");
+    // AppsFunction.errorDialog(
+    //     icon: icon ?? AppIcons.warningIcon,
+    //     title: title,
+    //     content: content,
+    //     buttonText: "Okay");
+
+    Get.dialog(
+      const ErrorDialogWidget(
+        icon: AppIcons.warningIcon,
+        title: "e.title!",
+        content: "e.message",
+        buttonText: AppString.okay,
+      ),
+    );
   }
 
   clearField() {

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../controller/product_controller.dart';
 import '../../../model/products_model.dart';
 import '../../../res/app_string.dart';
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../widget/single_empty_widget.dart';
 import '../../../loading_widget/loading_single_product_widget.dart';
 import 'single_popular_widget.dart';
@@ -32,14 +32,14 @@ class PopularProductListWidget extends StatelessWidget {
 
                 if (snapshot.hasError) {
                   return SingleEmptyWidget(
-                    image: ImagesAsset.errorSingle,
+                    image: AppImages.errorSingle,
                     title: '${AppString.errorOccure} ${snapshot.error}',
                   );
                 }
 
                 if (data == null || data.docs.isEmpty) {
-                  return SingleEmptyWidget(
-                    image: ImagesAsset.errorSingle,
+                  return const SingleEmptyWidget(
+                    image: AppImages.errorSingle,
                     title: AppString.noDataAvailable,
                   );
                 }

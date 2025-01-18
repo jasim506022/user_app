@@ -56,7 +56,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
           textInputAction: widget.textInputAction,
           keyboardType: widget.textInputType,
           style: widget.style ??
-              AppsTextStyle.textFieldInputTextStyle(widget.enabled!),
+              AppsTextStyle.textFieldInputStyle(widget.enabled!),
           decoration: widget.isUdateDecoration!
               ? widget.decoration
               : AppsFunction.textFormFielddecoration(

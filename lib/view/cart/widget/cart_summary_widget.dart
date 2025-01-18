@@ -38,15 +38,15 @@ class CartSummaryWidget extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            AppsFunction.verticleSpace(14),
+            AppsFunction.verticalSpacing(14),
             _buildAmountDetails(
               totalAmount: totalAmount,
               subTotal: subTotal,
             ),
-            AppsFunction.verticleSpace(20),
+            AppsFunction.verticalSpacing(20),
             InkWell(
               onTap: () {
-                Get.toNamed(RoutesName.billPage);
+                Get.toNamed(AppRoutesName.billPage);
               },
               child: Container(
                 height: 60.h,
@@ -63,7 +63,7 @@ class CartSummaryWidget extends StatelessWidget {
                 ),
               ),
             ),
-            AppsFunction.verticleSpace(5)
+            AppsFunction.verticalSpacing(5)
           ],
         );
       }),

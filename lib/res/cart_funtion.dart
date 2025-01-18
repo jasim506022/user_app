@@ -6,128 +6,126 @@ import 'app_constant.dart';
 import 'app_function.dart';
 import 'app_string.dart';
 
-class CartFunctions {
-  static void addItemToCart({
+// Final and Const
+class CartManager {
+  /// Adds a product to the cart with its quantity and seller ID.
+  static void addProductToCart({
     required String productId,
     required int quantity,
     required String sellerId,
   }) {
-    List<String> cartItems = AppConstant.sharedPreference!
-            .getStringList(AppString.cartListSharedPreference) ??
-        [];
+    final sharedPref = AppConstant.sharedPreference!;
+    const cartKey = AppString.cartListSharedPreference;
 
+// Retrieve existing cart items or initialize an empty list
+    List<String> cartItems = sharedPref.getStringList(cartKey) ?? [];
+    // Create a new item entry
     String itemEntry = "$productId:$sellerId:$quantity";
 
     cartItems.add(itemEntry);
 
-    Get.find<ProfileController>().updateUserCartData(
-        map: {AppString.cartListSharedPreference: cartItems});
+    Get.find<ProfileController>().updateUserCartData(map: {cartKey: cartItems});
 
-    AppsFunction.flutterToast(msg: AppString.itemAddSuccessfully);
-
-    AppConstant.sharedPreference!
-        .setStringList(AppString.cartListSharedPreference, cartItems);
-
+    AppsFunction.showToast(msg: AppString.itemAddSuccessfully);
+    // Save updated cart in shared preferences
+    sharedPref.setStringList(cartKey, cartItems);
+    // Update cart count
     Get.find<CartController>().incrementCartItem();
   }
 
+  // Clear the entire cart
   static void clearCart() {
-    AppConstant.sharedPreference!
-        .setStringList(AppString.cartListSharedPreference, ["initial"]);
-    List<String> emptyCart = AppConstant.sharedPreference!
-        .getStringList(AppString.cartListSharedPreference)!;
+    final sharedPref = AppConstant.sharedPreference!;
+    const cartKey = AppString.cartListSharedPreference;
+    // Reset cart data
+    sharedPref.setStringList(cartKey, ["initial"]);
+    List<String> emptyCart = sharedPref.getStringList(cartKey)!;
 
-    /*
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(sharedPreference!.getString("uid")!)
-*/
-    var profileController = Get.find<ProfileController>();
-    profileController.updateUserCartData(map: {"cartlist": emptyCart});
-    AppsFunction.flutterToast(msg: AppString.removieAllCartSuccessfully);
-    // FirebaseDatabase.currentUserSnaphots()
-    //     .update({"cartlist": emptyCart}).then((value) {
-    //   AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
-    // });
+    Get.find<ProfileController>().updateUserCartData(map: {cartKey: emptyCart});
+    AppsFunction.showToast(msg: AppString.removieAllCartSuccessfully);
   }
 
-// Separet Product Id From CartList
-  static List<String> separateProductID() {
+// Retrieve a specific field (helper function)
+  static List<T> _extractField<T>({
+    required int index,
+    required T Function(String) transform,
+  }) {
     return [
       for (var item in AppConstant.sharedPreference!
           .getStringList(AppString.cartListSharedPreference)!
           .skip(1))
-        item.toString().split(":")[0]
+        transform(item.split(":")[index])
     ];
   }
 
-// Separet Product Quantity List From CartList
-  static List<int> seperateProductQuantiyList() {
-    return [
-      for (var item in AppConstant.sharedPreference!
-          .getStringList(AppString.cartListSharedPreference)!
-          .skip(1))
-        int.parse(item.toString().split(":")[2])
-    ];
+  static List<String> getProductIds() {
+    return _extractField(index: 0, transform: (value) => value);
   }
 
-  //[2,3,4]
+  // Separate product quantities from the cart
+  static List<int> getProductQuantities() {
+    return _extractField(index: 2, transform: (value) => int.parse(value));
+  }
+
+// Separate seller IDs from the cart
+  static List<String> getSellerIds() {
+    return _extractField(
+      index: 1,
+      transform: (value) => value,
+    );
+  }
+
   // Separet Product Quantity List From CartList
+  // Get the quantity of a specific product
+  static int getProductQuantity(String productId) {
+    final sharedPref = AppConstant.sharedPreference!;
+    final cartItems =
+        sharedPref.getStringList(AppString.cartListSharedPreference)!;
 
-  static int productQuantiyList(String prodductId) {
-    List<String> list = AppConstant.sharedPreference!
+    // Find matching product entry
+    String? matchingItem = cartItems.skip(1).firstWhere(
+          (item) => item.contains(productId),
+        );
+
+    if (matchingItem.isNotEmpty) {
+      return int.parse(matchingItem.split(":")[2]);
+    }
+
+    return 0;
+  }
+
+  static Set<String> getSelletSet() {
+    return AppConstant.sharedPreference!
         .getStringList(AppString.cartListSharedPreference)!
         .skip(1)
-        .toList();
-
-    String? matchingItem = list.firstWhere(
-      (element) => element.contains(prodductId),
-      // orElse: () => null, // Provide a fallback if no match is found
-    );
-
-    // Parse the quantity from the matching item
-    return int.parse(matchingItem.split(":")[2]);
+        .map((seller) => "${seller.split(":")[1]}:false")
+        .toSet();
   }
+
+  static List<String> getOrderSellerIDs(dynamic productIds) {
+    return productIds.skip(1).map((item) => item.split(":")[1]).toList();
+  }
+
+  static List<String> getOrderProductsIds(dynamic productIds) {
+    return productIds.skip(1).map((item) => item.split(":")[0]).toList();
+  }
+
+  static List<int> getOrderProductQuantities(dynamic productIds) {
+    // List<String> listProductIds = List<String>.from(productIds);
+    return productIds.skip(1).map((item) => item.split(":")[2]).toList();
+  }
+}
+
+
+
+
+
+
+
 
 /*
-  static int productQuantiyList(String prodductId) {
-    List<String> list = AppConstant.sharedPreference!
-        .getStringList("cartlist")!
-        .skip(1)
-        .toList();
-
-    String? matchingItem = list.firstWhere(
-      (element) => element.contains(prodductId),
-    );
-
-    return int.parse(matchingItem.split(":")[2]);
-  }
-
-*/
-/*
-  static int productQuantiyList(String prodductId) {
-    List<String>? cartList = sharedPreference!.getStringList("cartlist");
-
-    if (cartList == null || cartList.isEmpty) {
-      return 0; // Default quantity if cart list is empty or null
-    }
-
-    List<String> list = cartList.skip(1).toList();
-
-    String? matchingItem = list.firstWhere(
-      (element) => element.contains(prodductId),
-      orElse: () => "",
-    );
-
-    if (matchingItem.isEmpty) {
-      return 0; // Default quantity if no match is found
-    }
-
-    return int.parse(matchingItem.split(":")[2]);
-  }
-*/
-// Separete Seller List From CartList
-  static List<String> separteSellerListUserList() {
+ Separete Seller List From CartList
+  static List<String> getSellerIds() {
     return [
       for (var item in AppConstant.sharedPreference!
           .getStringList(AppString.cartListSharedPreference)!
@@ -136,7 +134,39 @@ class CartFunctions {
     ];
   }
 
+*/
+
 /*
+  static List<String> getOrderSellerIDs(productIds) {
+    List<String> listProductIds = List<String>.from(productIds);
+    return [
+      for (var item in listProductIds.skip(1)) item.toString().split(":")[1]
+    ];
+  }
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+ // FirebaseDatabase.currentUserSnaphots()
+    //     .update({"cartlist": emptyCart}).then((value) {
+    //   AppsFunction.flutterToast(msg: "Remove All Cart Successfully");
+    // });
+
+
+    /*
   static List<String> separteSellerListUserList() {
     List<String> userCartList = sharedPreference!.getStringList("cartlist")!;
     List<String> sellerList = [];
@@ -180,42 +210,40 @@ class CartFunctions {
 
 */
 
-  static Set<String> seperateSellerSet() {
-    return AppConstant.sharedPreference!
+/*
+  static int productQuantiyList(String prodductId) {
+    List<String> list = AppConstant.sharedPreference!
         .getStringList("cartlist")!
         .skip(1)
-        .map((seller) => "${seller.split(":")[1]}:false")
-        .toSet();
+        .toList();
+
+    String? matchingItem = list.firstWhere(
+      (element) => element.contains(prodductId),
+    );
+
+    return int.parse(matchingItem.split(":")[2]);
   }
 
-  static List<int> seperfateProductQuantiyList() {
-    return [
-      for (var item
-          in AppConstant.sharedPreference!.getStringList("cartlist")!.skip(1))
-        int.parse(item.toString().split(":")[2])
-    ];
-  }
+*/
+/*
+  static int productQuantiyList(String prodductId) {
+    List<String>? cartList = sharedPreference!.getStringList("cartlist");
 
-  static List<String> separateOrderSellerCartList(productIds) {
-    List<String> listProductIds = List<String>.from(productIds);
-    return [
-      for (var item in listProductIds.skip(1)) item.toString().split(":")[1]
-    ];
-  }
+    if (cartList == null || cartList.isEmpty) {
+      return 0; // Default quantity if cart list is empty or null
+    }
 
-  static List<String> separteOrderProductIdList(productIds) {
-    List<dynamic> listProductIds = List<dynamic>.from(productIds);
+    List<String> list = cartList.skip(1).toList();
 
-    return [
-      for (var item in listProductIds.skip(1)) (item.toString().split(":")[0])
-    ];
-  }
+    String? matchingItem = list.firstWhere(
+      (element) => element.contains(prodductId),
+      orElse: () => "",
+    );
 
-  static List<int> separateOrderItemQuantities(productIds) {
-    List<String> listProductIds = List<String>.from(productIds);
-    return [
-      for (var item in listProductIds.skip(1))
-        int.parse(item.toString().split(":")[2])
-    ];
+    if (matchingItem.isEmpty) {
+      return 0; // Default quantity if no match is found
+    }
+
+    return int.parse(matchingItem.split(":")[2]);
   }
-}
+*/

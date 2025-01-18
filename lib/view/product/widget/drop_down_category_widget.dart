@@ -31,7 +31,7 @@ class DropdownCategoryWidget extends StatelessWidget {
         ),
         value: value,
         isExpanded: true,
-        style: AppsTextStyle.boldBodyTextStyle,
+        style: AppsTextStyle.bodyTextStyle,
         focusColor: Theme.of(context).primaryColor,
         elevation: 16,
 

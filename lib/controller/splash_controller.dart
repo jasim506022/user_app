@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 
 import '../model/app_exception.dart';
 import '../repository/splash_repository.dart';
+import '../res/app_constant.dart';
 import '../res/app_string.dart';
 import '../res/app_asset/app_icons.dart';
-import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
 import '../widget/error_dialog_widget.dart';
 
@@ -26,24 +26,25 @@ class SplashController extends GetxController {
 
       var currentUser = await repository.getCurrentUser();
 
-      isviewed = await repository.getOnboardingStatus();
+      AppConstant.isViewed = await repository.getOnboardingStatus();
 
       if (currentUser != null) {
-        Get.offNamed(RoutesName.mainPage);
+        Get.offNamed(AppRoutesName.mainPage);
       } else {
-        Get.offNamed(
-            isviewed != 0 ? RoutesName.onBaordingPage : RoutesName.signPage);
+        Get.offNamed(AppConstant.isViewed != 0
+            ? AppRoutesName.onbordingScreen
+            : AppRoutesName.signInPage);
       }
     } catch (e) {
       if (e is AppException) {
-        Get.dialog(ErrorDialogWidget(
+        Get.dialog(const ErrorDialogWidget(
             barrierDismissible: true,
             icon: AppIcons.warningIcon,
             title: "e.title!",
             content: "e.message",
             buttonText: AppString.okay));
       }
-      Get.offNamed(RoutesName.signPage);
+      Get.offNamed(AppRoutesName.signInPage);
     }
   }
 

@@ -25,8 +25,7 @@ class OrderProductSection extends StatelessWidget {
 
     return StreamBuilder(
       stream: orderController.sellerOrderSnapshot(
-          sellerList:
-              CartFunctions.separateOrderSellerCartList(orderModel.productIds)),
+          sellerList: CartManager.getOrderSellerIDs(orderModel.productIds)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingSingleProductWidget();

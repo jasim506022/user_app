@@ -8,7 +8,6 @@ import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constant/string_constant.dart';
 
 class ProductDetailsWidget extends StatelessWidget {
   const ProductDetailsWidget({super.key, required this.productModel});
@@ -25,15 +24,15 @@ class ProductDetailsWidget extends StatelessWidget {
       children: [
         Text(productModel.productname!,
             style: AppsTextStyle.largeBoldText.copyWith(fontSize: 20.sp)),
-        AppsFunction.verticleSpace(10),
+        AppsFunction.verticalSpacing(10),
         _buildPriceRow(),
-        AppsFunction.verticleSpace(15),
+        AppsFunction.verticalSpacing(15),
         Text(productModel.productdescription!,
             textAlign: TextAlign.justify,
             style: AppsTextStyle.mediumNormalText),
-        AppsFunction.verticleSpace(20),
+        AppsFunction.verticalSpacing(20),
         _buildQuantityAndRatingRow(productController, context),
-        AppsFunction.verticleSpace(15),
+        AppsFunction.verticalSpacing(15),
       ],
     );
   }
@@ -44,11 +43,11 @@ class ProductDetailsWidget extends StatelessWidget {
       children: [
         Obx(
           () => Text(
-              "${AppString.currencyIcon} ${AppsFunction.productPriceWithQuantity(productModel.productprice!, productModel.discount!.toDouble(), productController.productItemQuantity.value).toStringAsFixed(2)}",
+              "${AppString.currencyIcon} ${AppsFunction.calculateTotalPrice(productModel.productprice!, productModel.discount!.toDouble(), productController.productItemQuantity.value).toStringAsFixed(2)}",
               style: AppsTextStyle.largeBoldRedText
                   .copyWith(color: AppColors.accentGreen)),
         ),
-        AppsFunction.horizontalSpace(20),
+        AppsFunction.horizontalSpacing(20),
         Row(
           children: [
             _buildIncreandDecrementButton(() {
@@ -81,7 +80,7 @@ class ProductDetailsWidget extends StatelessWidget {
                     const TextSpan(text: "( "),
                     TextSpan(text: productModel.productrating!.toString()),
                     TextSpan(
-                        text: " ${StringConstant.rattings} ",
+                        text: " ${AppString.rattings} ",
                         style: AppsTextStyle.rattingText),
                     TextSpan(
                         text: ")",
@@ -100,16 +99,16 @@ class ProductDetailsWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-            "${AppString.currencyIcon} ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+            "${AppString.currencyIcon} ${AppsFunction.calculateDiscountedPrice(productModel.productprice!, productModel.discount!.toDouble())}",
             style: AppsTextStyle.largeBoldRedText),
-        AppsFunction.horizontalSpace(10),
+        AppsFunction.horizontalSpacing(10),
         Text(productModel.productunit!, style: AppsTextStyle.smallBoldText),
-        AppsFunction.horizontalSpace(50),
+        AppsFunction.horizontalSpacing(50),
         Text(
           "${AppString.discount}: ${(productModel.discount!)}${AppString.percentIcon}",
           style: AppsTextStyle.largeBoldRedText,
         ),
-        AppsFunction.horizontalSpace(12),
+        AppsFunction.horizontalSpacing(12),
         Text(
           productModel.productprice.toString(),
           style: AppsTextStyle.largeBoldRedText
@@ -129,7 +128,7 @@ class ProductDetailsWidget extends StatelessWidget {
       return InkWell(
         onTap: isInCart
             ? () {
-                AppsFunction.flutterToast(msg: StringConstant.alreadyAdded);
+                AppsFunction.showToast(msg: AppString.alreadyAdded);
               }
             : function,
         child: Container(

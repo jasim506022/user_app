@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../res/apps_text_style.dart';
 
 class AppSignInPageIntro extends StatelessWidget {
@@ -22,7 +22,7 @@ class AppSignInPageIntro extends StatelessWidget {
           height: 50.h,
         ),
         Image.asset(
-          ImagesAsset.appLogoImage,
+          AppImages.appLogo,
           height: 140.h,
           width: 140.h,
         ),

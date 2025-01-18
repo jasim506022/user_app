@@ -33,13 +33,13 @@ class LoadingAddressWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      AppsFunction.lineShimmer(20, 30),
-                      AppsFunction.horizontalSpace(20),
-                      AppsFunction.lineShimmer(20, 45),
+                      AppsFunction.buildShimmerEffect(height: 20, width: 30),
+                      AppsFunction.horizontalSpacing(20),
+                      AppsFunction.buildShimmerEffect(height: 20, width: 45),
                     ],
                   ),
-                  AppsFunction.lineShimmer(10),
-                  AppsFunction.lineShimmer(10),
+                  AppsFunction.buildShimmerEffect(height: 10),
+                  AppsFunction.buildShimmerEffect(height: 10),
                 ],
               ),
             ),

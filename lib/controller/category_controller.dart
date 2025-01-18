@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
-import '../res/constants.dart';
+import '../res/app_constant.dart';
 
 class CategoryController extends GetxController {
-  final _category = allCategoryList.first.obs;
+  final _category = AppConstant.cateogryTypes.first.obs;
 
   String get getCategory => _category.value;
 

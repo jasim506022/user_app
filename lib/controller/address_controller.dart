@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/res/app_constant.dart';
 import 'package:user_app/res/app_string.dart';
 import 'package:user_app/widget/loading_widget.dart';
 
@@ -9,8 +10,8 @@ import '../model/app_exception.dart';
 import '../repository/address_repository.dart';
 import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
-import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
+import '../widget/error_dialog_widget.dart';
 import '../widget/show_alert_dialog_widget.dart';
 
 class AddressController extends GetxController {
@@ -24,7 +25,7 @@ class AddressController extends GetxController {
   final TextEditingController cityTEC = TextEditingController();
   final TextEditingController countryTEC = TextEditingController();
 
-  var currentDropdownAddress = list.first.obs;
+  var currentDropdownAddress = AppConstant.addressTypes.first.obs;
   var completeAddress = "".obs;
   var addressid = "".obs;
   var currentAddressIndex = 0.obs;
@@ -71,7 +72,7 @@ class AddressController extends GetxController {
     villageTEC.clear();
     cityTEC.clear();
     countryTEC.clear();
-    currentDropdownAddress.value = list[0];
+    currentDropdownAddress.value = AppConstant.addressTypes[0];
   }
 
   void addChangeListener() {
@@ -149,7 +150,7 @@ class AddressController extends GetxController {
       try {
         await repository.deleteAddress(addressId: addressid.value);
         addressid.value = "";
-        AppsFunction.flutterToast(msg: AppString.succwssulyDelete);
+        AppsFunction.showToast(msg: AppString.succwssulyDelete);
       } catch (e) {
         handleException(e);
       }
@@ -169,9 +170,9 @@ class AddressController extends GetxController {
           addressModel: addressModel, isUpdate: isUpdate);
       clearInputField();
       Get.back();
-      Get.offNamed(RoutesName.billPage);
+      Get.offNamed(AppRoutesName.billPage);
 
-      AppsFunction.flutterToast(
+      AppsFunction.showToast(
           msg: isUpdate
               ? AppString.successfullyUpdate
               : AppString.succesffulyUploadNewAddress);
@@ -222,11 +223,19 @@ class AddressController extends GetxController {
 
   void handleException(Object e) {
     if (e is AppException) {
-      AppsFunction.errorDialog(
-        icon: AppIcons.warningIcon,
-        title: e.title!,
-        content: e.message,
-        buttonText: AppString.okay,
+      // AppsFunction.errorDialog(
+      //   icon: AppIcons.warningIcon,
+      //   title: e.title!,
+      //   content: e.message,
+      //   buttonText: AppString.okay,
+      // );
+      Get.dialog(
+        ErrorDialogWidget(
+          icon: AppIcons.warningIcon,
+          title: "e.title!",
+          content: e.message,
+          buttonText: AppString.okay,
+        ),
       );
     }
   }

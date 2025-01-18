@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/app_string.dart';
-import 'package:user_app/view/home/widget/network_utili.dart';
+import 'package:user_app/res/network_utili.dart';
 
 import '../../../controller/address_controller.dart';
 
@@ -24,7 +24,7 @@ class AddressDetailsWidget extends StatelessWidget {
     return Column(
       children: [
         _buildHeader(),
-        AppsFunction.verticleSpace(10),
+        AppsFunction.verticalSpacing(10),
         SizedBox(
           height: 250.h,
           child: const AddressListWidget(),
@@ -43,11 +43,11 @@ class AddressDetailsWidget extends StatelessWidget {
         InkWell(
           onTap: () async {
             if (Get.find<AddressController>().length.value >= maxAddresses) {
-              AppsFunction.flutterToast(msg: AppString.alreadyFourAddressAdded);
+              AppsFunction.showToast(msg: AppString.alreadyFourAddressAdded);
             } else {
               if (!await NetworkUtili.verifyInternetStatus()) {
                 Get.toNamed(
-                  RoutesName.addressPage,
+                  AppRoutesName.addressPage,
                 );
               }
             }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controller/profile_controller.dart';
-import 'package:user_app/res/app_asset/image_asset.dart';
+import 'package:user_app/res/app_asset/app_imges.dart';
 import 'package:user_app/res/app_function.dart';
 import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/routes/routes_name.dart';
@@ -37,20 +37,20 @@ class _PlaceOrderPageState extends State<PlaceOrderPage> {
             AppString.yourOrderIsConfirm,
             style: AppsTextStyle.titleTextStyle.copyWith(fontSize: 24.sp),
           ),
-          AppsFunction.verticleSpace(15),
+          AppsFunction.verticalSpacing(15),
           Text(
             AppString.thankyouforshopping,
             style: AppsTextStyle.largeBoldText,
           ),
-          Image.asset(ImagesAsset.confirmOrder),
-          AppsFunction.verticleSpace(5),
+          Image.asset(AppImages.orderConfirmed),
+          AppsFunction.verticalSpacing(5),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.accentGreen,
                   padding:
                       EdgeInsets.symmetric(vertical: 12.h, horizontal: 25.w)),
               onPressed: () {
-                Get.offAllNamed(RoutesName.mainPage, arguments: 0);
+                Get.offAllNamed(AppRoutesName.mainPage, arguments: 0);
               },
               child: Text(AppString.homePage,
                   style: AppsTextStyle.buttonTextStyle))

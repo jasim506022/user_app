@@ -26,7 +26,7 @@ class SingleEmptyWidget extends StatelessWidget {
             height: 160.h,
             width: 160.w,
           ),
-          AppsFunction.horizontalSpace(10),
+          AppsFunction.horizontalSpacing(10),
           Expanded(
             child: Text(title, style: AppsTextStyle.emptyTestStyle),
           )

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/res/constants.dart';
 import '../../controller/category_controller.dart';
+import '../../res/app_constant.dart';
 import '../../res/app_function.dart';
 
 import '../../res/app_string.dart';
@@ -27,13 +27,13 @@ class ProductPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Get.offAllNamed(RoutesName.mainPage, arguments: 2);
+              Get.offAllNamed(AppRoutesName.mainPage, arguments: 2);
             },
             icon: const Icon(
               Icons.search,
             ),
           ),
-          AppsFunction.horizontalSpace(10)
+          AppsFunction.horizontalSpacing(10)
         ],
         //
       ),
@@ -44,12 +44,12 @@ class ProductPage extends StatelessWidget {
             if (productListType == ProductListType.regular) ...[
               DropdownCategoryWidget(
                 value: categoryController.getCategory,
-                list: allCategoryList,
+                list: AppConstant.cateogryTypes,
                 onChanged: (p0) {
                   categoryController.setCategory(category: p0!);
                 },
               ),
-              AppsFunction.verticleSpace(15)
+              AppsFunction.verticalSpacing(15)
             ],
             Expanded(
                 child: ProductListWidget(productListType: productListType)),

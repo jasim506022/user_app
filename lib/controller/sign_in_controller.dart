@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../model/app_exception.dart';
 import '../repository/sign_in_repository.dart';
 import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
+import '../res/app_string.dart';
 import '../res/routes/routes_name.dart';
+import '../res/network_utili.dart';
+import '../widget/error_dialog_widget.dart';
+import '../widget/show_alert_dialog_widget.dart';
 import 'loading_controller.dart';
 
 class SignInController extends GetxController {
@@ -29,8 +34,24 @@ class SignInController extends GetxController {
     emailET.clear();
   }
 
+  Future<void> handleBackNavigaion(bool didPop) async {
+    if (didPop) return;
+
+    final bool shouldPop = await Get.dialog(CustomAlertDialogWidget(
+      icon: Icons.question_mark_rounded,
+      title: AppString.exit,
+      subTitle: AppString.exitMessage,
+      yesOnPress: () => Get.back(result: true),
+      noOnPress: () => Get.back(result: false),
+    ));
+
+    if (shouldPop) {
+      SystemNavigator.pop();
+    }
+  }
+
   Future<void> signInWithEmailAndPassword() async {
-    if (!(await AppsFunction.verifyInternetStatus())) {
+    if (!(await NetworkUtili.verifyInternetStatus())) {
       try {
         loadingController.setLoading(true);
 
@@ -41,16 +62,24 @@ class SignInController extends GetxController {
 
         loadingController.setLoading(false);
 
-        Get.offNamed(RoutesName.mainPage);
+        Get.offNamed(AppRoutesName.mainPage);
         cleanTextField();
-        AppsFunction.flutterToast(msg: "Sign in Successfully");
+        AppsFunction.showToast(msg: "Sign in Successfully");
       } catch (e) {
         if (e is AppException) {
-          AppsFunction.errorDialog(
+          Get.dialog(
+            ErrorDialogWidget(
               icon: AppIcons.warningIcon,
-              title: e.title!,
+              title: "e.title!",
               content: e.message,
-              buttonText: "Okay");
+              buttonText: AppString.okay,
+            ),
+          );
+          // AppsFunction.errorDialog(
+          //     icon: AppIcons.warningIcon,
+          //     title: e.title!,
+          //     content: e.message,
+          //     buttonText: "Okay");
         }
       } finally {
         loadingController.setLoading(false);
@@ -59,46 +88,67 @@ class SignInController extends GetxController {
   }
 
   Future<void> signWithGoogle() async {
-    bool checkInternet = await AppsFunction.internetChecking();
+    // bool checkInternet = await AppsFunction.internetChecking();
 
-    if (checkInternet) {
-      AppsFunction.errorDialog(
+    // if (checkInternet) {
+    //   AppsFunction.errorDialog(
+    //       icon: AppIcons.warningIcon,
+    //       title: "No Internet Connection",
+    //       content: "Please check your internet settings and try again.",
+    //       buttonText: "Okay");
+    // } else {
+
+    try {
+      Get.dialog(
+        const ErrorDialogWidget(
           icon: AppIcons.warningIcon,
-          title: "No Internet Connection",
-          content: "Please check your internet settings and try again.",
-          buttonText: "Okay");
-    } else {
-      try {
-        AppsFunction.errorDialog(
-          barrierDismissible: true,
-          icon: AppIcons.warningIcon,
-          title: "Loading for sign with Gmail \n Pleasing Waiting........",
-        );
+          title: "e.title!",
+          content: "e.message",
+          buttonText: AppString.okay,
+        ),
+      );
 
-        var userCredentialGmail = await repository.signWithGoogle();
+      // AppsFunction.errorDialog(
+      //   barrierDismissible: true,
+      //   icon: AppIcons.warningIcon,
+      //   title: "Loading for sign with Gmail \n Pleasing Waiting........",
+      // );
 
-        if (userCredentialGmail != null) {
-          Get.back();
-          if (await repository.userExists()) {
-            Get.offNamed(RoutesName.mainPage);
-            AppsFunction.flutterToast(msg: "Successfully Loging");
-          } else {
-            await repository.createUserGmail(user: userCredentialGmail.user!);
+      var userCredentialGmail = await repository.signWithGoogle();
 
-            Get.offNamed(RoutesName.mainPage);
-            AppsFunction.flutterToast(msg: "Successfully Loging");
-          }
-        }
-      } catch (e) {
+      if (userCredentialGmail != null) {
         Get.back();
-        if (e is AppException) {
-          AppsFunction.errorDialog(
-              icon: AppIcons.warningIcon,
-              title: e.title!,
-              content: e.message,
-              buttonText: "Okay");
+        if (await repository.userExists()) {
+          Get.offNamed(AppRoutesName.mainPage);
+          AppsFunction.showToast(msg: "Successfully Loging");
+        } else {
+          await repository.createUserGmail(user: userCredentialGmail.user!);
+
+          Get.offNamed(AppRoutesName.mainPage);
+          AppsFunction.showToast(msg: "Successfully Loging");
         }
       }
+    } catch (e) {
+      Get.back();
+      if (e is AppException) {
+        //   AppsFunction.errorDialog(
+        //       icon: AppIcons.warningIcon,
+        //       title: e.title!,
+        //       content: e.message,
+        //       buttonText: "Okay");
+        // }
+
+        Get.dialog(
+          ErrorDialogWidget(
+            icon: AppIcons.warningIcon,
+            title: "e.title!",
+            content: e.message,
+            buttonText: AppString.okay,
+          ),
+        );
+      }
+
+      // }
     }
   }
 }

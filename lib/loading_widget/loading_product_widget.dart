@@ -28,7 +28,7 @@ class LoadingProductWidget extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppsFunction.lineShimmer(135),
+                  child: AppsFunction.buildShimmerEffect(height: 135),
                 ),
                 Padding(
                   padding: EdgeInsets.all(10.0.r),
@@ -36,11 +36,11 @@ class LoadingProductWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      AppsFunction.lineShimmer(15),
-                      AppsFunction.verticleSpace(8),
-                      AppsFunction.lineShimmer(15),
-                      AppsFunction.verticleSpace(8),
-                      AppsFunction.lineShimmer(15),
+                      AppsFunction.buildShimmerEffect(height: 15),
+                      AppsFunction.verticalSpacing(8),
+                      AppsFunction.buildShimmerEffect(height: 15),
+                      AppsFunction.verticalSpacing(8),
+                      AppsFunction.buildShimmerEffect(height: 15),
                     ],
                   ),
                 )

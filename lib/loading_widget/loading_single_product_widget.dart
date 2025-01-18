@@ -33,7 +33,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AppsFunction.lineShimmer(130, 130),
+              AppsFunction.buildShimmerEffect(height: 130, width: 130),
               Expanded(
                 child: Padding(
                   padding:
@@ -43,7 +43,7 @@ class LoadingSingleProductWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: List.generate(
                         3,
-                        (index) => AppsFunction.lineShimmer(20.h),
+                        (index) => AppsFunction.buildShimmerEffect(height: 20),
                       )),
                 ),
               )

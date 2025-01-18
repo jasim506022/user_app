@@ -5,8 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:user_app/model/app_exception.dart';
 import 'package:user_app/repository/select_image_repository.dart';
 
-import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
+import '../res/app_string.dart';
+import '../widget/error_dialog_widget.dart';
 
 class SelectImageController extends GetxController {
   final SelectImageRepository repository;
@@ -20,11 +21,20 @@ class SelectImageController extends GetxController {
       selectPhoto.value = image;
     } catch (e) {
       if (e is AppException) {
-        AppsFunction.errorDialog(
+        // AppsFunction.errorDialog(
+        //     icon: AppIcons.warningIcon,
+        //     title: e.title!,
+        //     content: e.message,
+        //     buttonText: "Okay");
+
+        Get.dialog(
+          ErrorDialogWidget(
             icon: AppIcons.warningIcon,
-            title: e.title!,
+            title: "e.title!",
             content: e.message,
-            buttonText: "Okay");
+            buttonText: AppString.okay,
+          ),
+        );
       }
     }
   }

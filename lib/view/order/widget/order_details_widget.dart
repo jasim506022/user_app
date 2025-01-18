@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../model/order_model.dart';
@@ -28,17 +27,17 @@ class OrderDetailsWidget extends StatelessWidget {
               style: AppsTextStyle.largeBoldText.copyWith(
                 color: AppColors.accentGreen,
               )),
-          AppsFunction.verticleSpace(7),
+          AppsFunction.verticalSpacing(7),
           Text(
               "Placed On ${AppsFunction.formatDeliveryDate(datetime: orderModel.orderId)}",
               style: AppsTextStyle.mediumText600
                   .copyWith(color: Theme.of(context).hintColor)),
-          AppsFunction.verticleSpace(25),
+          AppsFunction.verticalSpacing(25),
           Align(
             alignment: Alignment.center,
             child: CustomRoundActionButton(
               onTap: () {
-                Get.offAndToNamed(RoutesName.mainPage, arguments: 0);
+                Get.offAndToNamed(AppRoutesName.mainPage, arguments: 0);
               },
               title: "Home Page",
             ),

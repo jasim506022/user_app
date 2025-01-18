@@ -8,7 +8,7 @@ import '../../controller/splash_controller.dart';
 import '../../res/app_asset/app_icons.dart';
 import '../../res/app_function.dart';
 import '../../res/app_string.dart';
-import '../../res/app_asset/image_asset.dart';
+import '../../res/app_asset/app_imges.dart';
 import '../../res/apps_text_style.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -23,9 +23,9 @@ class SplashScreen extends StatelessWidget {
       child: Container(
         height: 1.sh,
         width: 1.sw,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(ImagesAsset.splashImage), fit: BoxFit.fill),
+              image: AssetImage(AppImages.splashImage), fit: BoxFit.fill),
         ),
         child: Center(
           child: Column(
@@ -36,8 +36,8 @@ class SplashScreen extends StatelessWidget {
                 height: 0.15.sh,
                 width: 0.15.sh,
               ),
-              AppsFunction.verticleSpace(10),
-              Text(AppString.groceryApps, style: AppsTextStyle.appLogoFonts),
+              AppsFunction.verticalSpacing(10),
+              Text(AppString.groceryApps, style: AppsTextStyle.appLogoStyle),
             ],
           ),
         ),

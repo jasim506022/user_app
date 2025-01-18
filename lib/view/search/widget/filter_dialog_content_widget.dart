@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../../../controller/search_controller.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/app_constant.dart';
 import '../../../res/app_function.dart';
 import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constants.dart';
 import '../../../widget/custom_round_action_button.dart';
 import '../../product/widget/drop_down_category_widget.dart';
 import 'product_price_box_widget.dart';
@@ -28,11 +28,11 @@ class FilterDialogContentWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildTitle(),
-          AppsFunction.verticleSpace(10),
+          AppsFunction.verticalSpacing(10),
           const ProductPriceBoxWidget(),
-          AppsFunction.verticleSpace(10),
+          AppsFunction.verticalSpacing(10),
           _buildCategoryDropdown(),
-          AppsFunction.verticleSpace(10),
+          AppsFunction.verticalSpacing(10),
           _buildActionButtons(
             context,
           ),
@@ -60,10 +60,10 @@ class FilterDialogContentWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(AppString.productCategory, style: AppsTextStyle.mediumBoldText),
-        AppsFunction.verticleSpace(10),
+        AppsFunction.verticalSpacing(10),
         DropdownCategoryWidget(
           value: searchController.selectedCategory.value,
-          list: allCategoryList,
+          list: AppConstant.cateogryTypes,
           onChanged: (category) {
             if (category != null) {
               searchController.setCategory(category);
@@ -95,7 +95,7 @@ class FilterDialogContentWidget extends StatelessWidget {
               title: AppString.close,
               onTap: () => Get.back(),
             ),
-            AppsFunction.horizontalSpace(10),
+            AppsFunction.horizontalSpacing(10),
             CustomRoundActionButton(
               horizontal: 10.w,
               title: AppString.save,

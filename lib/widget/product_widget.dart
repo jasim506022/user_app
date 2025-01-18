@@ -11,6 +11,7 @@ import '../../res/app_colors.dart';
 
 import '../model/products_model.dart';
 
+import '../res/network_utili.dart';
 import 'product_image_widget.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -24,12 +25,12 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isInCart =
-        CartFunctions.separateProductID().contains(productModel.productId);
+        CartManager.getProductIds().contains(productModel.productId);
 
     return InkWell(
       onTap: () async {
-        if (!(await AppsFunction.verifyInternetStatus())) {
-          Get.toNamed(RoutesName.productDestailsPage, arguments: {
+        if (!(await NetworkUtili.verifyInternetStatus())) {
+          Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
             AppString.productModel: productModel,
             AppString.isCartBack: false
           });
@@ -79,27 +80,26 @@ class ProductWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              "${AppString.currencyIcon} ${AppsFunction.productPrice(productModel.productprice!, productModel.discount!.toDouble())}",
-              style: AppsTextStyle.boldBodyTextStyle
-                  .copyWith(color: AppColors.red),
+              "${AppString.currencyIcon} ${AppsFunction.calculateDiscountedPrice(productModel.productprice!, productModel.discount!.toDouble())}",
+              style: AppsTextStyle.bodyTextStyle.copyWith(color: AppColors.red),
             ),
-            AppsFunction.horizontalSpace(15),
+            AppsFunction.horizontalSpacing(15),
             Text(
               productModel.productprice!.toString(),
               style: AppsTextStyle.mediumText400lineThrough,
             ),
           ],
         ),
-        AppsFunction.verticleSpace(2),
+        AppsFunction.verticalSpacing(2),
         Text(
           productModel.productname ?? "Bangladesh",
-          style: AppsTextStyle.boldBodyTextStyle,
+          style: AppsTextStyle.bodyTextStyle,
         ),
-        AppsFunction.verticleSpace(5),
+        AppsFunction.verticalSpacing(5),
         InkWell(
             onTap: () async {
-              if (!(await AppsFunction.verifyInternetStatus())) {
-                Get.toNamed(RoutesName.productDestailsPage,
+              if (!(await NetworkUtili.verifyInternetStatus())) {
+                Get.toNamed(AppRoutesName.productDetailsPage,
                     arguments: productModel);
               }
             },
@@ -116,7 +116,7 @@ class ProductWidget extends StatelessWidget {
                 style: AppsTextStyle.buttonTextStyle,
               ),
             )),
-        AppsFunction.verticleSpace(7)
+        AppsFunction.verticalSpacing(7)
       ],
     );
   }

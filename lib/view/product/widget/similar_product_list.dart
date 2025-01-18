@@ -5,7 +5,7 @@ import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/product_controller.dart';
 import '../../../model/products_model.dart';
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../widget/single_empty_widget.dart';
 import '../../../loading_widget/loading_similar_widet.dart';
 import 'similar_product_widget.dart';
@@ -35,7 +35,7 @@ class SimilarProductList extends StatelessWidget {
               snapshot.data!.docs.isEmpty ||
               snapshot.hasError) {
             return SingleEmptyWidget(
-                image: ImagesAsset.errorSingle,
+                image: AppImages.errorSingle,
                 title: snapshot.hasError
                     ? '${AppString.errorOccure} ${snapshot.error}'
                     : AppString.noDataAvailable);

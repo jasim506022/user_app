@@ -20,7 +20,7 @@ class LoadingWidget extends StatelessWidget {
               valueColor: AlwaysStoppedAnimation(Colors.pinkAccent),
             ),
           ),
-          AppsFunction.verticleSpace(20),
+          AppsFunction.verticalSpacing(20),
           Text(
             "$message \n ${AppString.pleaseWait}",
             style: AppsTextStyle.titleTextStyle,

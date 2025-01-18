@@ -27,9 +27,9 @@ class LoadingSimilierWidget extends StatelessWidget {
             highlightColor: Utils.highlightShimmerColor,
             child: Column(
               children: [
-                AppsFunction.lineShimmer(70),
-                AppsFunction.verticleSpace(8),
-                AppsFunction.lineShimmer(10)
+                AppsFunction.buildShimmerEffect(height: 70),
+                AppsFunction.verticalSpacing(8),
+                AppsFunction.buildShimmerEffect(height: 10)
               ],
             ),
           ),

@@ -10,6 +10,7 @@ import '../../../res/app_string.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/cart_badge.dart';
+import '../../../res/network_utili.dart';
 
 class ProfileHeaderViewWidget extends StatelessWidget {
   const ProfileHeaderViewWidget({
@@ -44,7 +45,7 @@ class ProfileHeaderViewWidget extends StatelessWidget {
               ),
             ),
           ),
-          AppsFunction.horizontalSpace(13),
+          AppsFunction.horizontalSpacing(13),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +55,7 @@ class ProfileHeaderViewWidget extends StatelessWidget {
                       .copyWith(color: AppColors.deepGreenAccent)),
               Text(
                 name,
-                style: AppsTextStyle.boldBodyTextStyle,
+                style: AppsTextStyle.bodyTextStyle,
               )
             ],
           ),
@@ -62,8 +63,8 @@ class ProfileHeaderViewWidget extends StatelessWidget {
 
           // Cart badge with item count and navigation functionality.
           InkWell(onTap: () async {
-            if (!(await AppsFunction.verifyInternetStatus())) {
-              Get.toNamed(RoutesName.cartPage);
+            if (!(await NetworkUtili.verifyInternetStatus())) {
+              Get.toNamed(AppRoutesName.cartPage);
             }
           }, child: Obx(() {
             return CartBadge(
@@ -71,7 +72,7 @@ class ProfileHeaderViewWidget extends StatelessWidget {
                 itemCount: Get.find<CartController>().itemCount,
                 icon: Icons.shopping_bag);
           })),
-          AppsFunction.horizontalSpace(12)
+          AppsFunction.horizontalSpacing(12)
         ],
       ),
     );

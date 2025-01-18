@@ -12,6 +12,7 @@ import '../../res/apps_text_style.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 
+import '../../res/network_utili.dart';
 import 'widget/capture_image_profile_widget.dart';
 import 'widget/custom_button_widget.dart';
 
@@ -35,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: GestureDetector(
         onTap: () async {
           FocusScope.of(context).unfocus();
-          AppsFunction.verifyInternetStatus();
+          NetworkUtili.verifyInternetStatus();
         },
         child: Material(
           color: AppColors.white,
@@ -78,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         simpleText: "Already Create An Account? ",
                         colorText: "Sign In",
                         function: () async {
-                          if (!(await AppsFunction.verifyInternetStatus())) {
+                          if (!(await NetworkUtili.verifyInternetStatus())) {
                             Get.back();
                             signUpController.clearField();
                           }
@@ -157,7 +158,7 @@ class _SignUpPageState extends State<SignUpPage> {
           IntlPhoneField(
             textInputAction: TextInputAction.done,
             controller: signUpController.phontET,
-            style: AppsTextStyle.textFieldInputTextStyle(false),
+            style: AppsTextStyle.textFieldInputStyle(false),
             decoration: AppsFunction.textFormFielddecoration(
                 hintText: "Phone Number", function: () {}),
             languageCode: "en",

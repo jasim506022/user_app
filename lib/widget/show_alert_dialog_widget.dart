@@ -31,7 +31,7 @@ class CustomAlertDialogWidget extends StatelessWidget {
       title: Row(
         children: [
           Text(title, style: AppsTextStyle.titleTextStyle),
-          AppsFunction.horizontalSpace(10),
+          AppsFunction.horizontalSpacing(10),
           Container(
               padding: EdgeInsets.all(3.r),
               decoration:
@@ -44,7 +44,7 @@ class CustomAlertDialogWidget extends StatelessWidget {
         ],
       ),
       content: Text(subTitle,
-          style: AppsTextStyle.subTitleTextStyle
+          style: AppsTextStyle.subtitleTextStyle
               .copyWith(color: Theme.of(context).primaryColor)),
       actions: [
         OutlinedTextButtonWidget(

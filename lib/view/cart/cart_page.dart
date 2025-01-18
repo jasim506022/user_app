@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../controller/cart_controller.dart';
 import '../../res/app_colors.dart';
-import '../../res/app_asset/image_asset.dart';
+import '../../res/app_asset/app_imges.dart';
 
 import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
@@ -59,7 +59,7 @@ class CartPage extends StatelessWidget {
         }
         if (snapshot.hasError) {
           return EmptyWidget(
-            image: ImagesAsset.error,
+            image: AppImages.error,
             title: '${AppString.errorOccure} ${snapshot.error}',
           );
         }
@@ -94,8 +94,8 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _buildEmptyCartView() {
-    return EmptyWidget(
-      image: ImagesAsset.error,
+    return const EmptyWidget(
+      image: AppImages.error,
       title: AppString.noCartAvailabe,
     );
   }

@@ -11,6 +11,7 @@ import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/product_image_widget.dart';
+import '../../../res/network_utili.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({
@@ -25,10 +26,10 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cartController = Get.find<CartController>();
-    int quantity = CartFunctions.seperateProductQuantiyList()[index];
+    int quantity = CartManager.getProductQuantities()[index];
 
     return InkWell(
-      onTap: () => Get.toNamed(RoutesName.productDestailsPage, arguments: {
+      onTap: () => Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
         AppString.productModel: productModel,
         AppString.isCartBack: true
       }),
@@ -37,7 +38,7 @@ class CardWidget extends StatelessWidget {
         child: Column(
           children: [
             _buildProductCard(context, cartController, quantity),
-            AppsFunction.verticleSpace(10)
+            AppsFunction.verticalSpacing(10)
           ],
         ),
       ),
@@ -69,7 +70,7 @@ class CardWidget extends StatelessWidget {
 
   Expanded _buildProductDetails(
       BuildContext context, CartController cartController, int quantity) {
-    final price = AppsFunction.productPrice(
+    final price = AppsFunction.calculateDiscountedPrice(
       productModel.productprice!,
       productModel.discount!.toDouble(),
     );
@@ -90,14 +91,14 @@ class CardWidget extends StatelessWidget {
                   flex: 4,
                   child: FittedBox(
                     child: Text(productModel.productname!,
-                        style: AppsTextStyle.boldBodyTextStyle),
+                        style: AppsTextStyle.bodyTextStyle),
                   ),
                 ),
                 Flexible(
                   flex: 1,
                   child: InkWell(
                     onTap: () async {
-                      if (!(await AppsFunction.verifyInternetStatus())) {
+                      if (!(await NetworkUtili.verifyInternetStatus())) {
                         cartController.removeProductFromCart(
                           productId: productModel.productId!,
                         );
@@ -119,7 +120,7 @@ class CardWidget extends StatelessWidget {
               ],
             ),
             Text(productModel.productunit!.toString(),
-                style: AppsTextStyle.boldBodyTextStyle
+                style: AppsTextStyle.bodyTextStyle
                     .copyWith(color: AppColors.lightHintText)),
             Row(
               children: [
@@ -134,7 +135,7 @@ class CardWidget extends StatelessWidget {
                 const Spacer(),
                 Text(
                   "= ${AppString.currencyIcon}. ${total.toStringAsFixed(2)}",
-                  style: AppsTextStyle.boldBodyTextStyle
+                  style: AppsTextStyle.bodyTextStyle
                       .copyWith(color: AppColors.accentGreen),
                 ),
               ],

@@ -20,7 +20,7 @@ class OrderStatusWidget extends StatelessWidget {
       child: Column(
         children: [
           Image.asset(image, height: 200.h, width: 1.sw),
-          AppsFunction.verticleSpace(15),
+          AppsFunction.verticalSpacing(15),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 15.h),
             decoration: BoxDecoration(

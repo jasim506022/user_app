@@ -7,7 +7,7 @@ import '../../../model/products_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
-import '../../home/widget/network_utili.dart';
+import '../../../res/network_utili.dart';
 
 class AddCartItemFloatWidget extends StatelessWidget {
   const AddCartItemFloatWidget({
@@ -24,7 +24,7 @@ class AddCartItemFloatWidget extends StatelessWidget {
         backgroundColor:
             isProductInCart ? AppColors.red : AppColors.accentGreen,
         onPressed: isProductInCart
-            ? () => AppsFunction.flutterToast(msg: AppString.itemAlreadyInCart)
+            ? () => AppsFunction.showToast(msg: AppString.itemAlreadyInCart)
             : () async {
                 if (!(await NetworkUtili.verifyInternetStatus())) {
                   productController.addItemToCart(

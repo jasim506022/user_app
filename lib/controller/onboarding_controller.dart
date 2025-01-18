@@ -13,21 +13,23 @@ class OnBoardingController extends GetxController {
     pageController.dispose(); // Dispose the PageController when not needed
     super.onClose();
   }
+
   var currentIndex = 0.obs;
 
   OnBoardingController({required this.repository});
 
   Future<void> completeOnboarding() async {
     await repository.setOnboardingViewed();
-    Get.offNamed(RoutesName.signPage);
+    Get.offNamed(AppRoutesName.signInPage);
   }
 
   void updateIndex(int index) {
     currentIndex.value = index;
   }
 
-   void nextPage() {
-    if (currentIndex.value < 2) { // Assuming 3 onboarding pages
+  void nextPage() {
+    if (currentIndex.value < 2) {
+      // Assuming 3 onboarding pages
       pageController.nextPage(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,

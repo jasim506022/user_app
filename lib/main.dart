@@ -8,24 +8,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nested/nested.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:user_app/res/app_string.dart';
 
 import 'bindings/initial_binding.dart';
 import 'res/app_colors.dart';
 import 'res/app_constant.dart';
-import 'res/constant/string_constant.dart';
 import 'res/routes/app_routes.dart';
 import 'res/routes/routes_name.dart';
-import 'res/constants.dart';
 import 'service/provider/theme_provider.dart';
 
 void main() async {
-  Stripe.publishableKey = publishKey;
+  Stripe.publishableKey = AppConstant.publishKey;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   AppConstant.sharedPreference = await SharedPreferences.getInstance();
-  isviewed =
-      AppConstant.sharedPreference!.getInt(StringConstant.onBoardingSharedPre);
+  AppConstant.isViewed =
+      AppConstant.sharedPreference!.getInt(AppString.onBoardingSharedPre);
   runApp(const MyApp());
 }
 
@@ -48,7 +47,7 @@ class MyApp extends StatelessWidget {
                 initialBinding: InitialBinding(),
                 debugShowCheckedModeBanner: false,
                 theme: themeData(themeProvder),
-                initialRoute: RoutesName.initailRoutes,
+                initialRoute: AppRoutesName.splashScreen,
                 getPages: AppRoutes.appRoutes(),
               );
             },

@@ -10,6 +10,7 @@ import '../../../res/app_function.dart';
 import '../../../res/apps_text_style.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
+import '../../../res/network_utili.dart';
 
 class SimilarProductWidget extends StatelessWidget {
   const SimilarProductWidget({
@@ -21,13 +22,12 @@ class SimilarProductWidget extends StatelessWidget {
   final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
-    bool isCart =
-        CartFunctions.separateProductID().contains(productModel.productId);
+    bool isCart = CartManager.getProductIds().contains(productModel.productId);
     return InkWell(
       onTap: () async {
-        if (!(await AppsFunction.verifyInternetStatus())) {
+        if (!(await NetworkUtili.verifyInternetStatus())) {
           Get.offAndToNamed(
-            RoutesName.productDestailsPage,
+            AppRoutesName.productDetailsPage,
             arguments: {
               AppString.productModel: productModel,
               AppString.isCartBack: isCartBack
@@ -51,7 +51,7 @@ class SimilarProductWidget extends StatelessWidget {
                 imageUrl: productModel.productimage![0],
               ),
             ),
-            AppsFunction.verticleSpace(10),
+            AppsFunction.verticalSpacing(10),
             FittedBox(
                 child: Text(productModel.productname!,
                     textAlign: TextAlign.justify,

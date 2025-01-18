@@ -5,15 +5,15 @@ import 'package:user_app/res/app_function.dart';
 
 import '../../controller/bill_controller.dart';
 import '../../res/app_colors.dart';
+import '../../res/app_constant.dart';
 import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
-import '../../res/constants.dart';
 import 'widget/address_details_widget.dart';
 
 import 'widget/payment_list.dart';
 
-class BillPage extends StatelessWidget {
-  const BillPage({
+class BillingPage extends StatelessWidget {
+  const BillingPage({
     super.key,
   });
 
@@ -43,9 +43,9 @@ class BillPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const AddressDetailsWidget(),
-                        AppsFunction.verticleSpace(10),
+                        AppsFunction.verticalSpacing(10),
                         const PaymentList(),
-                        AppsFunction.verticleSpace(15),
+                        AppsFunction.verticalSpacing(15),
                         _buildPaymentActionButtion(billController, context),
                       ],
                     ),
@@ -63,7 +63,7 @@ class BillPage extends StatelessWidget {
               ? Container()
               : await billController.createPayment('USD');
         } else {
-          AppsFunction.flutterToast(msg: "Please Add a address");
+          AppsFunction.showToast(msg: "Please Add a address");
         }
       },
       child: Container(

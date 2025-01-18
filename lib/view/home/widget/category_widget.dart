@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../res/app_function.dart';
+import '../../../res/app_constant.dart';
 import '../../../res/apps_text_style.dart';
-import '../../../res/constants.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/utils.dart';
 import '../../../controller/category_controller.dart';
+import '../../../res/network_utili.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
@@ -23,9 +23,9 @@ class CategoryWidget extends StatelessWidget {
       width: 1.sw,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: allCategoryList.length,
+        itemCount: AppConstant.cateogryTypes.length,
         itemBuilder: (context, index) {
-          final category = allCategoryList[index];
+          final category = AppConstant.cateogryTypes[index];
           return _buildCategoryItem(categoryController, category);
         },
       ),
@@ -40,7 +40,7 @@ class CategoryWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: 10.w),
       child: InkWell(
         onTap: () async {
-          if (!(await AppsFunction.verifyInternetStatus())) {
+          if (!(await NetworkUtili.verifyInternetStatus())) {
             categoryController.setCategory(category: category);
           }
         },
@@ -58,7 +58,7 @@ class CategoryWidget extends StatelessWidget {
                     : Utils.categoryUnselectBackground,
                 borderRadius: BorderRadius.circular(30.r)),
             child: Text(category,
-                style: AppsTextStyle.boldBodyTextStyle.copyWith(
+                style: AppsTextStyle.bodyTextStyle.copyWith(
                     color: isSelected
                         ? AppColors.white
                         : Utils.categoryUnSelectTextColor)),

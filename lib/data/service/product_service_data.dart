@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../../model/products_model.dart';
+import '../../res/app_constant.dart';
 import '../../res/app_string.dart';
-import '../../res/constants.dart';
 import 'product_service_base.dart';
 
 class ProductServiceData extends ProductServiceBase {
@@ -23,7 +23,7 @@ class ProductServiceData extends ProductServiceBase {
     var query =
         collectionRef.where(AppString.productRating, isGreaterThan: 3.5);
 
-    if (category != allCategoryList[0]) {
+    if (category != AppConstant.cateogryTypes[0]) {
       query = query.where(AppString.productCategory, isEqualTo: category);
     }
 
@@ -37,7 +37,7 @@ class ProductServiceData extends ProductServiceBase {
         firebaseFirestore.collection(AppString.productCollection);
     var query = collectionRef.orderBy(AppString.publishDate, descending: true);
 
-    if (category != allCategoryList[0]) {
+    if (category != AppConstant.cateogryTypes[0]) {
       query = query.where(AppString.productCategory, isEqualTo: category);
     }
 

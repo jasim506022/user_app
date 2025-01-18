@@ -49,7 +49,7 @@ class CarouselWidget extends StatelessWidget {
               ),
               TextSpan(
                   text: " ${carouselModel.category}",
-                  style: AppsTextStyle.boldBodyTextStyle.copyWith(
+                  style: AppsTextStyle.bodyTextStyle.copyWith(
                     letterSpacing: .9,
                     color: AppColors.accentGreen,
                   )),
@@ -71,7 +71,7 @@ class CarouselWidget extends StatelessWidget {
                 color: AppColors.white,
               ),
             ),
-            AppsFunction.horizontalSpace(10),
+            AppsFunction.horizontalSpacing(10),
             Text(
               carouselModel.number.toUpperCase(),
               style: AppsTextStyle.largeBoldText.copyWith(

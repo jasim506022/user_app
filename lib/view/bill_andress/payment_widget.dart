@@ -5,8 +5,8 @@ import 'package:user_app/controller/bill_controller.dart';
 
 import '../../res/app_colors.dart';
 
+import '../../res/app_constant.dart';
 import '../../res/apps_text_style.dart';
-import '../../res/constants.dart';
 import '../../res/utils.dart';
 
 class PaymentWidgetMethod extends StatelessWidget {
@@ -39,11 +39,11 @@ class PaymentWidgetMethod extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  paymentList[index].icon!,
+                  AppConstant.paymentTypes[index].icon!,
                   height: 70.h,
                   width: 60.w,
                 ),
-                Text(paymentList[index].title!,
+                Text(AppConstant.paymentTypes[index].title!,
                     style: AppsTextStyle.mediumTextbold),
               ],
             ),

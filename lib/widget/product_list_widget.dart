@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controller/product_controller.dart';
 import '../model/products_model.dart';
 import '../res/app_string.dart';
-import '../res/app_asset/image_asset.dart';
+import '../res/app_asset/app_imges.dart';
 import 'empty_widget.dart';
 import '../loading_widget/loading_list_product_widget.dart';
 import 'product_widget.dart';
@@ -35,7 +35,7 @@ class ProductListWidget extends StatelessWidget {
                 snapshot.data!.docs.isEmpty ||
                 snapshot.hasError) {
               return EmptyWidget(
-                image: ImagesAsset.error,
+                image: AppImages.error,
                 title: snapshot.hasError
                     ? '${AppString.errorOccure} ${snapshot.error}'
                     : AppString.noDataAvailable,

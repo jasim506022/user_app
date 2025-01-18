@@ -27,14 +27,14 @@ class DeliveryInfoWidget extends StatelessWidget {
             subTitle: orderModel.deliveryPartner,
           ),
         ),
-        AppsFunction.verticleSpace(10),
+        AppsFunction.verticalSpacing(10),
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: DeliveryRichTextWidget(
                 title: "${AppString.trackingNumber} :",
                 color: AppColors.red,
                 subTitle: orderModel.trackingNumber)),
-        AppsFunction.verticleSpace(15),
+        AppsFunction.verticalSpacing(15),
         OrderReceiverDetailsWidget(orderModel: orderModel),
       ],
     );

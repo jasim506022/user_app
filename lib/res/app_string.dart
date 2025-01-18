@@ -209,6 +209,12 @@ class AppString {
   static const String trackingNumber = "Tracking Number";
   static const String receiver = "Receiver";
   static const String order = "Order";
+  static const String onBoardingSharedPre = "onBoarding";
+  static const String similarProducts = "Similar Products";
+  static const String alreadyAdded = "Already Added";
+  static const String rattings = "Rattings";
+  static const String exit = "Exit";
+  static const String exitMessage = 'Are you sure you want to Exit this Apps?';
 
   // Dynamic message generator
   static String pleaseEnterField(String fieldName) {

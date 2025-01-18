@@ -11,6 +11,7 @@ import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
 import '../res/cart_funtion.dart';
 
+import '../widget/error_dialog_widget.dart';
 import 'category_controller.dart';
 
 class ProductController extends GetxController {
@@ -68,7 +69,7 @@ class ProductController extends GetxController {
       productItemQuantity++;
     } else {
       if (productItemQuantity.value == 1) {
-        AppsFunction.flutterToast(msg: AppString.theQuantityCannotBeLessThen1);
+        AppsFunction.showToast(msg: AppString.theQuantityCannotBeLessThen1);
       } else {
         productItemQuantity--;
       }
@@ -77,15 +78,14 @@ class ProductController extends GetxController {
 
 // Check if the product is already in the cart
   void verifyProductInCart({required String productId}) {
-    isProductInCart.value =
-        CartFunctions.separateProductID().contains(productId);
+    isProductInCart.value = CartManager.getProductIds().contains(productId);
   }
 
   void addItemToCart({
     required String productId,
     required String sellerId,
   }) {
-    CartFunctions.addItemToCart(
+    CartManager.addProductToCart(
       productId: productId,
       quantity: productItemQuantity.value,
       sellerId: sellerId,
@@ -95,11 +95,19 @@ class ProductController extends GetxController {
   }
 
   void _handleError(AppException e) {
-    AppsFunction.errorDialog(
-      icon: AppIcons.warningIcon,
-      title: e.title ?? AppString.errorOccure,
-      content: e.message ?? AppString.someThingWentWrong,
-      buttonText: AppString.okay,
+    Get.dialog(
+      ErrorDialogWidget(
+        icon: AppIcons.warningIcon,
+        title: "e.title!",
+        content: e.message,
+        buttonText: AppString.okay,
+      ),
     );
+    // AppsFunction.errorDialog(
+    //   icon: AppIcons.warningIcon,
+    //   title: e.title ?? AppString.errorOccure,
+    //   content: e.message ?? AppString.someThingWentWrong,
+    //   buttonText: AppString.okay,
+    // );
   }
 }

@@ -14,7 +14,7 @@ import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
 import '../../widget/select_photo_profile_widget.dart';
 import '../../widget/text_form_field_widget.dart';
-import '../home/widget/network_utili.dart';
+import '../../res/network_utili.dart';
 import 'widget/about_data_widget.dart';
 import 'widget/row_text_title_widget.dart';
 
@@ -70,9 +70,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Column(
                     children: [
                       _buildProfileImageSection(),
-                      AppsFunction.verticleSpace(50),
+                      AppsFunction.verticalSpacing(50),
                       _isEditMode ? _buildFormField() : const AboutDataWidget(),
-                      AppsFunction.verticleSpace(100),
+                      AppsFunction.verticalSpacing(100),
                     ],
                   ),
                 ))));
@@ -153,13 +153,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
               controller: profileController.nameTEC,
               hintText: AppString.enterName,
             ),
-            AppsFunction.verticleSpace(15),
+            AppsFunction.verticalSpacing(15),
             RowTextTitleWidget(icon: Icons.phone, title: AppString.phone),
-            AppsFunction.verticleSpace(15),
+            AppsFunction.verticalSpacing(15),
             IntlPhoneField(
               textInputAction: TextInputAction.next,
               controller: profileController.phoneTEC,
-              style: AppsTextStyle.textFieldInputTextStyle(true),
+              style: AppsTextStyle.textFieldInputStyle(true),
               decoration: AppsFunction.textFormFielddecoration(
                   hintText: AppString.enterPhone, function: () {}),
               languageCode: "en",
@@ -167,14 +167,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               onChanged: (value) => profileController.addChangeListener(),
               onCountryChanged: (country) {},
             ),
-            AppsFunction.verticleSpace(15),
+            AppsFunction.verticalSpacing(15),
             const RowTextTitleWidget(icon: Icons.email, title: AppString.email),
             TextFormFieldWidget(
               controller: profileController.emailTEC,
               enabled: false,
               hintText: AppString.email,
             ),
-            AppsFunction.verticleSpace(15),
+            AppsFunction.verticalSpacing(15),
             const RowTextTitleWidget(
                 icon: Icons.place, title: AppString.address),
             TextFormFieldWidget(

@@ -13,7 +13,7 @@ class CardApiService {
         'Content-Type': AppString.contentType
       };
       final Map<String, String> body = {
-        'amount': AppsFunction.calculateAmount(amount),
+        'amount': AppsFunction.convertDollarToTaka(amount),
         'currency': currency,
         'payment_method_types[]': 'card',
       };

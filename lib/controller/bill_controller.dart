@@ -3,13 +3,12 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:user_app/model/order_model.dart';
 import 'package:user_app/res/app_string.dart';
-import 'package:user_app/view/home/widget/network_utili.dart';
+import 'package:user_app/res/network_utili.dart';
 
 import '../repository/bill_repository.dart';
 import '../res/app_constant.dart';
 import '../res/app_function.dart';
 import '../res/cart_funtion.dart';
-import '../res/constants.dart';
 import '../res/routes/routes_name.dart';
 import 'address_controller.dart';
 import 'cart_controller.dart';
@@ -52,7 +51,7 @@ class BillController extends GetxController {
 
       await displayPaymentSheet();
     } catch (e) {
-      AppsFunction.flutterToast(msg: e.toString());
+      AppsFunction.showToast(msg: e.toString());
     } finally {
       setLoading(false);
     }
@@ -68,12 +67,12 @@ class BillController extends GetxController {
       if (isSucess.value) {
         _processSuccessfullPayment();
       } else {
-        AppsFunction.flutterToast(msg: AppString.paymentCencle);
+        AppsFunction.showToast(msg: AppString.paymentCencle);
       }
     } on StripeException catch (e) {
-      AppsFunction.flutterToast(msg: e.toString());
+      AppsFunction.showToast(msg: e.toString());
     } catch (e) {
-      AppsFunction.flutterToast(msg: e.toString());
+      AppsFunction.showToast(msg: e.toString());
     } finally {
       setLoading(false);
     }
@@ -84,10 +83,10 @@ class BillController extends GetxController {
     repository.uploadOrderSnapshots(
       orderModel: orderModel,
     );
-    CartFunctions.clearCart();
-    AppsFunction.flutterToast(msg: AppString.congratulationOrder);
+    CartManager.clearCart();
+    AppsFunction.showToast(msg: AppString.congratulationOrder);
 
-    Get.offAllNamed(RoutesName.placeOrderScreen);
+    Get.offAllNamed(AppRoutesName.orderConfirmationPage);
   }
 
 /*
@@ -126,7 +125,7 @@ class BillController extends GetxController {
             .getStringList(AppString.cartListSharedPreference)!,
         paymentDetails: "Payment By Carrd",
         orderId: orderId,
-        seller: CartFunctions.seperateSellerSet().toList(),
+        seller: CartManager.getSelletSet().toList(),
         orderTime: orderId,
         isSuccess: true,
         status: "normal",

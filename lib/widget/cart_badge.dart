@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../res/app_colors.dart';
-import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
 import '../res/routes/routes_name.dart';
+import '../res/network_utili.dart';
 
 class CartBadge extends StatelessWidget {
   final int itemCount;
@@ -26,8 +26,8 @@ class CartBadge extends StatelessWidget {
               color: color,
             ),
             onPressed: () async {
-              if (!(await AppsFunction.verifyInternetStatus())) {
-                Get.toNamed(RoutesName.cartPage);
+              if (!(await NetworkUtili.verifyInternetStatus())) {
+                Get.toNamed(AppRoutesName.cartPage);
               }
             }),
         if (itemCount > 0)

@@ -6,7 +6,7 @@ import '../../../controller/address_controller.dart';
 import '../../../loading_widget/loading_addres_swidget.dart';
 import '../../../model/address_model.dart';
 
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../res/app_string.dart';
 import '../../../widget/single_empty_widget.dart';
 import 'address_widget.dart';
@@ -31,7 +31,7 @@ class AddressListWidget extends StatelessWidget {
             snapshot.data!.docs.isEmpty ||
             snapshot.hasError) {
           return SingleEmptyWidget(
-            image: ImagesAsset.errorSingle,
+            image: AppImages.errorSingle,
             title: snapshot.hasError
                 ? '${AppString.errorOccure} ${snapshot.error}'
                 : AppString.noAddressAvaiblabe,

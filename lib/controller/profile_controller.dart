@@ -67,7 +67,7 @@ class ProfileController extends GetxController {
 // Understand This Code
   Future<void> updateUserData() async {
     if (phoneTEC.text.trim().isEmpty) {
-      AppsFunction.flutterToast(msg: AppString.pleaseGiveYourPhoenNumber);
+      AppsFunction.showToast(msg: AppString.pleaseGiveYourPhoenNumber);
       return;
     }
 
@@ -85,8 +85,8 @@ class ProfileController extends GetxController {
       repository.updateUserData(map: updatedProfile.toMapProfileEdit());
       isChange(false);
       Get.back();
-      Get.offAllNamed(RoutesName.mainPage, arguments: 3);
-      AppsFunction.flutterToast(msg: AppString.successfullyUpdate);
+      Get.offAllNamed(AppRoutesName.mainPage, arguments: 3);
+      AppsFunction.showToast(msg: AppString.successfullyUpdate);
     } catch (e) {
       Get.back();
       _handleError(e);
@@ -127,8 +127,8 @@ class ProfileController extends GetxController {
           ?.setStringList(AppString.cartListSharedPreference, []);
 
       await repository.signOut();
-      AppsFunction.flutterToast(msg: AppString.successfullySignedOut);
-      Get.offAllNamed(RoutesName.signPage);
+      AppsFunction.showToast(msg: AppString.successfullySignedOut);
+      Get.offAllNamed(AppRoutesName.signInPage);
     } catch (e) {
       AppsFunction.handleException(e);
     }
@@ -148,7 +148,7 @@ class ProfileController extends GetxController {
 
           _updateTextControllers();
         } else {
-          AppsFunction.flutterToast(msg: AppString.userIsDisable);
+          AppsFunction.showToast(msg: AppString.userIsDisable);
         }
       }
     } catch (e) {

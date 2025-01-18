@@ -11,7 +11,7 @@ import '../../res/routes/routes_name.dart';
 import '../../widget/product_list_widget.dart';
 import 'widget/carousel_silder_widget.dart';
 import 'widget/category_widget.dart';
-import 'widget/network_utili.dart';
+import '../../res/network_utili.dart';
 import 'widget/popular_product_list_widget.dart';
 import 'widget/row_widget.dart';
 import 'widget/user_profile_header_widget.dart';
@@ -34,10 +34,10 @@ class HomePage extends StatelessWidget {
                   children: [
                     // Displays the user's profile information.
                     const UserProfileHeaderWidget(),
-                    AppsFunction.verticleSpace(10),
+                    AppsFunction.verticalSpacing(10),
                     InkWell(
                       onTap: () async {
-                        Get.offAllNamed(RoutesName.mainPage, arguments: 2);
+                        Get.offAllNamed(AppRoutesName.mainPage, arguments: 2);
                       },
                       child: _buildSearchBar(context),
                     ),
@@ -53,30 +53,30 @@ class HomePage extends StatelessWidget {
                         width: 1.sw,
                         child: const CarouselSilderWidget(),
                       ),
-                      AppsFunction.verticleSpace(10),
+                      AppsFunction.verticalSpacing(10),
                       const CategoryWidget(), // Displays the categories of products.
-                      AppsFunction.verticleSpace(15),
+                      AppsFunction.verticalSpacing(15),
                       // Popular Products Section
 
                       RowWidget(
                         text: AppString.popularProduct,
                         onTap: () async {
                           if (!(await NetworkUtili.verifyInternetStatus())) {
-                            Get.toNamed(RoutesName.productPage,
+                            Get.toNamed(AppRoutesName.productListPage,
                                 arguments: ProductListType.popular);
                           }
                         },
                       ),
-                      AppsFunction.verticleSpace(10),
+                      AppsFunction.verticalSpacing(10),
                       const PopularProductListWidget(),
-                      AppsFunction.verticleSpace(10),
+                      AppsFunction.verticalSpacing(10),
 
                       // All Products Section
                       RowWidget(
                         text: AppString.products,
                         onTap: () async {
                           if (!(await NetworkUtili.verifyInternetStatus())) {
-                            Get.toNamed(RoutesName.productPage,
+                            Get.toNamed(AppRoutesName.productListPage,
                                 arguments: ProductListType.regular);
                           }
                         },
@@ -115,7 +115,7 @@ class HomePage extends StatelessWidget {
               IconlyLight.search,
               color: Theme.of(context).primaryColor,
             ),
-            AppsFunction.horizontalSpace(10)
+            AppsFunction.horizontalSpacing(10)
           ],
         ),
       ),

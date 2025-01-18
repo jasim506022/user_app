@@ -47,13 +47,13 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
                     title: "${AppString.receiver}:",
                     subTitle: addressModel.name!,
                   ),
-                  AppsFunction.verticleSpace(10),
+                  AppsFunction.verticalSpacing(10),
                   DeliveryRichTextWidget(
                     title: "${AppString.phoneNumber}:",
                     subTitle: "0${addressModel.phone!}",
                     color: AppColors.red,
                   ),
-                  AppsFunction.verticleSpace(10),
+                  AppsFunction.verticalSpacing(10),
                   Text(addressModel.completeaddress!,
                       style: AppsTextStyle.mediumNormalText
                           .copyWith(color: Theme.of(context).hintColor))

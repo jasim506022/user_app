@@ -2,7 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/view/home/widget/network_utili.dart';
+import 'package:user_app/res/network_utili.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constant.dart';
@@ -30,7 +30,7 @@ class ProifleHeaderWidget extends StatelessWidget {
           child: Row(
             children: [
               _buildProfileImage(),
-              AppsFunction.horizontalSpace(30),
+              AppsFunction.horizontalSpacing(30),
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.w),
@@ -55,13 +55,13 @@ class ProifleHeaderWidget extends StatelessWidget {
         Text(
             AppConstant.sharedPreference!
                 .getString(AppString.emailSharedPreference)!,
-            style: AppsTextStyle.subTitleTextStyle),
-        AppsFunction.verticleSpace(8),
+            style: AppsTextStyle.subtitleTextStyle),
+        AppsFunction.verticalSpacing(8),
         CustomRoundActionButton(
           title: AppString.editProfile,
           onTap: () async {
             if (!(await NetworkUtili.verifyInternetStatus())) {
-              Get.toNamed(RoutesName.editProfileScreen, arguments: true);
+              Get.toNamed(AppRoutesName.editProfilePage, arguments: true);
             }
           },
         )

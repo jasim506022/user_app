@@ -4,7 +4,7 @@ import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/search_controller.dart';
 import '../../../model/products_model.dart';
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../widget/empty_widget.dart';
 import '../../../widget/product_widget.dart';
 
@@ -20,8 +20,8 @@ class SearchProductGridWidget extends StatelessWidget {
       final productList = _getProductList(searchController);
 
       if (productList.isEmpty) {
-        return EmptyWidget(
-          image: ImagesAsset.error,
+        return const EmptyWidget(
+          image: AppImages.error,
           title: AppString.noDataAvailable,
         );
       }

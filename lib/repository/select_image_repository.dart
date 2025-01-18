@@ -11,7 +11,7 @@ class SelectImageRepository {
     try {
       XFile? captureImage = await _imagepicker.pickImage(source: imageSource);
       if (captureImage == null) {
-        AppsFunction.flutterToast(
+        AppsFunction.showToast(
             msg: "No image selected or operation was canceled.");
       }
       return File(captureImage!.path);

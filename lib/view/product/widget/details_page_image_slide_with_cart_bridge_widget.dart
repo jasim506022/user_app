@@ -10,6 +10,7 @@ import '../../../res/app_colors.dart';
 import '../../../res/app_function.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/cart_badge.dart';
+import '../../../res/network_utili.dart';
 import 'details_image_swiper_widget.dart';
 
 class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
@@ -36,10 +37,10 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppsFunction.verticleSpace(10),
+                  AppsFunction.verticalSpacing(10),
                   _buildTopBar(),
                   DetailsImageSwiperWidget(productModel: productModel),
-                  AppsFunction.verticleSpace(10),
+                  AppsFunction.verticalSpacing(10),
                 ],
               ),
             ),
@@ -105,8 +106,8 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () async {
-            if (!(await AppsFunction.verifyInternetStatus())) {
-              Get.toNamed(RoutesName.cartPage);
+            if (!(await NetworkUtili.verifyInternetStatus())) {
+              Get.toNamed(AppRoutesName.cartPage);
             }
           },
           child: _buildCircularButton(

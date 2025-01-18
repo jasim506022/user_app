@@ -6,11 +6,11 @@ import 'package:user_app/res/app_string.dart';
 
 import '../../controller/profile_controller.dart';
 import '../../res/app_colors.dart';
-import '../../res/app_function.dart';
 import '../../res/apps_text_style.dart';
 import '../../res/routes/routes_name.dart';
 import '../../service/provider/theme_provider.dart';
 import '../../widget/show_alert_dialog_widget.dart';
+import '../../res/network_utili.dart';
 import 'widget/custom_list_tile.dart';
 import 'widget/profile_header_widget.dart';
 
@@ -65,28 +65,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
       {
         "icon": Icons.info_outline,
         "title": AppString.about,
-        "route": RoutesName.editProfileScreen
+        "route": AppRoutesName.editProfilePage
       },
       {
         "icon": Icons.home_outlined,
         "title": AppString.home,
-        "route": RoutesName.mainPage,
+        "route": AppRoutesName.mainPage,
         "argument": 0
       },
       {
         "icon": Icons.reorder,
         "title": AppString.myOrder,
-        "route": RoutesName.orderPage
+        "route": AppRoutesName.orderSummaryPage
       },
       {
         "icon": Icons.access_time,
         "title": AppString.history,
-        "route": RoutesName.historyPage
+        "route": AppRoutesName.orderHistoryPage
       },
       {
         "icon": Icons.search,
         "title": AppString.search,
-        "route": RoutesName.mainPage,
+        "route": AppRoutesName.mainPage,
         "argument": 2
       },
     ];
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: item['icon'],
           title: item['title'],
           onTap: () async {
-            if (!(await AppsFunction.verifyInternetStatus())) {
+            if (!(await NetworkUtili.verifyInternetStatus())) {
               if (item['argument'] is int) {
                 Get.offAndToNamed(item['route'], arguments: item['argument']);
               } else {
@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       title: AppString.signOut,
       iconColor: AppColors.red,
       onTap: () async {
-        if (!(await AppsFunction.verifyInternetStatus())) {
+        if (!(await NetworkUtili.verifyInternetStatus())) {
           Get.dialog(CustomAlertDialogWidget(
             icon: Icons.delete,
             title: AppString.signOut,

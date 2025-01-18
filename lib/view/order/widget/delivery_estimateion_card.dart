@@ -33,12 +33,12 @@ class DeliveryEstimationCard extends StatelessWidget {
           Text(AppString.onTheWayFromDahaka, //28
               style: AppsTextStyle.largeBoldText
                   .copyWith(color: AppColors.white, fontSize: 28.sp)),
-          AppsFunction.verticleSpace(10),
+          AppsFunction.verticalSpacing(10),
           Text(AppString.estimatedDeliveryDate,
               style: AppsTextStyle.largeText.copyWith(
                 color: AppColors.white,
               )),
-          AppsFunction.verticleSpace(20),
+          AppsFunction.verticalSpacing(20),
           Text(
             AppsFunction.formatDeliveryDate(datetime: orderModel.deliveryDate),
             style: AppsTextStyle.largestText

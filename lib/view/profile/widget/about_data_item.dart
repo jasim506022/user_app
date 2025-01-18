@@ -32,7 +32,7 @@ class AboutDataItem extends StatelessWidget {
           ),
           child: Text(
             item['value'] as String,
-            style: AppsTextStyle.textFieldInputTextStyle(),
+            style: AppsTextStyle.textFieldInputStyle(),
           ),
         ),
         SizedBox(height: 25.h),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/constant/string_constant.dart';
+import 'package:user_app/res/app_string.dart';
 
 import '../data/service/data_firebase_service.dart';
 import '../res/app_constant.dart';
@@ -18,7 +18,6 @@ class SplashRepository {
   }
 
   Future<int?> getOnboardingStatus() async {
-    return AppConstant.sharedPreference!
-        .getInt(StringConstant.onBoardingSharedPre);
+    return AppConstant.sharedPreference!.getInt(AppString.onBoardingSharedPre);
   }
 }

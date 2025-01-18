@@ -21,24 +21,26 @@ class LoadingUserProfileHeader extends StatelessWidget {
         child: Row(
           children: [
             // Circular shimmer placeholder for the profile picture.
-            AppsFunction.circleShimmer(50),
-            AppsFunction.horizontalSpace(13),
+            AppsFunction.buildShimmerEffect(height: 50, isCircle: true),
+            AppsFunction.horizontalSpacing(13),
 
             // Column with two shimmer placeholders for text lines.
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppsFunction.lineShimmer(10, 250), // First shimmer line.
-                AppsFunction.lineShimmer(10, 250), // Second shimmer line.
+                AppsFunction.buildShimmerEffect(
+                    height: 10, width: 250), // First shimmer line.
+                AppsFunction.buildShimmerEffect(
+                    height: 10, width: 250), // Second shimmer line.
               ],
             ),
 
             const Spacer(),
 
             // Circular shimmer placeholder for a trailing icon.
-            AppsFunction.circleShimmer(35),
-            AppsFunction.horizontalSpace(10),
+            AppsFunction.buildShimmerEffect(height: 35, isCircle: true),
+            AppsFunction.horizontalSpacing(10),
           ],
         ),
       ),

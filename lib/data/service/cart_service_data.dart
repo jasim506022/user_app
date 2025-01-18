@@ -10,8 +10,7 @@ class CartServiceData extends CartServiceBase {
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchSellersForCart() {
     return firebaseFirestore
         .collection(AppString.firebaseSellerCollection)
-        .where(AppString.firebaseuid,
-            whereIn: CartFunctions.separteSellerListUserList())
+        .where(AppString.firebaseuid, whereIn: CartManager.getSellerIds())
         .snapshots();
   }
 
@@ -21,7 +20,7 @@ class CartServiceData extends CartServiceBase {
     return firebaseFirestore
         .collection(AppString.productCollection)
         .where("sellerId", isEqualTo: sellerId)
-        .where("productId", whereIn: CartFunctions.separateProductID())
+        .where("productId", whereIn: CartManager.getProductIds())
         .orderBy(AppString.publishDate, descending: true)
         .snapshots();
 

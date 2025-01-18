@@ -24,7 +24,7 @@ class DeliveryRichTextWidget extends StatelessWidget {
             text: title,
             style: AppsTextStyle.mediumBoldText,
           ),
-          WidgetSpan(child: AppsFunction.horizontalSpace(10)),
+          WidgetSpan(child: AppsFunction.horizontalSpacing(10)),
           TextSpan(
               text: subTitle,
               style: AppsTextStyle.mediumNormalText.copyWith(

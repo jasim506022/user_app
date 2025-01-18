@@ -7,7 +7,7 @@ import 'package:user_app/res/app_string.dart';
 import '../../../controller/order_controller.dart';
 import '../../../model/order_model.dart';
 import '../../../model/products_model.dart';
-import '../../../res/app_asset/image_asset.dart';
+import '../../../res/app_asset/app_imges.dart';
 import '../../../res/cart_funtion.dart';
 import '../../../res/routes/routes_name.dart';
 import '../../../widget/card_product_widget.dart';
@@ -30,10 +30,10 @@ class OrderItemWidget extends StatelessWidget {
     final orderModel = Provider.of<OrderModel>(context, listen: false);
 
     List<int> separateQuantities =
-        CartFunctions.separateOrderItemQuantities(orderModel.productIds);
+        CartManager.getOrderProductQuantities(orderModel.productIds);
 
     List<String> listProductID =
-        CartFunctions.separteOrderProductIdList(orderModel.productIds);
+        CartManager.getOrderProductsIds(orderModel.productIds);
 
     return FutureBuilder(
       future: sellerId == null
@@ -47,7 +47,7 @@ class OrderItemWidget extends StatelessWidget {
             snapshot.data!.docs.isEmpty ||
             snapshot.hasError) {
           return EmptyWidget(
-            image: ImagesAsset.error,
+            image: AppImages.error,
             title: snapshot.hasError
                 ? '${AppString.errorOccure}: ${snapshot.error}'
                 : AppString.noDataAvailable,
@@ -56,7 +56,8 @@ class OrderItemWidget extends StatelessWidget {
           return InkWell(
             onTap: () {
               if (isCardDesign) {
-                Get.toNamed(RoutesName.deliveryScreen, arguments: orderModel);
+                Get.toNamed(AppRoutesName.deliveryScreen,
+                    arguments: orderModel);
               }
             },
             child: isCardDesign
