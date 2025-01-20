@@ -2,7 +2,7 @@ import 'app_function.dart';
 import 'app_string.dart';
 
 class Validators {
-  static String? validateEmail(String? email) {
+  static String? validateRequiredField(String? email) {
     if (email == null || email.isEmpty) {
       return AppString.pleaseEnterField(AppString.enterEmailAddress);
     } else if (!AppsFunction.isValidEmail(email)) {
@@ -16,6 +16,15 @@ class Validators {
       return AppString.enterPassword;
     } else if (password.length < 6) {
       return AppString.validPassword;
+    }
+    return null;
+  }
+
+  static String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return AppString.enterEmailAddress;
+    } else if (!AppsFunction.isValidEmail(email)) {
+      return AppString.validEmailAddress;
     }
     return null;
   }
@@ -49,6 +58,13 @@ class Validators {
       return AppString.pleaseEnterField(AppString.phone);
     }
     if (value.length != 11) return AppString.phoneNumberMustbeExactly11;
+    return null;
+  }
+
+  // Validation for non-empty fields.
+  static String? validateNonEmpty(String? value) {
+    if (value == null || value.isEmpty) return AppString.enterName;
+    if (value.length < 4) return AppString.nameValid;
     return null;
   }
 }

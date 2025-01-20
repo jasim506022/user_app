@@ -101,12 +101,12 @@ class AddressController extends GetxController {
       return;
     }
 
-    Get.dialog(CustomAlertDialogWidget(
+    Get.dialog(ShowAlertDialogWidget(
       icon: Icons.question_mark_rounded,
       title: AppString.saveChaned,
-      subTitle: AppString.doYouWantSave,
-      yesOnPress: () => Get.back(),
-      noOnPress: () {
+      content: AppString.doYouWantSave,
+      onYesPressed: () => Get.back(),
+      onNoPressed: () {
         clearInputField();
         isChange.value = false;
         Get.close(2);
@@ -137,12 +137,12 @@ class AddressController extends GetxController {
 
   Future<void> deleteAddress() async {
     final confirmed = await Get.dialog<bool>(
-      CustomAlertDialogWidget(
+      ShowAlertDialogWidget(
         icon: Icons.question_mark_rounded,
         title: AppString.confirmDeletion,
-        subTitle: AppString.deleteMessage,
-        yesOnPress: () => Get.back(result: true),
-        noOnPress: () => Get.back(result: false),
+        content: AppString.deleteMessage,
+        onYesPressed: () => Get.back(result: true),
+        onNoPressed: () => Get.back(result: false),
       ),
     );
 

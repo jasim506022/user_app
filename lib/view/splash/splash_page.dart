@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/splash_controller.dart';
 
 import '../../res/app_asset/app_icons.dart';
-import '../../res/app_function.dart';
 import '../../res/app_string.dart';
 import '../../res/app_asset/app_imges.dart';
 import '../../res/apps_text_style.dart';
@@ -16,28 +14,23 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Get.find<SplashController>();
-
-    return Material(
-      child: Container(
-        height: 1.sh,
-        width: 1.sw,
+    return Scaffold(
+      body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(AppImages.splashImage), fit: BoxFit.fill),
-        ),
+            image: DecorationImage(
+                fit: BoxFit.fill, image: AssetImage(AppImages.splashImage))),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 AppIcons.appIcon,
-                height: 0.15.sh,
-                width: 0.15.sh,
+                height: 120.h,
+                width: 120.h,
+                fit: BoxFit.fill,
               ),
-              AppsFunction.verticalSpacing(10),
-              Text(AppString.groceryApps, style: AppsTextStyle.appLogoStyle),
+              Text(AppString.appsName, style: AppsTextStyle.appsLogoTextStyole),
             ],
           ),
         ),

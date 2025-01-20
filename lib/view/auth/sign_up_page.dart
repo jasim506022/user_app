@@ -4,18 +4,153 @@ import 'package:get/get.dart';
 
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-import '../../controller/sign_up_controller.dart';
+import '../../controller/auth_controller.dart';
 import '../../res/app_function.dart';
-import '../../../res/app_colors.dart';
 
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
+import '../../res/valudation.dart';
+import '../../widget/custom_auth_button_widget.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 
 import '../../res/network_utili.dart';
+import 'widget/app_sign_page_intro.dart';
 import 'widget/capture_image_profile_widget.dart';
-import 'widget/custom_button_widget.dart';
 
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final authController = Get.find<AuthController>();
+
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      onPopInvoked: (didPop) {
+        if (!authController.loadingController.loading.value) {
+          authController.clearInputFields();
+        }
+      },
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(20.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AppSignInPageIntroWidget(
+                    widget: const ProfileImagePickerWidget(),
+                    title: AppString.adminRegistration,
+                    description: AppString.logInPageSubjectTitle,
+                  ),
+                  _buildSignUpForm(),
+                  AppsFunction.verticalSpacing(15),
+                  CustomAuthButtonWidget(
+                    onPressed: () async {
+                      if (!formKey.currentState!.validate()) return;
+                      await NetworkUtili.internetCheckingWFunction(
+                          function: () async {
+                        await authController.registerUser();
+                      });
+                    },
+                    title: AppString.signup,
+                  ),
+                  AppsFunction.verticalSpacing(25),
+                  RichTextWidget(
+                    simpleText: AppString.alreadyCreateAccount,
+                    colorText: AppString.signIn,
+                    function: () async {
+                      if (!authController.loadingController.loading.value) {
+                        Get.back();
+                        authController.clearInputFields();
+                      }
+                    },
+                  ),
+                  AppsFunction.verticalSpacing(150)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Build the sign-up form with various input fields and validations.
+  Form _buildSignUpForm() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormFieldWidget(
+            label: AppString.name,
+            hintText: AppString.yourName,
+            controller: authController.nameController,
+            validator: Validators.validateNonEmpty, // Validation method.
+            textInputType: TextInputType.name, // Keyboard type.
+          ),
+
+          // Email
+          TextFormFieldWidget(
+            label: AppString.email,
+            hintText: AppString.emailAddress,
+            controller: authController.emailController,
+            validator: Validators.validateEmail,
+            textInputType: TextInputType.emailAddress,
+          ),
+
+          // Password
+          TextFormFieldWidget(
+            label: AppString.password,
+            obscureText: true,
+            isShowPassword: true,
+            validator: Validators.validatePassword,
+            hintText: AppString.password,
+            textInputAction: TextInputAction.next,
+            controller: authController.passwordController,
+          ),
+
+          TextFormFieldWidget(
+            label: AppString.passwordConfirm,
+            obscureText: true,
+            isShowPassword: true,
+            validator: Validators.validateConfirmPassword,
+            hintText: AppString.passwordConfirm,
+            controller: authController.confirmPasswordController,
+          ),
+          AppsFunction.verticalSpacing(10),
+
+          Text(AppString.phone, style: AppsTextStyle.labelTextStyle),
+          AppsFunction.verticalSpacing(8),
+          IntlPhoneField(
+            textInputAction: TextInputAction.done,
+            controller: authController.phoneController,
+            style: AppsTextStyle.textFieldInputTextStyle(false),
+            decoration: AppsFunction.textFormFielddecoration(
+              hintText: AppString.phoneNumber,
+              function: () {},
+            ),
+            languageCode: "en",
+            initialCountryCode: 'BD',
+          ),
+          AppsFunction.verticalSpacing(20),
+        ],
+      ),
+    );
+  }
+}
+
+/*
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
   @override
@@ -183,3 +318,4 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+*/

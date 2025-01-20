@@ -6,36 +6,37 @@ import '../../../controller/onboarding_controller.dart';
 import '../../../data/onboarding_list_data.dart';
 import '../../../res/app_colors.dart';
 
-class IndicateWidget extends StatelessWidget {
-  const IndicateWidget({
+class OnboardingProgressDotsWidget extends StatelessWidget {
+  const OnboardingProgressDotsWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    var onBoardingController = Get.find<OnBoardingController>();
+    final controller = Get.find<OnboardingController>();
     return SizedBox(
-      height: 12.h,
+      height: 15.h,
       child: ListView.builder(
-        scrollDirection: Axis.horizontal,
         itemCount: OnBoardingListData.onboarddataList().length,
         shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Obx(
-                () => Container(
-                  height: 10.w,
-                  width: 10.w,
-                  margin: EdgeInsets.symmetric(horizontal: 3.w),
+                () => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: 10.h,
+                  width: controller.currentIndex.value == index ? 12.h : 10.h,
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
                   decoration: BoxDecoration(
-                      color: onBoardingController.currentIndex.value == index
+                      color: controller.currentIndex.value == index
                           ? AppColors.red
                           : AppColors.black,
-                      shape: BoxShape.circle),
+                      borderRadius: BorderRadius.circular(10.r)),
                 ),
-              )
+              ),
             ],
           );
         },

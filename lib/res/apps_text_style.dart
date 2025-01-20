@@ -12,6 +12,7 @@ class AppsTextStyle {
   static ThemeData get theme => Theme.of(context);
 
   // Common TextStyle helpers
+
   static TextStyle _baseStyle({
     Color? color,
     required double fontSize,
@@ -19,7 +20,7 @@ class AppsTextStyle {
     double letterSpacing = 0.0,
     TextDecoration decoration = TextDecoration.none,
   }) {
-    return TextStyle(
+    return GoogleFonts.poppins(
       color: color ?? theme.primaryColor,
       fontSize: fontSize.sp,
       fontWeight: fontWeight,
@@ -28,13 +29,67 @@ class AppsTextStyle {
     );
   }
 
+  // Large Normal Text
+  static TextStyle get largeNormalText => GoogleFonts.poppins(
+        fontSize: 16.sp,
+        color: theme.primaryColor,
+        fontWeight: FontWeight.w400,
+      );
+
+  static TextStyle get labelTextStyle => GoogleFonts.poppins(
+        color: theme.primaryColor,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w700,
+      );
+
+  static TextStyle textFieldInputTextStyle([bool isEnable = false]) =>
+      GoogleFonts.poppins(
+        fontSize: 14.sp,
+        color: isEnable ? AppColors.black : AppColors.black.withOpacity(.8),
+        fontWeight: isEnable ? FontWeight.w600 : FontWeight.w800,
+      );
+
+// Ttile
+  static TextStyle get titleSignPageTextStyle => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 28.sp,
+      fontWeight: FontWeight.w900,
+      height: 1.3,
+      letterSpacing: 1.2);
+
+  // Description
+  static TextStyle get descrptionTextStyle => GoogleFonts.roboto(
+      color: AppColors.black.withOpacity(.7),
+      fontSize: 16.sp,
+      fontWeight: FontWeight.normal,
+      height: 1.6,
+      letterSpacing: 1.2);
+
+// Apps Logo
+  static TextStyle get appsLogoTextStyole => GoogleFonts.roboto(
+        color: AppColors.accentGreen,
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w900,
+      );
+
+  // Large  Title Text Style
+  static TextStyle get largeTitleTextStyleForOnBoarding => GoogleFonts.roboto(
+      color: theme.primaryColor, fontSize: 30.sp, fontWeight: FontWeight.w900);
+
+// subtitle
+  static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 15.sp,
+        color: theme.hintColor,
+      );
+
 // App Logo Text Style
   static TextStyle get appLogoStyle => _baseStyle(
       color: AppColors.accentGreen, fontSize: 22, fontWeight: FontWeight.w900);
 
-  // Title Text Style (App Bar)
+  // Title Text Style (App Bar) // Working
   static TextStyle get titleTextStyle =>
-      _baseStyle(fontSize: 18, fontWeight: FontWeight.w700);
+      _baseStyle(fontSize: 20, fontWeight: FontWeight.w800);
 
   // Subtitle Text Style
   static TextStyle get subtitleTextStyle => _baseStyle(
@@ -45,11 +100,11 @@ class AppsTextStyle {
 
   // Button Text Style
   static TextStyle get buttonTextStyle => _baseStyle(
-      color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 15);
+      color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 16);
 
   // Medium Bold Text
   static TextStyle get mediumBoldText =>
-      _baseStyle(fontSize: 14, fontWeight: FontWeight.w800);
+      _baseStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
   // Medium Normal Text
   static TextStyle get mediumNormalText =>

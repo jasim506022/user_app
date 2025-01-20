@@ -10,49 +10,59 @@ import '../res/routes/routes_name.dart';
 import '../widget/error_dialog_widget.dart';
 
 class SplashController extends GetxController {
-  final SplashRepository repository;
+  SplashRepository repository;
 
   SplashController({required this.repository});
 
   @override
   void onInit() {
-    navigateToNextPage();
+    _navigateToNextScreen();
+
+    _configureUI();
     super.onInit();
   }
 
-  void navigateToNextPage() async {
+  // Logic for determining the next screen
+  void _navigateToNextScreen() {
     try {
-      await Future.delayed(const Duration(seconds: 3));
+      Future.delayed(
+        const Duration(seconds: 2),
+        () {
+          var currentUser = repository.getCurrentUser();
 
-      var currentUser = await repository.getCurrentUser();
+          final route = currentUser != null
+              ? AppRoutesName.mainPage
+              : (AppConstant.isViewed != 0
+                  ? AppRoutesName.onbordingScreen
+                  : AppRoutesName.signInPage);
 
-      AppConstant.isViewed = await repository.getOnboardingStatus();
-
-      if (currentUser != null) {
-        Get.offNamed(AppRoutesName.mainPage);
-      } else {
-        Get.offNamed(AppConstant.isViewed != 0
-            ? AppRoutesName.onbordingScreen
-            : AppRoutesName.signInPage);
-      }
+          Get.offNamed(route);
+        },
+      );
     } catch (e) {
       if (e is AppException) {
-        Get.dialog(const ErrorDialogWidget(
-            barrierDismissible: true,
+        Get.dialog(
+          ErrorDialogWidget(
             icon: AppIcons.warningIcon,
-            title: "e.title!",
-            content: "e.message",
-            buttonText: AppString.okay));
+            title: e.title!,
+            content: e.message,
+            buttonText: AppString.okay,
+          ),
+        );
       }
-      Get.offNamed(AppRoutesName.signInPage);
     }
   }
 
   @override
-  void dispose() {
-    // Reset system UI mode to manual when navigating away
+  void onClose() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
-    super.dispose();
+    super.onClose();
+  }
+
+  void _configureUI() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersive,
+    );
   }
 }

@@ -128,9 +128,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           BoxDecoration(color: Colors.red.shade400, shape: BoxShape.circle),
       child: IconButton(
           onPressed: () {
-            Get.bottomSheet(
-                backgroundColor: AppColors.white, const SelectPhotoProfile());
-            profileController.isChange.value = true;
+            // Get.bottomSheet(
+            //     backgroundColor: AppColors.white, const SelectPhotoProfile());
+            // profileController.isChange.value = true;
           },
           icon: Icon(
             Icons.camera_alt,

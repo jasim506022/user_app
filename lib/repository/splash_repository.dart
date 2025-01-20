@@ -8,7 +8,7 @@ import '../res/app_constant.dart';
 class SplashRepository {
   final DataFirebaseService _dataFirebaseService = DataFirebaseService();
 
-  Future<User?> getCurrentUser() async {
+  User? getCurrentUser() {
     try {
       return _dataFirebaseService.getCurrentUser();
     } catch (e) {

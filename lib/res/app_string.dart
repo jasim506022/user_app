@@ -1,9 +1,53 @@
 class AppString {
   // Splash
-  static const groceryApps = "Grocery Apps";
+  static String appsName = "Grocery Apps";
+
+  // Dialog
+  static const okay = "Okay";
+  static String exitApps = 'Are you sure you want to Exit this Apps?';
+
+  // sharepare
+  static const String onBoardingShareKey = 'onBoarding';
+
+  // firebsse
+
+  // On Boarding Item
+  static const String welcome = "Welcome";
+  static const String firstOnboardingDescription =
+      "Welcome to best online grocery store. Here you will find all the groceries at one place.";
+  static const String fresshFruis = "Fresh Fruits & Vegetables";
+  static const String secondOnboardingDescription =
+      "Buy farm fresh fruits & vegetables online at the best & affordable prices.";
+
+  static const String quickDelivery = "Quick & Fast Delivery";
+  static const String thirdOnboardingDescription =
+      "We offers speedy delivery of your groceries, bathroom supplies, baby care products, pet care items, stationary, etc within 30minutes at your doorstep.";
+
+  // Auth Page
+  static String adminLogin = "Welcome Admin Login";
+  static String logInPageSubjectTitle =
+      'Check our fresh viggies from Jasim Grocery';
+  static String forgetPassword = "Forget Password";
+  static String withOr = "with Or";
+  static String facebook = "Facebook";
+  static String gmail = "Gmail";
+  static String pleaseSelectPhoto = "Please Select a Photo";
+  static String createAccount = "Create Account";
+  static String dontHaveAccount = "Don't Have An Account? ";
+  static String adminRegistration = "Admin Registration";
+  static String alreadyCreateAccount = "Already Create An Account? ";
+  static String signup = 'Sign Up';
+  static String selectPhoto = "Select Photo";
+
+  static String entreEmailAddressForResetPassword =
+      "Please Enter your mail address to reset you password";
+  static String resetPassword = "Reset Password";
+  static String youdontWantToReset = "If you don't want to reset Password? ";
+  static const userDoesntExit = "User Doesn't Exit";
+  static String signupSuccessfull = "Sign up Successfully";
+  static String passwordMatch = "Password and Confirm Password do not match.";
 
   // All
-  static const okay = "Okay";
   static const profile = "Profile";
   static const search = "Search";
   static const products = "Products";
@@ -16,6 +60,7 @@ class AppString {
 
   static const searchHint = "Search...........";
 
+  static String signInSuccessfully = "Sign in Successfully";
   // Home Page
   static const hi = "Hi!";
   static const coldProcess = "Cold Process";
@@ -150,7 +195,7 @@ class AppString {
   static String validConfirmPassword =
       'Confirm Password Must be geather then 6 Characteris';
   static String passwordConfirm = "Confirm Password";
-  static String forgetPassword = "Forget Password";
+
   static String phoneNumber = "Phone Number";
   static String enterPhone = 'Please enter your phone number';
   static String validPhoneNumber = 'Please Give Valid Phone number';
@@ -215,6 +260,10 @@ class AppString {
   static const String rattings = "Rattings";
   static const String exit = "Exit";
   static const String exitMessage = 'Are you sure you want to Exit this Apps?';
+
+  //botton
+
+  static String signIn = 'Sign In';
 
   // Dynamic message generator
   static String pleaseEnterField(String fieldName) {

@@ -143,11 +143,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       iconColor: AppColors.red,
       onTap: () async {
         if (!(await NetworkUtili.verifyInternetStatus())) {
-          Get.dialog(CustomAlertDialogWidget(
+          Get.dialog(ShowAlertDialogWidget(
             icon: Icons.delete,
             title: AppString.signOut,
-            subTitle: AppString.doYouWantSignount,
-            yesOnPress: () async => await profileController.signOut(),
+            content: AppString.doYouWantSignount,
+            onYesPressed: () async => await profileController.signOut(),
           ));
         }
       },

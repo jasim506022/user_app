@@ -59,6 +59,20 @@ class MyApp extends StatelessWidget {
 
   ThemeData themeData(ThemeProvider themeProvder) {
     return ThemeData(
+        dialogTheme: DialogTheme(
+            backgroundColor: themeProvder.getDarkTheme
+                ? AppColors.darkCardBackground
+                : AppColors.white,
+            titleTextStyle: GoogleFonts.poppins(
+                color: themeProvder.getDarkTheme
+                    ? AppColors.white
+                    : AppColors.black,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold),
+            contentTextStyle: GoogleFonts.poppins(
+                color: AppColors.black.withOpacity(.7),
+                fontSize: 16.sp,
+                fontWeight: FontWeight.normal)),
         dialogBackgroundColor: themeProvder.getDarkTheme
             ? AppColors.darkBackground
             : AppColors.lightBackground,
@@ -110,6 +124,19 @@ class MyApp extends StatelessWidget {
                   width: 1),
               borderRadius: BorderRadius.circular(15.r)),
         )),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.accentGreen,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+        )),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: AppColors.white,
+          circularTrackColor: AppColors.red,
+          refreshBackgroundColor: AppColors.red,
+        ),
         // Hint Color
         hintColor: themeProvder.getDarkTheme
             ? AppColors.darkHintText

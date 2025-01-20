@@ -45,15 +45,15 @@ class ProfileController extends GetxController {
       Get.back();
       return;
     }
-    Get.dialog(CustomAlertDialogWidget(
+    Get.dialog(ShowAlertDialogWidget(
         icon: Icons.question_mark_rounded,
         title: AppString.saveChanged,
-        subTitle: AppString.doYouWantSave,
-        noOnPress: () {
+        content: AppString.doYouWantSave,
+        onNoPressed: () {
           isChange(false);
           Get.close(2);
         },
-        yesOnPress: () => Get.back()));
+        onYesPressed: () => Get.back()));
   }
 
   Future<void> updateUserCartData({required Map<String, dynamic> map}) async {

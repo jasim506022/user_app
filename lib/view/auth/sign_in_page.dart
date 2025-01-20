@@ -4,20 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 
-import '../../controller/network_controller.dart';
-import '../../controller/sign_in_controller.dart';
+import '../../controller/auth_controller.dart';
 import '../../res/app_asset/app_icons.dart';
 import '../../res/app_function.dart';
 
 import '../../res/app_colors.dart';
+import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
+import '../../res/valudation.dart';
+import '../../widget/custom_auth_button_widget.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../res/network_utili.dart';
 import 'widget/app_sign_page_intro.dart';
-import 'widget/custom_button_widget.dart';
 import 'widget/icon_with_button_widget.dart';
 
+/*
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -219,6 +221,192 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  Container _buildLine() {
+    return Container(
+      height: 2.5.h,
+      width: 70.w,
+      color: AppColors.grey,
+    );
+  }
+}
+
+*/
+
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final authController = Get.find<AuthController>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void didChangeDependencies() {
+    _setupStatusBar();
+    super.didChangeDependencies();
+  }
+
+  void _setupStatusBar() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppColors.lightBackground,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    authController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async => await authController.exitApps(didPop),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AppSignInPageIntroWidget(
+                    title: AppString.adminLogin,
+                    description: AppString.logInPageSubjectTitle,
+                  ),
+                  _buildLoginForm(),
+                  AppsFunction.verticalSpacing(5),
+                  _buildForgetPasswordButton(),
+                  AppsFunction.verticalSpacing(15),
+                  CustomAuthButtonWidget(
+                    onPressed: () async {
+                      if (!_formKey.currentState!.validate()) return;
+
+                      await NetworkUtili.internetCheckingWFunction(
+                          function: () async => await authController.signIn());
+                    },
+                    title: AppString.signIn,
+                  ),
+                  AppsFunction.verticalSpacing(25),
+                  _buildOrDividerText(),
+                  AppsFunction.verticalSpacing(20),
+                  _buildSocialLoginOptions(),
+                  AppsFunction.verticalSpacing(25),
+                  RichTextWidget(
+                    colorText: AppString.createAccount,
+                    function: () async => Get.toNamed(AppRoutesName.signUpPage),
+                    simpleText: AppString.dontHaveAccount,
+                  ),
+                  AppsFunction.verticalSpacing(100)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the social login options row (e.g., Facebook and Gmail).
+  Row _buildSocialLoginOptions() {
+    return Row(
+      children: [
+        Expanded(
+          child: SocialButtonWidget(
+            tap: () async => NetworkUtili.verifyInternetStatus(),
+            color: AppColors.facebookBlue,
+            image: AppIcons.facebookIcon,
+            title: AppString.facebook,
+          ),
+        ),
+        AppsFunction.horizontalSpacing(10),
+        Expanded(
+          child: SocialButtonWidget(
+            tap: () async => await NetworkUtili.internetCheckingWFunction(
+                function: () async => await authController.signInWithGoogle()),
+            color: AppColors.red,
+            image: AppIcons.gmailIcon,
+            title: AppString.gmail,
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Builds the "Forget Password" button aligned to the right.
+  Align _buildForgetPasswordButton() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: TextButton(
+        onPressed: () async {
+          NetworkUtili.internetCheckingWFunction(
+              function: () => Get.toNamed(AppRoutesName.forgetPasswordPage));
+        },
+        child: Text(
+          AppString.forgetPassword,
+          style: AppsTextStyle.mediumBoldText.copyWith(
+            color: AppColors.lightHintText,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds the login form containing email and password input fields.
+  Form _buildLoginForm() {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormFieldWidget(
+            label: AppString.email,
+            hintText: AppString.emailAddress,
+            controller: authController.emailController,
+            validator: Validators.validateEmail,
+            textInputType: TextInputType.emailAddress,
+          ),
+          TextFormFieldWidget(
+            label: AppString.password,
+            isShowPassword: true,
+            obscureText: true,
+            validator: Validators.validatePassword,
+            hintText: AppString.password,
+            controller: authController.passwordController,
+            textInputAction: TextInputAction.done,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Builds a divider with text in the center ("or").
+  Row _buildOrDividerText() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildLine(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Text(
+            AppString.withOr,
+            style:
+                AppsTextStyle.largeNormalText.copyWith(color: AppColors.grey),
+          ),
+        ),
+        _buildLine(),
+      ],
+    );
+  }
+
+  /// Builds a horizontal line for the divider.
   Container _buildLine() {
     return Container(
       height: 2.5.h,

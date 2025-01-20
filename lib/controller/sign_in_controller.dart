@@ -37,12 +37,12 @@ class SignInController extends GetxController {
   Future<void> handleBackNavigaion(bool didPop) async {
     if (didPop) return;
 
-    final bool shouldPop = await Get.dialog(CustomAlertDialogWidget(
+    final bool shouldPop = await Get.dialog(ShowAlertDialogWidget(
       icon: Icons.question_mark_rounded,
       title: AppString.exit,
-      subTitle: AppString.exitMessage,
-      yesOnPress: () => Get.back(result: true),
-      noOnPress: () => Get.back(result: false),
+      content: AppString.exitMessage,
+      onYesPressed: () => Get.back(result: true),
+      onNoPressed: () => Get.back(result: false),
     ));
 
     if (shouldPop) {

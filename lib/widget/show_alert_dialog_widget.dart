@@ -5,61 +5,71 @@ import 'package:get/get.dart';
 import '../res/app_colors.dart';
 import '../res/app_function.dart';
 import '../res/app_string.dart';
-import '../res/apps_text_style.dart';
 import 'outlined_text_button_widget.dart';
 
-class CustomAlertDialogWidget extends StatelessWidget {
-  const CustomAlertDialogWidget({
+class ShowAlertDialogWidget extends StatelessWidget {
+  const ShowAlertDialogWidget({
     super.key,
     required this.title,
-    required this.subTitle,
-    required this.yesOnPress,
-    this.noOnPress,
+    required this.content,
+    required this.onYesPressed,
+    this.onNoPressed,
     required this.icon,
+    this.iconColor,
+    this.yesButtonColor,
+    this.noButtonColor,
   });
 
   final String title;
-  final String subTitle;
-  final VoidCallback yesOnPress;
-  final VoidCallback? noOnPress;
+  final String content;
+  final VoidCallback onYesPressed;
+  final VoidCallback? onNoPressed;
   final IconData icon;
+  final Color? iconColor;
+  final Color? yesButtonColor;
+  final Color? noButtonColor;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).dialogBackgroundColor,
-      title: Row(
-        children: [
-          Text(title, style: AppsTextStyle.titleTextStyle),
-          AppsFunction.horizontalSpacing(10),
-          Container(
-              padding: EdgeInsets.all(3.r),
-              decoration:
-                  BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
-              child: Icon(
-                icon,
-                color: AppColors.white,
-                size: 20.h,
-              )),
-        ],
+      title: _buildTitleRow(),
+      content: Text(
+        content,
       ),
-      content: Text(subTitle,
-          style: AppsTextStyle.subtitleTextStyle
-              .copyWith(color: Theme.of(context).primaryColor)),
-      actions: [
-        OutlinedTextButtonWidget(
-          color: AppColors.red,
-          title: AppString.yes,
-          onPressed: yesOnPress,
+      actions: _buildActions(),
+    );
+  }
+
+  Row _buildTitleRow() {
+    return Row(
+      children: [
+        Text(title),
+        AppsFunction.horizontalSpacing(10),
+        Container(
+          padding: EdgeInsets.all(5.r),
+          decoration: BoxDecoration(
+              color: iconColor ?? AppColors.red, shape: BoxShape.circle),
+          child: Icon(
+            icon,
+            color: AppColors.white,
+          ),
         ),
-        OutlinedTextButtonWidget(
-            color: AppColors.accentGreen,
-            title: AppString.no,
-            onPressed: noOnPress ??
-                () {
-                  Get.back();
-                }),
       ],
     );
+  }
+
+  List<Widget> _buildActions() {
+    return [
+      OutlinedTextButtonWidget(
+        color: yesButtonColor ?? AppColors.red,
+        title: AppString.yes,
+        onPressed: onYesPressed,
+      ),
+      OutlinedTextButtonWidget(
+        color: noButtonColor ?? AppColors.accentGreen,
+        title: AppString.no,
+        onPressed: onNoPressed ?? () => Get.back(),
+      ),
+    ];
   }
 }

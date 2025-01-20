@@ -50,7 +50,7 @@ class AppRoutes {
             binding: OnBoardingBinding()),
         GetPage(
             name: AppRoutesName.forgetPasswordPage,
-            page: () => const ForgetPasswordPage()),
+            page: () => const ForgetPasswordScreen()),
         GetPage(name: AppRoutesName.cartPage, page: () => const CartPage()),
         GetPage(
             name: AppRoutesName.searchPage,
