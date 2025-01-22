@@ -106,6 +106,10 @@ class AppsTextStyle {
   static TextStyle get mediumBoldText =>
       _baseStyle(fontSize: 16, fontWeight: FontWeight.w700);
 
+  // Medium Bold Text
+  static TextStyle get prouductLarge =>
+      _baseStyle(fontSize: 18, fontWeight: FontWeight.w700);
+
   // Medium Normal Text
   static TextStyle get mediumNormalText =>
       _baseStyle(fontSize: 14, fontWeight: FontWeight.w400);
@@ -188,7 +192,7 @@ class AppsTextStyle {
 
 // Small Bold Text
   static TextStyle get smallBoldText =>
-      _baseStyle(fontSize: 12.sp, fontWeight: FontWeight.w700);
+      _baseStyle(fontSize: 14.sp, fontWeight: FontWeight.w700);
 
   static TextStyle get smallestText => _baseStyle(
         fontSize: 10,

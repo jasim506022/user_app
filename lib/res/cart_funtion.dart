@@ -107,12 +107,26 @@ class CartManager {
   }
 
   static List<String> getOrderProductsIds(dynamic productIds) {
-    return productIds.skip(1).map((item) => item.split(":")[0]).toList();
+    List<String> listProductIds = List<String>.from(productIds);
+    return listProductIds.skip(1).map((item) => item.split(":")[0]).toList();
   }
 
-  static List<int> getOrderProductQuantities(dynamic productIds) {
+/*
+  static List<int> getOrderProductQuantities(productIds) {
     // List<String> listProductIds = List<String>.from(productIds);
-    return productIds.skip(1).map((item) => item.split(":")[2]).toList();
+    return productIds
+        .skip(1)
+        .map((item) => int.parse((item as String).split(":")[2]))
+        .toList();
+  }
+  */
+
+  static List<int> getOrderProductQuantities(List<dynamic> productIds) {
+    return productIds
+        .skip(1)
+        .map((item) =>
+            int.parse((item as String).split(":")[2])) // Cast to String
+        .toList();
   }
 }
 

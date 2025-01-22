@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_string.dart';
 
 import '../../../controller/order_controller.dart';
@@ -30,6 +29,7 @@ class OrderStatusListWidget extends StatelessWidget {
           ),
         ),
         body: StreamBuilder(
+          // Stream of orders filtered by [orderStatus].
           stream: orderController.orderSnapshots(orderStatus: orderStatus),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,17 +43,16 @@ class OrderStatusListWidget extends StatelessWidget {
                     ? '${AppString.errorOccure}: ${snapshot.error}'
                     : AppString.noDataAvailable,
               );
+              // Display the list of orders when data is available.
             } else if (snapshot.hasData) {
+              // Convert the snapshot data to [OrderModel].
               return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   final orderModel =
                       OrderModel.fromMap(snapshot.data!.docs[index].data());
-
-                  return ChangeNotifierProvider.value(
-                    value: orderModel,
-                    child: const OrderItemWidget(isCardDesign: true),
-                  );
+                  return OrderItemWidget(
+                      isCardDesign: true, orderModel: orderModel);
                 },
               );
             } else {

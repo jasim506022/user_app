@@ -45,9 +45,8 @@ class OrderProductDetails extends StatelessWidget {
           ),
           AppsFunction.verticalSpacing(25),
           Flexible(
-            child: ChangeNotifierProvider.value(
-              value: orderModel,
-              child: const OrderItemWidget(),
+            child: OrderItemWidget(
+              orderModel: orderModel,
             ),
           ),
         ],

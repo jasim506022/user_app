@@ -12,7 +12,6 @@ import '../../res/app_constant.dart';
 import '../../res/app_function.dart';
 import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
-import '../../widget/select_photo_profile_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 import '../../res/network_utili.dart';
 import 'widget/about_data_widget.dart';

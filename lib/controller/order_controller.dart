@@ -21,17 +21,16 @@ class OrderController extends GetxController {
       if (e is AppException) {
         _handleError(e);
       }
-
       rethrow;
     }
   }
 
   /// Okay
   Future<QuerySnapshot<Map<String, dynamic>>> orderProductSnapshots(
-      {required List<String> listProductID}) async {
+      {required List<String> productIDs}) async {
     try {
       return await orderRepository.orderProductSnapshots(
-          listProductID: listProductID);
+          listProductID: productIDs);
     } catch (e) {
       if (e is AppException) {
         _handleError(e);
@@ -41,10 +40,10 @@ class OrderController extends GetxController {
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> sellerProductSnapshot(
-      {required List<String> productList, required String sellerId}) async {
+      {required List<String> productIDs, required String sellerId}) async {
     try {
       return await orderRepository.sellerProductSnapshot(
-          productList: productList, sellerId: sellerId);
+          productList: productIDs, sellerId: sellerId);
     } catch (e) {
       if (e is AppException) {
         _handleError(e);

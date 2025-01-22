@@ -22,14 +22,14 @@ class ProifleHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 0.18.sh,
+        height: 155.h,
         width: 1.sw,
         color: Theme.of(context).cardColor,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
             children: [
-              _buildProfileImage(),
+              const CircleImageWidget(),
               AppsFunction.horizontalSpacing(30),
               Expanded(
                 child: Padding(
@@ -69,7 +69,18 @@ class ProifleHeaderWidget extends StatelessWidget {
     );
   }
 
-  Container _buildProfileImage() {
+  // Container _buildProfileImage() {
+  //   return ;
+  // }
+}
+
+class CircleImageWidget extends StatelessWidget {
+  const CircleImageWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         height: .15.sh,
         width: .15.sh,

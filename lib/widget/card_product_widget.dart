@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 import '../model/products_model.dart';
 import '../res/app_colors.dart';
@@ -9,17 +8,18 @@ import '../res/app_string.dart';
 import '../res/apps_text_style.dart';
 import 'product_image_widget.dart';
 
-class CartProductWidget extends StatelessWidget {
-  const CartProductWidget({super.key, required this.quantity});
+class OrderProductWidget extends StatelessWidget {
+  const OrderProductWidget(
+      {super.key, required this.quantity, required this.productModel});
 
   final int quantity;
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
-    final productModel = Provider.of<ProductModel>(context);
     return Container(
-      height: 110.h,
-      width: 0.9.w,
+      height: 105.h,
+      width: 0.9.sw,
       decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20.r)),
@@ -27,7 +27,7 @@ class CartProductWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProductImageWidget(
-            height: 100.h,
+            height: 95.h,
             width: 120.w,
             imageHeith: 110.h,
             productModel: productModel,
@@ -49,11 +49,11 @@ class CartProductWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FittedBox(
-            child: Text(
-              productModel.productname!,
-              style: AppsTextStyle.largeBoldText,
-            ),
+          Text(
+            productModel.productname!,
+            style: AppsTextStyle.mediumBoldText,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           AppsFunction.verticalSpacing(5),
           Row(
@@ -65,12 +65,15 @@ class CartProductWidget extends StatelessWidget {
             ],
           ),
           AppsFunction.verticalSpacing(5),
+
+          /// Builds the product information section, displaying details like name, unit, and pricing.
+
           Row(
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("$quantity * ",
+                  Text("$quantity X ",
                       style: AppsTextStyle.mediumNormalText
                           .copyWith(color: AppColors.accentGreen)),
                   Text(

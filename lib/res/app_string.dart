@@ -265,6 +265,9 @@ class AppString {
 
   static String signIn = 'Sign In';
 
+  // status
+  static String normalOrderStatus = "normal";
+
   // Dynamic message generator
   static String pleaseEnterField(String fieldName) {
     return "$pleaseEnterPrefix $fieldName.";

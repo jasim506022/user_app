@@ -91,6 +91,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w700),
           centerTitle: true,
         ),
+        cardTheme: CardTheme(
+          elevation: 2,
+          color: themeProvder.getDarkTheme
+              ? AppColors.darkCardBackground
+              : AppColors.white,
+        ),
         scaffoldBackgroundColor: themeProvder.getDarkTheme
             ? AppColors.darkBackground
             : AppColors.lightBackground,

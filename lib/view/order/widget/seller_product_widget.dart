@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 import '../../../model/order_model.dart';
 import '../../../res/app_colors.dart';
@@ -37,19 +35,24 @@ class SellerProductWidget extends StatelessWidget {
                 const TextSpan(text: "Seller Name:\t"),
                 TextSpan(
                   text: sellerName,
-                  style: AppsTextStyle.largeBoldText.copyWith(color: AppColors.red),
+                  style: AppsTextStyle.largeBoldText
+                      .copyWith(color: AppColors.red),
                 ),
               ],
             ),
           ),
         ),
         Flexible(
-          child: ChangeNotifierProvider.value(
-            value: orderModel,
-            child: OrderItemWidget(
-              sellerId: sellerId,
-            ),
+          child: OrderItemWidget(
+            orderModel: orderModel,
+            sellerId: sellerId,
           ),
+          // child: ChangeNotifierProvider.value(
+          //   value: orderModel,
+          //   child: OrderItemWidget(
+          //     sellerId: sellerId,
+          //   ),
+          // ),
         ),
       ],
     );
