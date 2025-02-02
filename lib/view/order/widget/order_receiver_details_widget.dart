@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/app_colors.dart';
 import 'package:user_app/res/app_string.dart';
@@ -63,7 +62,7 @@ class OrderReceiverDetailsWidget extends StatelessWidget {
           }
           return Text(
             AppString.noDataAvailable,
-            style: AppsTextStyle.mediumTextbold.copyWith(fontSize: 20.sp),
+            style: AppsTextStyle.labelTextStyle,
           );
         });
   }

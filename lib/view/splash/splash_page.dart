@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../controller/splash_controller.dart';
 
 import '../../res/app_asset/app_icons.dart';
+import '../../res/app_function.dart';
 import '../../res/app_string.dart';
 import '../../res/app_asset/app_imges.dart';
 import '../../res/apps_text_style.dart';
@@ -26,10 +27,11 @@ class SplashScreen extends StatelessWidget {
             children: [
               Image.asset(
                 AppIcons.appIcon,
-                height: 120.h,
-                width: 120.h,
+                height: 100.h,
+                width: 120.w,
                 fit: BoxFit.fill,
               ),
+              AppsFunction.verticalSpacing(10),
               Text(AppString.appsName, style: AppsTextStyle.appsLogoTextStyole),
             ],
           ),

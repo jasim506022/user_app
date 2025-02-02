@@ -4,9 +4,11 @@ class AppImages {
   static const String appLogo = "assets/image/logo.png";
 
   // Onboarding Images
-  static const String onboardingFirstImage = "assets/onboard/grocery.png";
-  static const String onboardingSecondImage = "assets/onboard/all_grocery.png";
-  static const String onboardingThirdImage = "assets/onboard/delivery.png";
+  static const String onboardingFirstImage = "assets/image/onboard/grocery.png";
+  static const String onboardingSecondImage =
+      "assets/image/onboard/all_grocery.png";
+  static const String onboardingThirdImage =
+      "assets/image/onboard/delivery.png";
 
   // Error Images
   static const String errorSingle = "assets/error/empty_single.png";

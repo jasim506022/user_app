@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:user_app/model/order_model.dart';
-import 'package:user_app/res/app_asset/app_imges.dart';
-import 'package:user_app/res/app_function.dart';
-import 'package:user_app/res/app_string.dart';
 
+import '../../model/order_model.dart';
+import '../../res/app_asset/app_imges.dart';
+import '../../res/app_function.dart';
+import '../../res/app_string.dart';
 import 'widget/delivery_estimateion_card.dart';
 import 'widget/delivery_infor_widget.dart';
 import 'widget/order_product_details.dart';
 import 'widget/order_status_widget.dart';
 
-class OrderDeliveryPage extends StatelessWidget {
-  const OrderDeliveryPage({
+class OrderOverviewPage extends StatelessWidget {
+  const OrderOverviewPage({
     super.key,
   });
 
@@ -32,16 +31,11 @@ class OrderDeliveryPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ChangeNotifierProvider.value(
-                  value: orderModel,
-                  child: const DeliveryEstimationCard(),
-                ),
+                DeliveryEstimationCard(orderModel: orderModel),
                 AppsFunction.verticalSpacing(15),
-                ChangeNotifierProvider.value(
-                  value: orderModel,
-                  child: const DeliveryInfoWidget(),
-                ),
+                DeliveryInfoWidget(orderModel: orderModel),
                 AppsFunction.verticalSpacing(15),
+/*
                 if (orderModel.status == "normal")
                   const OrderStatusWidget(
                     image: AppImages.orderReadyForDelivery,
@@ -57,14 +51,38 @@ class OrderDeliveryPage extends StatelessWidget {
                     image: AppImages.orderConfirmed,
                     title: "Order is Successfully Done",
                   ),
+  */
+                _buildOrderStatusWidget(orderModel.status),
                 AppsFunction.verticalSpacing(10),
-                ChangeNotifierProvider.value(
-                  value: orderModel,
-                  child: const OrderProductDetails(),
+                OrderProductDetails(
+                  orderModel: orderModel,
                 )
               ],
             ),
           )),
     );
+  }
+
+  Widget _buildOrderStatusWidget(String status) {
+    switch (status) {
+      case AppString.normalOrderStatus:
+        return const OrderStatusWidget(
+          image: AppImages.orderReadyForDelivery,
+          title: AppString.orderReadyForShifted,
+        );
+      case AppString.shiftOrderStatus:
+        return const OrderStatusWidget(
+          image: AppImages.orderOutForDelivery,
+          title: AppString.productReadyForUser,
+        );
+      case AppString.completeOrderStatus:
+        return const OrderStatusWidget(
+          image: AppImages.orderConfirmed,
+          title: AppString.orderSuccesfuulydone,
+        );
+
+      default:
+        return const SizedBox.shrink(); // Empty widget for unknown statuses
+    }
   }
 }

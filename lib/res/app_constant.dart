@@ -10,9 +10,6 @@ class AppConstant {
   static const String defaultProfileImage =
       "https://firebasestorage.googleapis.com/v0/b/grocery-app-4ca36.appspot.com/o/blank%2Fno-profile-picture-15257%20(1).png?alt=media&token=8c031928-1578-4826-8289-0e3f62751627";
 
-  static const String sampleNewsImage =
-      "https://ecdn.dhakatribune.net/contents/cache/images/400x225x1/uploads/media/2023/08/09/Khaleda-Zia-f6577f837e7d75115d637f8664cb65e9.jpeg?jadewits_media_id=914";
-
   // Stripe publishable key
   static const String publishKey =
       'pk_test_51NxWNQAVUbXW3f6RWMGhMJhUO0udDaNswK3RRuIo817qEyN28xcXHMTPHIOnj27ah0giitHaEsgqvHOxbcoNbAWC00Z6GYb1Rv';

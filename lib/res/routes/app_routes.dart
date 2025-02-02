@@ -31,10 +31,17 @@ import 'routes_name.dart';
 
 class AppRoutes {
   static appRoutes() => [
+        // okay
         GetPage(
             name: AppRoutesName.splashScreen,
             page: () => const SplashScreen(),
             binding: SplashBinding()),
+
+        GetPage(
+            name: AppRoutesName.onbordingScreen,
+            page: () => const OnboardingScreen(),
+            binding: OnBoardingBinding()),
+
         GetPage(
           name: AppRoutesName.signInPage,
           page: () => const SignInPage(),
@@ -44,10 +51,7 @@ class AppRoutes {
           page: () => const SignUpPage(),
         ),
         GetPage(name: AppRoutesName.mainPage, page: () => const MainPage()),
-        GetPage(
-            name: AppRoutesName.onbordingScreen,
-            page: () => const OnboardingScreen(),
-            binding: OnBoardingBinding()),
+
         GetPage(
             name: AppRoutesName.forgetPasswordPage,
             page: () => const ForgetPasswordScreen()),
@@ -86,7 +90,7 @@ class AppRoutes {
         ),
         GetPage(
           name: AppRoutesName.deliveryScreen,
-          page: () => const OrderDeliveryPage(),
+          page: () => const OrderOverviewPage(),
         ),
         GetPage(
           name: AppRoutesName.orderDetailsPage,

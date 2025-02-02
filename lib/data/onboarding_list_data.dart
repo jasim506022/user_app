@@ -3,7 +3,7 @@ import '../model/onboard_model.dart';
 import '../res/app_string.dart';
 
 class OnBoardingListData {
-  static List<OnboardModel> onboarddataList() => [
+  static List<OnboardModel> getOnboardingData() => [
         OnboardModel(
           image: AppImages.onboardingFirstImage,
           title: AppString.welcome,
@@ -11,7 +11,7 @@ class OnBoardingListData {
         ),
         OnboardModel(
           image: AppImages.onboardingSecondImage,
-          title: AppString.fresshFruis,
+          title: AppString.fresshFruits,
           description: AppString.secondOnboardingDescription,
         ),
         OnboardModel(

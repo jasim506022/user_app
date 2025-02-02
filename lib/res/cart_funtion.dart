@@ -102,11 +102,12 @@ class CartManager {
         .toSet();
   }
 
-  static List<String> getOrderSellerIDs(dynamic productIds) {
-    return productIds.skip(1).map((item) => item.split(":")[1]).toList();
+  static List<String> getOrderSellerIDs(List<dynamic> productIds) {
+    List<String> listProductIds = List<String>.from(productIds);
+    return listProductIds.skip(1).map((item) => item.split(":")[1]).toList();
   }
 
-  static List<String> getOrderProductsIds(dynamic productIds) {
+  static List<String> getOrderProductsIds(List<dynamic> productIds) {
     List<String> listProductIds = List<String>.from(productIds);
     return listProductIds.skip(1).map((item) => item.split(":")[0]).toList();
   }

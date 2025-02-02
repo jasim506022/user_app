@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_string.dart';
 import 'package:user_app/res/routes/routes_name.dart';
 import 'package:user_app/view/order/widget/delivery_card_widget.dart';
@@ -14,11 +13,13 @@ import '../../../res/apps_text_style.dart';
 class OrderProductDetails extends StatelessWidget {
   const OrderProductDetails({
     super.key,
+    required this.orderModel,
   });
+
+  final OrderModel orderModel;
 
   @override
   Widget build(BuildContext context) {
-    final orderModel = Provider.of<OrderModel>(context, listen: false);
     return DelivaryCardWidget(
       child: Column(
         mainAxisSize: MainAxisSize.min,

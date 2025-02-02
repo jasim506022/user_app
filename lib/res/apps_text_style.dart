@@ -11,8 +11,27 @@ class AppsTextStyle {
 // Get the current ThemeData
   static ThemeData get theme => Theme.of(context);
 
-  // Common TextStyle helpers
+// Apps Logo (Modify)
+  static TextStyle get appsLogoTextStyole => GoogleFonts.roboto(
+        color: AppColors.black,
+        fontSize: 24.sp,
+        letterSpacing: 1.5,
+        fontWeight: FontWeight.w900,
+      );
 
+  // Large  Title Text Style (Modify)
+  static TextStyle get headingTextStyle => GoogleFonts.roboto(
+      color: theme.primaryColor, fontSize: 28.sp, fontWeight: FontWeight.w900);
+
+  // Large Bold Text (Modify)
+  static TextStyle get largeBoldText =>
+      _baseStyle(fontSize: 17, fontWeight: FontWeight.w800);
+
+// Medium Bold Text (Modify)
+  static TextStyle get mediumBoldText =>
+      _baseStyle(fontSize: 15, fontWeight: FontWeight.bold);
+
+  // Common TextStyle helpers
   static TextStyle _baseStyle({
     Color? color,
     required double fontSize,
@@ -57,6 +76,14 @@ class AppsTextStyle {
       height: 1.3,
       letterSpacing: 1.2);
 
+  // textCardOrder Details
+  // Ttile
+  static TextStyle get orderDateCard => GoogleFonts.poppins(
+      color: AppColors.white,
+      fontSize: 28.sp,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.2);
+
   // Description
   static TextStyle get descrptionTextStyle => GoogleFonts.roboto(
       color: AppColors.black.withOpacity(.7),
@@ -64,17 +91,6 @@ class AppsTextStyle {
       fontWeight: FontWeight.normal,
       height: 1.6,
       letterSpacing: 1.2);
-
-// Apps Logo
-  static TextStyle get appsLogoTextStyole => GoogleFonts.roboto(
-        color: AppColors.accentGreen,
-        fontSize: 24.sp,
-        fontWeight: FontWeight.w900,
-      );
-
-  // Large  Title Text Style
-  static TextStyle get largeTitleTextStyleForOnBoarding => GoogleFonts.roboto(
-      color: theme.primaryColor, fontSize: 30.sp, fontWeight: FontWeight.w900);
 
 // subtitle
   static TextStyle get subTitleTextStyle => GoogleFonts.poppins(
@@ -98,13 +114,9 @@ class AppsTextStyle {
         color: theme.hintColor,
       );
 
-  // Button Text Style
+  // Button Text Style (modify)
   static TextStyle get buttonTextStyle => _baseStyle(
-      color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 16);
-
-  // Medium Bold Text
-  static TextStyle get mediumBoldText =>
-      _baseStyle(fontSize: 16, fontWeight: FontWeight.w700);
+      color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 15);
 
   // Medium Bold Text
   static TextStyle get prouductLarge =>
@@ -113,10 +125,6 @@ class AppsTextStyle {
   // Medium Normal Text
   static TextStyle get mediumNormalText =>
       _baseStyle(fontSize: 14, fontWeight: FontWeight.w400);
-
-// Large Bold Text
-  static TextStyle get largeBoldText =>
-      _baseStyle(fontSize: 16, fontWeight: FontWeight.w800);
 
   // Large Bold Text in Red
   static TextStyle get largeBoldRedText => _baseStyle(
@@ -136,8 +144,8 @@ class AppsTextStyle {
   static TextStyle get bodyTextStyle =>
       _baseStyle(fontWeight: FontWeight.w700, fontSize: 15);
 
-  static TextStyle get largeText =>
-      GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w700);
+  static TextStyle get largeText => GoogleFonts.roboto(
+      fontSize: 16, fontWeight: FontWeight.w700, color: theme.primaryColor);
 
 // Larget Text
   static TextStyle get largestText =>

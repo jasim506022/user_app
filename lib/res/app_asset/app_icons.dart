@@ -1,6 +1,7 @@
 class AppIcons {
   // App Icons
-  static const String appIcon = "assets/image/icon.png";
+  static const String appIcon = "assets/icon/icon.png";
+  //"assets/image/icon.png";
 
   // Social Media Icons
   static const String facebookIcon = "assets/image/facebook.png";

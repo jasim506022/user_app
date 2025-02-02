@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:user_app/res/app_colors.dart';
 import 'package:user_app/res/app_string.dart';
 
@@ -13,11 +12,13 @@ import 'order_receiver_details_widget.dart';
 class DeliveryInfoWidget extends StatelessWidget {
   const DeliveryInfoWidget({
     super.key,
+    required this.orderModel,
   });
+
+  final OrderModel orderModel;
 
   @override
   Widget build(BuildContext context) {
-    final orderModel = Provider.of<OrderModel>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -31,7 +32,7 @@ class DeliveryInfoWidget extends StatelessWidget {
         Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: DeliveryRichTextWidget(
-                title: "${AppString.trackingNumber} :",
+                title: "${AppString.trackingNumber}:",
                 color: AppColors.red,
                 subTitle: orderModel.trackingNumber)),
         AppsFunction.verticalSpacing(15),

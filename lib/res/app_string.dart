@@ -1,6 +1,6 @@
 class AppString {
   // Splash
-  static String appsName = "Grocery Apps";
+  static String appsName = "JasiMart";
 
   // Dialog
   static const okay = "Okay";
@@ -9,13 +9,11 @@ class AppString {
   // sharepare
   static const String onBoardingShareKey = 'onBoarding';
 
-  // firebsse
-
   // On Boarding Item
   static const String welcome = "Welcome";
   static const String firstOnboardingDescription =
       "Welcome to best online grocery store. Here you will find all the groceries at one place.";
-  static const String fresshFruis = "Fresh Fruits & Vegetables";
+  static const String fresshFruits = "Fresh Fruits & Vegetables";
   static const String secondOnboardingDescription =
       "Buy farm fresh fruits & vegetables online at the best & affordable prices.";
 
@@ -54,9 +52,8 @@ class AppString {
   static const String popularProduct = "Popular Product";
   static const home = "Home";
   static const approved = "approved";
-  static const skip = "Skip";
+
   static const finish = "Finish";
-  static const next = "Next";
 
   static const searchHint = "Search...........";
 
@@ -260,13 +257,19 @@ class AppString {
   static const String rattings = "Rattings";
   static const String exit = "Exit";
   static const String exitMessage = 'Are you sure you want to Exit this Apps?';
+  static const String orderReadyForShifted = "Ready For Shifted";
+  static const String productReadyForUser = "Product Ready for User";
+  static const String orderSuccesfuulydone = "Order is Successfully Done";
 
-  //botton
-
-  static String signIn = 'Sign In';
+  //botton and text Button
+  static const String signIn = 'Sign In';
+  static const String skip = "Skip";
+  static const next = "Next";
 
   // status
-  static String normalOrderStatus = "normal";
+  static const String normalOrderStatus = "normal";
+  static const String shiftOrderStatus = "shift";
+  static const String completeOrderStatus = "complete";
 
   // Dynamic message generator
   static String pleaseEnterField(String fieldName) {

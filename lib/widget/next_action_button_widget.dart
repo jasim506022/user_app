@@ -5,6 +5,8 @@ import '../res/app_colors.dart';
 import '../res/app_function.dart';
 import '../res/apps_text_style.dart';
 
+/// A reusable button widget with a customizable title and an arrow icon.
+/// Commonly used for navigation actions like 'Next' or 'Get Started'.
 class NextActionButtonWidget extends StatelessWidget {
   const NextActionButtonWidget({
     super.key,
@@ -12,7 +14,10 @@ class NextActionButtonWidget extends StatelessWidget {
     required this.title,
   });
 
+  /// Callback triggered when the button is tapped.
   final VoidCallback onTap;
+
+  /// The label displayed on the button.
   final String title;
 
   @override
@@ -26,10 +31,7 @@ class NextActionButtonWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              title,
-              style: AppsTextStyle.buttonTextStyle,
-            ),
+            Text(title, style: AppsTextStyle.buttonTextStyle),
             AppsFunction.horizontalSpacing(10),
             Icon(
               Icons.arrow_forward_sharp,
