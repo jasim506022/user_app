@@ -26,9 +26,8 @@ class SearchBarWidget extends StatelessWidget {
         children: [
           Flexible(
               flex: 4,
-              child: TextFormFieldWidget(
+              child: CustomTextFormField(
                 style: AppsTextStyle.mediumNormalText,
-                isUdateDecoration: true,
                 decoration: AppsFunction.inputDecoration(
                   hint: AppString.searchProductHere,
                 ),
@@ -36,6 +35,7 @@ class SearchBarWidget extends StatelessWidget {
                 onChanged: (text) {
                   searchController.updateProductList(text);
                 },
+                hintText: '',
               )),
           IconButton(
               onPressed: () {

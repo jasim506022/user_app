@@ -97,6 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           icon: item['icon'],
           title: item['title'],
           onTap: () async {
+            NetworkUtils.executeWithInternetCheck(action: () {
+              if (item['argument'] is int) {
+                Get.offAndToNamed(item['route'], arguments: item['argument']);
+              } else {
+                Get.toNamed(item['route']);
+              }
+            });
+
+/*
             if (!(await NetworkUtili.verifyInternetStatus())) {
               if (item['argument'] is int) {
                 Get.offAndToNamed(item['route'], arguments: item['argument']);
@@ -104,6 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Get.toNamed(item['route']);
               }
             }
+*/
           },
         );
       }).toList(),
@@ -142,14 +152,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
       title: AppString.signOut,
       iconColor: AppColors.red,
       onTap: () async {
+        NetworkUtils.executeWithInternetCheck(action: () {
+          Get.dialog(ShowAlertDialogWidget(
+            icon: Icons.delete,
+            title: AppString.signOut,
+            content: AppString.doYouWantSignount,
+            onConfirmPressed: () async => await profileController.signOut(),
+          ));
+        });
+        /*
         if (!(await NetworkUtili.verifyInternetStatus())) {
+
           Get.dialog(ShowAlertDialogWidget(
             icon: Icons.delete,
             title: AppString.signOut,
             content: AppString.doYouWantSignount,
             onYesPressed: () async => await profileController.signOut(),
           ));
+          
         }
+
+        */
       },
     );
   }

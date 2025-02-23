@@ -9,6 +9,7 @@ class ProfileModel {
   String? phone;
   String? status;
   String? uid;
+  String? token;
   List<dynamic>? cartlist;
   ProfileModel({
     this.address,
@@ -18,6 +19,7 @@ class ProfileModel {
     this.phone,
     this.status,
     this.uid,
+    this.token,
     this.cartlist,
   });
 
@@ -31,6 +33,7 @@ class ProfileModel {
       'status': status,
       'uid': uid,
       'cartlist': cartlist,
+      'token': token
     };
   }
 
@@ -42,6 +45,7 @@ class ProfileModel {
       'name': name,
       'phone': phone,
       'status': "approved",
+      'token': token,
       'uid': AppConstant.sharedPreference!.getString("uid"),
       'cartlist': AppConstant.sharedPreference!.getStringList("cartlist"),
     };
@@ -51,6 +55,7 @@ class ProfileModel {
     return ProfileModel(
       address: map['address'] != null ? map['address'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
+      token: map['token'] != null ? map['token'] as String : null,
       imageurl: map['imageurl'] != null ? map['imageurl'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,

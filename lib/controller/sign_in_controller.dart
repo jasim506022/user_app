@@ -8,11 +8,10 @@ import '../res/app_function.dart';
 import '../res/app_asset/app_icons.dart';
 import '../res/app_string.dart';
 import '../res/routes/routes_name.dart';
-import '../res/network_utili.dart';
 import '../widget/error_dialog_widget.dart';
 import '../widget/show_alert_dialog_widget.dart';
 import 'loading_controller.dart';
-
+/*
 class SignInController extends GetxController {
   final SignInRepository repository;
   var loadingController = Get.find<LoadingController>();
@@ -49,7 +48,7 @@ class SignInController extends GetxController {
       SystemNavigator.pop();
     }
   }
-
+/*
   Future<void> signInWithEmailAndPassword() async {
     if (!(await NetworkUtili.verifyInternetStatus())) {
       try {
@@ -86,6 +85,7 @@ class SignInController extends GetxController {
       }
     }
   }
+  */
 
   Future<void> signWithGoogle() async {
     // bool checkInternet = await AppsFunction.internetChecking();
@@ -120,12 +120,12 @@ class SignInController extends GetxController {
         Get.back();
         if (await repository.userExists()) {
           Get.offNamed(AppRoutesName.mainPage);
-          AppsFunction.showToast(msg: "Successfully Loging");
+          AppsFunction.flutterToast(msg: "Successfully Loging");
         } else {
           await repository.createUserGmail(user: userCredentialGmail.user!);
 
           Get.offNamed(AppRoutesName.mainPage);
-          AppsFunction.showToast(msg: "Successfully Loging");
+          AppsFunction.flutterToast(msg: "Successfully Loging");
         }
       }
     } catch (e) {
@@ -152,3 +152,5 @@ class SignInController extends GetxController {
     }
   }
 }
+
+*/

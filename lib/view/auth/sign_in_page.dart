@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:user_app/res/routes/routes_name.dart';
 
 import '../../controller/auth_controller.dart';
 import '../../res/app_asset/app_icons.dart';
@@ -11,15 +10,16 @@ import '../../res/app_function.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_string.dart';
 import '../../res/apps_text_style.dart';
+import '../../res/routes/routes_name.dart';
 import '../../res/valudation.dart';
-import '../../widget/custom_auth_button_widget.dart';
+import 'widget/custom_auth_button_widget.dart';
 import '../../widget/rich_text_widget.dart';
-import '../../widget/text_form_field_widget.dart';
+import '../../widget/custom_text_form_field.dart';
 import '../../res/network_utili.dart';
-import 'widget/app_sign_page_intro.dart';
+import 'widget/auth_page_intro.dart';
 import 'widget/icon_with_button_widget.dart';
 
-/*
+/// A sign-in page where users can log in with email/password or social accounts.
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -28,248 +28,38 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  SignInController signInController = Get.find();
-
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  NetworkController networkController = Get.put(NetworkController());
-
-  @override
-  void didChangeDependencies() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: AppColors.white,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light));
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-    super.didChangeDependencies();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    DependencyInjection.init();
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) async {
-        signInController.handleBackNavigaion(didPop);
-        // if (didPop) {
-        //   return;
-        // }
-        // final bool shouldPop = await AppsFunction.showBackDialog() ?? false;
-        // if (shouldPop) {
-        //   SystemNavigator.pop();
-        // }
-      },
-      child: GestureDetector(
-        onTap: () async {
-          FocusScope.of(context).unfocus();
-          NetworkUtili.verifyInternetStatus();
-        },
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const AppSignInPageIntro(
-                    title: "Welcome Back!",
-                    subTitle: "Check our fresh viggies from Jasim Grocery",
-                  ),
-                  _buildLoginForm(),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  _buildForgetPasswordButton(),
-                  SizedBox(height: 15.h),
-                  CustomButtonWidget(
-                    onPressed: () async {
-                      if (!formKey.currentState!.validate()) return;
-                      signInController.signInWithEmailAndPassword();
-                    },
-                    title: 'Sign In',
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  _buildOrDividerText(),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  _buildSocialLoginOptions(),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  RichTextWidget(
-                    colorText: "Create Account",
-                    function: () async {
-                      if (!(await NetworkUtili.verifyInternetStatus())) {
-                        Get.toNamed(AppRoutesName.signUpPage);
-                      }
-                    },
-                    simpleText: "Don't Have An Account? ",
-                  ),
-                  SizedBox(
-                    height: .12.sh,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Row _buildSocialLoginOptions() {
-    return Row(
-      children: [
-        Expanded(
-          child: IconWithButtonWidget(
-              function: () async {
-                NetworkUtili.verifyInternetStatus();
-              },
-              color: AppColors.facebookBlue,
-              image: AppIcons.facebookIcon,
-              title: "Facebook"),
-        ),
-        SizedBox(
-          width: 10.w,
-        ),
-        Expanded(
-          child: IconWithButtonWidget(
-              function: () async {
-                if (!(await NetworkUtili.verifyInternetStatus())) {
-                  await signInController.signWithGoogle();
-                }
-              },
-              color: AppColors.red,
-              image: AppIcons.gmailIcon,
-              title: "Gmail"),
-        ),
-      ],
-    );
-  }
-
-  Form _buildLoginForm() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          TextFormFieldWidget(
-            hintText: 'Email Address',
-            controller: signInController.emailET,
-            validator: (emailText) {
-              if (emailText!.isEmpty) {
-                return 'Please enter your Email Address';
-              } else if (!AppsFunction.isValidEmail(emailText)) {
-                return 'Please Enter a Valid Email Address';
-              }
-              return null;
-            },
-            textInputType: TextInputType.emailAddress,
-          ),
-          TextFormFieldWidget(
-            isShowPassword: true,
-            obscureText: true,
-            validator: (passwordText) {
-              if (passwordText!.isEmpty) {
-                return 'Please enter your Password';
-              } else if (passwordText.length < 6) {
-                return 'Password Must be geather then 6 Characteris';
-              }
-              return null;
-            },
-            hintText: "Password",
-            controller: signInController.passwordET,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Align _buildForgetPasswordButton() {
-    return Align(
-        alignment: Alignment.topRight,
-        child: TextButton(
-          onPressed: () async {
-            if (!(await NetworkUtili.verifyInternetStatus())) {
-              Get.toNamed(AppRoutesName.forgetPasswordPage);
-              signInController.cleanTextField();
-            }
-          },
-          child: Text("Forget Password",
-              style: AppsTextStyle.forgetPasswordTextStyle),
-        ));
-  }
-
-  Row _buildOrDividerText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _buildLine(),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Text(
-            "with Or",
-            style: TextStyle(color: AppColors.grey),
-          ),
-        ),
-        _buildLine(),
-      ],
-    );
-  }
-
-  Container _buildLine() {
-    return Container(
-      height: 2.5.h,
-      width: 70.w,
-      color: AppColors.grey,
-    );
-  }
-}
-
-*/
-
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
-
-  @override
-  State<SignInPage> createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
-  final authController = Get.find<AuthController>();
+  /// Controller for handling authentication-related logic
+  late final AuthController authController;
+  // Form key for validation
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
-  void didChangeDependencies() {
-    _setupStatusBar();
-    super.didChangeDependencies();
+  void initState() {
+    /// Get the `AuthController` instance for managing authentication.
+    authController = Get.find<AuthController>();
+    _configureStatusBar();
+    super.initState();
   }
 
-  void _setupStatusBar() {
+  /// Configures the system UI to set the status bar color and icon brightness.
+  void _configureStatusBar() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: AppColors.lightBackground,
+        statusBarColor: AppColors.backgroundLight,
         statusBarIconBrightness: Brightness.dark,
       ),
     );
   }
 
   @override
-  void dispose() {
-    authController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async => await authController.exitApps(didPop),
+      onPopInvoked:
+          (didPop) async => // Prevents accidental app exit without confirmation.
+              await authController.confirmExitApp(didPop),
       child: GestureDetector(
+        // Dismiss keyboard when tapping outside.
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
           body: SingleChildScrollView(
@@ -278,32 +68,43 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AppSignInPageIntroWidget(
-                    title: AppString.adminLogin,
-                    description: AppString.logInPageSubjectTitle,
+                  /// Displays an introduction (title & description).
+                  const AuthIntroWidget(
+                    title: AppString.userLoginTitle,
+                    description: AppString.authPageDescription,
                   ),
-                  _buildLoginForm(),
+
+                  /// Displays the form.
+                  _buildForm(),
                   AppsFunction.verticalSpacing(5),
+
+                  /// "Forgot Password" button.
                   _buildForgetPasswordButton(),
                   AppsFunction.verticalSpacing(15),
-                  CustomAuthButtonWidget(
+
+                  /// Login Button  Button.
+                  AuthButton(
                     onPressed: () async {
                       if (!_formKey.currentState!.validate()) return;
-
-                      await NetworkUtili.internetCheckingWFunction(
-                          function: () async => await authController.signIn());
+                      await authController.signIn();
                     },
-                    title: AppString.signIn,
+                    label: AppString.signInTitle,
                   ),
                   AppsFunction.verticalSpacing(25),
-                  _buildOrDividerText(),
+
+                  /// OR divider section.
+                  _buildOrDivider(),
                   AppsFunction.verticalSpacing(20),
+
+                  /// Social login buttons (Google & Facebook)
                   _buildSocialLoginOptions(),
                   AppsFunction.verticalSpacing(25),
+
+                  /// Sign-up link with navigation to the registration page.
                   RichTextWidget(
-                    colorText: AppString.createAccount,
-                    function: () async => Get.toNamed(AppRoutesName.signUpPage),
-                    simpleText: AppString.dontHaveAccount,
+                    highlightedText: AppString.createAccount,
+                    onTap: () => Get.toNamed(AppRoutesName.signUpPage),
+                    normalText: AppString.dontHaveAccount,
                   ),
                   AppsFunction.verticalSpacing(100)
                 ],
@@ -315,70 +116,28 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  /// Builds the social login options row (e.g., Facebook and Gmail).
-  Row _buildSocialLoginOptions() {
-    return Row(
-      children: [
-        Expanded(
-          child: SocialButtonWidget(
-            tap: () async => NetworkUtili.verifyInternetStatus(),
-            color: AppColors.facebookBlue,
-            image: AppIcons.facebookIcon,
-            title: AppString.facebook,
-          ),
-        ),
-        AppsFunction.horizontalSpacing(10),
-        Expanded(
-          child: SocialButtonWidget(
-            tap: () async => await NetworkUtili.internetCheckingWFunction(
-                function: () async => await authController.signInWithGoogle()),
-            color: AppColors.red,
-            image: AppIcons.gmailIcon,
-            title: AppString.gmail,
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Builds the "Forget Password" button aligned to the right.
-  Align _buildForgetPasswordButton() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: TextButton(
-        onPressed: () async {
-          NetworkUtili.internetCheckingWFunction(
-              function: () => Get.toNamed(AppRoutesName.forgetPasswordPage));
-        },
-        child: Text(
-          AppString.forgetPassword,
-          style: AppsTextStyle.mediumBoldText.copyWith(
-            color: AppColors.lightHintText,
-          ),
-        ),
-      ),
-    );
-  }
-
-  /// Builds the login form containing email and password input fields.
-  Form _buildLoginForm() {
+  /// Builds the login form containing email and password input fields
+  Form _buildForm() {
     return Form(
       key: _formKey,
       child: Column(
         children: [
-          TextFormFieldWidget(
-            label: AppString.email,
-            hintText: AppString.emailAddress,
+          /// Email input field.
+          CustomTextFormField(
+            label: AppString.emailLabel,
+            hintText: AppString.emailHint,
             controller: authController.emailController,
             validator: Validators.validateEmail,
             textInputType: TextInputType.emailAddress,
           ),
-          TextFormFieldWidget(
-            label: AppString.password,
-            isShowPassword: true,
+
+          /// Password input field
+          CustomTextFormField(
+            label: AppString.passwordLabel,
+            hasPasswordToggle: true,
             obscureText: true,
             validator: Validators.validatePassword,
-            hintText: AppString.password,
+            hintText: AppString.passwordHint,
             controller: authController.passwordController,
             textInputAction: TextInputAction.done,
           ),
@@ -387,8 +146,27 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  /// Builds a divider with text in the center ("or").
-  Row _buildOrDividerText() {
+  /// Builds the "Forgot Password" button.
+  Widget _buildForgetPasswordButton() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: TextButton(
+        onPressed: () async {
+          await NetworkUtils.executeWithInternetCheck(
+              action: () => Get.toNamed(AppRoutesName.forgetPasswordPage));
+        },
+        child: Text(
+          AppString.forgetPasswordTitle,
+          style: AppsTextStyle.mediumBoldText.copyWith(
+            color: AppColors.hintTextlight,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Builds a divider with "OR" text in the center.
+  Row _buildOrDivider() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -398,10 +176,39 @@ class _SignInPageState extends State<SignInPage> {
           child: Text(
             AppString.withOr,
             style:
-                AppsTextStyle.largeNormalText.copyWith(color: AppColors.grey),
+                AppsTextStyle.mediumNormalText.copyWith(color: AppColors.grey),
           ),
         ),
         _buildLine(),
+      ],
+    );
+  }
+
+  /// Builds the social login options row (e.g., Facebook and Gmail).
+  Row _buildSocialLoginOptions() {
+    return Row(
+      children: [
+        Expanded(
+          /// Facebook login button.
+          child: SocialButton(
+            onTap: () {},
+            color: AppColors.facebookBlue,
+            iconPath: AppIcons.facebookIcon,
+            label: AppString.btnFacebook,
+          ),
+        ),
+        AppsFunction.horizontalSpacing(10),
+        Expanded(
+          /// Facebook login button.
+          child: SocialButton(
+            onTap: () async {
+              await authController.signInWithGoogle();
+            },
+            color: AppColors.red,
+            iconPath: AppIcons.gmailIcon,
+            label: AppString.btnGmail,
+          ),
+        ),
       ],
     );
   }
@@ -415,3 +222,18 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
+
+
+
+
+
+/*
+//formKey.currentState?.validate() and resetting with formKey.currentState?.reset()
+#: SignInPage	SignInScreen	"Screen" is more descriptive than "Page"
+#: Which is best way to declare variable name   
+final AuthController authController = Get.find<AuthController>(); 
+or final AuthController authController = Get.find<AuthController>() 
+#: final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+#: Why use dispose
+
+*/

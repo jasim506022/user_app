@@ -34,12 +34,12 @@ class AppRoutes {
         // okay
         GetPage(
             name: AppRoutesName.splashScreen,
-            page: () => const SplashScreen(),
+            page: () => const SplashPage(),
             binding: SplashBinding()),
 
         GetPage(
             name: AppRoutesName.onbordingScreen,
-            page: () => const OnboardingScreen(),
+            page: () => const OnboardingPage(),
             binding: OnBoardingBinding()),
 
         GetPage(
@@ -54,7 +54,7 @@ class AppRoutes {
 
         GetPage(
             name: AppRoutesName.forgetPasswordPage,
-            page: () => const ForgetPasswordScreen()),
+            page: () => const ForgetPasswordPage()),
         GetPage(name: AppRoutesName.cartPage, page: () => const CartPage()),
         GetPage(
             name: AppRoutesName.searchPage,

@@ -67,9 +67,16 @@ class _AddressPageState extends State<AddressPage> {
             backgroundColor: AppColors.accentGreen,
             onPressed: () async {
               if (!_formKey.currentState!.validate()) return;
+
+              NetworkUtils.executeWithInternetCheck(action: () {
+                addressController.saveAddress(isUpdate);
+              });
+
+/*
               if (!(await NetworkUtili.verifyInternetStatus())) {
                 addressController.saveAddress(isUpdate);
               }
+*/
             },
             icon: Icon(
               isUpdate ? Icons.update : Icons.save,
@@ -102,13 +109,13 @@ class _AddressPageState extends State<AddressPage> {
             children: [
               Flexible(
                 flex: 5,
-                child: TextFormFieldWidget(
+                child: CustomTextFormField(
                   onChanged: (value) => addressController.addChangeListener(),
                   controller: addressController.countryTEC,
                   hintText: AppString.countryName,
                   textInputType: TextInputType.text,
-                  validator: (value) =>
-                      Validators.validateNotEmpty(value, AppString.countryName),
+                  // validator: (value) =>
+                  //     Validators.validateNotEmpty(value, AppString.countryName),
                 ),
               ),
               AppsFunction.horizontalSpacing(20),
@@ -125,40 +132,42 @@ class _AddressPageState extends State<AddressPage> {
 
   List<Widget> _buildTextFields() {
     return [
-      _buildTextField(addressController.nameTEC, AppString.nameHintText,
-          Validators.validateName),
-      _buildTextField(addressController.phoneTEC, AppString.phoneHintText,
-          Validators.validatePhoneNumber),
+      _buildTextField(
+        addressController.nameTEC, AppString.nameHintText,
+        // Validators.validateName
+      ),
+      _buildTextField(
+        addressController.phoneTEC, AppString.phoneHintText,
+        // Validators.validatePhoneNumber
+      ),
       _buildTextField(
         addressController.flatHouseNumberTEC,
         AppString.flatHintText,
-        (value) => Validators.validateNotEmpty(value, AppString.flatHintText),
+        // (value) => Validators.validateNotEmpty(value, AppString.flatHintText),
       ),
       _buildTextField(
-        addressController.streetnameornumberTEC,
-        AppString.streetHintText,
-        (value) => Validators.validateNotEmpty(value, AppString.streetHintText),
-      ),
-      _buildTextField(
-        addressController.villageTEC,
-        AppString.villageHintText,
-        (value) =>
-            Validators.validateNotEmpty(value, AppString.villageHintText),
-      ),
-      _buildTextField(
-        addressController.cityTEC,
-        AppString.cityNameHintText,
-        (value) =>
-            Validators.validateNotEmpty(value, AppString.cityNameHintText),
-      ),
+          addressController.streetnameornumberTEC, AppString.streetHintText
+          // (value) => Validators.validateNotEmpty(value, AppString.streetHintText),
+          ),
+      _buildTextField(addressController.villageTEC, AppString.villageHintText
+          // (value) =>
+          //     Validators.validateNotEmpty(value, AppString.villageHintText),
+          ),
+      _buildTextField(addressController.cityTEC, AppString.cityNameHintText
+          // (value) =>
+          //     Validators.validateNotEmpty(value, AppString.cityNameHintText),
+          ),
     ];
   }
 
-  TextFormFieldWidget _buildTextField(TextEditingController controller,
-      String hintText, String? Function(String?)? validator) {
-    return TextFormFieldWidget(
+  CustomTextFormField _buildTextField(
+    TextEditingController controller,
+    String hintText,
+    // String? Function(String?)? validator
+  ) {
+    return CustomTextFormField(
       onChanged: (value) => addressController.addChangeListener(),
-      validator: validator,
+      // validator: validator,
       controller: controller,
       hintText: hintText,
       textInputType: TextInputType.text,

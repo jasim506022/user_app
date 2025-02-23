@@ -54,9 +54,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ? IconButton(
                         onPressed: () async {
                           if (!key.currentState!.validate()) return;
+                          NetworkUtils.executeWithInternetCheck(action: () {
+                            profileController.updateUserData();
+                          });
+/*
                           if (!(await NetworkUtili.verifyInternetStatus())) {
                             profileController.updateUserData();
                           }
+*/
                         },
                         icon: Icon(Icons.done,
                             color: Theme.of(context).primaryColor))
@@ -146,7 +151,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RowTextTitleWidget(icon: Icons.person, title: AppString.name),
-            TextFormFieldWidget(
+            CustomTextFormField(
               onChanged: (value) => profileController.addChangeListener(),
               validator: Validators.validateName,
               controller: profileController.nameTEC,
@@ -168,7 +173,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             AppsFunction.verticalSpacing(15),
             const RowTextTitleWidget(icon: Icons.email, title: AppString.email),
-            TextFormFieldWidget(
+            CustomTextFormField(
               controller: profileController.emailTEC,
               enabled: false,
               hintText: AppString.email,
@@ -176,9 +181,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             AppsFunction.verticalSpacing(15),
             const RowTextTitleWidget(
                 icon: Icons.place, title: AppString.address),
-            TextFormFieldWidget(
+            CustomTextFormField(
               validator: (value) {
-                Validators.validateNotEmpty(value, AppString.address);
+                Validators.validateAddress;
                 return null;
               },
               onChanged: (p0) => profileController.addChangeListener(),

@@ -63,9 +63,14 @@ class ProfileHeaderViewWidget extends StatelessWidget {
 
           // Cart badge with item count and navigation functionality.
           InkWell(onTap: () async {
+            NetworkUtils.executeWithInternetCheck(action: () {
+              Get.toNamed(AppRoutesName.cartPage);
+            });
+            /*
             if (!(await NetworkUtili.verifyInternetStatus())) {
               Get.toNamed(AppRoutesName.cartPage);
             }
+            */
           }, child: Obx(() {
             return CartBadge(
                 color: AppColors.accentGreen,

@@ -32,19 +32,16 @@ class Utils {
   static Color get green200 =>
       getTheme ? Colors.green.shade700 : Colors.green.shade200;
 
-  static Color? get green50 =>
-      getTheme ? AppColors.darkCardBackground : Colors.green[50];
+  static Color? get green50 => getTheme ? AppColors.cardDark : Colors.green[50];
 
   static Color? get profileTextColor =>
       getTheme ? Colors.black87 : Colors.black54;
 
-  static Color? get bottomTotalBill => getTheme
-      ? AppColors.darkCardBackground
-      : AppColors.accentGreen.withOpacity(.1);
+  static Color? get bottomTotalBill =>
+      getTheme ? AppColors.cardDark : AppColors.accentGreen.withOpacity(.1);
 
-  static Color? get categoryUnselectBackground => getTheme
-      ? AppColors.darkCardBackground
-      : const Color.fromARGB(255, 238, 236, 236);
+  static Color? get categoryUnselectBackground =>
+      getTheme ? AppColors.cardDark : const Color.fromARGB(255, 238, 236, 236);
 
   static Color? get categoryUnSelectTextColor => getTheme
       ? AppColors.white.withOpacity(.7)

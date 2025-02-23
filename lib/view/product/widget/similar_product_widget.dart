@@ -25,6 +25,16 @@ class SimilarProductWidget extends StatelessWidget {
     bool isCart = CartManager.getProductIds().contains(productModel.productId);
     return InkWell(
       onTap: () async {
+        NetworkUtils.executeWithInternetCheck(action: () {
+          Get.offAndToNamed(
+            AppRoutesName.productDetailsPage,
+            arguments: {
+              AppString.productModel: productModel,
+              AppString.isCartBack: isCartBack
+            },
+          );
+        });
+        /*
         if (!(await NetworkUtili.verifyInternetStatus())) {
           Get.offAndToNamed(
             AppRoutesName.productDetailsPage,
@@ -34,6 +44,7 @@ class SimilarProductWidget extends StatelessWidget {
             },
           );
         }
+        */
       },
       child: Container(
         height: 150.h,

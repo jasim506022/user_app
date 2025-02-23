@@ -98,11 +98,19 @@ class CardWidget extends StatelessWidget {
                   flex: 1,
                   child: InkWell(
                     onTap: () async {
+                      NetworkUtils.executeWithInternetCheck(action: () {
+                        cartController.removeProductFromCart(
+                          productId: productModel.productId!,
+                        );
+                      });
+                      /*
                       if (!(await NetworkUtili.verifyInternetStatus())) {
                         cartController.removeProductFromCart(
                           productId: productModel.productId!,
                         );
                       }
+*/
+
                       cartController.removeValue(total);
                     },
                     child: Container(
@@ -121,7 +129,7 @@ class CardWidget extends StatelessWidget {
             ),
             Text(productModel.productunit!.toString(),
                 style: AppsTextStyle.bodyTextStyle
-                    .copyWith(color: AppColors.lightHintText)),
+                    .copyWith(color: AppColors.hintTextlight)),
             Row(
               children: [
                 Row(

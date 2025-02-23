@@ -17,7 +17,7 @@ class OutlinedTextButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return OutlinedButton(
         style: TextButton.styleFrom(
             side: BorderSide(
               color: color,

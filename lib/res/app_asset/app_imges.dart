@@ -1,6 +1,6 @@
 class AppImages {
   // Splash & Logo
-  static const String splashImage = "assets/image/splash.png";
+  static const String splashScreenBackground = "assets/image/splash.png";
   static const String appLogo = "assets/image/logo.png";
 
   // Onboarding Images

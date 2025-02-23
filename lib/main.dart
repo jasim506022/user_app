@@ -57,69 +57,67 @@ class MyApp extends StatelessWidget {
   }
 
   /// Builds the theme data based on the selected theme (dark or light).
-  ThemeData _buildThemeData(ThemeProvider themeProvder) {
+  ThemeData _buildThemeData(ThemeProvider themeProvider) {
+    // Determine if the app is in dark theme mode
+    var isDarkTheme = themeProvider.getDarkTheme;
     return ThemeData(
 
-        // Dialog theme customization
+        // (Modify and Add comments)
         dialogTheme: DialogTheme(
-            backgroundColor: themeProvder.getDarkTheme
-                ? AppColors.darkCardBackground
-                : AppColors.white,
+            backgroundColor: isDarkTheme ? AppColors.cardDark : AppColors.white,
             titleTextStyle: GoogleFonts.poppins(
-                color: themeProvder.getDarkTheme
-                    ? AppColors.white
-                    : AppColors.black,
-                fontSize: 20.sp,
+                color: isDarkTheme ? AppColors.white : AppColors.black,
+                fontSize: 18.sp,
                 fontWeight: FontWeight.bold),
             contentTextStyle: GoogleFonts.poppins(
-                color: AppColors.black.withOpacity(.7),
-                fontSize: 16.sp,
+                color: isDarkTheme
+                    ? AppColors.white.withOpacity(.7)
+                    : AppColors.black.withOpacity(.7),
+                fontSize: 15.sp,
                 fontWeight: FontWeight.normal)),
 
-        // Check
-        dialogBackgroundColor: themeProvder.getDarkTheme
-            ? AppColors.darkBackground
-            : AppColors.lightBackground,
-
-        // AppBar theme customization
-
+        // App Bar Theme (Modify)
         appBarTheme: AppBarTheme(
           iconTheme: IconThemeData(
-              color: themeProvder.getDarkTheme
-                  ? AppColors.white
-                  : AppColors.black),
-          backgroundColor: themeProvder.getDarkTheme
-              ? AppColors.darkBackground
-              : AppColors.lightBackground,
+            color: isDarkTheme ? AppColors.white : AppColors.black,
+          ),
+          backgroundColor: isDarkTheme
+              ? AppColors.backgroundDark
+              : AppColors.backgroundLight,
           titleTextStyle: GoogleFonts.roboto(
-              color:
-                  themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w700),
+            color: isDarkTheme ? AppColors.white : AppColors.black,
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+          ),
           centerTitle: true,
         ),
 
-        // Card and background theme customization
+        // Divider (Modify)
+        dividerTheme: DividerThemeData(
+          color: isDarkTheme ? AppColors.hintTextDark : AppColors.hintTextlight,
+          thickness: 2,
+        ),
+
+        // Modify
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: AppColors.white,
+          linearTrackColor: AppColors.red,
+          circularTrackColor: AppColors.red,
+          refreshBackgroundColor: AppColors.red,
+        ),
         cardTheme: CardTheme(
           elevation: 2,
-          color: themeProvder.getDarkTheme
-              ? AppColors.darkCardBackground
-              : AppColors.white,
+          color: isDarkTheme ? AppColors.cardDark : AppColors.white,
         ),
-        scaffoldBackgroundColor: themeProvder.getDarkTheme
-            ? AppColors.darkBackground
-            : AppColors.lightBackground,
-        canvasColor: themeProvder.getDarkTheme
-            ? AppColors.darkCardBackground
-            : AppColors.searchLightColor,
-        indicatorColor:
-            themeProvder.getDarkTheme ? AppColors.white : AppColors.black,
-        unselectedWidgetColor: themeProvder.getDarkTheme
-            ? AppColors.darkUnselect
-            : AppColors.lightUnselect,
+        scaffoldBackgroundColor:
+            isDarkTheme ? AppColors.backgroundDark : AppColors.backgroundLight,
+        canvasColor:
+            isDarkTheme ? AppColors.cardDark : AppColors.searchColorLight,
+        indicatorColor: isDarkTheme ? AppColors.white : AppColors.black,
+        unselectedWidgetColor:
+            isDarkTheme ? AppColors.unselectDark : AppColors.unselectList,
         primaryColorLight: AppColors.black,
-        brightness:
-            themeProvder.getDarkTheme ? Brightness.light : Brightness.dark,
+        brightness: isDarkTheme ? Brightness.light : Brightness.dark,
 
         // Input decoration for dropdown menus
         dropdownMenuTheme: DropdownMenuThemeData(
@@ -127,42 +125,27 @@ class MyApp extends StatelessWidget {
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
                 filled: true,
-                fillColor: themeProvder.getDarkTheme
-                    ? AppColors.darkCardBackground
-                    : AppColors.white,
+                fillColor: isDarkTheme ? AppColors.cardDark : AppColors.white,
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: themeProvder.getDarkTheme
-                            ? AppColors.white
-                            : AppColors.black,
+                        color: isDarkTheme ? AppColors.white : AppColors.black,
                         width: 1),
                     borderRadius: BorderRadius.circular(15.r)))),
-
-        // Progress indicator theme
-        progressIndicatorTheme: ProgressIndicatorThemeData(
-          color: AppColors.white,
-          circularTrackColor: AppColors.red,
-          refreshBackgroundColor: AppColors.red,
+        // Modify
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              backgroundColor: AppColors.accentGreen,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.r))),
         ),
 
-        // Elevated button styling
-        elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accentGreen,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
-                padding:
-                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h))),
-
         // Hint color based on theme
-        hintColor: themeProvder.getDarkTheme
-            ? AppColors.darkHintText
-            : AppColors.lightHintText,
+        hintColor:
+            isDarkTheme ? AppColors.hintTextDark : AppColors.hintTextlight,
 
         // Overall primary color customization
-        primaryColor:
-            themeProvder.getDarkTheme ? AppColors.white : AppColors.black);
+        primaryColor: isDarkTheme ? AppColors.white : AppColors.black);
   }
 
   List<SingleChildWidget> get providerAllList {

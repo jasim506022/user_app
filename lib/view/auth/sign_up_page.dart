@@ -2,21 +2,158 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:intl_phone_field/intl_phone_field.dart';
-
 import '../../controller/auth_controller.dart';
 import '../../res/app_function.dart';
 
 import '../../res/app_string.dart';
-import '../../res/apps_text_style.dart';
 import '../../res/valudation.dart';
-import '../../widget/custom_auth_button_widget.dart';
+import '../../widget/phone_number_widget.dart';
+import 'widget/capture_image_profile_widget.dart';
+import 'widget/custom_auth_button_widget.dart';
 import '../../widget/rich_text_widget.dart';
 import '../../widget/text_form_field_widget.dart';
 
-import '../../res/network_utili.dart';
-import 'widget/app_sign_page_intro.dart';
-import 'widget/capture_image_profile_widget.dart';
+import 'widget/auth_page_intro.dart';
+
+/// `SignUpPage` is a user registration screen where users can enter their details
+/// to create a new account.
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  /// Controller for handling authentication-related logic
+  late final AuthController authController;
+  // Form key for validation
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    /// Get the `AuthController` instance for managing authentication.
+    authController = Get.find<AuthController>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false, // Prevents Back when Loadng True
+      onPopInvoked: (didPop) => authController.resetFormIfNotLoading(), //
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context)
+            .unfocus(), // Dismiss keyboard when tapping outside.
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Header with profile image picker and description
+                  AuthIntroWidget(
+                    customWidget: const ProfileImagePicker(),
+                    title: AppString.registrationTitle,
+                    description: AppString.authPageDescription,
+                  ),
+
+                  /// Displays the form.
+                  _buildForm(),
+
+                  AppsFunction.verticalSpacing(15),
+
+                  /// Registration Button.
+                  AuthButton(
+                    onPressed: () async {
+                      if (!formKey.currentState!.validate()) return;
+                      await authController.registerNewUser();
+                    },
+                    label: AppString.signUpTitle,
+                  ),
+                  AppsFunction.verticalSpacing(25),
+                  RichTextWidget(
+                    normalText: AppString.alreadyHaveAccount,
+                    highlightedText: AppString.signInTitle,
+                    onTap: () async {
+                      if (!authController.loadingController.loading.value) {
+                        Get.back();
+                        authController.resetFields();
+                      }
+                    },
+                  ),
+                  AppsFunction.verticalSpacing(150)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Build the sign-up form with various input fields and validations.
+  Form _buildForm() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Name input field
+          CustomTextFormField(
+            label: AppString.nameLabel,
+            hintText: AppString.nameHint,
+            controller: authController.nameController,
+            validator: Validators.validateName, // Validation method.
+            textInputType: TextInputType.name, // Keyboard type.
+          ),
+
+          // Email input field
+          CustomTextFormField(
+            label: AppString.emailLabel,
+            hintText: AppString.emailHint,
+            controller: authController.emailController,
+            validator: Validators.validateEmail,
+            textInputType: TextInputType.emailAddress,
+          ),
+
+          // Password input field
+          CustomTextFormField(
+            label: AppString.passwordLabel,
+            obscureText: true,
+            hasPasswordToggle: true,
+            validator: Validators.validatePassword,
+            hintText: AppString.passwordHint,
+            textInputAction: TextInputAction.next,
+            controller: authController.passwordController,
+          ),
+
+          // Confirm password input field
+          CustomTextFormField(
+            label: AppString.passwordConfirmLabel,
+            obscureText: true,
+            hasPasswordToggle: true,
+            validator: (value) => Validators.validateConfirmPassword(
+              value,
+              authController.passwordController.text,
+            ),
+            hintText: AppString.confirmPasswordHint,
+            controller: authController.confirmPasswordController,
+          ),
+          AppsFunction.verticalSpacing(10),
+          // Phone number input field
+          PhoneNumberWidget(
+            controller: authController.phoneController,
+            textInputAction: TextInputAction.done,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -47,7 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AppSignInPageIntroWidget(
+                  AuthPageIntro(
                     widget: const ProfileImagePickerWidget(),
                     title: AppString.adminRegistration,
                     description: AppString.logInPageSubjectTitle,
@@ -57,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   CustomAuthButtonWidget(
                     onPressed: () async {
                       if (!formKey.currentState!.validate()) return;
-                      await NetworkUtili.internetCheckingWFunction(
+                      await NetworkUtili.executeWithInternetCheck(
                           function: () async {
                         await authController.registerUser();
                       });
@@ -149,6 +286,9 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
+*/
+
 
 /*
 class SignUpPage extends StatefulWidget {

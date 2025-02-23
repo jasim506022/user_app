@@ -40,9 +40,14 @@ class CategoryWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: 10.w),
       child: InkWell(
         onTap: () async {
+          NetworkUtils.executeWithInternetCheck(action: () {
+            categoryController.setCategory(category: category);
+          });
+/*
           if (!(await NetworkUtili.verifyInternetStatus())) {
             categoryController.setCategory(category: category);
           }
+*/
         },
         child: Obx(() {
           bool isSelected = categoryController.getCategory == category;

@@ -29,7 +29,7 @@ class SignUpController extends GetxController {
 
   Future<void> createNewUserButton() async {
     if (phontET.text.trim().isEmpty) {
-      AppsFunction.showToast(msg: "Please Give your Phone Numer");
+      AppsFunction.flutterToast(msg: "Please Give your Phone Numer");
       return;
     }
     if (!_validateInput()) return;
@@ -65,7 +65,7 @@ class SignUpController extends GetxController {
           profileModel: profileModel, firebaseDocument: user.user!.uid);
       clearField();
       Get.offNamed(AppRoutesName.mainPage);
-      AppsFunction.showToast(msg: "Sign up Successfully");
+      AppsFunction.flutterToast(msg: "Sign up Successfully");
       selectImageController.selectPhoto.value = null;
     } on FirebaseAuthException catch (e) {
       // AppsFunction.errorDialog(

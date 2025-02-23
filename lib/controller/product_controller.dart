@@ -69,7 +69,7 @@ class ProductController extends GetxController {
       productItemQuantity++;
     } else {
       if (productItemQuantity.value == 1) {
-        AppsFunction.showToast(msg: AppString.theQuantityCannotBeLessThen1);
+        AppsFunction.flutterToast(msg: AppString.theQuantityCannotBeLessThen1);
       } else {
         productItemQuantity--;
       }

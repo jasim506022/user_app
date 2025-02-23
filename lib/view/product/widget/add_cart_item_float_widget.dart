@@ -24,14 +24,22 @@ class AddCartItemFloatWidget extends StatelessWidget {
         backgroundColor:
             isProductInCart ? AppColors.red : AppColors.accentGreen,
         onPressed: isProductInCart
-            ? () => AppsFunction.showToast(msg: AppString.itemAlreadyInCart)
+            ? () => AppsFunction.flutterToast(msg: AppString.itemAlreadyInCart)
             : () async {
+                NetworkUtils.executeWithInternetCheck(action: () {
+                  productController.addItemToCart(
+                    productId: productModel.productId!,
+                    sellerId: productModel.sellerId!,
+                  );
+                });
+                /*
                 if (!(await NetworkUtili.verifyInternetStatus())) {
                   productController.addItemToCart(
                     productId: productModel.productId!,
                     sellerId: productModel.sellerId!,
                   );
                 }
+                */
               },
         icon: Icon(
           Icons.shopping_cart,

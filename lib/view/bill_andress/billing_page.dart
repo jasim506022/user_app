@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:user_app/res/app_function.dart';
+import 'package:user_app/res/network_utili.dart';
 
 import '../../controller/bill_controller.dart';
 import '../../res/app_colors.dart';
@@ -58,13 +59,15 @@ class BillingPage extends StatelessWidget {
       BillController billController, BuildContext context) {
     return InkWell(
       onTap: () async {
-        if (billController.addressController.addressid.value.isNotEmpty) {
-          billController.card.value == Payment.bkash.name
-              ? Container()
-              : await billController.createPayment('USD');
-        } else {
-          AppsFunction.showToast(msg: "Please Add a address");
-        }
+        NetworkUtils.executeWithInternetCheck(action: () async {
+          if (billController.addressController.addressid.value.isNotEmpty) {
+            billController.card.value == Payment.bkash.name
+                ? Container()
+                : await billController.createPayment('USD');
+          } else {
+            AppsFunction.flutterToast(msg: "Please Add a address");
+          }
+        });
       },
       child: Container(
         height: 50.h,

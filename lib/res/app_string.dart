@@ -1,10 +1,177 @@
 class AppString {
-  // Splash
-  static String appsName = "JasiMart";
+  /*
+   🏠 General App Strings
+  */
+  static String appName = "JasiMart";
+
+// 📌 Button Labels
+  static const String btnYes = "Yes";
+  static const String btnNo = "No";
+  static const String btnaddProductImage = "Add Product Image";
+  static const String btnCancel = "Cancel";
+  static const String btnPickImage = "Pick Image";
+  static const String btnUpdate = "Update";
+  static const String btnDelete = "Delete";
+  static const String btnReset = "Reset";
+  static const String btnClose = "Close";
+  static const String btnSave = 'Save';
+  static const String btnSkip = "Skip";
+  static const String btnNext = "Next";
+  static const String btnFacebook = "Facebook";
+  static const String btnGmail = "Gmail";
+  static const String btnOkay = "Okay";
+
+  // 📌 Firebase Collections & Shared Preferences Keys
+  static const String collectionUsers = "users";
+  static const String collectionProducts = "products";
+  static const String collectionOrders = "orders";
+  static const String prefUserId = "userId";
+  static const String prefUserEmail = "userEmail";
+  static const String prefUserName = "userName";
+  static const String prefUserPhone = "userPhone";
+  static const String prefUserProfilePic = "userProfilePic";
+  static const String prefUserEarnings = "userEarnings";
+  static const String prefOnboarding = 'onBoarding';
+
+  // 📌 Authentication Titles & Messages
+  static const String userLoginTitle = "Welcome! Please Log In";
+  static const String signInTitle = "Sign In";
+  static const String signUpTitle = "Sign Up";
+  static String resetPasswordTitle = "Reset Password";
+  static const String authPageDescription =
+      "Check our fresh veggies from Jasim Grocery";
+  static const String forgetPasswordTitle = "Forgot Password?";
+  static String withOr = "with Or";
+  static String forgetPasswordDescription =
+      "Please Enter your mail address to reset you password";
+  static String registrationTitle = "JasiMart Registration";
+  static const String createAccount = "Create Account";
+  static const String alreadyHaveAccount = "Already have an account?";
+  static const String dontHaveAccount = "Don't have an account?";
+  static String youdontWantToReset = "If you don't want to reset Password? ";
+  static const String passwordMatch = "Passwords do not match.";
+
+  // 📌 Form Field Labels
+  static const productNameLabel = 'Product Name';
+  static const String priceLabel = 'Price';
+  static const String discountLabel = 'Discount';
+  static const String ratingLabel = 'Rating';
+  static const String descriptionLabel = 'Description';
+  static const String emailLabel = "Email";
+  static const String passwordLabel = "Password";
+  static const String nameLabel = "Name";
+  static const String passwordConfirmLabel = "Confirm Password";
+  static const String phoneLabel = "Phone";
+
+  // 📌 Hint Texts (For Input Fields)
+  static const String productNameHint = "Enter product name (e.g., Nike Shoes)";
+  static const String productPriceHint = "Enter price (e.g., 99.99)";
+  static const String productDiscountHint = "Enter discount (e.g., 10 for 10%)";
+  static const String productRatingHint = "Enter rating (1 to 5)";
+  static const String productDescriptionHint =
+      "Write a short product description...";
+  static const String emailHint = "Enter your email address";
+  static const String passwordHint = "Enter your password";
+  static const String confirmPasswordHint = "Re-enter your password";
+  static const String nameHint = "Enter your full name";
+  static const String addressHint = "Enter your address (Street, City, ZIP)";
+  static const String phoneHint = "Phone Number";
+  static const String searchHint = "Search...........";
+
+  // 📌 Validation Messages
+  // Product
+  static const String emptyProductName = "Please enter a product name.";
+  static const String productNameTooShort =
+      "Product name must be at least 3 characters long.";
+  static const String productNameTooLong =
+      "Product name cannot exceed 100 characters.";
+  static const String productNameInvalid =
+      "Product name can only contain letters, numbers, and spaces.";
+// Price
+  static const String emptyPrice = "Please enter a product price.";
+  static const String invalidPrice =
+      "Invalid price! Please enter a valid numeric value.";
+  static const String priceOutOfRange =
+      "Price must be between 0.01 and 1,000,000.";
+  static const String invalidPriceFormat =
+      "Please enter a valid price with up to two decimal places.";
+  // Ratting
+  static const String emptyRating = "Please enter a rating before submitting.";
+  static const String invalidRating =
+      "Invalid rating! Please enter a numeric value between 1 and 5.";
+  static const String ratingOutOfRange = "Rating must be between 1 and 5.";
+  // Discount
+  static const String emptyDiscount = "Please enter a discount value.";
+  static const String invalidDiscount =
+      "Invalid discount! Please enter a valid numeric value.";
+  static const String discountNegative = "Discount cannot be negative.";
+  static const String discountTooHigh =
+      "Discount cannot be greater than the product price.";
+  static const String discountOverLimit = "Discount cannot exceed 100%.";
+  static const String invalidDiscountFormat =
+      "Please enter a valid discount with up to two decimal places.";
+  //Description
+  static const String emptyDescription = "Please enter a product description.";
+  static const String descriptionTooShort =
+      "Product description must be at least 10 characters long.";
+  static const String descriptionTooLong =
+      "Product description cannot exceed 1000 characters.";
+  // Email
+  static const String emptyEmail = "Please enter your email address.";
+  static const String invalidEmailFormat =
+      "Invalid email format! Please enter a valid email.";
+  static const String emailTooLong =
+      "Email address is too long. Please enter a valid email.";
+  // Password
+  static const String emptyPassword = "Please enter your password.";
+  static const String passwordTooShort =
+      "Password must be at least 6 characters long.";
+  static const String passwordTooLong = "Password cannot exceed 20 characters.";
+  static const String passwordUppercase =
+      "Password must contain at least one uppercase letter.";
+  static const String passwordLowercase =
+      "Password must contain at least one lowercase letter.";
+  static const String passwordNumber =
+      "Password must contain at least one number.";
+  // Confirm Password
+  static const String confirmPasswordRequired = "Please confirm your password.";
+  static const String passwordMismatch =
+      "Passwords do not match. Please re-enter.";
+  // Name
+  static const String emptyName = "Please enter your name.";
+  static const String nameTooShort = "Name must be at least 2 characters long.";
+  static const String nameTooLong = "Name cannot exceed 50 characters.";
+  static const String nameInvalid = "Name can only contain letters and spaces.";
+  // Address
+  static const String emptyAddress = "Please enter your address.";
+  static const String addressTooShort =
+      "Address must be at least 5 characters long.";
+  static const String addressTooLong = "Address cannot exceed 200 characters.";
+
+// 📌 Dialog title & Messages
+  static const String exitDialogTitle = "Exit Application";
+  static const String selectPhotoTitle = "Select Photo";
+  static const String takePhotoCameraTitle = "Take a Photo";
+  static const String chooseFromGalleryTitle = "Choose from Gallery";
+  static const String saveChangesTitle = "Save Changes?";
+  static const String areYouWantDeleteTitle = "Do you want to delete?";
+
+  static const String confirmExitMessage = "Are you sure  want to exit?";
+  static const String saveMessage = "Do you want to save your changes?";
+  static const String deleteMessage =
+      "Do you want to delete the product? If you delete the product, it cannot be undone.";
+
+  // Defauld Value:
+  static const String defaultName = "Name Not Found";
+  static const String defaultEmail = "email@example.com";
+  static const String defaultPhone = "No phone number";
+  static const String defaultImage =
+      "https://www.example.com/default-profile.png";
 
   // Dialog
   static const okay = "Okay";
-  static String exitApps = 'Are you sure you want to Exit this Apps?';
+  static String exitConent = 'Are you sure you want to Exit this Apps?';
+  static const String exit = "Exit App?";
 
   // sharepare
   static const String onBoardingShareKey = 'onBoarding';
@@ -21,17 +188,32 @@ class AppString {
   static const String thirdOnboardingDescription =
       "We offers speedy delivery of your groceries, bathroom supplies, baby care products, pet care items, stationary, etc within 30minutes at your doorstep.";
 
+// 📌 Success & Toast Messages
+  static const String successSignUpMessage = "Sign up successful!";
+  static const String successSignInMessage = "Sign in successful!";
+  static const String errorUserNotFoundToast = "User not found.";
+  static const String toastWaitForUploadMessage =
+      "Please wait until upload completes.";
+  static const String loginProcessOngoingToast =
+      "Login process is in progress. Please wait...";
+  static const String processOngoingToast = "Please wait.   progressing.";
+  static const String pleaseSelectPhotoToast = "Please Select a Photo";
+  static const String validPhoneNumberToast =
+      'Please enter a valid phone number';
+  static const String imageUploadFailToast =
+      "Image upload failed. Please try again.";
+  static const String selectOneImageToast = "Please Select at least One Image";
+  static const updateProductToastMessage = "Succesfully update a New Product";
+  static const uploadProductToastMessage = "Succesfully Upload a New Product";
+
   // Auth Page
   static String adminLogin = "Welcome Admin Login";
   static String logInPageSubjectTitle =
       'Check our fresh viggies from Jasim Grocery';
   static String forgetPassword = "Forget Password";
-  static String withOr = "with Or";
   static String facebook = "Facebook";
   static String gmail = "Gmail";
   static String pleaseSelectPhoto = "Please Select a Photo";
-  static String createAccount = "Create Account";
-  static String dontHaveAccount = "Don't Have An Account? ";
   static String adminRegistration = "Admin Registration";
   static String alreadyCreateAccount = "Already Create An Account? ";
   static String signup = 'Sign Up';
@@ -40,10 +222,8 @@ class AppString {
   static String entreEmailAddressForResetPassword =
       "Please Enter your mail address to reset you password";
   static String resetPassword = "Reset Password";
-  static String youdontWantToReset = "If you don't want to reset Password? ";
   static const userDoesntExit = "User Doesn't Exit";
   static String signupSuccessfull = "Sign up Successfully";
-  static String passwordMatch = "Password and Confirm Password do not match.";
 
   // All
   static const profile = "Profile";
@@ -55,7 +235,7 @@ class AppString {
 
   static const finish = "Finish";
 
-  static const searchHint = "Search...........";
+  // static const searchHint = "Search...........";
 
   static String signInSuccessfully = "Sign in Successfully";
   // Home Page
@@ -179,15 +359,11 @@ class AppString {
   static const String streetHintText = 'Street Number or Name';
   static const String villageHintText = 'Village Name';
   static const String cityNameHintText = 'City Name';
-  static String emailAddress = "Email Address";
-  static String enterEmailAddress = 'Email Address';
-  static String validEmailAddress = 'Valid Email Address';
+
   static String yourName = 'Your Name';
   static String enterName = 'Please enter your name';
   static String nameValid = 'Name must be longer than 2 characters';
-  static String enterPassword = 'Password';
-  static String validPassword = 'Password Must be geather then 6 Characteris';
-  static String password = "Password";
+
   static String enterConfirmPassword = 'Please enter your Confirm Password';
   static String validConfirmPassword =
       'Confirm Password Must be geather then 6 Characteris';
@@ -202,8 +378,7 @@ class AppString {
   static String removieAllCartSuccessfully = "Remove All Cart Successfully";
   static String phone = "Phone";
   static String paymentMethod = "Payment Method";
-  static String deleteMessage =
-      'Are you sure you want to delete this item? This action cannot be undone.';
+
   static String confirmDeletion = "Confirm Deletion?";
   static String pleaseEnterAddress = "Please enter your Address";
   static const String pleaseEnterPrefix = "Please enter";
@@ -233,7 +408,6 @@ class AppString {
   static const String nameMustbeLongerThenTow =
       "Name must be longer than 2 characters";
 
-  static const String email = "Email";
   static const String saveChanged = "Save Changed?";
   static const String address = "Address";
   static const String hintAddress = "Enter Your Address";
@@ -255,7 +429,7 @@ class AppString {
   static const String similarProducts = "Similar Products";
   static const String alreadyAdded = "Already Added";
   static const String rattings = "Rattings";
-  static const String exit = "Exit";
+
   static const String exitMessage = 'Are you sure you want to Exit this Apps?';
   static const String orderReadyForShifted = "Ready For Shifted";
   static const String productReadyForUser = "Product Ready for User";
@@ -275,4 +449,15 @@ class AppString {
   static String pleaseEnterField(String fieldName) {
     return "$pleaseEnterPrefix $fieldName.";
   }
+
+  // TextField
+  static const String email = "Email";
+  static const String emailAddress = "Email Address";
+  static String password = "Password";
+
+  // Validation Text
+  static String enterEmailAddress = 'Email Address';
+  static String validEmailAddress = 'Valid Email Address';
+  static String enterPassword = 'Password';
+  static String validPassword = 'Password Must be geather then 6 Characteris';
 }

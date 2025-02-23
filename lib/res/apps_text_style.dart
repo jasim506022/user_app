@@ -11,13 +11,18 @@ class AppsTextStyle {
 // Get the current ThemeData
   static ThemeData get theme => Theme.of(context);
 
+// Apps Logo
 // Apps Logo (Modify)
-  static TextStyle get appsLogoTextStyole => GoogleFonts.roboto(
-        color: AppColors.black,
+  static TextStyle get appsLogoTextStyle => GoogleFonts.pacifico(
+        color: AppColors.deepGreenAccent,
         fontSize: 24.sp,
-        letterSpacing: 1.5,
+        letterSpacing: 1.2,
         fontWeight: FontWeight.w900,
       );
+
+  // Large  Title Text Style (modify)
+  static TextStyle get largeTitle => GoogleFonts.roboto(
+      color: theme.primaryColor, fontSize: 28.sp, fontWeight: FontWeight.w900);
 
   // Large  Title Text Style (Modify)
   static TextStyle get headingTextStyle => GoogleFonts.roboto(
@@ -30,6 +35,45 @@ class AppsTextStyle {
 // Medium Bold Text (Modify)
   static TextStyle get mediumBoldText =>
       _baseStyle(fontSize: 15, fontWeight: FontWeight.bold);
+
+  // Description (Modify)
+  static TextStyle get descrptionTextStyle => GoogleFonts.roboto(
+      color: AppColors.black.withOpacity(.7),
+      fontSize: 15.sp,
+      fontWeight: FontWeight.normal,
+      height: 1.6,
+      letterSpacing: 1.2);
+
+  // Label Text (Modify)
+  static TextStyle get labelTextStyle => GoogleFonts.poppins(
+        color: theme.primaryColor,
+        fontSize: 15.sp,
+        fontWeight: FontWeight.w700,
+      );
+
+// TextFieldInputStyle(Modify)
+  static TextStyle textFieldInputTextStyle(bool isEnable) =>
+      GoogleFonts.poppins(
+        fontSize: 15.sp,
+        color: isEnable ? AppColors.black : AppColors.black.withOpacity(.8),
+        fontWeight: isEnable ? FontWeight.w600 : FontWeight.w800,
+      );
+
+// MOdify
+  static TextStyle get authIntroTitleTextStyle => GoogleFonts.roboto(
+      color: theme.primaryColor,
+      fontSize: 28.sp,
+      fontWeight: FontWeight.w900,
+      height: 1.3,
+      letterSpacing: 1.2);
+
+  // Description (Modify)
+  static TextStyle get authIntroDescriptionTextStyle => GoogleFonts.roboto(
+      color: AppColors.black.withOpacity(.8),
+      fontSize: 17.sp,
+      fontWeight: FontWeight.normal,
+      height: 1.6,
+      letterSpacing: 1.2);
 
   // Common TextStyle helpers
   static TextStyle _baseStyle({
@@ -55,19 +99,6 @@ class AppsTextStyle {
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle get labelTextStyle => GoogleFonts.poppins(
-        color: theme.primaryColor,
-        fontSize: 16.sp,
-        fontWeight: FontWeight.w700,
-      );
-
-  static TextStyle textFieldInputTextStyle([bool isEnable = false]) =>
-      GoogleFonts.poppins(
-        fontSize: 14.sp,
-        color: isEnable ? AppColors.black : AppColors.black.withOpacity(.8),
-        fontWeight: isEnable ? FontWeight.w600 : FontWeight.w800,
-      );
-
 // Ttile
   static TextStyle get titleSignPageTextStyle => GoogleFonts.roboto(
       color: theme.primaryColor,
@@ -82,14 +113,6 @@ class AppsTextStyle {
       color: AppColors.white,
       fontSize: 28.sp,
       fontWeight: FontWeight.bold,
-      letterSpacing: 1.2);
-
-  // Description
-  static TextStyle get descrptionTextStyle => GoogleFonts.roboto(
-      color: AppColors.black.withOpacity(.7),
-      fontSize: 16.sp,
-      fontWeight: FontWeight.normal,
-      height: 1.6,
       letterSpacing: 1.2);
 
 // subtitle
@@ -179,7 +202,7 @@ class AppsTextStyle {
 
   static TextStyle get forgetPasswordTextStyle => _baseStyle(
         fontSize: 14.sp,
-        color: AppColors.lightHintText,
+        color: AppColors.hintTextlight,
         fontWeight: FontWeight.w700,
       );
 

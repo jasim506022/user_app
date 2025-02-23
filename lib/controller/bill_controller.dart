@@ -3,7 +3,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:user_app/model/order_model.dart';
 import 'package:user_app/res/app_string.dart';
-import 'package:user_app/res/network_utili.dart';
 
 import '../repository/bill_repository.dart';
 import '../res/app_constant.dart';
@@ -33,10 +32,6 @@ class BillController extends GetxController {
   void setCurrentPayment(String card) => this.card.value = card;
 
   Future<void> createPayment(String currency) async {
-    if (await NetworkUtili.verifyInternetStatus()) {
-      return;
-    }
-
     try {
       setLoading(true);
       var amount = cartController.totalAmount.value.toInt();
@@ -51,7 +46,7 @@ class BillController extends GetxController {
 
       await displayPaymentSheet();
     } catch (e) {
-      AppsFunction.showToast(msg: e.toString());
+      AppsFunction.flutterToast(msg: e.toString());
     } finally {
       setLoading(false);
     }
@@ -67,12 +62,12 @@ class BillController extends GetxController {
       if (isSucess.value) {
         _processSuccessfullPayment();
       } else {
-        AppsFunction.showToast(msg: AppString.paymentCencle);
+        AppsFunction.flutterToast(msg: AppString.paymentCencle);
       }
     } on StripeException catch (e) {
-      AppsFunction.showToast(msg: e.toString());
+      AppsFunction.flutterToast(msg: e.toString());
     } catch (e) {
-      AppsFunction.showToast(msg: e.toString());
+      AppsFunction.flutterToast(msg: e.toString());
     } finally {
       setLoading(false);
     }
@@ -84,7 +79,7 @@ class BillController extends GetxController {
       orderModel: orderModel,
     );
     CartManager.clearCart();
-    AppsFunction.showToast(msg: AppString.congratulationOrder);
+    AppsFunction.flutterToast(msg: AppString.congratulationOrder);
 
     Get.offAllNamed(AppRoutesName.orderConfirmationPage);
   }

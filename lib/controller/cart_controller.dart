@@ -140,7 +140,7 @@ class CartController extends GetxController {
         profileController.updateUserCartData(
             map: {AppString.cartListSharedPreference: cartList});
 
-        AppsFunction.showToast(msg: AppString.itemRemoveSuccessfully);
+        AppsFunction.flutterToast(msg: AppString.itemRemoveSuccessfully);
 
         AppConstant.sharedPreference!
             .setStringList(AppString.cartListSharedPreference, cartList);
@@ -153,10 +153,10 @@ class CartController extends GetxController {
           fetchSellersForCart();
         }
       } catch (e) {
-        AppsFunction.showToast(msg: e.toString());
+        AppsFunction.flutterToast(msg: e.toString());
       }
     } else {
-      AppsFunction.showToast(msg: AppString.itemNotFoundInCart);
+      AppsFunction.flutterToast(msg: AppString.itemNotFoundInCart);
     }
   }
 }

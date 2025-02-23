@@ -60,9 +60,14 @@ class ProifleHeaderWidget extends StatelessWidget {
         CustomRoundActionButton(
           title: AppString.editProfile,
           onTap: () async {
+            NetworkUtils.executeWithInternetCheck(action: () {
+              Get.toNamed(AppRoutesName.editProfilePage, arguments: true);
+            });
+/*
             if (!(await NetworkUtili.verifyInternetStatus())) {
               Get.toNamed(AppRoutesName.editProfilePage, arguments: true);
             }
+            */
           },
         )
       ],

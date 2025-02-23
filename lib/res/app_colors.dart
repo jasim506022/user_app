@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Light Theme Colors
-  static Color lightBackground = const Color(0xfffcfcfc);
-  static Color searchLightColor = const Color(0xfff3f3f4);
-  static Color lightHintText = const Color(0xff686874);
-  static Color lightUnselect = Colors.black54;
+  static Color backgroundLight = const Color(0xfffcfcfc);
+  static Color searchColorLight = const Color(0xfff3f3f4);
+  static Color hintTextlight = const Color(0xff686874);
+  static Color unselectList = Colors.black54;
 
   // Dark Theme Colors
-  static Color darkBackground = const Color(0xff080e1e);
-  static Color darkCardBackground = const Color(0xff393e4b);
-  static Color darkHintText = const Color.fromARGB(255, 220, 220, 235);
-  static Color darkUnselect = Colors.white54;
+  static Color backgroundDark = const Color(0xff080e1e);
+  static Color cardDark = const Color(0xff393e4b);
+  static Color hintTextDark = const Color.fromARGB(255, 220, 220, 235);
+  static Color unselectDark = Colors.white54;
 
   // Common Accent Colors
   static Color accentGreen = const Color(0xff00b761);
@@ -19,7 +19,7 @@ class AppColors {
   static Color black = Colors.black;
   static Color white = Colors.white;
   static Color red = const Color(0xffed6767);
-  static Color lightRed = const Color.fromARGB(255, 251, 196, 192);
+  static Color lightRed = const Color.fromARGB(255, 95, 67, 65);
   static Color brightYellow = const Color.fromRGBO(255, 241, 112, 1);
   static Color grey = Colors.grey;
 

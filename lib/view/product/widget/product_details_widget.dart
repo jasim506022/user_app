@@ -128,7 +128,7 @@ class ProductDetailsWidget extends StatelessWidget {
       return InkWell(
         onTap: isInCart
             ? () {
-                AppsFunction.showToast(msg: AppString.alreadyAdded);
+                AppsFunction.flutterToast(msg: AppString.alreadyAdded);
               }
             : function,
         child: Container(

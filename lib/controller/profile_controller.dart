@@ -49,11 +49,11 @@ class ProfileController extends GetxController {
         icon: Icons.question_mark_rounded,
         title: AppString.saveChanged,
         content: AppString.doYouWantSave,
-        onNoPressed: () {
+        onCancelPressed: () {
           isChange(false);
           Get.close(2);
         },
-        onYesPressed: () => Get.back()));
+        onConfirmPressed: () => Get.back()));
   }
 
   Future<void> updateUserCartData({required Map<String, dynamic> map}) async {
@@ -67,7 +67,7 @@ class ProfileController extends GetxController {
 // Understand This Code
   Future<void> updateUserData() async {
     if (phoneTEC.text.trim().isEmpty) {
-      AppsFunction.showToast(msg: AppString.pleaseGiveYourPhoenNumber);
+      AppsFunction.flutterToast(msg: AppString.pleaseGiveYourPhoenNumber);
       return;
     }
 
@@ -86,7 +86,7 @@ class ProfileController extends GetxController {
       isChange(false);
       Get.back();
       Get.offAllNamed(AppRoutesName.mainPage, arguments: 3);
-      AppsFunction.showToast(msg: AppString.successfullyUpdate);
+      AppsFunction.flutterToast(msg: AppString.successfullyUpdate);
     } catch (e) {
       Get.back();
       _handleError(e);
@@ -127,7 +127,7 @@ class ProfileController extends GetxController {
           ?.setStringList(AppString.cartListSharedPreference, []);
 
       await repository.signOut();
-      AppsFunction.showToast(msg: AppString.successfullySignedOut);
+      AppsFunction.flutterToast(msg: AppString.successfullySignedOut);
       Get.offAllNamed(AppRoutesName.signInPage);
     } catch (e) {
       AppsFunction.handleException(e);
@@ -148,7 +148,7 @@ class ProfileController extends GetxController {
 
           _updateTextControllers();
         } else {
-          AppsFunction.showToast(msg: AppString.userIsDisable);
+          AppsFunction.flutterToast(msg: AppString.userIsDisable);
         }
       }
     } catch (e) {

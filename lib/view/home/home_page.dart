@@ -61,10 +61,16 @@ class HomePage extends StatelessWidget {
                       RowWidget(
                         text: AppString.popularProduct,
                         onTap: () async {
+                          NetworkUtils.executeWithInternetCheck(action: () {
+                            Get.toNamed(AppRoutesName.productListPage,
+                                arguments: ProductListType.popular);
+                          });
+/*
                           if (!(await NetworkUtili.verifyInternetStatus())) {
                             Get.toNamed(AppRoutesName.productListPage,
                                 arguments: ProductListType.popular);
                           }
+*/
                         },
                       ),
                       AppsFunction.verticalSpacing(10),
@@ -75,10 +81,16 @@ class HomePage extends StatelessWidget {
                       RowWidget(
                         text: AppString.products,
                         onTap: () async {
+                          NetworkUtils.executeWithInternetCheck(action: () {
+                            Get.toNamed(AppRoutesName.productListPage,
+                                arguments: ProductListType.regular);
+                          });
+/*
                           if (!(await NetworkUtili.verifyInternetStatus())) {
                             Get.toNamed(AppRoutesName.productListPage,
                                 arguments: ProductListType.regular);
                           }
+*/
                         },
                       ),
                       const ProductListWidget(

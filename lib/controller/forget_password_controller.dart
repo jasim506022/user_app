@@ -44,7 +44,7 @@ class ForgetPasswordController extends GetxController {
     // else {
     try {
       repository.forgetPasswordSnapshot(email: emailET.text.trim());
-      AppsFunction.showToast(msg: "Sending a mail. Please Check ur Email");
+      AppsFunction.flutterToast(msg: "Sending a mail. Please Check ur Email");
       Get.toNamed(AppRoutesName.signInPage);
     } catch (e) {
       if (e is AppException) {

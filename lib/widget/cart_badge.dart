@@ -26,9 +26,12 @@ class CartBadge extends StatelessWidget {
               color: color,
             ),
             onPressed: () async {
-              if (!(await NetworkUtili.verifyInternetStatus())) {
+              NetworkUtils.executeWithInternetCheck(action: () {
                 Get.toNamed(AppRoutesName.cartPage);
-              }
+              });
+              // if (!(await NetworkUtili.verifyInternetStatus())) {
+              //   Get.toNamed(AppRoutesName.cartPage);
+              // }
             }),
         if (itemCount > 0)
           Positioned(

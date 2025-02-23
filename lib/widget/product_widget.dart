@@ -29,12 +29,22 @@ class ProductWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        NetworkUtils.executeWithInternetCheck(action: () {
+          Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
+            AppString.productModel: productModel,
+            AppString.isCartBack: false
+          });
+        });
+
+/*
         if (!(await NetworkUtili.verifyInternetStatus())) {
           Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
             AppString.productModel: productModel,
             AppString.isCartBack: false
           });
         }
+
+*/
       },
       child: Card(
         color: Theme.of(context).cardColor,
@@ -98,10 +108,17 @@ class ProductWidget extends StatelessWidget {
         AppsFunction.verticalSpacing(5),
         InkWell(
             onTap: () async {
+              NetworkUtils.executeWithInternetCheck(action: () {
+                Get.toNamed(AppRoutesName.productDetailsPage,
+                    arguments: productModel);
+              });
+
+/*
               if (!(await NetworkUtili.verifyInternetStatus())) {
                 Get.toNamed(AppRoutesName.productDetailsPage,
                     arguments: productModel);
               }
+*/
             },
             child: Container(
               alignment: Alignment.center,

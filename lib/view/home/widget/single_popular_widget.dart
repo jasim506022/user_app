@@ -25,12 +25,20 @@ class SingleProductWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        NetworkUtils.executeWithInternetCheck(action: () {
+          Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
+            AppString.productModel: productModel,
+            AppString.isCartBack: false
+          });
+        });
+        /*
         if (!(await NetworkUtili.verifyInternetStatus())) {
           Get.toNamed(AppRoutesName.productDetailsPage, arguments: {
             AppString.productModel: productModel,
             AppString.isCartBack: false
           });
         }
+        */
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),

@@ -43,13 +43,19 @@ class AddressDetailsWidget extends StatelessWidget {
         InkWell(
           onTap: () async {
             if (Get.find<AddressController>().length.value >= maxAddresses) {
-              AppsFunction.showToast(msg: AppString.alreadyFourAddressAdded);
+              AppsFunction.flutterToast(msg: AppString.alreadyFourAddressAdded);
             } else {
+              NetworkUtils.executeWithInternetCheck(action: () {
+                Get.toNamed(AppRoutesName.addressPage);
+              });
+
+/*
               if (!await NetworkUtili.verifyInternetStatus()) {
                 Get.toNamed(
                   AppRoutesName.addressPage,
                 );
               }
+*/
             }
           },
           child: Text("+${AppString.add}",

@@ -51,8 +51,8 @@ class InitialBinding extends Bindings {
         () => AuthController(repository: Get.find<AuthReposity>()),
         fenix: true);
 
-    Get.lazyPut<SignInController>(
-        () => SignInController(repository: Get.find<SignInRepository>()));
+    // Get.lazyPut<SignInController>(
+    //     () => SignInController(repository: Get.find<SignInRepository>()));
 
     Get.lazyPut<ForgetPasswordController>(() => ForgetPasswordController(
         repository: Get.find<ForgetPasswordRepository>()));

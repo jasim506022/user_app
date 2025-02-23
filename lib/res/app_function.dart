@@ -49,14 +49,14 @@ class AppsFunction {
   // Utility Functions
   // ======================
 
-  static void showToast({required String msg}) {
+  static void flutterToast({required String msg}) {
     Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
         backgroundColor: AppColors.red,
         textColor: AppColors.white,
-        fontSize: 16.0);
+        fontSize: 16.sp);
   }
 
 // ======================
@@ -107,7 +107,7 @@ class AppsFunction {
       bool isEnable = true,
       required Function function}) {
     return InputDecoration(
-        fillColor: isEnable ? AppColors.searchLightColor : Utils.textFeildColor,
+        fillColor: isEnable ? AppColors.searchColorLight : Utils.textFeildColor,
         filled: true,
         hintText: hintText,
         border: OutlineInputBorder(
@@ -126,7 +126,7 @@ class AppsFunction {
                 },
                 icon: Icon(
                   Icons.password,
-                  color: obscureText ? AppColors.lightHintText : AppColors.red,
+                  color: obscureText ? AppColors.hintTextlight : AppColors.red,
                 ))
             : null,
         contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
@@ -169,4 +169,41 @@ class AppsFunction {
       .add(const Duration(days: 15))
       .millisecondsSinceEpoch
       .toString();
+
+  /// This function provides a pre-defined text field decoration with options for:
+  static InputDecoration textFieldInputDecoration(
+      {bool isShowPassword = false,
+      required String hintText,
+      bool obscureText = false,
+      bool isEnable = true,
+      VoidCallback? onPasswordToggle}) {
+    // ✅ More specific type}
+    return InputDecoration(
+        // Background color changes based on enabled state
+
+        fillColor: isEnable ? AppColors.searchColorLight : Utils.textFeildColor,
+        filled: true,
+        hintText: hintText,
+        // Border styling: No border, rounded corners
+        border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(15.r)),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(15.r)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(15.r)),
+        // Adds password visibility toggle if needed
+        suffixIcon: isShowPassword
+            ? IconButton(
+                onPressed: onPasswordToggle ?? () {}, // ✅ Safe null handling,
+                icon: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: obscureText ? AppColors.hintTextlight : AppColors.red,
+                ))
+            : null,
+        contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
+        hintStyle: AppsTextStyle.hintTextStyle);
+  }
 }

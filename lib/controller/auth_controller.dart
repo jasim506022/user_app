@@ -15,6 +15,19 @@ import '../widget/show_alert_dialog_widget.dart';
 import 'loading_controller.dart';
 import 'select_image_controller.dart';
 
+/// **AuthController** handles user authentication with Firebase using GetX.
+///
+/// It provides methods for:
+/// - Email/Password login.
+/// - Google sign-in.
+/// - User registration.
+/// - Password reset.
+/// - Managing authentication state.
+///
+/// Uses:
+/// - `AuthRepository` for Firebase interactions.
+/// - `LoadingController` for loading state management.
+/// - `SelectImageController` for profile image handling.
 class AuthController extends GetxController {
   final AuthReposity repository;
   final LoadingController loadingController = Get.find();
@@ -44,39 +57,79 @@ class AuthController extends GetxController {
   }
 
   /// Resets all input fields to initial state.
-  void clearInputFields() {
-    emailController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    phoneController.clear();
-    nameController.clear();
-    // selectImageController.selectPhoto.value = null;
+  void resetFields() {
+    for (final controller in [
+      emailController,
+      passwordController,
+      confirmPasswordController,
+      phoneController,
+      nameController
+    ]) {
+      controller.clear();
+    }
+    // Reset loading state
+    loadingController.setLoading(false);
+    // Reset selected image
+    selectImageController.selectPhoto.value = null;
   }
 
-  /// Signs in the user using email and password.
+  /// Displays a confirmation dialog before exiting the app.
   ///
+  /// If a process (such as login) is ongoing, the user is notified via a toast message
+  /// instead of showing the dialog. Otherwise, it presents an alert dialog asking
+  /// the user to confirm exiting the app.
+  Future<void> confirmExitApp(bool didPop) async {
+    if (loadingController.loading.value) {
+      AppsFunction.flutterToast(msg: AppString.loginProcessOngoingToast);
+      return;
+    }
+
+    // Show a confirmation dialog and wait for the user's response.
+    final bool shouldPop = await Get.dialog<bool>(
+          ShowAlertDialogWidget(
+            icon: Icons.question_mark_rounded,
+            title: AppString.exitDialogTitle,
+            content: AppString.confirmExitMessage,
+            onConfirmPressed: () => Get.back(result: true),
+            onCancelPressed: () => Get.back(result: false),
+          ),
+        ) ??
+        false; // Default to `false` if the dialog is dismissed.
+    // Close the app if the user confirms.
+    if (shouldPop) SystemNavigator.pop();
+  }
+
+  /// Handles user sign-in using email and password.
   Future<void> signIn() async {
     try {
+// Show loading indicator
       loadingController.setLoading(true);
+      // Retrieve and clean up user input
+      final String email = emailController.text.trim();
+      final String password = passwordController.text.trim();
+      // Attempt login using repository
       await repository.loginWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
+        email: email,
+        password: password,
       );
-
+// Check if the user's profile exists
       if (await repository.isUserProfileExists()) {
-        _navigateToMainPage(AppString.signInSuccessfully);
-        clearInputFields();
+        _navigateToMainPage(AppString.successSignInMessage);
+        resetFields(); // Clear input fields after successful login
       } else {
-        AppsFunction.showToast(msg: AppString.userDoesntExit);
+        // Show error toast if user profile does not exist
+        AppsFunction.flutterToast(msg: AppString.errorUserNotFoundToast);
       }
     } catch (e) {
+      // Handle any errors that occur during sign-in
       _handleError(e);
     } finally {
+      // Hide loading indicator
       loadingController.setLoading(false);
     }
   }
 
-  /// Signs in a user using Google authentication.
+  /// (Please Check After) Signs in a user using Google authentication.
   Future<void> signInWithGoogle() async {
     try {
       _showLoadingDialog();
@@ -87,15 +140,15 @@ class AuthController extends GetxController {
 
       if (userCredentialGmail != null) {
         if (await repository.isUserProfileExists()) {
-          _navigateToMainPage(AppString.signInSuccessfully);
+          _navigateToMainPage(AppString.successSignInMessage);
         } else {
           var user = userCredentialGmail.user!;
-          ProfileModel profileModel = buildUserProfile(user: user);
+          ProfileModel profileModel = createUserProfile(user: user);
 
           await repository.createNewUserWithGoogle(
               user: user, profileModel: profileModel);
 
-          _navigateToMainPage(AppString.signInSuccessfully);
+          _navigateToMainPage(AppString.successSignInMessage);
         }
       }
     } catch (e) {
@@ -104,85 +157,104 @@ class AuthController extends GetxController {
     }
   }
 
+  /// **Resets form only if not loading.**
+
+  void resetFormIfNotLoading() {
+    if (loadingController.loading.value) {
+      AppsFunction.flutterToast(msg: AppString.processOngoingToast);
+    } else {
+      resetFields();
+    }
+  }
+
   /// Registers a new user with email and password.
-  Future<void> registerUser() async {
-    if (!_validateInput()) return;
+  Future<void> registerNewUser() async {
+    // Check if the input data is valid before proceeding
+    if (!_isInputValid()) return;
 
     try {
+      // Set loading state to true to show a loading indicator
       loadingController.setLoading(true);
 
-      var imageUrl = await repository.uploadUserImage(
+      // Upload the user's profile image and get the image URL
+      String userProfileImageUrl = await repository.uploadUserImage(
           file: selectImageController.selectPhoto.value!);
 
-      var user = await repository.registerUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
+      // Register the user with email and password
+      UserCredential userCredential =
+          await repository.registerUserWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim());
 
-      ProfileModel profile = buildUserProfile(
-          user: user.user!,
-          userProfileImageUrl: imageUrl,
+      // Create user profile data
+      ProfileModel profile = createUserProfile(
+          user: userCredential.user!,
+          userProfileImageUrl: userProfileImageUrl,
           phoneNumber: phoneController.text.trim(),
           userName: nameController.text.trim());
 
       // Upload user profile data
       repository.saveUserProfile(
-          profileModel: profile, documentId: user.user!.uid);
+          profileModel: profile, documentId: userCredential.user!.uid);
 
-      clearInputFields();
+      // Reset the input fields after successful registration
+      resetFields();
 
       _navigateToMainPage(AppString.signupSuccessfull);
     } catch (e) {
+      // Handle any errors during registration
       _handleError(e);
     } finally {
       loadingController.setLoading(false);
-      selectImageController.selectPhoto.value = null;
     }
   }
 
-  /// Displays a dialog asking the user for confirmation to exit the app.
-  Future<void> exitApps(bool didPop) async {
-    if (!loadingController.loading.value) {
-      if (didPop) {
-        return;
-      }
+  /// Creates a user profile using the provided user data or defaults.
 
-      final bool shouldPop = await Get.dialog<bool>(
-            ShowAlertDialogWidget(
-              icon: Icons.question_mark_rounded,
-              title: AppString.exit,
-              content: AppString.exitApps,
-              onYesPressed: () => Get.back(result: true),
-              onNoPressed: () => Get.back(result: false),
-            ),
-          ) ??
-          false;
-
-      if (shouldPop) SystemNavigator.pop();
-    }
-  }
-
-  ProfileModel buildUserProfile(
+  ProfileModel createUserProfile(
       {required User user,
       String? userProfileImageUrl,
       String? userName,
       String? phoneNumber}) {
     return ProfileModel(
-        name: userName ?? user.displayName ?? "",
-        // earnings: 0.0,
-        status: AppString.approved,
-        email: user.email,
-        phone: phoneNumber ?? user.phoneNumber ?? "",
-        uid: user.uid,
-        address: "",
-        imageurl: userProfileImageUrl ?? user.photoURL ?? "");
+      address: "",
+      cartlist: ["initial"],
+      email: user.email ?? AppString.defaultEmail,
+      name: userName ?? user.displayName ?? AppString.defaultName,
+      imageurl: userProfileImageUrl,
+      phone: phoneNumber ?? user.phoneNumber ?? AppString.defaultPhone,
+      status: AppString.approved,
+      uid: user.uid,
+    );
+  }
+
+  /// Validates the user input fields and shows appropriate error messages if any field is invalid.
+  bool _isInputValid() {
+    // Check if a photo has been selected
+    if (selectImageController.selectPhoto.value == null) {
+      AppsFunction.flutterToast(msg: AppString.pleaseSelectPhotoToast);
+      return false;
+    }
+    // Check if phone number is empty
+    if (phoneController.text.trim().isEmpty) {
+      AppsFunction.flutterToast(msg: AppString.validPhoneNumberToast);
+      return false;
+    }
+    // Check if password and confirm password match
+    if (passwordController.text != confirmPasswordController.text) {
+      AppsFunction.flutterToast(msg: AppString.passwordMatch);
+      return false;
+    }
+    return true;
   }
 
   /// Sends a password reset email.
   Future<void> resetPassword() async {
     try {
       loadingController.setLoading(true);
-      repository.sendPasswordResetEmail(email: emailController.text.trim());
-      AppsFunction.showToast(msg: AppString.sendingMail);
+      await repository.sendPasswordResetEmail(
+          email: emailController.text.trim());
+      AppsFunction.flutterToast(msg: AppString.sendingMail);
       Get.toNamed(AppRoutesName.signInPage);
     } catch (e) {
       _handleError(e);
@@ -191,36 +263,19 @@ class AuthController extends GetxController {
     }
   }
 
-  /// Validates user input and shows appropriate error messages
-  bool _validateInput() {
-    if (selectImageController.selectPhoto.value == null) {
-      AppsFunction.showToast(msg: AppString.pleaseSelectPhoto);
-      return false;
-    }
-    if (phoneController.text.trim().isEmpty) {
-      AppsFunction.showToast(msg: AppString.validPhoneNumber);
-      return false;
-    }
-    if (passwordController.text != confirmPasswordController.text) {
-      AppsFunction.showToast(msg: AppString.passwordMatch);
-      return false;
-    }
-    return true;
-  }
-
   /// Navigates to the main page with a success message.
   void _navigateToMainPage(String message) {
-    AppsFunction.showToast(msg: message);
+    AppsFunction.flutterToast(msg: message);
     Get.offNamed(AppRoutesName.mainPage);
   }
 
   /// Displays a loading dialog.
   void _showLoadingDialog() {
     Get.dialog(
-      ErrorDialogWidget(
+      const ErrorDialogWidget(
         icon: AppIcons.warningIcon,
-        title: AppString.logInPageSubjectTitle,
-        buttonText: AppString.okay,
+        title: AppString.authPageDescription,
+        buttonText: AppString.btnOkay,
       ),
       barrierDismissible: false,
     );
@@ -234,9 +289,17 @@ class AuthController extends GetxController {
           icon: AppIcons.warningIcon,
           title: error.title!,
           content: error.message,
-          buttonText: AppString.okay,
+          buttonText: AppString.btnOkay,
         ),
       );
     }
   }
 }
+
+/*
+#: Get.back(result: true)
+#: Loading.setLoding(true) : loadingController.setLoading(false);
+#: Gmail After
+#: Boolean methods should start with is or has to make it clear they return a true/false result.
+*/
+

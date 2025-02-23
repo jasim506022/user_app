@@ -11,18 +11,18 @@ class OnboardingController extends GetxController {
   var currentIndex = 0.obs;
 
   /// Marks the onboarding as viewed in shared preferences and navigates to the sign-in page
-  void markOnboardingAsViewedAndNavigate() {
+  void skipOnboarding() {
     AppConstant.isViewed = 0;
     AppConstant.sharedPreference!
-        .setInt(AppString.onBoardingShareKey, AppConstant.isViewed!);
+        .setInt(AppString.prefOnboarding, AppConstant.isViewed!);
     Get.offNamed(AppRoutesName.signInPage);
   }
 
   /// Navigates to the next page in the onboarding sequence
-  void navigateToNextPageOrSkip() {
+  void goToNextPageOrSkip() {
     if (currentIndex.value ==
         OnBoardingListData.getOnboardingData().length - 1) {
-      markOnboardingAsViewedAndNavigate();
+      skipOnboarding();
     } else {
       pageController.nextPage(
         duration: const Duration(milliseconds: 250),

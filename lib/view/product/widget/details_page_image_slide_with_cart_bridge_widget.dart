@@ -106,9 +106,14 @@ class DetailsPageImageSlideWithCartBridgeWidget extends StatelessWidget {
         ),
         InkWell(
           onTap: () async {
+            NetworkUtils.executeWithInternetCheck(action: () {
+              Get.toNamed(AppRoutesName.cartPage);
+            });
+            /*
             if (!(await NetworkUtili.verifyInternetStatus())) {
               Get.toNamed(AppRoutesName.cartPage);
             }
+            */
           },
           child: _buildCircularButton(
             Obx(

@@ -32,9 +32,14 @@ class AddressWidget extends StatelessWidget {
           padding: EdgeInsets.only(top: 12.h),
           child: InkWell(
             onLongPress: () async {
+              NetworkUtils.executeWithInternetCheck(action: () {
+                addressController.deleteAddress();
+              });
+              /*
               if (!(await NetworkUtili.verifyInternetStatus())) {
                 addressController.deleteAddress();
               }
+              */
             },
             onTap: () {
               addressController.setIndex(index);
@@ -87,12 +92,20 @@ class AddressWidget extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () async {
+                      NetworkUtils.executeWithInternetCheck(action: () {
+                        Get.toNamed(AppRoutesName.addressPage, arguments: {
+                          AppString.isUpdate: true,
+                          AppString.addressModel: addressModel
+                        });
+                      });
+/*
                       if (!(await NetworkUtili.verifyInternetStatus())) {
                         Get.toNamed(AppRoutesName.addressPage, arguments: {
                           AppString.isUpdate: true,
                           AppString.addressModel: addressModel
                         });
                       }
+*/
                     },
                     child: Icon(Typicons.edit,
                         size: 40, color: AppColors.accentGreen),

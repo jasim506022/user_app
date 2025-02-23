@@ -105,8 +105,8 @@ class AddressController extends GetxController {
       icon: Icons.question_mark_rounded,
       title: AppString.saveChaned,
       content: AppString.doYouWantSave,
-      onYesPressed: () => Get.back(),
-      onNoPressed: () {
+      onConfirmPressed: () => Get.back(),
+      onCancelPressed: () {
         clearInputField();
         isChange.value = false;
         Get.close(2);
@@ -141,8 +141,8 @@ class AddressController extends GetxController {
         icon: Icons.question_mark_rounded,
         title: AppString.confirmDeletion,
         content: AppString.deleteMessage,
-        onYesPressed: () => Get.back(result: true),
-        onNoPressed: () => Get.back(result: false),
+        onConfirmPressed: () => Get.back(result: true),
+        onCancelPressed: () => Get.back(result: false),
       ),
     );
 
@@ -150,7 +150,7 @@ class AddressController extends GetxController {
       try {
         await repository.deleteAddress(addressId: addressid.value);
         addressid.value = "";
-        AppsFunction.showToast(msg: AppString.succwssulyDelete);
+        AppsFunction.flutterToast(msg: AppString.succwssulyDelete);
       } catch (e) {
         handleException(e);
       }
@@ -172,7 +172,7 @@ class AddressController extends GetxController {
       Get.back();
       Get.offNamed(AppRoutesName.billPage);
 
-      AppsFunction.showToast(
+      AppsFunction.flutterToast(
           msg: isUpdate
               ? AppString.successfullyUpdate
               : AppString.succesffulyUploadNewAddress);

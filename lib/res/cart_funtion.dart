@@ -26,7 +26,7 @@ class CartManager {
 
     Get.find<ProfileController>().updateUserCartData(map: {cartKey: cartItems});
 
-    AppsFunction.showToast(msg: AppString.itemAddSuccessfully);
+    AppsFunction.flutterToast(msg: AppString.itemAddSuccessfully);
     // Save updated cart in shared preferences
     sharedPref.setStringList(cartKey, cartItems);
     // Update cart count
@@ -42,7 +42,7 @@ class CartManager {
     List<String> emptyCart = sharedPref.getStringList(cartKey)!;
 
     Get.find<ProfileController>().updateUserCartData(map: {cartKey: emptyCart});
-    AppsFunction.showToast(msg: AppString.removieAllCartSuccessfully);
+    AppsFunction.flutterToast(msg: AppString.removieAllCartSuccessfully);
   }
 
 // Retrieve a specific field (helper function)
